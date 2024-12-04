@@ -10,7 +10,7 @@
 </head>
 <body class="flex flex-col items-center w-full justify-center">
     {{-- Navigation --}}
-    <div class="fixed top-0 bg-gray-100 backdrop-blur-lg z-50 shadow-md align-center items-center flex flex-row justify-between w-[45vw] rounded-full mt-6">
+    <div class="fixed top-0 bg-gray-100/30 backdrop-blur-lg z-50 shadow-md align-center items-center flex flex-row justify-between w-[45vw] rounded-full mt-6">
         <img src="{{asset('logo.webp')}}" class="h-[40px] mx-[40px] my-[20px]" alt="Bangladesh Angels Network Logo">
         <div>
             <ul class="flex font-bold">
