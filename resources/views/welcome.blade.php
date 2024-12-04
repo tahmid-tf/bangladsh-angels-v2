@@ -35,11 +35,11 @@
                 <h1 class="text-[1.5em] font-bold">
                     Accelerate your Startup
                 </h1>
-                <h1 class="text-[3em] font-bold mt-5">
+                <h1 class="text-[3em] leading-none font-bold mt-5">
                     Elevating Entrepreneurs<br>in Bangladesh
                 </h1>
                 <h1 class="my-10">
-                    The nation’s first angel investment network created with a mission to nurture<br>the innovation & entrepreneurship in Bangladesh, connecting them to both local & global investors.
+                    The nation’s first angel investment network created with a mission to nurture the innovation & entrepreneurship in Bangladesh, connecting them to both local & global investors.
                 </h1>
                 <button class="p-3 pl-4 pr-4 rounded-full bg-[#eefff1] font-bold text-[#36b37e]">
                     Invest in Startups
@@ -49,10 +49,40 @@
     </section>
    
     {{-- Meet the investors --}}
-    <div>
-        <h1 class="text-[1.5em] font-bold">
+    <div class="flex w-full flex-col justify-center items-center p-6 bg-gradient-to-b from-green-50 pt-[200px] to-white">
+        <h1 class="text-[3em] font-bold">
             Meet the Investors
         </h1>
+        <p class="mt-3 text-center">
+            Join a Global network of over 450 executives and operators<br>who have built and expanded companies in all parts of the world.
+        </p>
+        <div class="flex p-3 mt-6">
+            <div class="flex flex-col">
+                <img src="{{asset('image_4x.webp')}}" class="rounded-lg h-[200px] w-auto my-4 shadow-md" alt="">
+                <img src="{{asset('image_4x.webp')}}" class="rounded-lg h-[200px] w-auto my-4 shadow-md" alt="">
+            </div>
+
+            <div class="flex flex-col mt-16 ml-6">
+                <img src="{{asset('image_4x.webp')}}" class="rounded-lg h-[200px] w-auto my-4 shadow-md" alt="">
+                <img src="{{asset('image_4x.webp')}}" class="rounded-lg h-[200px] w-auto my-4 shadow-md" alt="">
+            </div>
+
+            <div class="flex flex-col ml-6">
+                <img src="{{asset('image_4x.webp')}}" class="rounded-lg h-[200px] w-auto my-4 shadow-md" alt="">
+                <img src="{{asset('image_4x.webp')}}" class="rounded-lg h-[200px] w-auto my-4 shadow-md" alt="">
+            </div>
+
+            <div class="flex flex-col mt-16 ml-6">
+                <img src="{{asset('image_4x.webp')}}" class="rounded-lg h-[200px] w-auto my-4 shadow-md" alt="">
+                <img src="{{asset('image_4x.webp')}}" class="rounded-lg h-[200px] w-auto my-4 shadow-md" alt="">
+            </div>
+
+            <div class="flex flex-col ml-6">
+                <img src="{{asset('image_4x.webp')}}" class="rounded-lg h-[200px] w-auto my-4 shadow-md" alt="">
+                <img src="{{asset('image_4x.webp')}}" class="rounded-lg h-[200px] w-auto my-4 shadow-md" alt="">
+            </div>
+        </div>
+        
     </div>
 </body>
 </html>
