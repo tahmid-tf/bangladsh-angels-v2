@@ -362,7 +362,56 @@
             Explore All Deals
         </button>
     </section>
-
+    <section class="flex flex-col justify-center text-center w-full py-[100px] border-box">
+      <h1 class="text-[3em] font-bold">
+        BAN Resources
+      </h1>
+      <p class="mt-3 text-center text-[1.5em]">
+        Bangladesh Angels Hosts events for start-ups and Angel Investors.<br>Join any of our events to connect with people today!
+      </p>
+      <div class="bg-white py-6 sm:py-8 lg:py-[20px]">
+        <div class="mx-auto max-w-screen-xl px-4 md:px-8">
+          <div class="flex flex-col overflow-hidden text-white justify-start rounded-lg bg-gradient-to-br to-[#022e2e] from-[#156755] sm:flex-row md:h-80">
+            <!-- image - start -->
+            <div class="order-first h-48 w-full bg-gray-300 sm:order-none sm:h-auto sm:w-1/2 lg:w-2/5">
+              <img src="{{asset('resourcesCover.webp')}}" loading="lazy" alt="Photo by Andras Vas" class="h-full w-full object-cover object-center" />
+            </div>
+            <!-- image - end -->
+      
+            <!-- content - start -->
+            <div class="flex w-full justify-start flex-col p-4 sm:w-1/2 sm:p-8 lg:w-3/5">
+              <h2 class="mb-4 text-xl self-start font-bold md:text-2xl lg:text-2xl">Networking Event<br>hosted by ShopUp</h2>
+              <span class="flex justify-start my-2 items-center">
+                <div class="flex bg-white rounded-full p-5">
+                  <img src="{{asset('dateicon.webp')}}" alt="date_icon" class="h-[20px]" draggable="false">
+                </div>
+                <p class="text-left ml-3">
+                  16 - 22 December, 2023<br>
+                  08:00 AM to 06:00 PM
+                </p>
+              </span>
+              <span class="flex justify-start my-2 items-center">
+                <div class="flex bg-white rounded-full p-5">
+                  <img src="{{asset('locationicon.webp')}}" alt="date_icon" class="h-[20px]" draggable="false">
+                </div>
+                <p class="text-left ml-3">
+                  64–65, Kazi Nazrul Islam Avenue,<br>Dhaka-1215  
+                </p>
+              </span>
+              <div class="mt-auto self-start">
+                <a href="#" class="inline-block rounded-full bg-white px-8 py-3 text-center text-sm font-semibold text-gray-800 outline-none ring-indigo-300 transition duration-100 hover:bg-gray-100 focus-visible:ring active:bg-gray-200 md:text-base">Register</a>
+              </div>
+            </div>
+            <!-- content - end -->
+          </div>
+          <button class="p-3 pl-4 my-10 pr-4 rounded-full bg-[#eefff1] font-bold text-[#36b37e]">
+            Discover BAN Resources
+        </button>
+        </div>
+      </div>
+    </section>
+    
+    
     <livewire:scripts />
 </body>
 </html>
