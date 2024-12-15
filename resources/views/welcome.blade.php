@@ -16,11 +16,11 @@
             <img src="{{asset('logo.webp')}}" class="h-[40px] mx-[40px] my-[20px]" alt="Bangladesh Angels Network Logo">
             <div>
                 <ul class="flex font-bold">
-                    <li class="m-3">Portfolio</li>
                     <li class="m-3">Deals</li>
+                    <li class="m-3">BAN Investors</li>
+                    <li class="m-3">Portfolio</li>
+                    <li class="m-3">BAN Resources</li>
                     <li class="m-3">Our Team</li>
-                    <li class="m-3">Get Funded</li>
-                    <li class="m-3">FAQ</li>
                 </ul>
             </div>
             <div class="mr-6">
