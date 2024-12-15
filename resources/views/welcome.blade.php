@@ -11,7 +11,7 @@
 </head>
 <body class="flex flex-col items-center w-full justify-center">
     {{-- Navigation --}}
-    <section class="fixed flex top-0 text-center justify-center items-center w-full">
+    <section class="fixed flex z-10 top-0 text-center justify-center items-center w-full">
         <div class="align-self-center w-[70vw] bg-gray-100/30 backdrop-blur-lg z-50 shadow-md align-center items-center flex flex-row justify-between  rounded-full mt-6">
             <img src="{{asset('logo.webp')}}" class="h-[40px] mx-[40px] my-[20px]" alt="Bangladesh Angels Network Logo">
             <div>
@@ -210,7 +210,7 @@
             <button>
                 <img src="{{asset('icons/disabled previous btn.webp')}}" class="1/4 h-[6em]" alt="previous btn">
             </button>
-            <div class="w-1/3 m-3">
+            <div class="w-1/3 m-3 z-0">
                 <a href="#" class="group relative block rounded-lg overflow-hidden">
                     
                   
@@ -258,7 +258,7 @@
                     </div>
                   </a>
             </div>
-            <div class="w-1/3 m-3">
+            <div class="w-1/3 m-3 z-0">
                 <a href="#" class="group relative block rounded-lg overflow-hidden">
                     
                   
@@ -306,7 +306,7 @@
                     </div>
                   </a>
             </div>
-            <div class="w-1/3 m-3">
+            <div class="w-1/3 m-3 z-0">
                 <a href="#" class="group relative block rounded-lg overflow-hidden">
                     
                   
