@@ -13,6 +13,7 @@
 <body class="flex flex-col items-center w-full mt-[150px] justify-center">
     {{-- Navigation --}}
     @yield('page_content')
+    <livewire:footer></livewire:footer>
     <livewire:scripts />
 </body>
 </html>
