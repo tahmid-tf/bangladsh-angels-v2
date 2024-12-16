@@ -4,8 +4,8 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PrimaryController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', PrimaryController::class);
-
+Route::get('/', PrimaryController::class)->name('home');
+Route::get('/deals', [PrimaryController::class,'viewDeals'])->middleware('auth')->name('deals');
 
 Route::get('/dashboard', function () {
     return view('dashboard');

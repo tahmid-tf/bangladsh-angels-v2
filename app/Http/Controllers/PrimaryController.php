@@ -10,4 +10,9 @@ class PrimaryController extends Controller
     {
         return view('welcome');
     }
+
+    public function viewDeals()
+    {
+        return view('deals.index');
+    }
 }
