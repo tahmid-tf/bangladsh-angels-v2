@@ -11,9 +11,12 @@
             </ul>
         </div>
         <div class="mr-6">
+            @guest
             <button class="p-3 pl-4 pr-4 rounded-full bg-[#36b37e] font-bold text-white">
                 Login
-            </button>
+            </button>    
+            @endguest
+            
         </div>
     </div>
 </section>
