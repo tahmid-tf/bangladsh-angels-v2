@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', PrimaryController::class)->name('home');
 Route::get('/deals', [PrimaryController::class,'viewDeals'])->middleware('auth')->name('deals');
 Route::get('/faq', [PrimaryController::class,'viewFAQ'])->name('faq');
+Route::get('/about', [PrimaryController::class,'viewAbout'])->name('about');
+Route::get('/investor/signup', [PrimaryController::class,'viewInvestorSignup'])->name('investor.signup');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
