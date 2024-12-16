@@ -18,7 +18,14 @@
                 Login
             </a>    
             @endguest
-            
+            @auth
+            <form method="POST" action="{{ route('logout') }}">
+                @csrf
+                <button type="submit" class="p-3 pl-4 pr-4 rounded-full bg-red-500 font-bold text-white hover:bg-red-600">
+                    Logout
+                </button>
+            </form>
+            @endauth
         </div>
     </div>
 </section>
