@@ -15,4 +15,8 @@ class PrimaryController extends Controller
     {
         return view('deals.index');
     }
+
+    public function viewFAQ(){
+        return view('faq');
+    }
 }

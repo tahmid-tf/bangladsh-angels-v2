@@ -14,8 +14,10 @@
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
-    <body class="font-sans text-gray-900 antialiased">
+    <livewire:navigation-bar></livewire:navigation-bar>
+    <body class="flex flex-col justify-center items-center w-full font-sans text-gray-900 mt-[150px] antialiased">
         @yield('page_content')
         <livewire:scripts />
     </body>
+    <livewire:footer></livewire:footer>
 </html>

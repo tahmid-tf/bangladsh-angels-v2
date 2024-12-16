@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', PrimaryController::class)->name('home');
 Route::get('/deals', [PrimaryController::class,'viewDeals'])->middleware('auth')->name('deals');
+Route::get('/faq', [PrimaryController::class,'viewFAQ'])->name('faq');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
