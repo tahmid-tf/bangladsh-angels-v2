@@ -111,171 +111,173 @@
             <img src="{{asset('team.webp')}}" alt="team photo">
         </div>
     </section>
-
-    {{-- Deal Listings --}}
+    @auth
+      {{-- Deal Listings --}}
     <section class="flex mt-[6em] flex-col w-full bg-[#00877a] py-[200px] border-box text-white  border-box justify-center items-center">
-        <h1 class="text-[3em] font-bold">
-            Deal Listings
-        </h1>
-        <p class="my-10 text-[1.5em]">
-            Live Details to review and invest today!
-        </p>
-        <div class="flex flex-row w-[70vw] justify-between">
-            <button>
-                <img src="{{asset('icons/disabled previous btn.webp')}}" class="1/4 h-[6em]" alt="previous btn">
-            </button>
-            <div class="w-1/3 m-3 z-0">
-                <a href="#" class="group relative block rounded-lg overflow-hidden">
-                    
+      <h1 class="text-[3em] font-bold">
+          Deal Listings
+      </h1>
+      <p class="my-10 text-[1.5em]">
+          Live Details to review and invest today!
+      </p>
+      <div class="flex flex-row w-[70vw] justify-between">
+          <button>
+              <img src="{{asset('icons/disabled previous btn.webp')}}" class="1/4 h-[6em]" alt="previous btn">
+          </button>
+          <div class="w-1/3 m-3 z-0">
+              <a href="#" class="group relative block rounded-lg overflow-hidden">
                   
-                    <img
-                      src="https://images.unsplash.com/photo-1628202926206-c63a34b1618f?q=80&w=2574&auto=format&fit=crop"
-                      alt=""
-                      class="h-64 w-full object-cover transition duration-500 group-hover:scale-105 sm:h-72"
-                    />
-                    <div class="ml-3 absolute top-[15em] flex items-center">
-                        <img class="h-10 w-10 -mx-1.5 ring ring-white rounded-full object-cover" src="https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=4&w=880&h=880&q=100" alt="">
-                        <img class="h-10 w-10 -mx-1.5 ring ring-white rounded-full object-cover" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=4&w=687&h=687&q=80" alt="">
-                        <img class="h-10 w-10 -mx-1.5 ring ring-white rounded-full object-cover" src="https://images.unsplash.com/photo-1464863979621-258859e62245?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=4&w=686&h=686&q=80" alt="">
-                        <img class="h-10 w-10 -mx-1.5 ring ring-white rounded-full object-cover" src="https://images.unsplash.com/photo-1485178575877-1a13bf489dfe?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=4&w=1401&h=1401&q=80" alt="">
-                        <img class="h-10 w-10 -mx-1.5 ring ring-white rounded-full object-cover" src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=4&w=880&h=880&q=80" alt="">
-                    </div>
-                    <div class="flex flex-col border w-full border-gray-100 bg-white p-6 border-box">
-                      <div class="flex w-full">
-                        <p class="flex w-1/3 text-gray-400 bg-gray-100 font-bold text-[0.7em] justify-center self-start rounded-full p-3">
-                            Audio Technology
-                        </p>
-                        <p class="flex w-1/3 text-gray-400 bg-gray-100 font-bold text-[0.7em] justify-center self-start rounded-full p-3">
-                        Artifical Intelligence
-                        </p>
-                      </div>
-                        
-                      <h3 class="mt-1.5 text-lg font-medium text-gray-900">Wireless Headphones</h3>
-                  
-                      <p class="mt-1.5 line-clamp-3 text-gray-700">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Labore nobis iure obcaecati pariatur.
-                        Officiis qui, enim cupiditate aliquam corporis iste.
+                
+                  <img
+                    src="https://images.unsplash.com/photo-1628202926206-c63a34b1618f?q=80&w=2574&auto=format&fit=crop"
+                    alt=""
+                    class="h-64 w-full object-cover transition duration-500 group-hover:scale-105 sm:h-72"
+                  />
+                  <div class="ml-3 absolute top-[15em] flex items-center">
+                      <img class="h-10 w-10 -mx-1.5 ring ring-white rounded-full object-cover" src="https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=4&w=880&h=880&q=100" alt="">
+                      <img class="h-10 w-10 -mx-1.5 ring ring-white rounded-full object-cover" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=4&w=687&h=687&q=80" alt="">
+                      <img class="h-10 w-10 -mx-1.5 ring ring-white rounded-full object-cover" src="https://images.unsplash.com/photo-1464863979621-258859e62245?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=4&w=686&h=686&q=80" alt="">
+                      <img class="h-10 w-10 -mx-1.5 ring ring-white rounded-full object-cover" src="https://images.unsplash.com/photo-1485178575877-1a13bf489dfe?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=4&w=1401&h=1401&q=80" alt="">
+                      <img class="h-10 w-10 -mx-1.5 ring ring-white rounded-full object-cover" src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=4&w=880&h=880&q=80" alt="">
+                  </div>
+                  <div class="flex flex-col border w-full border-gray-100 bg-white p-6 border-box">
+                    <div class="flex w-full">
+                      <p class="flex w-1/3 text-gray-400 bg-gray-100 font-bold text-[0.7em] justify-center self-start rounded-full p-3">
+                          Audio Technology
                       </p>
-                  
-                      <div class="flex w-full justify-between">
-                        <h1 class="rounded-full text-gray-700  p-3 self-end my-6 font-bold transition hover:scale-105"
-                      >
-                        Pre-Seed
-                      </h1>
-                      <button
-                          type="button"
-                          class="rounded-full border-2 w-[8em] border-[#36b37e] text-[#36b37e]  p-3 self-end my-6 font-bold transition hover:scale-105"
-                        >
-                          Invest Now
-                        </button>
-                      </div>
-                    </div>
-                  </a>
-            </div>
-            <div class="w-1/3 m-3 z-0">
-                <a href="#" class="group relative block rounded-lg overflow-hidden">
-                    
-                  
-                    <img
-                      src="https://images.unsplash.com/photo-1628202926206-c63a34b1618f?q=80&w=2574&auto=format&fit=crop"
-                      alt=""
-                      class="h-64 w-full object-cover transition duration-500 group-hover:scale-105 sm:h-72"
-                    />
-                    <div class="ml-3 absolute top-[15em] flex items-center">
-                        <img class="h-10 w-10 -mx-1.5 ring ring-white rounded-full object-cover" src="https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=4&w=880&h=880&q=100" alt="">
-                        <img class="h-10 w-10 -mx-1.5 ring ring-white rounded-full object-cover" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=4&w=687&h=687&q=80" alt="">
-                        <img class="h-10 w-10 -mx-1.5 ring ring-white rounded-full object-cover" src="https://images.unsplash.com/photo-1464863979621-258859e62245?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=4&w=686&h=686&q=80" alt="">
-                        <img class="h-10 w-10 -mx-1.5 ring ring-white rounded-full object-cover" src="https://images.unsplash.com/photo-1485178575877-1a13bf489dfe?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=4&w=1401&h=1401&q=80" alt="">
-                        <img class="h-10 w-10 -mx-1.5 ring ring-white rounded-full object-cover" src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=4&w=880&h=880&q=80" alt="">
-                    </div>
-                    <div class="flex flex-col border w-full border-gray-100 bg-white p-6 border-box">
-                      <div class="flex w-full">
-                        <p class="flex w-1/3 text-gray-400 bg-gray-100 font-bold text-[0.7em] justify-center self-start rounded-full p-3">
-                            Audio Technology
-                        </p>
-                        <p class="flex w-1/3 text-gray-400 bg-gray-100 font-bold text-[0.7em] justify-center self-start rounded-full p-3">
-                        Artifical Intelligence
-                        </p>
-                      </div>
-                        
-                      <h3 class="mt-1.5 text-lg font-medium text-gray-900">Wireless Headphones</h3>
-                  
-                      <p class="mt-1.5 line-clamp-3 text-gray-700">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Labore nobis iure obcaecati pariatur.
-                        Officiis qui, enim cupiditate aliquam corporis iste.
+                      <p class="flex w-1/3 text-gray-400 bg-gray-100 font-bold text-[0.7em] justify-center self-start rounded-full p-3">
+                      Artifical Intelligence
                       </p>
-                  
-                      <div class="flex w-full justify-between">
-                        <h1 class="rounded-full text-gray-700  p-3 self-end my-6 font-bold transition hover:scale-105"
+                    </div>
+                      
+                    <h3 class="mt-1.5 text-lg font-medium text-gray-900">Wireless Headphones</h3>
+                
+                    <p class="mt-1.5 line-clamp-3 text-gray-700">
+                      Lorem ipsum dolor sit amet consectetur adipisicing elit. Labore nobis iure obcaecati pariatur.
+                      Officiis qui, enim cupiditate aliquam corporis iste.
+                    </p>
+                
+                    <div class="flex w-full justify-between">
+                      <h1 class="rounded-full text-gray-700  p-3 self-end my-6 font-bold transition hover:scale-105"
+                    >
+                      Pre-Seed
+                    </h1>
+                    <button
+                        type="button"
+                        class="rounded-full border-2 w-[8em] border-[#36b37e] text-[#36b37e]  p-3 self-end my-6 font-bold transition hover:scale-105"
                       >
-                        Pre-Seed
-                      </h1>
-                      <button
-                          type="button"
-                          class="rounded-full border-2 w-[8em] border-[#36b37e] text-[#36b37e]  p-3 self-end my-6 font-bold transition hover:scale-105"
-                        >
-                          Invest Now
-                        </button>
-                      </div>
+                        Invest Now
+                      </button>
                     </div>
-                  </a>
-            </div>
-            <div class="w-1/3 m-3 z-0">
-                <a href="#" class="group relative block rounded-lg overflow-hidden">
-                    
+                  </div>
+                </a>
+          </div>
+          <div class="w-1/3 m-3 z-0">
+              <a href="#" class="group relative block rounded-lg overflow-hidden">
                   
-                    <img
-                      src="https://images.unsplash.com/photo-1628202926206-c63a34b1618f?q=80&w=2574&auto=format&fit=crop"
-                      alt=""
-                      class="h-64 w-full object-cover transition duration-500 group-hover:scale-105 sm:h-72"
-                    />
-                    <div class="ml-3 absolute top-[15em] flex items-center">
-                        <img class="h-10 w-10 -mx-1.5 ring ring-white rounded-full object-cover" src="https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=4&w=880&h=880&q=100" alt="">
-                        <img class="h-10 w-10 -mx-1.5 ring ring-white rounded-full object-cover" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=4&w=687&h=687&q=80" alt="">
-                        <img class="h-10 w-10 -mx-1.5 ring ring-white rounded-full object-cover" src="https://images.unsplash.com/photo-1464863979621-258859e62245?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=4&w=686&h=686&q=80" alt="">
-                        <img class="h-10 w-10 -mx-1.5 ring ring-white rounded-full object-cover" src="https://images.unsplash.com/photo-1485178575877-1a13bf489dfe?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=4&w=1401&h=1401&q=80" alt="">
-                        <img class="h-10 w-10 -mx-1.5 ring ring-white rounded-full object-cover" src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=4&w=880&h=880&q=80" alt="">
-                    </div>
-                    <div class="flex flex-col border w-full border-gray-100 bg-white p-6 border-box">
-                      <div class="flex w-full">
-                        <p class="flex w-1/3 text-gray-400 bg-gray-100 font-bold text-[0.7em] justify-center self-start rounded-full p-3">
-                            Audio Technology
-                        </p>
-                        <p class="flex w-1/3 text-gray-400 bg-gray-100 font-bold text-[0.7em] justify-center self-start rounded-full p-3">
-                        Artifical Intelligence
-                        </p>
-                      </div>
-                        
-                      <h3 class="mt-1.5 text-lg font-medium text-gray-900">Wireless Headphones</h3>
-                  
-                      <p class="mt-1.5 line-clamp-3 text-gray-700">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Labore nobis iure obcaecati pariatur.
-                        Officiis qui, enim cupiditate aliquam corporis iste.
+                
+                  <img
+                    src="https://images.unsplash.com/photo-1628202926206-c63a34b1618f?q=80&w=2574&auto=format&fit=crop"
+                    alt=""
+                    class="h-64 w-full object-cover transition duration-500 group-hover:scale-105 sm:h-72"
+                  />
+                  <div class="ml-3 absolute top-[15em] flex items-center">
+                      <img class="h-10 w-10 -mx-1.5 ring ring-white rounded-full object-cover" src="https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=4&w=880&h=880&q=100" alt="">
+                      <img class="h-10 w-10 -mx-1.5 ring ring-white rounded-full object-cover" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=4&w=687&h=687&q=80" alt="">
+                      <img class="h-10 w-10 -mx-1.5 ring ring-white rounded-full object-cover" src="https://images.unsplash.com/photo-1464863979621-258859e62245?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=4&w=686&h=686&q=80" alt="">
+                      <img class="h-10 w-10 -mx-1.5 ring ring-white rounded-full object-cover" src="https://images.unsplash.com/photo-1485178575877-1a13bf489dfe?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=4&w=1401&h=1401&q=80" alt="">
+                      <img class="h-10 w-10 -mx-1.5 ring ring-white rounded-full object-cover" src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=4&w=880&h=880&q=80" alt="">
+                  </div>
+                  <div class="flex flex-col border w-full border-gray-100 bg-white p-6 border-box">
+                    <div class="flex w-full">
+                      <p class="flex w-1/3 text-gray-400 bg-gray-100 font-bold text-[0.7em] justify-center self-start rounded-full p-3">
+                          Audio Technology
                       </p>
-                  
-                      <div class="flex w-full justify-between">
-                        <h1 class="rounded-full text-gray-700  p-3 self-end my-6 font-bold transition hover:scale-105"
-                      >
-                        Pre-Seed
-                      </h1>
-                      <button
-                          type="button"
-                          class="rounded-full border-2 w-[8em] border-[#36b37e] text-[#36b37e]  p-3 self-end my-6 font-bold transition hover:scale-105"
-                        >
-                          Invest Now
-                        </button>
-                      </div>
+                      <p class="flex w-1/3 text-gray-400 bg-gray-100 font-bold text-[0.7em] justify-center self-start rounded-full p-3">
+                      Artifical Intelligence
+                      </p>
                     </div>
-                  </a>
-            </div>
-            <button>
-                <img src="{{asset('icons/enabled next btn.webp')}}" class="1/4 h-[6em]" alt="next btn">
-            </button>
-        </div>
-        <button class="p-3 pl-4 pr-4 rounded-full bg-white mt-6 font-bold text-[#00877a]">
-            Explore All Deals
-        </button>
+                      
+                    <h3 class="mt-1.5 text-lg font-medium text-gray-900">Wireless Headphones</h3>
+                
+                    <p class="mt-1.5 line-clamp-3 text-gray-700">
+                      Lorem ipsum dolor sit amet consectetur adipisicing elit. Labore nobis iure obcaecati pariatur.
+                      Officiis qui, enim cupiditate aliquam corporis iste.
+                    </p>
+                
+                    <div class="flex w-full justify-between">
+                      <h1 class="rounded-full text-gray-700  p-3 self-end my-6 font-bold transition hover:scale-105"
+                    >
+                      Pre-Seed
+                    </h1>
+                    <button
+                        type="button"
+                        class="rounded-full border-2 w-[8em] border-[#36b37e] text-[#36b37e]  p-3 self-end my-6 font-bold transition hover:scale-105"
+                      >
+                        Invest Now
+                      </button>
+                    </div>
+                  </div>
+                </a>
+          </div>
+          <div class="w-1/3 m-3 z-0">
+              <a href="#" class="group relative block rounded-lg overflow-hidden">
+                  
+                
+                  <img
+                    src="https://images.unsplash.com/photo-1628202926206-c63a34b1618f?q=80&w=2574&auto=format&fit=crop"
+                    alt=""
+                    class="h-64 w-full object-cover transition duration-500 group-hover:scale-105 sm:h-72"
+                  />
+                  <div class="ml-3 absolute top-[15em] flex items-center">
+                      <img class="h-10 w-10 -mx-1.5 ring ring-white rounded-full object-cover" src="https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=4&w=880&h=880&q=100" alt="">
+                      <img class="h-10 w-10 -mx-1.5 ring ring-white rounded-full object-cover" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=4&w=687&h=687&q=80" alt="">
+                      <img class="h-10 w-10 -mx-1.5 ring ring-white rounded-full object-cover" src="https://images.unsplash.com/photo-1464863979621-258859e62245?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=4&w=686&h=686&q=80" alt="">
+                      <img class="h-10 w-10 -mx-1.5 ring ring-white rounded-full object-cover" src="https://images.unsplash.com/photo-1485178575877-1a13bf489dfe?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=4&w=1401&h=1401&q=80" alt="">
+                      <img class="h-10 w-10 -mx-1.5 ring ring-white rounded-full object-cover" src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=4&w=880&h=880&q=80" alt="">
+                  </div>
+                  <div class="flex flex-col border w-full border-gray-100 bg-white p-6 border-box">
+                    <div class="flex w-full">
+                      <p class="flex w-1/3 text-gray-400 bg-gray-100 font-bold text-[0.7em] justify-center self-start rounded-full p-3">
+                          Audio Technology
+                      </p>
+                      <p class="flex w-1/3 text-gray-400 bg-gray-100 font-bold text-[0.7em] justify-center self-start rounded-full p-3">
+                      Artifical Intelligence
+                      </p>
+                    </div>
+                      
+                    <h3 class="mt-1.5 text-lg font-medium text-gray-900">Wireless Headphones</h3>
+                
+                    <p class="mt-1.5 line-clamp-3 text-gray-700">
+                      Lorem ipsum dolor sit amet consectetur adipisicing elit. Labore nobis iure obcaecati pariatur.
+                      Officiis qui, enim cupiditate aliquam corporis iste.
+                    </p>
+                
+                    <div class="flex w-full justify-between">
+                      <h1 class="rounded-full text-gray-700  p-3 self-end my-6 font-bold transition hover:scale-105"
+                    >
+                      Pre-Seed
+                    </h1>
+                    <button
+                        type="button"
+                        class="rounded-full border-2 w-[8em] border-[#36b37e] text-[#36b37e]  p-3 self-end my-6 font-bold transition hover:scale-105"
+                      >
+                        Invest Now
+                      </button>
+                    </div>
+                  </div>
+                </a>
+          </div>
+          <button>
+              <img src="{{asset('icons/enabled next btn.webp')}}" class="1/4 h-[6em]" alt="next btn">
+          </button>
+      </div>
+      <button class="p-3 pl-4 pr-4 rounded-full bg-white mt-6 font-bold text-[#00877a]">
+          Explore All Deals
+      </button>
     </section>
+    @endauth
+    
     <section class="flex flex-col justify-center text-center w-full py-[100px] border-box">
       <h1 class="text-[3em] font-bold">
         BAN Resources
