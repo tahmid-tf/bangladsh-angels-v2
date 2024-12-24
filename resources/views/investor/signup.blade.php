@@ -1,7 +1,7 @@
 @extends('layouts.guest')
 @section('page_title','Sign up as an Investor')
 @section('page_content')
-<section class="bg-green-700 py-12 text-white">
+<section class="bg-[#0a5554] py-12 text-white">
     <!-- Hero Section -->
     <div class="container mx-auto px-6 lg:flex lg:items-center lg:space-x-12">
         <!-- Text Content -->
@@ -14,7 +14,7 @@
 
         <!-- Image Placeholder -->
         <div class="lg:w-1/2 mt-6 lg:mt-0">
-            <img src="https://via.placeholder.com/500x250" alt="Investors" class="w-full h-auto rounded-lg">
+            <img src="{{asset('investor_cover.webp')}}" alt="Investors" class="w-full h-auto rounded-lg">
         </div>
     </div>
 </section>

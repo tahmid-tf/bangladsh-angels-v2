@@ -21,6 +21,15 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role',
+        'company_name',
+        'website_link',
+        'designation',
+        'primary_country',
+        'secondary_countries',
+        'linkedin',
+        'investment_expertise',
+        'is_approved'
     ];
 
     /**
@@ -44,5 +53,29 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    /**
+     * Check if the user is an admin.
+     */
+    public function isAdmin()
+    {
+        return $this->role === 'admin';
+    }
+
+    /**
+     * Check if the user is an investor.
+     */
+    public function isInvestor()
+    {
+        return $this->role === 'investor';
+    }
+
+    /**
+     * Check if the user is a seeker.
+     */
+    public function isSeeker()
+    {
+        return $this->role === 'seeker';
     }
 }

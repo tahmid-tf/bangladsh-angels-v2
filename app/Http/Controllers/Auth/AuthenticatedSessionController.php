@@ -27,8 +27,14 @@ class AuthenticatedSessionController extends Controller
         $request->authenticate();
 
         $request->session()->regenerate();
-
-        return redirect()->intended(route('home', absolute: false));
+        // Redirect based on user role
+        if (auth()->user()->isAdmin()) {
+            return redirect()->route('admin.dashboard');
+        } elseif (auth()->user()->isInvestor()) {
+            return redirect()->route('home');
+        } else {
+            return redirect()->route('home'); // Default route for seekers
+        }
     }
 
     /**
