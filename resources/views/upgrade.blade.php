@@ -15,7 +15,7 @@
         <p class="text-gray-500 mb-6">Please upgrade to advanced or institutional plans to unlock deals.</p>
         <!-- Buttons -->
         <div class="flex justify-center space-x-4">
-            <button class="px-6 py-3 bg-green-500 text-white font-semibold rounded-full hover:bg-green-600 transition">View Plans</button>
+            <a href="{{route('plans')}}" class="px-6 py-3 bg-green-500 text-white font-semibold rounded-full hover:bg-green-600 transition">View Plans</a>
             <button class="px-6 py-3 border border-green-500 text-green-500 font-semibold rounded-full hover:bg-green-50 transition">Go back</button>
         </div>
     </div>

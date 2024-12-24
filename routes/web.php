@@ -7,6 +7,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', PrimaryController::class)->name('home');
 Route::get('/upgrade',[PrimaryController::class,'upgradePage'])->name('upgrade.page');
+Route::get('/upgrade/plans',[PrimaryController::class,'viewPlans'])->name('plans');
+Route::get('/upgrade/pay',[PrimaryController::class,'viewCheckout'])->name('checkout');
+
 Route::get('/deals', function () {
     if (!Auth::check()) {
         return redirect()->route('upgrade.page'); // Redirect to the plans page if not authenticated

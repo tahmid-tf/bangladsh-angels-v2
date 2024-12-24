@@ -15,6 +15,16 @@ class PrimaryController extends Controller
         return view('upgrade');
     }
 
+    public function viewPlans()
+    {
+        return view('plans');
+    }
+
+    public function viewCheckout()
+    {
+        return view('payment.checkout');
+    }
+
     public function viewDeals()
     {
         return view('deals.index');
