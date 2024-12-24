@@ -36,6 +36,13 @@ Route::middleware('auth')->group(function () {
     Route::get('/admin/member/add', [AdminController::class,'addMember'])->name('member.add');
     Route::post('/admin/member/add/{approval}', [AdminController::class,'createMember'])->name('member.create');
 
+    Route::get('/admin/deals', [AdminController::class,'viewDeals'])->name('admin.deals');
+    Route::get('/admin/deal/add', [AdminController::class,'addDeal'])->name('deal.add');
+
+
+    Route::get('deal/1', [AdminController::class,'viewDeal'])->name('deal.view');
+
+
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');

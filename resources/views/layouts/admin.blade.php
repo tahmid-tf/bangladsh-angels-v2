@@ -18,9 +18,9 @@
         <img src="{{asset('bdangels_white.png')}}" alt="">
       </div>
       <nav>
-        <a href="#" class="block py-2 px-6 hover:bg-green-600">Dashboard</a>
+        <a href="{{route('admin.dashboard')}}" class="block py-2 px-6 hover:bg-green-600">Dashboard</a>
         <a href="{{route('admin.members')}}" class="block py-2 px-6 hover:bg-green-600">Members</a>
-        <a href="#" class="block py-2 px-6 hover:bg-green-600">Deals</a>
+        <a href="{{route('admin.deals')}}" class="block py-2 px-6 hover:bg-green-600">Deals</a>
       </nav>
     </aside>
 

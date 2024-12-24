@@ -158,4 +158,20 @@ class AdminController extends Controller
         dd($user);
 
     }
+
+    public function viewDeals()
+    {
+        return view('admin.deals.index');
+    }
+
+    public function viewDeal()
+    {
+        return view('deals.single');
+    }
+
+
+    public function addDeal()
+    {
+        
+    }
 }

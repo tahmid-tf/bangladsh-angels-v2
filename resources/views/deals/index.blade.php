@@ -28,7 +28,9 @@
     @endphp
    @while ($i > 0)
    <div class="bg-white rounded-lg shadow-md overflow-hidden">
+    <a href="{{route('deal.view')}}">
        <img src="https://via.placeholder.com/300x150" alt="Deal Image" class="w-full h-40 object-cover">
+    </a>
        <div class="p-4">
            <div class="flex items-center justify-between">
                <h2 class="text-lg font-bold">Jatri</h2>
