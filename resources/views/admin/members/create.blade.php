@@ -2,7 +2,12 @@
 @section('page_title','Add a new member | Bangladesh Angels Network')
 @section('page_content')
 <!-- Header -->
-<form id="add-member-form" class="bg-white p-6 rounded-lg shadow space-y-6" method="POST" action="{{route('member.create')}}" enctype="multipart/form-data">
+@php
+  use App\Models\User;
+  $user = User::class;
+  
+@endphp
+<form id="add-member-form" class="bg-white p-6 rounded-lg shadow space-y-6" method="POST" action="{{route('member.create', true)}}" enctype="multipart/form-data">
 
 <header class="flex justify-between items-center mb-6">
     <div>

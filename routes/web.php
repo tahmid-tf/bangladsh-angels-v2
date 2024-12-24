@@ -27,12 +27,14 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
+Route::post('/member/create', [AdminController::class,'memberApply'])->name('member.apply');
+
 Route::middleware('auth')->group(function () {
 
     Route::get('/admin/dashboard', AdminController::class)->name('admin.dashboard');
     Route::get('/admin/members', [AdminController::class,'viewMembers'])->name('admin.members');
     Route::get('/admin/member/add', [AdminController::class,'addMember'])->name('member.add');
-    Route::post('/admin/member/add', [AdminController::class,'createMember'])->name('member.create');
+    Route::post('/admin/member/add/{approval}', [AdminController::class,'createMember'])->name('member.create');
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
