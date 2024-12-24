@@ -13,13 +13,13 @@
     <!-- Main Container -->
   <div class="flex flex-col lg:flex-row">
     <!-- Sidebar -->
-    <aside class="w-full lg:w-64 bg-green-800 text-white h-auto lg:h-screen">
+    <aside class="w-full lg:w-64 bg-[#0a5554] text-white h-auto lg:h-screen">
       <div class="p-6">
         <img src="{{asset('bdangels_white.png')}}" alt="">
       </div>
       <nav>
         <a href="#" class="block py-2 px-6 hover:bg-green-600">Dashboard</a>
-        <a href="#" class="block py-2 px-6 hover:bg-green-600">Members</a>
+        <a href="{{route('admin.members')}}" class="block py-2 px-6 hover:bg-green-600">Members</a>
         <a href="#" class="block py-2 px-6 hover:bg-green-600">Deals</a>
       </nav>
     </aside>
