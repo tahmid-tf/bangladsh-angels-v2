@@ -2,10 +2,19 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PrimaryController;
+use App\Http\Middleware\SubscriberCheckMiddleware;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', PrimaryController::class)->name('home');
-Route::get('/deals', [PrimaryController::class,'viewDeals'])->middleware('auth')->name('deals');
+Route::get('/upgrade',[PrimaryController::class,'upgradePage'])->name('upgrade.page');
+Route::get('/deals', function () {
+    if (!Auth::check()) {
+        return redirect()->route('upgrade.page'); // Redirect to the plans page if not authenticated
+    }
+
+    // Call the controller's `viewDeals` method
+    return app(PrimaryController::class)->viewDeals();
+})->name('deals');
 Route::get('/faq', [PrimaryController::class,'viewFAQ'])->name('faq');
 Route::get('/about', [PrimaryController::class,'viewAbout'])->name('about');
 Route::get('/investor/signup', [PrimaryController::class,'viewInvestorSignup'])->name('investor.signup');

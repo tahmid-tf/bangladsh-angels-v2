@@ -11,6 +11,10 @@ class PrimaryController extends Controller
         return view('welcome');
     }
 
+    public function upgradePage(){
+        return view('upgrade');
+    }
+
     public function viewDeals()
     {
         return view('deals.index');
