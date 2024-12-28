@@ -22,19 +22,25 @@
             </div>
             <ul class="text-gray-600 space-y-2">
                 <li class="flex items-center justify-center space-x-2">
-                    <span class="text-green-600">✔</span> <span>3 deal reviews monthly</span>
+                    <span class="text-green-600">✔</span> <span>Complete deal access</span>
                 </li>
                 <li class="flex items-center justify-center space-x-2">
-                    <span class="text-green-600">✔</span> <span>Review and commit deals</span>
+                    <span class="text-green-600">✔</span> <span>Data room access (with approval)</span>
                 </li>
                 <li class="flex items-center justify-center space-x-2">
-                    <span class="text-gray-400">✘</span> <span>Investment deals</span>
+                    <span class="text-green-600">✔</span> <span>Active deal participation</span>
                 </li>
                 <li class="flex items-center justify-center space-x-2">
-                    <span class="text-gray-400">✘</span> <span>Advanced security</span>
+                    <span class="text-green-600">✔</span> <span>Investment capabilities</span>
                 </li>
                 <li class="flex items-center justify-center space-x-2">
-                    <span class="text-gray-400">✘</span> <span>Permissions & workflows</span>
+                    <span class="text-gray-400">✘</span> <span>Portfolio monitoring</span>
+                </li>
+                <li class="flex items-center justify-center space-x-2">
+                    <span class="text-gray-400">✘</span> <span>Full access to dataroom</span>
+                </li>
+                <li class="flex items-center justify-center space-x-2">
+                    <span class="text-gray-400">✘</span> <span>Full access of deal flows & showcases</span>
                 </li>
             </ul>
             <button class="mt-6 bg-gray-200 text-gray-500 py-2 px-6 rounded-full cursor-not-allowed">
@@ -54,24 +60,27 @@
             <span class="absolute top-4 right-4 bg-purple-200 text-purple-600 text-xs font-semibold px-2 py-1 rounded-full uppercase">
                 Popular
             </span>
-            <ul class="text-gray-600 space-y-2">
+            <ul class="text-gray-600 space-y-2 mb-6">
                 <li class="flex items-center justify-center space-x-2">
-                    <span class="text-green-600">✔</span> <span>3 deal reviews monthly</span>
+                    <span class="text-green-600">✔</span> <span>Complete Deal Access</span>
                 </li>
                 <li class="flex items-center justify-center space-x-2">
-                    <span class="text-green-600">✔</span> <span>Review and commit deals</span>
+                    <span class="text-green-600">✔</span> <span>Full Access to Data Room</span>
                 </li>
                 <li class="flex items-center justify-center space-x-2">
-                    <span class="text-green-600">✔</span> <span>Investment deals</span>
+                    <span class="text-green-600">✔</span> <span>Active Deal Participation</span>
                 </li>
                 <li class="flex items-center justify-center space-x-2">
-                    <span class="text-gray-400">✘</span> <span>Advanced security</span>
+                    <span class="text-green-600">✔</span> <span>Investment Capabilities</span>
                 </li>
                 <li class="flex items-center justify-center space-x-2">
-                    <span class="text-gray-400">✘</span> <span>Permissions & workflows</span>
+                    <span class="text-green-600">✔</span> <span>Portfolio Monitoring</span>
                 </li>
-            </ul>
-            <a href="{{route('checkout')}}" class="mt-6 bg-green-600 text-white py-2 px-6 rounded-full hover:bg-green-700 transition">
+                <li class="flex items-center justify-center space-x-2">
+                    <span class="text-green-600">✔</span> <span>Full access of Deal Flows & Showcases</span>
+                </li>
+            </ul class="">
+            <a href="{{route('checkout')}}" class=" bg-green-600 text-white py-2 px-6 rounded-full hover:bg-green-700 transition">
                 Choose Advanced
             </a>
         </div>
@@ -87,19 +96,25 @@
             </div>
             <ul class="text-gray-600 space-y-2">
                 <li class="flex items-center justify-center space-x-2">
-                    <span class="text-green-600">✔</span> <span>3 deal reviews monthly</span>
+                    <span class="text-green-600">✔</span> <span>Complete Deal Access</span>
                 </li>
                 <li class="flex items-center justify-center space-x-2">
-                    <span class="text-green-600">✔</span> <span>Review and commit deals</span>
+                    <span class="text-green-600">✔</span> <span>Full Access to Data Room</span>
                 </li>
                 <li class="flex items-center justify-center space-x-2">
-                    <span class="text-green-600">✔</span> <span>Investment deals</span>
+                    <span class="text-green-600">✔</span> <span>Active Deal Participation</span>
                 </li>
                 <li class="flex items-center justify-center space-x-2">
-                    <span class="text-green-600">✔</span> <span>Advanced security</span>
+                    <span class="text-green-600">✔</span> <span>Investment Capabilities</span>
                 </li>
                 <li class="flex items-center justify-center space-x-2">
-                    <span class="text-green-600">✔</span> <span>Permissions & workflows</span>
+                    <span class="text-green-600">✔</span> <span>Portfolio Monitoring</span>
+                </li>
+                <li class="flex items-center justify-center space-x-2">
+                    <span class="text-green-600">✔</span> <span>Full access of Deal Flows & Showcases</span>
+                </li>
+                <li class="flex items-center justify-center space-x-2">
+                    <span class="text-green-600">✔</span> <span>3-4 Additional Account access</span>
                 </li>
             </ul>
             <button class="mt-6 bg-green-600 text-white py-2 px-6 rounded-full hover:bg-green-700 transition">
