@@ -16,7 +16,7 @@
         <!-- Buttons -->
         <div class="flex justify-center space-x-4">
             <a href="{{route('plans')}}" class="px-6 py-3 bg-green-500 text-white font-semibold rounded-full hover:bg-green-600 transition">View Plans</a>
-            <button class="px-6 py-3 border border-green-500 text-green-500 font-semibold rounded-full hover:bg-green-50 transition">Go back</button>
+            <a href="{{route('home')}}" class="px-6 py-3 border border-green-500 text-green-500 font-semibold rounded-full hover:bg-green-50 transition">Go back</a>
         </div>
     </div>
 </div>
