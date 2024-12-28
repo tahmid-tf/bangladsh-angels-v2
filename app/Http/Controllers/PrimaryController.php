@@ -43,6 +43,11 @@ class PrimaryController extends Controller
         return view('investor.signup');
     }
 
+    public function viewInvestors()
+    {
+        return view('investors');
+    }
+
     public function viewResources()
     {
         return view('resources');

@@ -10,7 +10,8 @@ use Illuminate\Support\Facades\Auth;
  * Public Routes
  */
 Route::get('/', PrimaryController::class)->name('home');
-Route::get('/ban-resources',[PrimaryController::class,'viewResources']);
+Route::get('/investors',[PrimaryController::class,'viewInvestors']);
+Route::get('/resources',[PrimaryController::class,'viewResources']);
 
 Route::prefix('upgrade')->group(function () {
     Route::get('/', [PrimaryController::class, 'upgradePage'])->name('upgrade.page');
