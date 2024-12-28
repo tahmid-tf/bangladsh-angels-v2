@@ -9,7 +9,7 @@
                 <li class="m-3">BAN Investors</li>
                 <li class="m-3">Portfolio</li>
                 <li class="m-3">BAN Resources</li>
-                <li class="m-3"><a href="{{route('about')}}">Our Team</a></li>
+                <li class="m-3"><a href="{{route('team')}}">Our Team</a></li>
             </ul>
         </div>
         <div class="mr-6">

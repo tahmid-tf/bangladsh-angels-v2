@@ -28,7 +28,7 @@ Route::get('/deals', function () {
 })->name('deals');
 
 Route::get('/faq', [PrimaryController::class, 'viewFAQ'])->name('faq');
-Route::get('/about', [PrimaryController::class, 'viewAbout'])->name('about');
+Route::get('/our-team', [PrimaryController::class, 'viewTeam'])->name('team');
 Route::get('/investor/signup', [PrimaryController::class, 'viewInvestorSignup'])->name('investor.signup');
 
 /**

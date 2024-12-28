@@ -34,8 +34,8 @@ class PrimaryController extends Controller
         return view('faq');
     }
 
-    public function viewAbout(){
-        return view('about');
+    public function viewTeam(){
+        return view('team');
     }
 
     public function viewInvestorSignup()
