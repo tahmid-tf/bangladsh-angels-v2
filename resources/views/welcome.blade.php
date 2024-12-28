@@ -16,7 +16,7 @@
     {{-- Hero --}}
     <section class="flex justify-center">
         <div class="flex w-full h-[70vh] py-[120px] justify-center items-center" style="background-image: url('{{ asset('world_map_4x.webp') }}');">
-            <img src="{{asset('fpage.JPG')}}" alt="coverphoto" draggable="false">
+            <img src="{{asset('landing.png')}}" alt="coverphoto" draggable="false">
             <div class="p-3 ml-6 w-1/3">
                 <h1 class="text-[1.5em] font-bold">
                     Accelerate your Startup
