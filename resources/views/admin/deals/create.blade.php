@@ -13,7 +13,7 @@
       </div>
   </header>
 
-  <form action="{{ route('deals.store') }}" method="POST" enctype="multipart/form-data" class="space-y-8">
+  <form action="{{ route('deal.store') }}" method="POST" enctype="multipart/form-data" class="space-y-8">
       @csrf
 
       <!-- Deal Information -->
@@ -22,7 +22,7 @@
           <div class="text-center border-dashed border-2 border-gray-300 rounded-lg p-6">
               <label class="block cursor-pointer">
                   <div class="mb-4">
-                      <img src="https://via.placeholder.com/150" alt="Upload Placeholder" class="mx-auto rounded-full h-24 w-24">
+                      <img src="{{asset('upload_dealcover.png')}}" alt="Upload Placeholder" class="mx-auto rounded-full h-24 w-24">
                   </div>
                   <input type="file" name="logo" accept="image/*" class="hidden">
                   <p class="text-gray-500 text-sm">Upload logo</p>
@@ -54,7 +54,7 @@
       <div class="border-dashed border-2 border-gray-300 rounded-lg p-6">
           <label class="block cursor-pointer text-center">
               <div class="mb-4">
-                  <img src="https://via.placeholder.com/150" alt="Upload Placeholder" class="mx-auto rounded-lg">
+                  <img src="{{asset('upload_dealcover.png')}}" alt="Upload Placeholder" class="mx-auto rounded-lg">
               </div>
               <input type="file" name="company_cover" accept="image/*" class="hidden">
               <p class="text-gray-500 text-sm">Attach Files</p>

@@ -65,6 +65,7 @@ Route::middleware('auth')->group(function () {
         Route::prefix('deals')->group(function () {
             Route::get('/', [AdminController::class, 'viewDeals'])->name('admin.deals');
             Route::get('/add', [AdminController::class, 'addDeal'])->name('deal.add');
+            Route::post('/add', [AdminController::class, 'storeDeal'])->name('deal.store');
         });
 
         Route::get('/deal/1', [AdminController::class, 'viewDeal'])->name('deal.view');

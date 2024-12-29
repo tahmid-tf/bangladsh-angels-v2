@@ -8,7 +8,7 @@
             <h1 class="text-2xl font-bold">Deals</h1>
             <p class="text-gray-500">Dashboard &gt; Deals</p>
         </div>
-        <a class="px-4 py-2 bg-green-600 text-white rounded-lg shadow hover:bg-green-700">
+        <a href="{{route('deal.add')}}" class="px-4 py-2 bg-green-600 text-white rounded-lg shadow hover:bg-green-700">
             + Add new deal
         </a>
     </header>

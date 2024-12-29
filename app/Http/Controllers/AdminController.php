@@ -172,6 +172,11 @@ class AdminController extends Controller
 
     public function addDeal()
     {
-        
+        return view('admin.deals.create');
+    }
+
+    public function storeDeal(Request $request)
+    {
+        dd($request);
     }
 }
