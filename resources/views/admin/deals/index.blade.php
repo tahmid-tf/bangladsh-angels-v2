@@ -5,7 +5,7 @@
     <!-- Header -->
     <header class="flex justify-between items-center mb-6">
         <div>
-            <h1 class="text-2xl font-bold">Deals</h1>
+            <h1 class="text-2xl font-bold">Deals ({{count($deals)}})</h1>
             <p class="text-gray-500">Dashboard &gt; Deals</p>
         </div>
         <a href="{{route('deal.add')}}" class="px-4 py-2 bg-green-600 text-white rounded-lg shadow hover:bg-green-700">
@@ -56,59 +56,35 @@
                 </tr>
             </thead>
             <tbody>
-                <!-- Row 1 -->
+                @foreach ($deals as $deal)
                 <tr class="border-t">
                     <td class="px-4 py-2 flex items-center space-x-4">
-                        <img src="https://via.placeholder.com/40" alt="Jatri Logo" class="rounded-full">
+                        <img src="{{ $deal->company_logo ? asset('storage/' . $deal->company_logo) : 'https://via.placeholder.com/40' }}" alt="{{ $deal->title }} Logo" class="rounded-full">
                         <div>
-                            <p class="font-semibold">Jatri</p>
-                            <p class="text-sm text-gray-500">Transport</p>
+                            <p class="font-semibold">{{ $deal->title }}</p>
+                            <p class="text-sm text-gray-500">{{ $deal->sector }}</p>
                         </div>
                     </td>
-                    <td class="px-4 py-2">Pre Seed</td>
-                    <td class="px-4 py-2">$1,244,322</td>
-                    <td class="px-4 py-2">One-stop travel solution for Car Rental, online Bus & Launch Tickets.</td>
+                    <td class="px-4 py-2">{{ $deal->investment_stage }}</td>
+                    <td class="px-4 py-2">${{ number_format($deal->amount_seeking, 2) }}</td>
+                    <td class="px-4 py-2">{{ $deal->description }}</td>
                     <td class="px-4 py-2 text-center">
-                        <input type="checkbox" class="toggle-checkbox" checked>
+                        {{-- <input type="checkbox" class="toggle-checkbox" {{ $deal->key_metrics['growth_traction'] ? 'checked' : '' }}> --}}
                     </td>
                     <td class="px-4 py-2 text-center">
-                        <input type="checkbox" class="toggle-checkbox" checked>
+                        {{-- <input type="checkbox" class="toggle-checkbox" {{ $deal->key_metrics['impact_metrics'] ? 'checked' : '' }}> --}}
                     </td>
                     <td class="px-4 py-2 text-center">
-                        <input type="checkbox" class="toggle-checkbox">
+                        {{-- <input type="checkbox" class="toggle-checkbox" {{ $deal->key_metrics['future_plans'] ? 'checked' : '' }}> --}}
                     </td>
                     <td class="px-4 py-2 text-center">
-                        <input type="checkbox" class="toggle-checkbox">
+                        {{-- <input type="checkbox" class="toggle-checkbox" {{ $deal->key_metrics['partnerships'] ? 'checked' : '' }}> --}}
                     </td>
                 </tr>
-
-                <!-- Repeat Rows as Needed -->
-                <tr class="border-t">
-                    <td class="px-4 py-2 flex items-center space-x-4">
-                        <img src="https://via.placeholder.com/40" alt="Hishabee Logo" class="rounded-full">
-                        <div>
-                            <p class="font-semibold">Hishabee</p>
-                            <p class="text-sm text-gray-500">Fintech</p>
-                        </div>
-                    </td>
-                    <td class="px-4 py-2">Series A</td>
-                    <td class="px-4 py-2">$1,036,648</td>
-                    <td class="px-4 py-2">Empowering small businesses to access embedded financial services.</td>
-                    <td class="px-4 py-2 text-center">
-                        <input type="checkbox" class="toggle-checkbox" checked>
-                    </td>
-                    <td class="px-4 py-2 text-center">
-                        <input type="checkbox" class="toggle-checkbox">
-                    </td>
-                    <td class="px-4 py-2 text-center">
-                        <input type="checkbox" class="toggle-checkbox">
-                    </td>
-                    <td class="px-4 py-2 text-center">
-                        <input type="checkbox" class="toggle-checkbox" checked>
-                    </td>
-                </tr>
+                @endforeach
             </tbody>
         </table>
+        
     </div>
 
     <!-- Pagination -->

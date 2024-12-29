@@ -3,7 +3,7 @@
 @section('page_content')
 <!-- Header Section -->
 <header class="flex justify-between items-center p-6 bg-white shadow">
-    <h1 class="text-xl font-bold">Members</h1>
+    <h1 class="text-xl font-bold">Members ({{count($users)}})</h1>
     <a href="{{route('member.add')}}" class="bg-green-600 text-white px-4 py-2 rounded-lg shadow hover:bg-green-700">
       + Add New Member
     </a>
@@ -36,62 +36,51 @@
   <div class="p-6 bg-white shadow mt-4 overflow-x-auto">
     <table class="min-w-full border-collapse border border-gray-200 text-left text-sm">
       <thead>
-        <tr class="bg-gray-100">
-          <th class="px-6 py-4 font-medium text-gray-600">Name and Membership</th>
-          <th class="px-6 py-4 font-medium text-gray-600">Strategic Investment Analyst</th>
-          <th class="px-6 py-4 font-medium text-gray-600">Designation</th>
-          <th class="px-6 py-4 font-medium text-gray-600">Organization</th>
-          <th class="px-6 py-4 font-medium text-gray-600">Phone/WhatsApp</th>
-          <th class="px-6 py-4 font-medium text-gray-600">Email</th>
-          <th class="px-6 py-4 font-medium text-gray-600">Joining Date</th>
-          <th class="px-6 py-4 font-medium text-gray-600">Renewed</th>
-        </tr>
+          <tr class="bg-gray-100">
+              <th class="px-6 py-4 font-medium text-gray-600">Name and Membership</th>
+              <th class="px-6 py-4 font-medium text-gray-600">Strategic Investment Analyst</th>
+              <th class="px-6 py-4 font-medium text-gray-600">Designation</th>
+              <th class="px-6 py-4 font-medium text-gray-600">Organization</th>
+              <th class="px-6 py-4 font-medium text-gray-600">Phone/WhatsApp</th>
+              <th class="px-6 py-4 font-medium text-gray-600">Email</th>
+              <th class="px-6 py-4 font-medium text-gray-600">Joining Date</th>
+              <th class="px-6 py-4 font-medium text-gray-600">Renewed</th>
+          </tr>
       </thead>
       <tbody>
-        <!-- Example Row -->
-        <tr class="border-t">
-          <td class="px-6 py-4">
-            <div class="flex items-center space-x-4">
-              <img src="https://via.placeholder.com/40" alt="Profile" class="rounded-full w-10 h-10">
-              <div>
-                <p class="font-medium">Nazat Babar Chowdhury</p>
-                <p class="text-sm text-gray-500">BAN Individual Member</p>
-              </div>
-            </div>
-          </td>
-          <td class="px-6 py-4 text-center">
-            <span class="bg-blue-100 text-blue-600 px-2 py-1 rounded-full text-xs">TL</span>
-          </td>
-          <td class="px-6 py-4">-</td>
-          <td class="px-6 py-4">M Chowdhury</td>
-          <td class="px-6 py-4">M-K | Nazat bhai & BAN</td>
-          <td class="px-6 py-4 text-sm text-gray-600">nazar.chowdhury@gmail.com</td>
-          <td class="px-6 py-4 text-sm text-gray-600">2020 Q3</td>
-          <td class="px-6 py-4 text-sm text-gray-600">2023 Q1</td>
-        </tr>
-        <!-- Add more rows as needed -->
-        <tr class="border-t">
-          <td class="px-6 py-4">
-            <div class="flex items-center space-x-4">
-              <img src="https://via.placeholder.com/40" alt="Profile" class="rounded-full w-10 h-10">
-              <div>
-                <p class="font-medium">Kazi Qyyum</p>
-                <p class="text-sm text-gray-500">BAN Individual Member</p>
-              </div>
-            </div>
-          </td>
-          <td class="px-6 py-4 text-center">
-            <span class="bg-purple-100 text-purple-600 px-2 py-1 rounded-full text-xs">FS</span>
-          </td>
-          <td class="px-6 py-4">-</td>
-          <td class="px-6 py-4">-</td>
-          <td class="px-6 py-4">-</td>
-          <td class="px-6 py-4 text-sm text-gray-600">kazyqyum@gmail.com</td>
-          <td class="px-6 py-4 text-sm text-gray-600">2021 Q4</td>
-          <td class="px-6 py-4 text-sm text-gray-600">2023 Q1</td>
-        </tr>
+          @foreach ($users as $user)
+          <tr class="border-t">
+              <td class="px-6 py-4">
+                  <div class="flex items-center space-x-4">
+                      <img src="{{ $user->profile_picture ? asset('storage/' . $user->profile_picture) : 'https://via.placeholder.com/40' }}" alt="Profile" class="rounded-full w-10 h-10">
+                      <div>
+                          <p class="font-medium">{{ $user->name }}</p>
+                          <p class="text-sm text-gray-500">{{ $user->role == 'investor' ? 'BAN Individual Member' : ucfirst($user->role) }}</p>
+                      </div>
+                  </div>
+              </td>
+              <td class="px-6 py-4 text-center">
+                  @if ($user->strategic_investment_analyst)
+                  <span class="bg-blue-100 text-blue-600 px-2 py-1 rounded-full text-xs">{{ $user->strategic_investment_analyst }}</span>
+                  @else
+                  <span class="text-gray-400 text-xs">-</span>
+                  @endif
+              </td>
+              <td class="px-6 py-4">{{ $user->designation ?? '-' }}</td>
+              <td class="px-6 py-4">{{ $user->company_name ?? '-' }}</td>
+              <td class="px-6 py-4">{{ $user->phone ?? '-' }}</td>
+              <td class="px-6 py-4 text-sm text-gray-600">{{ $user->email }}</td>
+              <td class="px-6 py-4 text-sm text-gray-600">
+                  {{ $user->created_at ? $user->created_at->format('Y Q') : '-' }}
+              </td>
+              <td class="px-6 py-4 text-sm text-gray-600">
+                  {{ $user->updated_at ? $user->updated_at->format('Y Q') : '-' }}
+              </td>
+          </tr>
+          @endforeach
       </tbody>
-    </table>
+  </table>
+  
 
     <!-- Pagination -->
     <div class="flex justify-between items-center mt-4">

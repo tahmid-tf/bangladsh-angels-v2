@@ -6,17 +6,22 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
+use App\Models\Deal;
+
+use Illuminate\Support\Str;
 
 class AdminController extends Controller
 {
     public function __invoke()
     {
-        return view('admin.index');
+        $users = User::all(); // Retrieve all users
+        return view('admin.index', compact('users'));
     }
 
     public function viewMembers()
     {
-        return view('admin.members.index');
+        $users = User::all(); // Retrieve all users
+        return view('admin.members.index', compact('users'));
     }
 
     public function addMember()
@@ -161,7 +166,8 @@ class AdminController extends Controller
 
     public function viewDeals()
     {
-        return view('admin.deals.index');
+        $deals = Deal::all(); // Fetch all deals
+        return view('admin.deals.index', compact('deals'));
     }
 
     public function viewDeal()
@@ -177,6 +183,81 @@ class AdminController extends Controller
 
     public function storeDeal(Request $request)
     {
-        dd($request);
+        // Validate incoming request
+        $validatedData = $request->validate([
+            'title' => 'required|string|max:255',
+            'company_name' => 'required|string|max:255',
+            'sector' => 'required|string|max:255',
+            'type' => 'required|in:commit,invest,review',
+            'investment_stage' => 'required|in:Pre Seed,Seed,Series A,Series B',
+            'amount_seeking' => 'required|numeric|min:0',
+            'description' => 'required|string',
+            'company_logo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5120',
+            'company_cover' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5120',
+            'pitch_deck_url' => 'nullable|url|max:255',
+            'monthly_revenue' => 'nullable|numeric|min:0',
+            'total_addressable_market' => 'nullable|string|max:255',
+            'serviceable_addressable_market' => 'nullable|string|max:255',
+            'growth_rate' => 'nullable|string|max:255',
+            'revenue_model' => 'nullable|string',
+            'user_base' => 'nullable|string|max:255',
+            'daily_active_users' => 'nullable|string|max:255',
+            'market_penetration' => 'nullable|string|max:255',
+            'time_saved' => 'nullable|string|max:255',
+            'carbon_emission_reduction' => 'nullable|string|max:255',
+            'future_plans' => 'nullable|string',
+            'partnerships' => 'nullable|string',
+            'video_url' => 'nullable|url|max:255',
+            'image_gallery.*' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5120',
+            'status' => 'nullable|in:active,closed,draft',
+        ]);
+
+        // Inside your store method
+        $slug = Str::slug($validatedData['title'], '-');
+
+        // Create a new Deal record
+        $deal = Deal::create([
+            'title' => $validatedData['title'],
+            'slug' => $slug,
+            'company_name' => $validatedData['company_name'],
+            'sector' => $validatedData['sector'],
+            'type' => $validatedData['type'],
+            'investment_stage' => $validatedData['investment_stage'],
+            'amount_seeking' => $validatedData['amount_seeking'],
+            'description' => $validatedData['description'],
+            'pitch_deck_url' => $validatedData['pitch_deck_url'] ?? null,
+            'monthly_revenue' => $validatedData['monthly_revenue'] ?? null,
+            'total_addressable_market' => $validatedData['total_addressable_market'] ?? null,
+            'serviceable_addressable_market' => $validatedData['serviceable_addressable_market'] ?? null,
+            'growth_rate' => $validatedData['growth_rate'] ?? null,
+            'revenue_model' => $validatedData['revenue_model'] ?? null,
+            'user_base' => $validatedData['user_base'] ?? null,
+            'daily_active_users' => $validatedData['daily_active_users'] ?? null,
+            'market_penetration' => $validatedData['market_penetration'] ?? null,
+            'time_saved' => $validatedData['time_saved'] ?? null,
+            'carbon_emission_reduction' => $validatedData['carbon_emission_reduction'] ?? null,
+            'future_plans' => $validatedData['future_plans'] ?? null,
+            'partnerships' => $validatedData['partnerships'] ?? null,
+            'video_url' => $validatedData['video_url'] ?? null,
+            'status' => $validatedData['status'] ?? 'draft',
+            'created_by' => auth()->id(),
+        ]);
+
+        // Handle file uploads using Spatie Media Library
+        if ($request->hasFile('logo')) {
+            $deal->addMediaFromRequest('logo')->toMediaCollection('company_logo');
+        }
+
+        if ($request->hasFile('company_cover')) {
+            $deal->addMediaFromRequest('company_cover')->toMediaCollection('company_cover');
+        }
+
+        if ($request->hasFile('image_gallery')) {
+            foreach ($request->file('image_gallery') as $image) {
+                $deal->addMedia($image)->toMediaCollection('image_gallery');
+            }
+        }
+
+        return redirect()->route('admin.deals')->with('success', 'Deal added successfully!');
     }
 }
