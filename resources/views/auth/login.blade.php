@@ -49,6 +49,7 @@
                             type="email"
                             id="email"
                             name="email"
+                            value="{{old('email')}}"
                             class="mt-1 w-full p-3 border-box rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm"
                         />
                         <x-input-error :messages="$errors->get('email')" class="mt-2" />
