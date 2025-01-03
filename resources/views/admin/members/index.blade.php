@@ -45,6 +45,8 @@
               <th class="px-6 py-4 font-medium text-gray-600">Email</th>
               <th class="px-6 py-4 font-medium text-gray-600">Joining Date</th>
               <th class="px-6 py-4 font-medium text-gray-600">Renewed</th>
+              <th class="px-6 py-4 font-medium text-gray-600">Subscription</th>
+              <th class="px-6 py-4 font-medium text-gray-600">Payment Status</th>
           </tr>
       </thead>
       <tbody>
@@ -75,6 +77,12 @@
               </td>
               <td class="px-6 py-4 text-sm text-gray-600">
                   {{ $user->updated_at ? $user->updated_at->format('Y Q') : '-' }}
+              </td>
+              <td class="px-6 py-4 text-sm text-gray-600">
+                {{ ucfirst($user->status()) }}
+              </td>
+              <td class="px-6 py-4 text-sm text-gray-600">
+                {{ ucfirst($user->paymentStatus()) }}
               </td>
           </tr>
           @endforeach

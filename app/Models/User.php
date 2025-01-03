@@ -78,4 +78,35 @@ class User extends Authenticatable
     {
         return $this->role === 'seeker';
     }
+    /**
+     * Check user account status.
+     */
+     public function status()
+     {
+        if ($this->account_status == "free"){
+            return 'Free Tier';
+        } elseif ($this->account_status == "core"){
+            return 'Core Tier';
+        } elseif ($this->account_status == "advanced"){
+            return 'Advanced Tier';
+        } elseif ($this->account_status == "institutional"){
+            return 'Institutional Tier';
+        } elseif ($this->account_status == "disabled"){
+            return 'Disabled';
+        }
+     }
+    /**
+     * Check user payment status.
+     */
+     public function paymentStatus()
+     {
+        if($this->payment_status=="free"){
+            return 'Non-Payable';
+        } elseif($this->payment_status=="due"){
+            return 'Due';
+        } elseif($this->payment_status=="paid"){
+            return 'Paid';
+        }
+
+     }
 }

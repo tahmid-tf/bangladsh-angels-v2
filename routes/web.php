@@ -6,6 +6,10 @@ use App\Http\Controllers\AdminController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
+use App\Models\User;
+use App\Models\Deal;
+use App\Models\Payment;
+
 /**
  * Public Routes
  */

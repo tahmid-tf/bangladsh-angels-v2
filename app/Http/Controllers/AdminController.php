@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use App\Models\Deal;
+use App\Models\Payment;
 
 use Illuminate\Support\Str;
 
@@ -15,7 +16,9 @@ class AdminController extends Controller
     public function __invoke()
     {
         $users = User::all(); // Retrieve all users
-        return view('admin.index', compact('users'));
+        $deals = Deal::all(); // Retrieve all deals
+
+        return view('admin.index', compact('users','deals'));
     }
 
     public function viewMembers()

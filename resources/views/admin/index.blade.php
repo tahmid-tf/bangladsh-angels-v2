@@ -3,14 +3,19 @@
 @section('page_content')
 <!-- Overview Cards -->
 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-    <div class="p-4 bg-white rounded-lg shadow">
-      <h2 class="text-xl font-bold">31,968</h2>
-      <p class="text-gray-500">Member Count</p>
-    </div>
-    <div class="p-4 bg-white rounded-lg shadow">
-      <h2 class="text-xl font-bold">15,127</h2>
-      <p class="text-gray-500">Active Deals</p>
-    </div>
+    <a href="{{route('admin.members')}}">
+      <div class="p-4 bg-white rounded-lg shadow">
+        <h2 class="text-xl font-bold">{{ count($users) }}</h2>
+        <p class="text-gray-500">Member Count</p>
+      </div>
+    </a>
+    <a href="{{route('admin.deals')}}">
+      <div class="p-4 bg-white rounded-lg shadow">
+        <h2 class="text-xl font-bold">{{ count($deals)}}</h2>
+        <p class="text-gray-500">Active Deals</p>
+      </div>
+    </a>
+    
     <div class="p-4 bg-white rounded-lg shadow">
       <h2 class="text-xl font-bold">28,471</h2>
       <p class="text-gray-500">Total Portfolio Companies</p>
