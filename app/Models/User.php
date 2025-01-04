@@ -6,11 +6,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 
-class User extends Authenticatable
+class User extends Authenticatable implements HasMedia
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable;
+    use InteractsWithMedia, HasFactory, Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -109,4 +111,12 @@ class User extends Authenticatable
         }
 
      }
+
+    public function getProfilePhotoUrl(): string
+    {
+        $media = $this->getFirstMedia('profile_photo');
+
+        // Return the URL if media exists, otherwise return a default placeholder
+        return $media ? $media->getUrl() : asset('default_pfp.jpg');
+    }
 }

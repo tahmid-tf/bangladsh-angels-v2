@@ -56,7 +56,7 @@
             <!-- Re-enter Password -->
             <div>
                 <label class="block text-gray-700 font-semibold mb-2" for="re_password">Can you re-enter the password? *</label>
-                <input type="password" id="re_password" name="re_password" placeholder="Re-enter password" class="w-full rounded-lg border-gray-300 shadow-sm focus:border-green-500 focus:ring focus:ring-green-200" required>
+                <input type="password" id="re_password" name="password_confirmation" placeholder="Re-enter password" class="w-full rounded-lg border-gray-300 shadow-sm focus:border-green-500 focus:ring focus:ring-green-200" required>
             </div>
 
             <!-- Company Name -->
@@ -142,7 +142,7 @@
             <!-- Photo Upload -->
             <div>
                 <label class="block text-gray-700 font-semibold mb-2" for="photo">Upload Your Photo</label>
-                <input type="file" id="photo" name="photo" accept="image/*" class="w-full rounded-lg border-gray-300 shadow-sm focus:border-green-500 focus:ring focus:ring-green-200">
+                <input type="file" id="photo" name="profile_photo" accept="image/*" class="w-full rounded-lg border-gray-300 shadow-sm focus:border-green-500 focus:ring focus:ring-green-200">
             </div>
         </div>
 

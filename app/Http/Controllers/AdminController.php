@@ -41,31 +41,28 @@ class AdminController extends Controller
             'gender' => 'required|in:male,female,other',
             'organization' => 'nullable|string|max:255',
             'designation' => 'nullable|string|max:255',
-            'joining_date' => 'date',
+            'joining_date' => 'nullable|date',
             'renewed' => 'nullable|string|max:255',
             'country' => 'required|string|max:100',
             'preference_sector' => 'nullable|string|max:255',
             'strategic_analyst' => 'nullable|in:TL,FS,TB',
             'photo' => 'nullable|image|max:3072', // Max size: 3MB
+            'profile_photo' => 'nullable|image|max:3072|mimes:jpeg,png,jpg,gif', // Validation for profile_photo
             'company_name.*' => 'nullable|string|max:255',
             'investment_amount.*' => 'nullable|numeric|min:0',
+            'password' => 'required|string|min:8|confirmed', // Ensure password and re_password match
         ]);
+
 
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
-        }
-
-        // Handle file upload for the photo
-        $photoPath = null;
-        if ($request->hasFile('photo')) {
-            $photoPath = $request->file('photo')->store('investors/photos', 'public');
         }
 
         // Create the user as an investor
         $user = User::create([
             'name' => $request->full_name,
             'email' => $request->email,
-            'password' => Hash::make('defaultpassword123'), // Assign a default password (consider sending reset link later)
+            'password' => Hash::make($request->password), // Hash the password
             'phone' => $request->phone,
             'gender' => $request->gender,
             'organization' => $request->organization,
@@ -76,9 +73,14 @@ class AdminController extends Controller
             'preference_sector' => $request->preference_sector,
             'strategic_analyst' => $request->strategic_analyst,
             'role' => 'investor', // Assign the investor role
-            'photo' => $photoPath,
             'is_approved' => $approval,
         ]);
+
+        // Handle file upload for the photo using Media Library
+        if ($request->hasFile('photo')) {
+            dd('real');
+            $user->addMediaFromRequest('photo')->toMediaCollection('profile_photo');
+        }
 
         // Add investment portfolio data if provided
         if ($request->has('company_name')) {
@@ -92,13 +94,14 @@ class AdminController extends Controller
             }
         }
 
-
-        dd($user);
-
+        return redirect()->route('admin.members')->with('success', 'Member created successfully.');
     }
+
 
     public function memberApply(Request $request, User $user)
     {
+        $approval = false;
+        
         $validator = Validator::make($request->all(), [
             'full_name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email',
@@ -106,31 +109,30 @@ class AdminController extends Controller
             'gender' => 'required|in:male,female,other',
             'organization' => 'nullable|string|max:255',
             'designation' => 'nullable|string|max:255',
-            'joining_date' => 'date',
+            'joining_date' => 'nullable|date',
             'renewed' => 'nullable|string|max:255',
             'country' => 'required|string|max:100',
             'preference_sector' => 'nullable|string|max:255',
             'strategic_analyst' => 'nullable|in:TL,FS,TB',
             'photo' => 'nullable|image|max:3072', // Max size: 3MB
+            'profile_photo' => 'nullable|image|max:3072|mimes:jpeg,png,jpg,gif', // Validation for profile_photo
             'company_name.*' => 'nullable|string|max:255',
             'investment_amount.*' => 'nullable|numeric|min:0',
+            'password' => 'required|string|min:8|confirmed', // Ensure password and re_password match
         ]);
+
+        
 
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
-        // Handle file upload for the photo
-        $photoPath = null;
-        if ($request->hasFile('photo')) {
-            $photoPath = $request->file('photo')->store('investors/photos', 'public');
-        }
 
         // Create the user as an investor
         $user = User::create([
             'name' => $request->full_name,
             'email' => $request->email,
-            'password' => Hash::make('defaultpassword123'), // Assign a default password (consider sending reset link later)
+            'password' => Hash::make($request->password), // Hash the password
             'phone' => $request->phone,
             'gender' => $request->gender,
             'organization' => $request->organization,
@@ -141,9 +143,14 @@ class AdminController extends Controller
             'preference_sector' => $request->preference_sector,
             'strategic_analyst' => $request->strategic_analyst,
             'role' => 'investor', // Assign the investor role
-            'photo' => $photoPath,
-            'is_approved' => false,
+            'is_approved' => $approval,
         ]);
+
+        // Handle file upload for the photo using Media Library
+        if ($request->hasFile('profile_photo')) {
+           
+            $user->addMediaFromRequest('profile_photo')->toMediaCollection('profile_photo');
+        }
 
         // Add investment portfolio data if provided
         if ($request->has('company_name')) {
