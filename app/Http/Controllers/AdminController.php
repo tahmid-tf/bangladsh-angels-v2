@@ -77,9 +77,8 @@ class AdminController extends Controller
         ]);
 
         // Handle file upload for the photo using Media Library
-        if ($request->hasFile('photo')) {
-            dd('real');
-            $user->addMediaFromRequest('photo')->toMediaCollection('profile_photo');
+        if ($request->hasFile('profile_photo')) {
+            $user->addMediaFromRequest('profile_photo')->toMediaCollection('profile_photo');
         }
 
         // Add investment portfolio data if provided

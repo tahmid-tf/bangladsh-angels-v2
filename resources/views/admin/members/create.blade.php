@@ -41,7 +41,7 @@
             <div class="mb-4">
               <img src="https://via.placeholder.com/150" alt="Upload Placeholder" class="mx-auto rounded-full h-24 w-24">
             </div>
-            <input type="file" name="photo" accept="image/*" class="hidden">
+            <input type="file" name="profile_photo" accept="image/*" class="hidden">
             <p class="text-gray-500 text-sm">Upload photo</p>
             <p class="text-gray-400 text-xs">Allowed: *.jpeg, *.png, *.gif (Max: 3.1 MB)</p>
           </label>
