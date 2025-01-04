@@ -35,8 +35,14 @@
 
                     <x-slot name="content">
                         <x-dropdown-link :href="route('profile.edit')">
-                            {{ __('Profile') }}
+                            Profile
                         </x-dropdown-link>
+
+                        @if (auth()->user()->isAdmin())
+                        <x-dropdown-link :href="route('admin.dashboard')">
+                            Admin Panel
+                        </x-dropdown-link>
+                        @endif
 
                         <!-- Authentication -->
                         <form method="POST" action="{{ route('logout') }}">
