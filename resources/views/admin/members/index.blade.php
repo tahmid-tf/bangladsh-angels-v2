@@ -55,7 +55,7 @@
           <tr class="border-t">
               <td class="px-6 py-4">
                   <div class="flex items-center space-x-4">
-                      <img src="{{ $user->profile_picture ? asset('storage/' . $user->profile_picture) : 'https://via.placeholder.com/40' }}" alt="Profile" class="rounded-full w-10 h-10">
+                      <img src="{{ $user->getProfilePhotoUrl() }}" alt="Profile" class="rounded-full w-10 h-10">
                       <div>
                           <p class="font-medium">{{ $user->name }}</p>
                           <p class="text-sm text-gray-500">{{ $user->role == 'investor' ? 'BAN Individual Member' : ucfirst($user->role) }}</p>
@@ -74,10 +74,10 @@
               <td class="px-6 py-4">{{ $user->phone ?? '-' }}</td>
               <td class="px-6 py-4 text-sm text-gray-600">{{ $user->email }}</td>
               <td class="px-6 py-4 text-sm text-gray-600">
-                  {{ $user->created_at ? $user->created_at->format('Y Q') : '-' }}
+                  {{ $user->joinedAt() }}
               </td>
               <td class="px-6 py-4 text-sm text-gray-600">
-                  {{ $user->updated_at ? $user->updated_at->format('Y Q') : '-' }}
+                  {{ $user->renewedAt() }}
               </td>
               <td class="px-6 py-4 text-sm text-gray-600">
                 {{ ucfirst($user->status()) }}

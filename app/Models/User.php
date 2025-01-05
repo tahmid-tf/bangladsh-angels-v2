@@ -121,4 +121,40 @@ class User extends Authenticatable implements HasMedia
         // Return the URL if media exists, otherwise return a default placeholder
         return $media ? $media->getUrl() : asset('default_pfp.jpg');
     }
+
+    public function joinedAt(): string
+    {
+        // Get the year of creation
+        $year = $this->created_at->format('Y');
+
+        // Get the month of creation
+        $month = $this->created_at->format('n');
+
+        // Determine the quarter
+        $quarter = ceil($month / 3); // 1-3 = Q1, 4-6 = Q2, 7-9 = Q3, 10-12 = Q4
+
+        // Return the formatted string
+        return "{$year} Q{$quarter}";
+    }
+
+    public function renewedAt(): string
+    {
+        // Ensure the "updated_at" field exists
+        if (!$this->updated_at) {
+            return "Not renewed";
+        }
+
+        // Get the year of the last update
+        $year = $this->updated_at->format('Y');
+
+        // Get the month of the last update
+        $month = $this->updated_at->format('n');
+
+        // Determine the quarter
+        $quarter = ceil($month / 3); // 1-3 = Q1, 4-6 = Q2, 7-9 = Q3, 10-12 = Q4
+
+        // Return the formatted string
+        return "{$year} Q{$quarter}";
+    }
+
 }
