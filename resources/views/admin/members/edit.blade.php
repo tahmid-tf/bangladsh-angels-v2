@@ -2,20 +2,17 @@
 @section('page_title','Add a new member | Bangladesh Angels Network')
 @section('page_content')
 <!-- Header -->
-@php
-  use App\Models\User;
-  $user = User::class;
-  
-@endphp
+
 <form id="add-member-form" class="bg-white p-6 rounded-lg shadow space-y-6" method="POST" action="{{route('member.create', true)}}" enctype="multipart/form-data">
 
 <header class="flex justify-between items-center mb-6">
     <div>
       <h1 class="text-2xl font-bold">Add New Member</h1>
-      <p class="text-gray-500">Dashboard > Members > Add new member</p>
+      <p class="text-gray-500">Dashboard > Members > Edit</p>
     </div>
     <div class="flex space-x-4">
-      <button class="px-4 py-2 bg-gray-200 text-gray-600 rounded-lg shadow">Save as Draft</button>
+      <a href="{{route('member.remove', $user->id)}}" onclick="return confirm('Are you sure you want to remove this member?');"
+      class="text-red-500 hover:underline">Delete</a>
       <button type="submit" id="add-member-btn" class="px-4 py-2 bg-green-600 text-white rounded-lg shadow hover:bg-green-700">Add Member</button>
     </div>
   </header>

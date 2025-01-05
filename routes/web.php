@@ -64,6 +64,7 @@ Route::middleware('auth')->group(function () {
             Route::get('/add', [AdminController::class, 'addMember'])->name('member.add');
             Route::post('/add/{approval}', [AdminController::class, 'createMember'])->name('member.create');
             Route::get('/{user:id}/edit', [AdminController::class, 'editMember'])->name('member.edit');
+            Route::get('/{user:id}/remove', [AdminController::class, 'removeMember'])->name('member.remove');
         });
 
         // Deal Routes

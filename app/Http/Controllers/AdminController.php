@@ -84,7 +84,7 @@ class AdminController extends Controller
                 'designation' => $request->designation,
                 'joining_date' => $request->joining_date,
                 'renewed' => $request->renewed,
-                'country' => $request->country,
+                'primary_country' => $request->country,
                 'preference_sector' => $request->preference_sector,
                 'strategic_analyst' => $request->strategic_analyst,
                 'role' => 'investor', // Assign the investor role
@@ -310,6 +310,43 @@ class AdminController extends Controller
 
     public function editMember(User $user)
     {
-        return view('admin.members.edit');
+        
+        return view('admin.members.edit',compact('user'));
     }
+
+    public function removeMember(User $user)
+    {
+        // Check if the authenticated user is an admin
+        if (auth()->user()->role !== 'admin') {
+            return redirect()->route('admin.members')->with('error', 'You do not have permission to perform this action.');
+        }
+
+        // Prevent deleting self (Optional)
+        if (auth()->id() === $user->id) {
+            return redirect()->route('admin.members')->with('error', 'You cannot delete your own account.');
+        }
+
+        try {
+            // Check if the user exists
+            if (!$user) {
+                return redirect()->route('admin.members')->with('error', 'User not found.');
+            }
+
+            // Delete related data if necessary (e.g., user media, posts, etc.)
+            if ($user->hasMedia('profile_photo')) {
+                $user->clearMediaCollection('profile_photo');
+            }
+
+            // Delete the user
+            $user->delete();
+
+            return redirect()->route('admin.members')->with('success', 'Member successfully removed.');
+        } catch (\Exception $e) {
+            // Log the error for debugging
+            \Log::error('Error deleting user: ' . $e->getMessage());
+
+            return redirect()->route('admin.members')->with('error', 'An error occurred while trying to delete the member. Please try again.');
+        }
+    }
+
 }
