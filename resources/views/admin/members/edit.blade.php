@@ -84,11 +84,6 @@
             <option value="TB" {{ old('strategic_analyst') == 'TB' ? 'selected' : '' }}>TB</option>
           </select>
         </div>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <input type="password" name="password" placeholder="Set a strong password" class="border border-gray-300 p-2 rounded w-full" value="{{ old('password') }}" required>
-          <input type="password" name="password_confirmation" placeholder="Confirm password" class="border border-gray-300 p-2 rounded w-full" value="{{ old('password_confirmation') }}">
-          
-        </div>
       </div>
     </div>
 

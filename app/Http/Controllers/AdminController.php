@@ -47,6 +47,7 @@ class AdminController extends Controller
 
     public function createMember(Request $request, User $user, $approval)
     {
+        $approval = true;
         if(auth()->user()->isAdmin()){
             $validator = Validator::make($request->all(), [
                 'full_name' => 'required|string|max:255',
@@ -79,7 +80,7 @@ class AdminController extends Controller
                 'password' => Hash::make($request->password), // Hash the password
                 'phone' => $request->phone,
                 'gender' => $request->gender,
-                'organization' => $request->organization,
+                'company_name' => $request->organization,
                 'designation' => $request->designation,
                 'joining_date' => $request->joining_date,
                 'renewed' => $request->renewed,
@@ -305,5 +306,10 @@ class AdminController extends Controller
         } else {
             return redirect()->route('home');
         }
+    }
+
+    public function editMember(User $user)
+    {
+        return view('admin.members.edit');
     }
 }

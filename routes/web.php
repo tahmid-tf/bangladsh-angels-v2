@@ -63,6 +63,7 @@ Route::middleware('auth')->group(function () {
             Route::get('/', [AdminController::class, 'viewMembers'])->name('admin.members');
             Route::get('/add', [AdminController::class, 'addMember'])->name('member.add');
             Route::post('/add/{approval}', [AdminController::class, 'createMember'])->name('member.create');
+            Route::get('/{user:id}/edit', [AdminController::class, 'editMember'])->name('member.edit');
         });
 
         // Deal Routes
