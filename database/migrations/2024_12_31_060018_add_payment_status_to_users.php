@@ -26,8 +26,8 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            // $table->dropColumn('phone');
-            // $table->dropColumn('preference_sector');
+            $table->dropColumn('phone');
+            $table->dropColumn('preference_sector');
             $table->dropColumn('account_status');
             $table->dropColumn('payment_status');
             $table->enum('role', ['admin', 'investor', 'seeker'])->default('investor')->change();
