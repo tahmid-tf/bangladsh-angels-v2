@@ -65,18 +65,15 @@
                     <td class="px-4 py-2">{{ $deal->investment_stage }}</td>
                     <td class="px-4 py-2">${{ number_format($deal->amount_seeking, 2) }}</td>
                     <td class="px-4 py-2">{{ $deal->description }}</td>
-                    <td class="px-4 py-2 text-center">
-                        {{-- <input type="checkbox" class="toggle-checkbox" {{ $deal->key_metrics['growth_traction'] ? 'checked' : '' }}> --}}
+                    <td class="px-4 py-2 text-left">
+                        @foreach($deal->getKeyMetrics() as $metric)
+                            <li>
+                                <strong>{{ $metric['name'] ?? 'Unnamed Metric' }}:</strong> 
+                                {{ $metric['value'] ?? 'No Value Provided' }}
+                            </li>
+                        @endforeach
                     </td>
-                    <td class="px-4 py-2 text-center">
-                        {{-- <input type="checkbox" class="toggle-checkbox" {{ $deal->key_metrics['impact_metrics'] ? 'checked' : '' }}> --}}
-                    </td>
-                    <td class="px-4 py-2 text-center">
-                        {{-- <input type="checkbox" class="toggle-checkbox" {{ $deal->key_metrics['future_plans'] ? 'checked' : '' }}> --}}
-                    </td>
-                    <td class="px-4 py-2 text-center">
-                        {{-- <input type="checkbox" class="toggle-checkbox" {{ $deal->key_metrics['partnerships'] ? 'checked' : '' }}> --}}
-                    </td>
+     
                 </tr>
                 @endforeach
             </tbody>
