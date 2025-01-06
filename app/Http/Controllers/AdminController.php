@@ -117,7 +117,7 @@ class AdminController extends Controller
 
     public function memberApply(Request $request, User $user)
     {
-        if(auth()->user()->isAdmin()){
+        
 
         $approval = false;
         
@@ -189,9 +189,7 @@ class AdminController extends Controller
 
         return redirect()->route('dashboard');
 
-        } else {
-            return redirect()->route('home');
-        }
+       
 
     }
 
@@ -227,6 +225,7 @@ class AdminController extends Controller
     public function storeDeal(Request $request)
     {
         if(auth()->user()->isAdmin()){   
+            
             // Validate incoming request
             $validatedData = $request->validate([
                 'title' => 'required|string|max:255',
@@ -348,5 +347,72 @@ class AdminController extends Controller
             return redirect()->route('admin.members')->with('error', 'An error occurred while trying to delete the member. Please try again.');
         }
     }
+
+    public function updateMember(Request $request, User $user)
+    {
+        dd($request);
+        // Validate the request data
+        $validator = Validator::make($request->all(), [
+            'full_name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email,' . $user->id, // Ignore the current user's email
+            'phone' => 'required|string|max:20',
+            'gender' => 'required|in:male,female,other',
+            'organization' => 'nullable|string|max:255',
+            'designation' => 'nullable|string|max:255',
+            'joining_date' => 'nullable|date',
+            'renewed' => 'nullable|string|max:255',
+            'country' => 'required|string|max:100',
+            'preference_sector' => 'nullable|string|max:255',
+            'strategic_analyst' => 'nullable|in:TL,FS,TB',
+            'profile_photo' => 'nullable|image|max:3072', // Max size: 3MB
+            'company_name.*' => 'nullable|string|max:255',
+            'investment_amount.*' => 'nullable|numeric|min:0',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        // Update the user details
+        $user->update([
+            'name' => $request->full_name,
+            'email' => $request->email,
+            'phone' => $request->phone,
+            'gender' => $request->gender,
+            'company_name' => $request->organization,
+            'designation' => $request->designation,
+            'joining_date' => $request->joining_date,
+            'renewed' => $request->renewed,
+            'country' => $request->country,
+            'preference_sector' => $request->preference_sector,
+            'strategic_analyst' => $request->strategic_analyst
+        ]);
+
+        // Handle profile photo update
+        if ($request->hasFile('profile_photo')) {
+            $user->clearMediaCollection('profile_photo'); // Clear old profile photo
+            $user->addMediaFromRequest('profile_photo')->toMediaCollection('profile_photo'); // Add new photo
+        }
+
+        // Handle investment portfolio updates
+        if ($request->has('company_name')) {
+            // Clear existing portfolio data
+            $user->portfolio()->delete();
+
+            // Add new portfolio data
+            foreach ($request->company_name as $index => $companyName) {
+                if (!empty($companyName) && isset($request->investment_amount[$index]) && !empty($request->investment_amount[$index])) {
+                    $user->portfolio()->create([
+                        'company_name' => $companyName,
+                        'investment_amount' => $request->investment_amount[$index],
+                    ]);
+                }
+            }
+        }
+
+        // Redirect with a success message
+        return redirect()->route('admin.members')->with('success', 'Member updated successfully.');
+    }
+
 
 }

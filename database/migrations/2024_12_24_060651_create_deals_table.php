@@ -18,8 +18,6 @@ return new class extends Migration
             $table->enum('type', ['commit', 'invest', 'review']); // Deal Type
             $table->enum('investment_stage', ['Pre Seed', 'Seed', 'Series A', 'Series B'])->nullable(); // Investment Stage
             $table->decimal('amount_seeking', 15, 2)->nullable(); // Amount Being Sought
-            $table->string('company_logo')->nullable(); // Path to Company Logo
-            $table->string('company_banner')->nullable(); // Path to Company Banner
             $table->string('pitch_deck_url')->nullable(); // URL to Pitch Deck
             $table->foreignId('created_by')->constrained('users')->onDelete('cascade'); // User who created the deal
             $table->enum('status', ['active', 'closed', 'draft'])->default('draft'); // Deal Status

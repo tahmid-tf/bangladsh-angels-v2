@@ -18,7 +18,7 @@ class Deal extends Model implements HasMedia
         'investment_stage',
         'amount_seeking',
         'company_logo',
-        'company_banner',
+        'company_cover',
         'pitch_deck_url',
         'created_by',
         'status',

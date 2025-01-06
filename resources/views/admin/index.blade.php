@@ -15,11 +15,7 @@
         <p class="text-gray-500">Active Deals</p>
       </div>
     </a>
-    
-    <div class="p-4 bg-white rounded-lg shadow">
-      <h2 class="text-xl font-bold">28,471</h2>
-      <p class="text-gray-500">Total Portfolio Companies</p>
-    </div>
+   
   </div>
 
   <!-- Charts & Member Status -->
