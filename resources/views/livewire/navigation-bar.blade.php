@@ -30,6 +30,11 @@
                         <li class="px-4 py-2 hover:bg-gray-100">
                             <a href="{{ route('profile.edit') }}">Profile</a>
                         </li>
+                        @if (auth()->user()->isAdmin())
+                            <li class="px-4 py-2 hover:bg-gray-100">
+                                <a href="{{ route('dashboard') }}">Admin Panel</a>
+                            </li>
+                        @endif
                         <li class="px-4 py-2 hover:bg-gray-100">
                             <a href="{{ route('dashboard') }}">Dashboard</a>
                         </li>
