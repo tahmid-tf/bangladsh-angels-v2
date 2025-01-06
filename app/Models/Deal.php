@@ -15,6 +15,7 @@ class Deal extends Model implements HasMedia
         'title',
         'description',
         'type',
+        'key_metrics',
         'investment_stage',
         'amount_seeking',
         'company_logo',
@@ -24,15 +25,8 @@ class Deal extends Model implements HasMedia
         'status',
         'slug',
         'monthly_revenue',
-        'total_addressable_market',
-        'serviceable_addressable_market',
         'growth_rate',
         'revenue_model',
-        'user_base',
-        'daily_active_users',
-        'market_penetration',
-        'time_saved',
-        'carbon_emission_reduction',
         'future_plans',
         'partnerships',
         'video_url',
@@ -45,5 +39,14 @@ class Deal extends Model implements HasMedia
     public function creator()
     {
         return $this->belongsTo(User::class, 'created_by');
+    }
+
+    public function getKeyMetrics()
+    {
+        // Decode the JSON key_metrics field
+        $keyMetrics = json_decode($this->key_metrics, true);
+
+        // Ensure it returns an array, even if the field is empty or null
+        return $keyMetrics ?? [];
     }
 }

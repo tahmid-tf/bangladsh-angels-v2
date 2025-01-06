@@ -120,24 +120,90 @@
             </label>
         </div>
 
-        <!-- Key Metrics -->
-        <div>
-            <h2 class="text-lg font-bold mb-4">Key Metrics</h2>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                @php
-                    $metrics = ['growth_traction', 'impact_metrics', 'future_plans', 'partnerships', 'revenue_highlights', 'market_opportunity'];
-                @endphp
-                @foreach ($metrics as $metric)
-                    <div>
-                        <label for="{{ $metric }}" class="block text-gray-700 font-semibold mb-2">{{ ucfirst(str_replace('_', ' ', $metric)) }}</label>
-                        <input type="text" id="{{ $metric }}" name="key_metrics[{{ $metric }}]" placeholder="{{ ucfirst(str_replace('_', ' ', $metric)) }}" class="input-field" value="{{ old("key_metrics.$metric") }}">
-                        @error("key_metrics.$metric")
-                            <span class="text-red-500 text-sm">{{ $message }}</span>
-                        @enderror
-                    </div>
-                @endforeach
+<!-- Key Metrics Section -->
+<div id="key-metrics-section">
+    <h2 class="text-lg font-bold mb-4">Key Metrics</h2>
+    <div id="key-metrics-container" class="space-y-4">
+        @if(is_array(old('key_metrics')))
+            @foreach(old('key_metrics') as $index => $metric)
+                <div class="grid grid-cols-2 gap-4">
+                    <input 
+                        type="text" 
+                        name="key_metrics[{{ $index }}][name]" 
+                        placeholder="Metric Name" 
+                        class="input-field" 
+                        value="{{ $metric['name'] ?? '' }}" 
+                        required
+                    >
+                    <input 
+                        type="text" 
+                        name="key_metrics[{{ $index }}][value]" 
+                        placeholder="Metric Value" 
+                        class="input-field" 
+                        value="{{ $metric['value'] ?? '' }}" 
+                        required
+                    >
+                </div>
+            @endforeach
+        @else
+            <!-- Default empty field -->
+            <div class="grid grid-cols-2 gap-4">
+                <input 
+                    type="text" 
+                    name="key_metrics[0][name]" 
+                    placeholder="Metric Name" 
+                    class="input-field" 
+                    required
+                >
+                <input 
+                    type="text" 
+                    name="key_metrics[0][value]" 
+                    placeholder="Metric Value" 
+                    class="input-field" 
+                    required
+                >
             </div>
-        </div>
+        @endif
+    </div>
+
+    <button 
+        type="button" 
+        id="add-key-metric-btn" 
+        class="px-4 py-2 bg-blue-100 text-blue-700 rounded-lg mt-4">
+        + Add Key Metric
+    </button>
+</div>
+
+<script>
+    // Initialize a counter for unique key metric IDs
+    let metricCounter = document.querySelectorAll('#key-metrics-container .grid').length;
+
+    // Add another key metric dynamically
+    document.getElementById('add-key-metric-btn').addEventListener('click', function () {
+        const container = document.getElementById('key-metrics-container');
+        const newField = `
+            <div class="grid grid-cols-2 gap-4">
+                <input 
+                    type="text" 
+                    name="key_metrics[${metricCounter}][name]" 
+                    placeholder="Metric Name" 
+                    class="input-field" 
+                    required
+                >
+                <input 
+                    type="text" 
+                    name="key_metrics[${metricCounter}][value]" 
+                    placeholder="Metric Value" 
+                    class="input-field" 
+                    required
+                >
+            </div>`;
+        container.insertAdjacentHTML('beforeend', newField);
+        metricCounter++;
+    });
+</script>
+
+
     </form>
 </section>
 

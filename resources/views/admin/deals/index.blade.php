@@ -50,9 +50,6 @@
                     <th class="px-4 py-2 text-left text-gray-600 font-semibold">Amount Seeking</th>
                     <th class="px-4 py-2 text-left text-gray-600 font-semibold">Description</th>
                     <th class="px-4 py-2 text-center text-gray-600 font-semibold">Key Metrics</th>
-                    <th class="px-4 py-2 text-center text-gray-600 font-semibold">Growth Traction</th>
-                    <th class="px-4 py-2 text-center text-gray-600 font-semibold">Impact Metrics</th>
-                    <th class="px-4 py-2 text-center text-gray-600 font-semibold">Future Plans</th>
                 </tr>
             </thead>
             <tbody>

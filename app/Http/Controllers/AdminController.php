@@ -253,6 +253,9 @@ class AdminController extends Controller
                 'video_url' => 'nullable|url|max:255',
                 'image_gallery.*' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5120',
                 'status' => 'nullable|in:active,closed,draft',
+                'key_metrics' => 'nullable|array',
+                'key_metrics.*.name' => 'required|string|max:255',
+                'key_metrics.*.value' => 'required|string|max:255',
             ]);
 
             // Inside your store method
@@ -269,21 +272,14 @@ class AdminController extends Controller
                 'amount_seeking' => $validatedData['amount_seeking'],
                 'description' => $validatedData['description'],
                 'pitch_deck_url' => $validatedData['pitch_deck_url'] ?? null,
-                'monthly_revenue' => $validatedData['monthly_revenue'] ?? null,
-                'total_addressable_market' => $validatedData['total_addressable_market'] ?? null,
-                'serviceable_addressable_market' => $validatedData['serviceable_addressable_market'] ?? null,
                 'growth_rate' => $validatedData['growth_rate'] ?? null,
-                'revenue_model' => $validatedData['revenue_model'] ?? null,
-                'user_base' => $validatedData['user_base'] ?? null,
-                'daily_active_users' => $validatedData['daily_active_users'] ?? null,
-                'market_penetration' => $validatedData['market_penetration'] ?? null,
-                'time_saved' => $validatedData['time_saved'] ?? null,
-                'carbon_emission_reduction' => $validatedData['carbon_emission_reduction'] ?? null,
+                'revenue_model' => $validatedData['revenue_model'] ?? null, 
                 'future_plans' => $validatedData['future_plans'] ?? null,
                 'partnerships' => $validatedData['partnerships'] ?? null,
                 'video_url' => $validatedData['video_url'] ?? null,
                 'status' => $validatedData['status'] ?? 'draft',
                 'created_by' => auth()->id(),
+                'key_metrics' => json_encode($request->key_metrics), // Store as JSON
             ]);
 
             // Handle file uploads using Spatie Media Library
@@ -394,21 +390,7 @@ class AdminController extends Controller
             $user->addMediaFromRequest('profile_photo')->toMediaCollection('profile_photo'); // Add new photo
         }
 
-        // Handle investment portfolio updates
-        if ($request->has('company_name')) {
-            // Clear existing portfolio data
-            $user->portfolio()->delete();
-
-            // Add new portfolio data
-            foreach ($request->company_name as $index => $companyName) {
-                if (!empty($companyName) && isset($request->investment_amount[$index]) && !empty($request->investment_amount[$index])) {
-                    $user->portfolio()->create([
-                        'company_name' => $companyName,
-                        'investment_amount' => $request->investment_amount[$index],
-                    ]);
-                }
-            }
-        }
+        
 
         // Redirect with a success message
         return redirect()->route('admin.members')->with('success', 'Member updated successfully.');
