@@ -6,18 +6,18 @@
     <div class="container mx-auto px-6 lg:flex lg:items-center text-white">
         <!-- Left Content -->
         <div class="lg:w-full">
-            <h1 class="text-4xl font-extrabold mb-4">Jatri</h1>
+            <h1 class="text-4xl font-extrabold mb-4">{{$deal->title}}</h1>
             <p class="text-lg  mb-6">
-                One-stop travel solution for Car Rental, online Bus & Launch Tickets. Simplify your journey!
+                {{$deal->description}}
             </p>
             <div class="flex items-center space-x-8 mb-6">
                 <div>
-                    <p class=" text-sm">Investment stage</p>
+                    <p class=" text-sm">{{ $deal->investment_stage }}</p>
                     <p class="text-lg font-semibold">Pre Seed</p>
                 </div>
                 <div>
                     <p class=" text-sm">Amount Seeking</p>
-                    <p class="text-lg font-semibold">৳ 9,80,000</p>
+                    <p class="text-lg font-semibold">$ {{$deal->amount_seeking}}</p>
                 </div>
             </div>
             <button class="px-6 py-3 bg-green-600 text-white font-semibold rounded-lg hover:bg-green-700 transition">

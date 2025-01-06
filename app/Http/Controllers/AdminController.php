@@ -203,14 +203,7 @@ class AdminController extends Controller
         }
     }
 
-    public function viewDeal()
-    {
-        if(auth()->user()->isAdmin()){
-            return view('deals.single');
-        } else {
-            return redirect()->route('home');
-        }
-    }
+    
 
 
     public function addDeal()
@@ -394,6 +387,11 @@ class AdminController extends Controller
 
         // Redirect with a success message
         return redirect()->route('admin.members')->with('success', 'Member updated successfully.');
+    }
+
+    public function showDeal(Deal $deal)
+    {
+        return view('deals.single',compact('deal'));
     }
 
 
