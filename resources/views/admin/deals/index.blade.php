@@ -56,7 +56,7 @@
                 @foreach ($deals as $deal)
                 <tr class="border-t">
                     <td class="px-4 py-2 flex items-center space-x-4">
-                        <img src="{{ $deal->company_logo ? asset('storage/' . $deal->company_logo) : 'https://via.placeholder.com/40' }}" alt="{{ $deal->title }} Logo" class="rounded-full">
+                        <img src="{{ $deal->getLogoUrl() }}" alt="{{ $deal->title }} Logo" class="h-[30px] rounded-full">
                         <div>
                             <p class="font-semibold">{{ $deal->title }}</p>
                             <p class="text-sm text-gray-500">{{ $deal->sector }}</p>

@@ -36,6 +36,22 @@ class Deal extends Model implements HasMedia
         'investor_commits',
     ];
 
+    public function getLogoUrl(): string
+    {
+        $media = $this->getFirstMedia('company_logo');
+
+        // Return the URL if media exists, otherwise return a default placeholder
+        return $media ? $media->getUrl() : asset('default_pfp.jpg');
+    }
+
+    public function getCoverUrl(): string
+    {
+        $media = $this->getFirstMedia('company_cover');
+
+        // Return the URL if media exists, otherwise return a default placeholder
+        return $media ? $media->getUrl() : asset('default_pfp.jpg');
+    }
+
     public function creator()
     {
         return $this->belongsTo(User::class, 'created_by');
