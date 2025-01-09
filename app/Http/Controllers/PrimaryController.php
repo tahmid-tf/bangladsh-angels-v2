@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Deal;
 
 class PrimaryController extends Controller
 {
@@ -27,7 +28,8 @@ class PrimaryController extends Controller
 
     public function viewDeals()
     {
-        return view('deals.index');
+        $deals = Deal::all();
+        return view('deals.index', compact('deals'));
     }
 
     public function viewFAQ(){

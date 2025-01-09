@@ -72,7 +72,7 @@ Route::middleware('auth')->group(function () {
         Route::prefix('deals')->group(function () {
             Route::get('/', [AdminController::class, 'viewDeals'])->name('admin.deals');
             Route::get('/{deal:id}',[AdminController::class,'showDeal'])->name('deal.view');
-            Route::get('/add', [AdminController::class, 'addDeal'])->name('deal.add');
+            Route::get('/add/new', [AdminController::class, 'addDeal'])->name('deal.add');
             Route::post('/add', [AdminController::class, 'storeDeal'])->name('deal.store');
         });
 

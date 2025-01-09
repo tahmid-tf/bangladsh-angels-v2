@@ -44,6 +44,11 @@ class Deal extends Model implements HasMedia
         return $media ? $media->getUrl() : asset('default_pfp.jpg');
     }
 
+    public function amountSeeking(): string
+    {
+        return number_format((float) $this->amount_seeking, 0, '.', ',');
+    }
+
     public function getCoverUrl(): string
     {
         $media = $this->getFirstMedia('company_cover');
