@@ -43,8 +43,8 @@
                     <span class="text-gray-400">✘</span> <span>Full access of deal flows & showcases</span>
                 </li>
             </ul>
-            <button class="mt-6 bg-gray-200 text-gray-500 py-2 px-6 rounded-full cursor-not-allowed">
-                Current Plan
+            <button class="mt-6 bg-green-600 text-white py-2 px-6 rounded-full hover:bg-green-700 transition">
+                Choose Core
             </button>
         </div>
 
