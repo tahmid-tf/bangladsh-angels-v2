@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PrimaryController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\CheckoutController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -21,7 +22,9 @@ Route::get('/portfolio',[PrimaryController::class,'viewPortfolio'])->name('portf
 Route::prefix('upgrade')->group(function () {
     Route::get('/', [PrimaryController::class, 'upgradePage'])->name('upgrade.page');
     Route::get('/plans', [PrimaryController::class, 'viewPlans'])->name('plans');
-    Route::get('/pay', [PrimaryController::class, 'viewCheckout'])->name('checkout');
+    Route::match(['get', 'post'], '/pay', [CheckoutController::class, 'checkout'])->name('checkout');
+    Route::post('/checkout', [CheckoutController::class, 'processCheckout'])->name('checkout.process');
+    Route::get('/success',[CheckoutController::class,'success'])->name('checkout.success');
 });
 
 Route::get('/deals', function () {

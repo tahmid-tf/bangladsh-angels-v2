@@ -43,9 +43,14 @@
                     <span class="text-gray-400">✘</span> <span>Full access of deal flows & showcases</span>
                 </li>
             </ul>
-            <button class="mt-6 bg-green-600 text-white py-2 px-6 rounded-full hover:bg-green-700 transition">
-                Choose Core
-            </button>
+            <form method="POST" action="{{ route('checkout') }}">
+                @csrf
+                <input type="hidden" name="plan_name" value="Core">
+                <input type="hidden" name="plan_price" value="399">
+                <button type="submit" class="mt-6 bg-green-600 text-white py-2 px-6 rounded-full hover:bg-green-700 transition">
+                    Choose Core
+                </button>
+            </form>
         </div>
 
         <!-- Advanced Plan -->
@@ -80,9 +85,14 @@
                     <span class="text-green-600">✔</span> <span>Full access of Deal Flows & Showcases</span>
                 </li>
             </ul class="">
-            <a href="{{route('checkout')}}" class=" bg-green-600 text-white py-2 px-6 rounded-full hover:bg-green-700 transition">
-                Choose Advanced
-            </a>
+            <form method="POST" action="{{ route('checkout') }}">
+                @csrf
+                <input type="hidden" name="plan_name" value="Advanced">
+                <input type="hidden" name="plan_price" value="599">
+                <button type="submit" class="mt-6 bg-green-600 text-white py-2 px-6 rounded-full hover:bg-green-700 transition">
+                    Choose Advanced
+                </button>
+            </form>
         </div>
 
         <!-- Institutional Plan -->
@@ -117,9 +127,14 @@
                     <span class="text-green-600">✔</span> <span>3-4 Additional Account access</span>
                 </li>
             </ul>
-            <button class="mt-6 bg-green-600 text-white py-2 px-6 rounded-full hover:bg-green-700 transition">
-                Choose Institutional
-            </button>
+            <form method="POST" action="{{ route('checkout') }}">
+                @csrf
+                <input type="hidden" name="plan_name" value="Institutional">
+                <input type="hidden" name="plan_price" value="999">
+                <button type="submit" class="mt-6 bg-green-600 text-white py-2 px-6 rounded-full hover:bg-green-700 transition">
+                    Choose Institutional
+                </button>
+            </form>
         </div>
     </div>
 </section>

@@ -2,63 +2,87 @@
 @section('page_title','Checkout | Bangladesh Angels Network')
 @section('page_content')
 
-    <!-- Page Container -->
-    <div class="container mx-auto px-4 py-12">
-        <!-- Header -->
-        <div class="text-center mb-8">
-            <h1 class="text-2xl font-bold text-gray-800">Let’s finish powering you up!</h1>
-            <p class="text-gray-500">Professional plan is right for you.</p>
-        </div>
+<!-- Page Container -->
+<div class="container mx-auto px-4 py-12">
+    <!-- Header -->
+    <div class="text-center mb-8">
+        <h1 class="text-2xl font-bold text-gray-800">Let’s finish powering you up!</h1>
+        <p class="text-gray-500">Your selected plan is shown below.</p>
+    </div>
 
-        <!-- Main Content -->
+    <!-- Main Content -->
+    <form action="{{ route('checkout.process') }}" method="POST">
+        @csrf
+        <!-- Hidden Inputs for Plan and Price -->
+        <input type="hidden" name="plan" value="{{ session('checkout.plan.name', 'Default Plan') }}">
+        <input type="hidden" name="price" value="{{ session('checkout.plan.price', '0') }}">
+
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <!-- Selected Plan Section -->
+            <div class="bg-white shadow-md rounded-lg p-6 lg:col-span-3">
+                <h2 class="text-lg font-semibold text-gray-800 mb-4">Selected Plan</h2>
+                <div class="flex justify-between items-center">
+                    <div>
+                        <p class="text-xl font-bold text-gray-800">{{ session('checkout.plan.name', 'Default Plan') }}</p>
+                        <p class="text-gray-500">${{ session('checkout.plan.price', '0') }} /yr</p>
+                    </div>
+                    <a href="{{ route('plans') }}" class="text-green-600 hover:underline">Change Plan</a>
+                </div>
+            </div>
+
             <!-- Left: Billing Address -->
             <div class="lg:col-span-2 bg-white shadow-md rounded-lg p-6">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <!-- Billing Address -->
                     <div>
                         <h2 class="text-lg font-semibold text-gray-800 mb-4">Billing Address</h2>
-                        <form class="space-y-4">
-                            <input type="text" placeholder="Julian Weber" class="w-full border rounded-md px-4 py-2 text-gray-700 focus:ring focus:ring-green-200">
-                            <input type="text" placeholder="365-374-4961" class="w-full border rounded-md px-4 py-2 text-gray-700 focus:ring focus:ring-green-200">
-                            <input type="email" placeholder="julian.weber@selisegroup.com" class="w-full border rounded-md px-4 py-2 text-gray-700 focus:ring focus:ring-green-200">
-                            <input type="text" placeholder="19034 Verna Unions Apt. 164 - Honolulu" class="w-full border rounded-md px-4 py-2 text-gray-700 focus:ring focus:ring-green-200">
-                        </form>
+                        <div class="space-y-4">
+                            <input 
+                                type="text" 
+                                name="name" 
+                                placeholder="Full Name" 
+                                value="{{ auth()->user() ? auth()->user()->name : old('name') }}" 
+                                class="w-full border rounded-md px-4 py-2 text-gray-700 focus:ring focus:ring-green-200"
+                                required
+                            >
+                            <input 
+                                type="text" 
+                                name="phone" 
+                                placeholder="Phone Number" 
+                                value="{{ auth()->user() ? auth()->user()->phone : old('phone') }}" 
+                                class="w-full border rounded-md px-4 py-2 text-gray-700 focus:ring focus:ring-green-200"
+                                required
+                            >
+                            <input 
+                                type="email" 
+                                name="email" 
+                                placeholder="Email Address" 
+                                value="{{ auth()->user() ? auth()->user()->email : old('email') }}" 
+                                class="w-full border rounded-md px-4 py-2 text-gray-700 focus:ring focus:ring-green-200"
+                                required
+                            >
+                            <input 
+                                type="text" 
+                                name="address" 
+                                placeholder="Address" 
+                                value="{{ auth()->user() && auth()->user()->address ? auth()->user()->address : old('address') }}" 
+                                class="w-full border rounded-md px-4 py-2 text-gray-700 focus:ring focus:ring-green-200"
+                            >
+                        </div>
                     </div>
 
                     <!-- Payment Method -->
                     <div>
                         <h2 class="text-lg font-semibold text-gray-800 mb-4">Payment Method</h2>
-                        <form class="space-y-4">
-                            <!-- SSLCommerz -->
+                        <div class="space-y-4">
+                            <!-- Send Payment Details -->
                             <label class="flex items-center space-x-4">
-                                <input type="radio" name="payment" class="text-green-600 focus:ring focus:ring-green-200">
+                                <input type="radio" name="payment" value="email" class="text-green-600 focus:ring focus:ring-green-200" checked>
                                 <span class="flex items-center">
-                                    SSLCommerz
-                                    <img src="https://via.placeholder.com/50" alt="SSLCommerz Logo" class="ml-2 h-5">
+                                    Send Payment details to my email
                                 </span>
                             </label>
-
-                            <!-- PayPal -->
-                            <label class="flex items-center space-x-4">
-                                <input type="radio" name="payment" class="text-green-600 focus:ring focus:ring-green-200">
-                                <span class="flex items-center">
-                                    Paypal
-                                    <img src="https://via.placeholder.com/50" alt="PayPal Logo" class="ml-2 h-5">
-                                </span>
-                            </label>
-
-                            <!-- Credit Card -->
-                            <label class="flex items-center space-x-4">
-                                <input type="radio" name="payment" checked class="text-green-600 focus:ring focus:ring-green-200">
-                                <span class="flex items-center">
-                                    Credit Card
-                                    <img src="https://via.placeholder.com/50" alt="Credit Card Logos" class="ml-2 h-5">
-                                </span>
-                            </label>
-                            <input type="text" placeholder="**** **** **** 5678" class="w-full border rounded-md px-4 py-2 text-gray-700 focus:ring focus:ring-green-200">
-                            <a href="#" class="text-green-600 text-sm font-semibold">+ Add new card</a>
-                        </form>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -69,25 +93,20 @@
                 <ul class="space-y-4">
                     <li class="flex justify-between text-gray-700">
                         <span>Subscription</span>
-                        <span class="bg-green-100 text-green-600 text-sm font-semibold px-2 py-1 rounded-full">Premium</span>
-                    </li>
-                    <li class="flex justify-between text-gray-700 items-center">
-                        <span>Billed Monthly</span>
-                        <label class="inline-flex items-center cursor-pointer">
-                            <input type="checkbox" class="sr-only peer">
-                            <div class="w-10 h-6 bg-gray-200 rounded-full peer-checked:bg-green-600"></div>
-                        </label>
+                        <span class="bg-green-100 text-green-600 text-sm font-semibold px-2 py-1 rounded-full">
+                            {{ session('checkout.plan.name', 'Default Plan') }}
+                        </span>
                     </li>
                     <li class="text-gray-800 text-4xl font-bold text-center">
-                        $9.99 <span class="text-lg font-normal text-gray-500">/mo</span>
+                        ${{ session('checkout.plan.price', '0') }} <span class="text-lg font-normal text-gray-500">/yr</span>
                     </li>
                     <li class="flex justify-between text-gray-700">
                         <span>Total Billed</span>
-                        <span>$9.99</span>
+                        <span>${{ session('checkout.plan.price', '0') }}</span>
                     </li>
                 </ul>
-                <button class="mt-6 bg-green-600 text-white w-full py-2 rounded-full hover:bg-green-700 transition">
-                    Upgrade My Plan
+                <button type="submit" class="mt-6 bg-green-600 text-white w-full py-2 rounded-full hover:bg-green-700 transition">
+                    Complete Checkout
                 </button>
                 <p class="text-center text-sm text-gray-500 mt-4">
                     Secure credit card payment <br>
@@ -95,6 +114,8 @@
                 </p>
             </div>
         </div>
-    </div>
+    </form>
+
+</div>
 
 @endsection

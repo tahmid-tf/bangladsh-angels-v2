@@ -92,4 +92,9 @@ class PrimaryController extends Controller
 
         return view('resources');
     }
+
+    public function checkout(Request $request)
+    {
+        dd($request);
+    }
 }
