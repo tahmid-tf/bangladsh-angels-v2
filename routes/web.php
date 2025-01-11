@@ -14,8 +14,9 @@ use App\Models\Payment;
  * Public Routes
  */
 Route::get('/', PrimaryController::class)->name('home');
-Route::get('/investors',[PrimaryController::class,'viewInvestors']);
+Route::get('/ban-investors',[PrimaryController::class,'viewInvestors'])->name('investors');
 Route::get('/resources',[PrimaryController::class,'viewResources']);
+Route::get('/portfolio',[PrimaryController::class,'viewPortfolio'])->name('portfolio');
 
 Route::prefix('upgrade')->group(function () {
     Route::get('/', [PrimaryController::class, 'upgradePage'])->name('upgrade.page');

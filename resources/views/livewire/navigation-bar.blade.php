@@ -9,8 +9,8 @@
         <div class="hidden md:flex flex-1 justify-center">
             <ul class="flex flex-row font-bold text-gray-700">
                 <li class="m-3"><a href="{{ route('deals') }}">Deals</a></li>
-                <li class="m-3"><a href="#">BAN Investors</a></li>
-                <li class="m-3"><a href="#">Portfolio</a></li>
+                <li class="m-3"><a href="{{route('investors')}}">BAN Investors</a></li>
+                <li class="m-3"><a href="{{route('portfolio')}}">Portfolio</a></li>
                 <li class="m-3"><a href="#">BAN Resources</a></li>
                 <li class="m-3"><a href="{{ route('team') }}">Our Team</a></li>
             </ul>

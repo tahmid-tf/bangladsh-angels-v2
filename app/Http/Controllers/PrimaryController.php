@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
 use App\Models\Deal;
 
 class PrimaryController extends Controller
@@ -14,6 +16,16 @@ class PrimaryController extends Controller
 
     public function upgradePage(){
         return view('upgrade');
+    }
+
+    public function viewPortfolio()
+    {
+        if (!Auth::check()) {
+            return redirect()->route('upgrade.page');
+        }
+
+        $deals = Deal::all();
+        return view('portfolio',compact('deals'));
     }
 
     public function viewPlans()
@@ -65,11 +77,19 @@ class PrimaryController extends Controller
 
     public function viewInvestors()
     {
+        if (!Auth::check()) {
+            return redirect()->route('upgrade.page');
+        }
+
         return view('investors');
     }
 
     public function viewResources()
     {
+        if (!Auth::check()) {
+            return redirect()->route('upgrade.page');
+        }
+
         return view('resources');
     }
 }
