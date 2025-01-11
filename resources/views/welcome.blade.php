@@ -44,28 +44,28 @@
         </p>
         <div class="flex p-3 mt-6">
             <div class="flex flex-col">
-                <img src="{{asset('image_4x.webp')}}" class="rounded-lg h-[200px] w-auto my-4 shadow-md" alt="">
-                <img src="{{asset('image_4x.webp')}}" class="rounded-lg h-[200px] w-auto my-4 shadow-md" alt="">
+                <img src="{{asset('investors/1.png')}}" class="rounded-lg h-[200px] w-auto my-4 shadow-md" alt="">
+                <img src="{{asset('investors/2.png')}}" class="rounded-lg h-[200px] w-auto my-4 shadow-md" alt="">
             </div>
 
             <div class="flex flex-col mt-16 ml-6">
-                <img src="{{asset('image_4x.webp')}}" class="rounded-lg h-[200px] w-auto my-4 shadow-md" alt="">
-                <img src="{{asset('image_4x.webp')}}" class="rounded-lg h-[200px] w-auto my-4 shadow-md" alt="">
+                <img src="{{asset('investors/3.png')}}" class="rounded-lg h-[200px] w-auto my-4 shadow-md" alt="">
+                <img src="{{asset('investors/4.png')}}" class="rounded-lg h-[200px] w-auto my-4 shadow-md" alt="">
             </div>
 
             <div class="flex flex-col ml-6">
-                <img src="{{asset('image_4x.webp')}}" class="rounded-lg h-[200px] w-auto my-4 shadow-md" alt="">
-                <img src="{{asset('image_4x.webp')}}" class="rounded-lg h-[200px] w-auto my-4 shadow-md" alt="">
+                <img src="{{asset('investors/5.png')}}" class="rounded-lg h-[200px] w-auto my-4 shadow-md" alt="">
+                <img src="{{asset('investors/6.png')}}" class="rounded-lg h-[200px] w-auto my-4 shadow-md" alt="">
             </div>
 
             <div class="flex flex-col mt-16 ml-6">
-                <img src="{{asset('image_4x.webp')}}" class="rounded-lg h-[200px] w-auto my-4 shadow-md" alt="">
-                <img src="{{asset('image_4x.webp')}}" class="rounded-lg h-[200px] w-auto my-4 shadow-md" alt="">
+                <img src="{{asset('investors/7.png')}}" class="rounded-lg h-[200px] w-auto my-4 shadow-md" alt="">
+                <img src="{{asset('investors/8.png')}}" class="rounded-lg h-[200px] w-auto my-4 shadow-md" alt="">
             </div>
 
             <div class="flex flex-col ml-6">
-                <img src="{{asset('image_4x.webp')}}" class="rounded-lg h-[200px] w-auto my-4 shadow-md" alt="">
-                <img src="{{asset('image_4x.webp')}}" class="rounded-lg h-[200px] w-auto my-4 shadow-md" alt="">
+                <img src="{{asset('investors/9.png')}}" class="rounded-lg h-[200px] w-auto my-4 shadow-md" alt="">
+                <img src="{{asset('investors/10.png')}}" class="rounded-lg h-[200px] w-auto my-4 shadow-md" alt="">
             </div>
         </div>
         
