@@ -60,25 +60,13 @@ class CheckoutController extends Controller
         }
 
         // Send the email
-        Mail::to($user->email)->send(new CheckoutConfirmation($user, $validated['plan'], $validated['price']));
+        // Mail::to($user->email)->send(new CheckoutConfirmation($user, $validated['plan'], $validated['price']));
         
         // Redirect to a success page
         return redirect()->route('checkout.success');
     }
 
-    protected function sendPaymentEmail(User $user, $plan, $price)
-    {
-        $details = [
-            'subject' => 'Your Payment Details',
-            'body' => "Hello {$user->name},\n\nThank you for selecting the {$plan} plan. The total amount due is \${$price}.\n\nWe will contact you shortly with further details.",
-        ];
-
-        Mail::send([], [], function ($message) use ($user, $details) {
-            $message->to($user->email)
-                ->subject($details['subject'])
-                ->setBody(nl2br($details['body']), 'text/html');
-        });
-    }
+    
 
     public function success()
     {
