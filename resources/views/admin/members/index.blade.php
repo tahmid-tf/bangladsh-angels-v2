@@ -38,7 +38,6 @@
       <thead>
           <tr class="bg-gray-100">
               <th class="px-6 py-4 font-medium text-gray-600">Name and Membership</th>
-              <th class="px-6 py-4 font-medium text-gray-600">Strategic Investment Analyst</th>
               <th class="px-6 py-4 font-medium text-gray-600">Designation</th>
               <th class="px-6 py-4 font-medium text-gray-600">Organization</th>
               <th class="px-6 py-4 font-medium text-gray-600">Phone/WhatsApp</th>
@@ -61,13 +60,6 @@
                           <p class="text-sm text-gray-500">{{ $user->role == 'investor' ? 'BAN Individual Member' : ucfirst($user->role) }}</p>
                       </div>
                   </div>
-              </td>
-              <td class="px-6 py-4 text-center">
-                  @if ($user->strategic_investment_analyst)
-                  <span class="bg-blue-100 text-blue-600 px-2 py-1 rounded-full text-xs">{{ $user->strategic_investment_analyst }}</span>
-                  @else
-                  <span class="text-gray-400 text-xs">-</span>
-                  @endif
               </td>
               <td class="px-6 py-4">{{ $user->designation ?? '-' }}</td>
               <td class="px-6 py-4">{{ $user->company_name ?? '-' }}</td>
