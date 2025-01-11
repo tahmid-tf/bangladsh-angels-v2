@@ -32,6 +32,24 @@ class PrimaryController extends Controller
         return view('deals.index', compact('deals'));
     }
 
+    public function viewDeals_invest()
+    {
+        $deals = Deal::where('type','invest')->get();
+        return view('deals.invest', compact('deals'));
+    }
+
+    public function viewDeals_commit()
+    {
+        $deals = Deal::where('type','commit')->get();
+        return view('deals.commit', compact('deals'));
+    }
+
+    public function viewDeals_review()
+    {
+        $deals = Deal::where('type','review')->get();
+        return view('deals.review', compact('deals'));
+    }
+
     public function viewFAQ(){
         return view('faq');
     }

@@ -27,9 +27,29 @@ Route::get('/deals', function () {
     if (!Auth::check()) {
         return redirect()->route('upgrade.page');
     }
-
     return app(PrimaryController::class)->viewDeals();
 })->name('deals');
+
+Route::get('/deals/invest', function () {
+    if (!Auth::check()) {
+        return redirect()->route('upgrade.page');
+    }
+    return app(PrimaryController::class)->viewDeals_invest();
+})->name('deals.invest');
+
+Route::get('/deals/commit', function () {
+    if (!Auth::check()) {
+        return redirect()->route('upgrade.page');
+    }
+    return app(PrimaryController::class)->viewDeals_commit();
+})->name('deals.commit');
+
+Route::get('/deals/review', function () {
+    if (!Auth::check()) {
+        return redirect()->route('upgrade.page');
+    }
+    return app(PrimaryController::class)->viewDeals_review();
+})->name('deals.review');
 
 Route::get('/faq', [PrimaryController::class, 'viewFAQ'])->name('faq');
 Route::get('/our-team', [PrimaryController::class, 'viewTeam'])->name('team');
@@ -71,6 +91,7 @@ Route::middleware('auth')->group(function () {
         // Deal Routes
         Route::prefix('deals')->group(function () {
             Route::get('/', [AdminController::class, 'viewDeals'])->name('admin.deals');
+
             Route::get('/{deal:id}',[AdminController::class,'showDeal'])->name('deal.view');
             Route::get('/add/new', [AdminController::class, 'addDeal'])->name('deal.add');
             Route::post('/add', [AdminController::class, 'storeDeal'])->name('deal.store');

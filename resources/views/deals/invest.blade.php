@@ -14,8 +14,8 @@
         </button>
     </div>
     <div class="flex space-x-4 mb-6">
-        <a href="{{route('deals')}}" class="font-bold border-b-2 border-black pb-2">All</a>
-        <a href="{{route('deals.invest')}}" class="text-gray-500 pb-2">Invest</a>
+        <a href="{{route('deals')}}" class="text-gray-500 pb-2">All</a>
+        <a href="{{route('deals.invest')}}" class="font-bold border-b-2 border-black pb-2">Invest</a>
         <a href="{{route('deals.commit')}}" class="text-gray-500 pb-2">Commit</a>
         <a href="{{route('deals.review')}}" class="text-gray-500 pb-2">Review</a>
     </div>    

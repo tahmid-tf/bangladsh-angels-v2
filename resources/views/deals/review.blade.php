@@ -14,10 +14,10 @@
         </button>
     </div>
     <div class="flex space-x-4 mb-6">
-        <a href="{{route('deals')}}" class="font-bold border-b-2 border-black pb-2">All</a>
+        <a href="{{route('deals')}}" class="text-gray-500 pb-2">All</a>
         <a href="{{route('deals.invest')}}" class="text-gray-500 pb-2">Invest</a>
         <a href="{{route('deals.commit')}}" class="text-gray-500 pb-2">Commit</a>
-        <a href="{{route('deals.review')}}" class="text-gray-500 pb-2">Review</a>
+        <a href="{{route('deals.review')}}" class="font-bold border-b-2 border-black pb-2">Review</a>
     </div>    
 </div>
 
@@ -48,12 +48,12 @@
                     </div>
                 </div>
                 <button class="w-full mt-4 bg-[#36b37e] text-white py-2 rounded-full font-semibold hover:bg-green-600 transition">
-                    Invest
+                    Commit
                 </button>
             </div>
         </div>        
     @empty
-    
+    No Deals in this section
     @endforelse
     @php
         $i = 9;
