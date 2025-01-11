@@ -391,7 +391,8 @@ class AdminController extends Controller
 
     public function showDeal(Deal $deal)
     {
-        return view('deals.single',compact('deal'));
+        $otherDeals = $deal->getOtherDeals(5); // Fetch 5 other deals
+        return view('deals.single',compact('deal','otherDeals'));
     }
 
 

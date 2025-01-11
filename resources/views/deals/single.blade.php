@@ -12,8 +12,8 @@
             </p>
             <div class="flex items-center space-x-8 mb-6">
                 <div>
-                    <p class=" text-sm">{{ $deal->investment_stage }}</p>
-                    <p class="text-lg font-semibold">Pre Seed</p>
+                    <p class=" text-sm">Investment Stage</p>
+                    <p class="text-lg font-semibold">{{ $deal->investment_stage }}</p>
                 </div>
                 <div>
                     <p class=" text-sm">Amount Seeking</p>
@@ -27,7 +27,7 @@
 
         <!-- Right Content -->
         <div class="lg:w-1/2 mt-6 lg:mt-0">
-            <img src="https://via.placeholder.com/600x400" alt="Jatri Image" class="w-full h-auto rounded-lg shadow-md">
+            <img src="{{$deal->getCoverUrl()}}" alt="Jatri Image" class="w-full h-auto rounded-lg shadow-md">
             <button class="mt-4 px-6 py-2 bg-gray-200 text-gray-700 font-semibold rounded-lg shadow hover:bg-gray-300">
                 View Pitch Deck
             </button>
@@ -39,14 +39,11 @@
 <section class="container mx-auto px-6 py-12">
     <h2 class="text-3xl font-bold mb-4">Company Bio</h2>
     <p class="text-gray-700 leading-relaxed">
-        Jatri is a technology-driven platform revolutionizing public transportation in Bangladesh. Since its inception, Jatri has been
-        dedicated to streamlining the commuter experience through innovative solutions that improve safety, reliability, and convenience.
-        By leveraging cutting-edge digital technologies, Jatri offers a seamless platform for ticketing, scheduling, and real-time
-        tracking, ensuring a more efficient and accessible transport ecosystem.
+        {{$deal->description}}
     </p>
 </section>
 
-<!-- Metrics Section -->
+{{-- <!-- Metrics Section -->
 <section class="bg-gray-50 py-12">
     <div class="container mx-auto px-6">
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -68,46 +65,45 @@
             </div>
         </div>
     </div>
-</section>
-
-<!-- Key Metrics Section -->
+</section> --}}
 <section class="container mx-auto px-6 py-12">
-    <h2 class="text-3xl font-bold mb-8">Key Metrics</h2>
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <div class="bg-white p-6 rounded-lg shadow">
-            <h3 class="text-lg font-bold mb-2">Growth Traction</h3>
-            <p class="text-gray-700 text-sm">
-                User Base: Over X million registered users with Y% month-over-month growth.
-            </p>
-            <p class="text-gray-700 text-sm">
-                Daily Active Users (DAU): 2K+ commuters rely on Jatri daily for hassle-free transit solutions.
+    <h2 class="text-3xl font-bold mb-8 text-center">Key Metrics</h2>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        @forelse($deal->getKeyMetrics() as $metric)
+        <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
+            <h3 class="text-lg font-bold mb-3 text-gray-900">{{ $metric['name'] }}</h3>
+            <p class="text-gray-600 text-sm leading-relaxed">
+                {{ $metric['value'] }}
             </p>
         </div>
-        <div class="bg-white p-6 rounded-lg shadow">
-            <h3 class="text-lg font-bold mb-2">Impact Metrics</h3>
-            <p class="text-gray-700 text-sm">Time Saved: [Number] hours saved annually for users through efficient scheduling and real-time updates.</p>
+        @empty
+        <div class="col-span-full text-center text-gray-500">
+            <p>No Key Metrics available for this deal.</p>
         </div>
-        <div class="bg-white p-6 rounded-lg shadow">
-            <h3 class="text-lg font-bold mb-2">Revenue Highlights</h3>
-            <p class="text-gray-700 text-sm">Monthly Revenue: $XX,XXX+ with a [Y%] growth rate in the last 12 months.</p>
-        </div>
+        @endforelse
     </div>
 </section>
+
 
 <!-- More Live Deals Section -->
 <section class="container mx-auto px-6 py-12">
     <h2 class="text-3xl font-bold mb-8">More Live Deals</h2>
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div class="bg-white p-6 rounded-lg shadow">
-            <img src="https://via.placeholder.com/300x150" alt="Deal Image" class="w-full h-40 object-cover rounded-lg mb-4">
-            <h3 class="text-lg font-bold">Jatri</h3>
-            <p class="text-gray-500 text-sm mb-4">
-                One-stop travel solution for Car Rental, online Bus & Launch Tickets. Simplify your journey!
-            </p>
-            <button class="px-6 py-2 bg-green-500 text-white font-semibold rounded-lg hover:bg-green-600 transition">
-                Invest
-            </button>
-        </div>
+        @forelse ($otherDeals as $otherDeal)
+            <div class="bg-white p-6 rounded-lg shadow">
+                <img src="{{$otherDeal->getCoverUrl()}}" alt="Deal Image" class="w-full h-40 object-cover rounded-lg mb-4">
+                <h3 class="text-lg font-bold">{{ $otherDeal->title }}</h3>
+                <p class="text-gray-500 text-sm mb-4">
+                    {{$otherDeal->description}}
+                </p>
+                <button class="px-6 py-2 bg-green-500 text-white font-semibold rounded-lg hover:bg-green-600 transition">
+                    Invest
+                </button>
+            </div>
+        @empty
+            
+        @endforelse
+        
     </div>
 </section>
 @endsection
