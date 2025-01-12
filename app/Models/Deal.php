@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
+use App\Models\Investment;
 
 class Deal extends Model implements HasMedia
 {
@@ -79,4 +80,25 @@ class Deal extends Model implements HasMedia
             ->take($limit) // Limit the number of deals fetched
             ->get();
     }
+
+    public function investments()
+    {
+        return $this->hasMany(Investment::class, 'deal_id');
+    }
+
+    public function investorsCount()
+    {
+        return $this->investments()->where('type', 'invest')->count();
+    }
+
+    public function commitCount()
+    {
+        return $this->investments()->where('type', 'commit')->count();
+    }
+
+    public function reviewCount()
+    {
+        return $this->investments()->where('type', 'review')->count();
+    }
+
 }
