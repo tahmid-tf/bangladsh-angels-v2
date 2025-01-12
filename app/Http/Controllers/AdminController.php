@@ -353,7 +353,7 @@ class AdminController extends Controller
             'designation' => 'nullable|string|max:255',
             'joining_date' => 'nullable|date',
             'renewed' => 'nullable|string|max:255',
-            'country' => 'required|string|max:100',
+            'primary_country' => 'required|string|max:100',
             'preference_sector' => 'nullable|string|max:255',
             'strategic_analyst' => 'nullable|in:TL,FS,TB',
             'profile_photo' => 'nullable|image|max:3072', // Max size: 3MB
@@ -376,7 +376,7 @@ class AdminController extends Controller
             'designation' => $request->designation,
             'joining_date' => $request->joining_date,
             'renewed' => $request->renewed,
-            'country' => $request->country,
+            'primary_country' => $request->primary_country,
             'preference_sector' => $request->preference_sector,
             'strategic_analyst' => $request->strategic_analyst
         ]);
