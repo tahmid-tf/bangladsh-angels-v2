@@ -158,9 +158,9 @@ class AdminController extends Controller
             'designation' => $request->designation,
             'joining_date' => $request->joining_date,
             'renewed' => $request->renewed,
-            'primary_country' => $request->country,
+            'primary_country' => $request->primary_country,
             'preference_sector' => $request->preference_sector,
-            'strategic_analyst' => $request->strategic_analyst,
+            'strategic_investment_analyst' => $request->strategic_analyst,
             'role' => 'investor', // Assign the investor role
             'is_approved' => $approval,
         ]);
