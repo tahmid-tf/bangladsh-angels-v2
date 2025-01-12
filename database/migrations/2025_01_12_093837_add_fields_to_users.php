@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::table('users', function (Blueprint $table) {
             $table->enum('gender',['male','female','other']);
             $table->string('linkedin')->nullable();
-            $table->string('expertise_level')->nullable();
             $table->string('strategic_investment_analyst')->nullable();
         });
     }
@@ -27,7 +26,6 @@ return new class extends Migration
         Schema::table('users', function (Blueprint $table) {
             $table->dropColumn('gender');
             $table->dropColumn('linkedin');
-            $table->dropColumn('expertise_level');
             $table->dropColumn('strategic_investment_analyst');
         });
     }
