@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PrimaryController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\InvestmentController;
 use App\Http\Controllers\CheckoutController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
@@ -95,6 +96,7 @@ Route::middleware('auth')->group(function () {
         // Deal Routes
         Route::prefix('deals')->group(function () {
             Route::get('/', [AdminController::class, 'viewDeals'])->name('admin.deals');
+            Route::post('/{deal:id}/invest', [InvestmentController::class, 'invest'])->name('deal.invest');
 
             Route::get('/{deal:id}',[AdminController::class,'showDeal'])->name('deal.view');
             Route::get('/add/new', [AdminController::class, 'addDeal'])->name('deal.add');

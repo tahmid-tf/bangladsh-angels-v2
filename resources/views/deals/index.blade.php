@@ -2,6 +2,25 @@
 @section('page_title','Deals | Bangladesh Angels Network Limited')
 @section('page_content')
 <div class="flex w-[70%] justify-start flex-col">
+    @if(session('success'))
+    <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4" role="alert">
+        <strong class="font-bold">Success!</strong>
+        <span class="block sm:inline">{{ session('success') }}</span>
+        <button type="button" class="absolute top-0 bottom-0 right-0 px-4 py-3" onclick="this.parentElement.style.display='none';">
+            <span class="text-green-700">&times;</span>
+        </button>
+    </div>
+@endif
+
+@if(session('error'))
+    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4" role="alert">
+        <strong class="font-bold">Error!</strong>
+        <span class="block sm:inline">{{ session('error') }}</span>
+        <button type="button" class="absolute top-0 bottom-0 right-0 px-4 py-3" onclick="this.parentElement.style.display='none';">
+            <span class="text-red-700">&times;</span>
+        </button>
+    </div>
+@endif
     <div class="flex w-full justify-between">
         <h1 class="text-3xl font-bold mb-6 ">All Deals</h1>
         <button class="flex items-center space-x-2 px-5 py-2 border-2 border-green-300 rounded-full hover:bg-green-100 transition duration-200">
@@ -21,37 +40,44 @@
     </div>    
 </div>
 
+
 <!-- Deals Grid -->
 <div class="grid grid-cols-1 md:grid-cols-3 gap-6 w-[70%]">
     <!-- Card Component -->
     @forelse ($deals as $deal)
-        <div class="bg-white rounded-lg shadow-md overflow-hidden">
-            <a href="{{route('deal.view',$deal->id)}}">
-                <img src="{{$deal->getCoverUrl()}}" alt="Deal Image" class="w-full h-40 object-cover">
-            </a>
-            <div class="p-4">
-                <div class="flex items-center justify-between">
-                    <h2 class="text-lg font-bold">{{$deal->title}}</h2>
-                    <span class="bg-gray-200 text-xs px-2 py-1 rounded-full">Transport</span>
+    <div class="bg-white rounded-lg shadow-md overflow-hidden">
+        <a href="{{ route('deal.view', $deal->id) }}">
+            <img src="{{ $deal->getCoverUrl() }}" alt="Deal Image" class="w-full h-40 object-cover">
+        </a>
+        <div class="p-4">
+            <div class="flex items-center justify-between">
+                <h2 class="text-lg font-bold">{{ $deal->title }}</h2>
+                <span class="bg-gray-200 text-xs px-2 py-1 rounded-full">Transport</span>
+            </div>
+            <p class="text-gray-500 text-sm mt-2">
+                {{ $deal->description }}
+            </p>
+            <div class="flex justify-between items-center mt-4 text-sm">
+                <div class="text-center">
+                    <p class="text-gray-400">Investment Stage</p>
+                    <p class="font-semibold">{{ $deal->investment_stage }}</p>
                 </div>
-                <p class="text-gray-500 text-sm mt-2">
-                    {{$deal->description}}
-                </p>
-                <div class="flex justify-between items-center mt-4 text-sm">
-                    <div class="text-center">
-                        <p class="text-gray-400">Investment Stage</p>
-                        <p class="font-semibold">{{ $deal->investment_stage }}</p>
-                    </div>
-                    <div class="text-center">
-                        <p class="text-gray-400">Amount Seeking</p>
-                        <p class="font-semibold">$ {{ $deal->amountSeeking() }}</p>
-                    </div>
+                <div class="text-center">
+                    <p class="text-gray-400">Amount Seeking</p>
+                    <p class="font-semibold">$ {{ $deal->amountSeeking() }}</p>
                 </div>
-                <button class="w-full mt-4 bg-[#36b37e] text-white py-2 rounded-full font-semibold hover:bg-green-600 transition">
+            </div>
+            <form method="POST" action="{{ route('deal.invest',$deal->id) }}" onsubmit="return confirm('Are you sure you want to perform this action?');">
+                @csrf
+                <input type="hidden" name="deal_id" value="{{ $deal->id }}">
+                <input type="hidden" name="user_id" value="{{ auth()->id() }}">
+                <button type="submit" class="w-full mt-4 bg-[#36b37e] text-white py-2 rounded-full font-semibold hover:bg-green-600 transition">
                     Invest
                 </button>
-            </div>
-        </div>        
+            </form>
+        </div>
+    </div>
+        
     @empty
     
     @endforelse

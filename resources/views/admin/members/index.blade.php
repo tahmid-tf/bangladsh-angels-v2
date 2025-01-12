@@ -25,7 +25,6 @@
           <option>Role</option>
           <option>Admin</option>
           <option>Investor</option>
-          <option>Seeker</option>
         </select>
         <input type="text" placeholder="Search..." class="border-gray-300 rounded-lg shadow-sm px-4 py-2">
       </div>
