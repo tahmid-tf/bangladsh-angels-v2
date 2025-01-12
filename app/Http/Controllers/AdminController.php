@@ -342,12 +342,12 @@ class AdminController extends Controller
 
     public function updateMember(Request $request, User $user)
     {
-        dd($request);
         // Validate the request data
         $validator = Validator::make($request->all(), [
             'full_name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email,' . $user->id, // Ignore the current user's email
             'phone' => 'required|string|max:20',
+            'account_status' => 'required|string',
             'gender' => 'required|in:male,female,other',
             'organization' => 'nullable|string|max:255',
             'designation' => 'nullable|string|max:255',
@@ -371,6 +371,7 @@ class AdminController extends Controller
             'email' => $request->email,
             'phone' => $request->phone,
             'gender' => $request->gender,
+            'account_status' => $request->account_status,
             'company_name' => $request->organization,
             'designation' => $request->designation,
             'joining_date' => $request->joining_date,
@@ -385,8 +386,6 @@ class AdminController extends Controller
             $user->clearMediaCollection('profile_photo'); // Clear old profile photo
             $user->addMediaFromRequest('profile_photo')->toMediaCollection('profile_photo'); // Add new photo
         }
-
-        
 
         // Redirect with a success message
         return redirect()->route('admin.members')->with('success', 'Member updated successfully.');

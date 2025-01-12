@@ -3,7 +3,7 @@
 @section('page_content')
 <form id="edit-member-form" class="bg-white p-6 rounded-lg shadow space-y-6" method="POST" action="{{route('member.update',$user->id)}}" enctype="multipart/form-data">
     @csrf
-    @method('PUT') <!-- Use PUT for updating the user -->
+    {{-- @method('PUT') <!-- Use PUT for updating the user --> --}}
 
     <header class="flex justify-between items-center mb-6">
         <div>
@@ -63,20 +63,29 @@
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <input type="text" name="organization" placeholder="Organization" class="border border-gray-300 p-2 rounded w-full" value="{{ old('organization', $user->company_name) }}">
+                <input type="text" name="organization" placeholder="Organization" class="border border-gray-300 p-2 rounded w-full" value="{{ $user->company_name }}">
                 <input type="text" name="designation" placeholder="Designation" class="border border-gray-300 p-2 rounded w-full" value="{{ old('designation', $user->designation) }}">
-                <input type="date" name="joining_date" placeholder="Joining Date" class="border border-gray-300 p-2 rounded w-full" value="{{ old('joining_date', $user->joining_date) }}" required>
-                <input type="text" name="renewed" placeholder="Renewed" class="border border-gray-300 p-2 rounded w-full" value="{{ old('renewed', $user->renewed) }}">
+                {{-- <input type="date" name="joining_date" placeholder="Joining Date" class="border border-gray-300 p-2 rounded w-full" value="{{ $user->created_at }}"> --}}
+                <select name="account_status" id="" class="border border-gray-300 p-2 rounded w-full">
+                    <option disabled value="{{$user->account_status}}">{{ ucfirst($user->account_status) }}</option>
+                    <optgroup label="Tiers">
+                        <option value="free">Free</option>
+                        <option value="core">Core</option>
+                        <option value="advanced">Advanced</option>
+                        <option value="institutional">Institutional</option>
+                    </optgroup>
+                    
+                </select>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <input type="text" name="country" placeholder="Country" class="border border-gray-300 p-2 rounded w-full" value="{{ old('country', $user->country) }}" required>
+                <input type="text" name="primary_country" placeholder="Country" class="border border-gray-300 p-2 rounded w-full" value="{{ $user->primary_country }}" required>
                 <input type="text" name="preference_sector" placeholder="Preference Sector" class="border border-gray-300 p-2 rounded w-full" value="{{ old('preference_sector', $user->preference_sector) }}">
                 <select name="strategic_analyst" class="border border-gray-300 p-2 rounded w-full">
-                    <option value="">Strategic Investment Analyst</option>
-                    <option value="TL" {{ old('strategic_analyst', $user->strategic_analyst) == 'TL' ? 'selected' : '' }}>TL</option>
-                    <option value="FS" {{ old('strategic_analyst', $user->strategic_analyst) == 'FS' ? 'selected' : '' }}>FS</option>
-                    <option value="TB" {{ old('strategic_analyst', $user->strategic_analyst) == 'TB' ? 'selected' : '' }}>TB</option>
+                    <option disabled value="{{$user->strategic_investment_analyst}}">{{ ($user->strategic_investment_analyst) ? ucfirst($user->strategic_investment_analyst) : "Select" }}</option>
+                    <option value="TL" {{ old('strategic_investment_analyst', $user->strategic_investment_analyst) == 'TL' ? 'selected' : '' }}>TL</option>
+                    <option value="FS" {{ old('strategic_investment_analyst', $user->strategic_investment_analyst) == 'FS' ? 'selected' : '' }}>FS</option>
+                    <option value="TB" {{ old('strategic_investment_analyst', $user->strategic_investment_analyst) == 'TB' ? 'selected' : '' }}>TB</option>
                 </select>
             </div>
         </div>
