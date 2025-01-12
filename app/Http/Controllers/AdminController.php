@@ -160,6 +160,7 @@ class AdminController extends Controller
             'investment_expertise' => $request->investment_expertise,
             'joining_date' => $request->joining_date,
             'renewed' => $request->renewed,
+            'linkedin' => $request->linkedin,
             'primary_country' => $request->primary_country,
             'preference_sector' => $request->preference_sector,
             'strategic_investment_analyst' => $request->strategic_analyst,
