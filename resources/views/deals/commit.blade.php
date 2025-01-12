@@ -53,7 +53,7 @@
             </div>
         </div>        
     @empty
-    
+    No Deals in this section
     @endforelse
     @php
         $i = 9;
