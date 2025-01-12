@@ -28,28 +28,28 @@ Route::prefix('upgrade')->group(function () {
 });
 
 Route::get('/deals', function () {
-    if (!Auth::check()) {
+    if (!Auth::check() || auth()->user()->account_status == "free") {
         return redirect()->route('upgrade.page');
     }
     return app(PrimaryController::class)->viewDeals();
 })->name('deals');
 
 Route::get('/deals/invest', function () {
-    if (!Auth::check()) {
+    if (!Auth::check() || auth()->user()->account_status == "free") {
         return redirect()->route('upgrade.page');
     }
     return app(PrimaryController::class)->viewDeals_invest();
 })->name('deals.invest');
 
 Route::get('/deals/commit', function () {
-    if (!Auth::check()) {
+    if (!Auth::check() || auth()->user()->account_status == "free") {
         return redirect()->route('upgrade.page');
     }
     return app(PrimaryController::class)->viewDeals_commit();
 })->name('deals.commit');
 
 Route::get('/deals/review', function () {
-    if (!Auth::check()) {
+    if (!Auth::check() || auth()->user()->account_status == "free") {
         return redirect()->route('upgrade.page');
     }
     return app(PrimaryController::class)->viewDeals_review();
@@ -69,7 +69,7 @@ Route::get('/dashboard', function () {
 /**
  * Member Routes
  */
-Route::post('/member/create', [AdminController::class, 'memberApply'])->name('member.apply');
+Route::post('/member/create', [AdminController::class, 'memberApply'])->middleware(['auth', 'verified'])->name('member.apply');
 
 /**
  * Authenticated Routes
