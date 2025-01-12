@@ -45,7 +45,7 @@
         <table class="w-full table-auto">
             <thead class="bg-gray-50">
                 <tr>
-                    <th class="px-4 py-2 text-left text-gray-600 font-semibold">Name and Membership</th>
+                    <th class="px-4 py-2 text-left text-gray-600 font-semibold">Name</th>
                     <th class="px-4 py-2 text-left text-gray-600 font-semibold">Investment stage</th>
                     <th class="px-4 py-2 text-left text-gray-600 font-semibold">Amount Seeking</th>
                     <th class="px-4 py-2 text-left text-gray-600 font-semibold">Description</th>
