@@ -22,6 +22,7 @@ class User extends Authenticatable implements HasMedia
     protected $fillable = [
         'name',
         'email',
+        'gender',
         'phone',
         'preference_sector',
         'password',
@@ -33,6 +34,7 @@ class User extends Authenticatable implements HasMedia
         'secondary_countries',
         'linkedin',
         'investment_expertise',
+        'strategic_investment_analyst',
         'is_approved'
     ];
 

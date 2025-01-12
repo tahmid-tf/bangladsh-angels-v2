@@ -79,8 +79,8 @@
 
             <!-- Primary Country -->
             <div>
-                <label class="block text-gray-700 font-semibold mb-2" for="country">What is the primary country you are in business? *</label>
-                <select id="primary_country" name="country" class="w-full rounded-lg border-gray-300 shadow-sm focus:border-green-500 focus:ring focus:ring-green-200" required>
+                <label class="block text-gray-700 font-semibold mb-2" for="primary_country">What is the primary country you are in business? *</label>
+                <select id="primary_country" name="primary_country" class="w-full rounded-lg border-gray-300 shadow-sm focus:border-green-500 focus:ring focus:ring-green-200" required>
                     <option value="">Select Primary Country</option>
                     <option value="Bangladesh" {{ old('primary_country') == 'Bangladesh' ? 'selected' : '' }}>Bangladesh</option>
                     <option value="India" {{ old('primary_country') == 'India' ? 'selected' : '' }}>India</option>

@@ -14,6 +14,7 @@ class Deal extends Model implements HasMedia
     protected $fillable = [
         'title',
         'description',
+        'sector',
         'type',
         'key_metrics',
         'investment_stage',
