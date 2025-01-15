@@ -50,7 +50,7 @@
             @endauth
             @guest
             <a href="{{ route('login') }}" class="p-3 pl-4 pr-4 rounded-full bg-[#36b37e] font-bold text-white">
-                Login
+                Login / Sign Up
             </a>
             @endguest
         </div>

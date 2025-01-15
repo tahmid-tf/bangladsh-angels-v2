@@ -36,7 +36,7 @@
                 </h1>
 
                 <p class="mt-4 leading-relaxed text-gray-500">
-                    New user? <a href="{{route('investor.signup')}}">Create an account</a>
+                    New user? <a href="{{route('investor.signup')}}" class="font-bold text-green-800">Create an account</a>
                 </p>
 
                 <form method="POST" action="{{ route('login') }}">

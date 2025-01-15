@@ -10,14 +10,9 @@
             Bangladesh Angels
           </h1>
           <ul class="flex flex-col">
-            <li>
-              <a href="#">About Us</a>
-            </li>
+            
             <li>
               <a href="#">Contact Us</a>
-            </li>
-            <li>
-              <a href="#">Angel Academy</a>
             </li>
             <li>
               <a href="#">FAQ</a>
@@ -81,9 +76,7 @@
       <div class="flex flex-row my-6 justify-between text-white">
         <small>© Bangladesh Angels. All rights reserved.</small>
         <div class="flex flex-row justify-between">
-          <a href="#" class="underline mx-2">Refund Policy</a>
           <a href="#" class="underline mx-2">Terms & Conditions</a>
-          <a href="#" class="underline mx-2">Privacy Policy</a>
         </div>
       </div>
     </section>

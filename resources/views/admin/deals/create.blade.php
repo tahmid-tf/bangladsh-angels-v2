@@ -84,8 +84,11 @@
                             <option value="Pre Seed" {{ old('investment_stage') == 'Pre Seed' ? 'selected' : '' }}>Pre Seed</option>
                             <option value="Seed" {{ old('investment_stage') == 'Seed' ? 'selected' : '' }}>Seed</option>
                             <option value="Series A" {{ old('investment_stage') == 'Series A' ? 'selected' : '' }}>Series A</option>
-                            <option value="Growth" {{ old('investment_stage') == 'Growth' ? 'selected' : '' }}>Growth</option>
+                            <option value="Series B" {{ old('investment_stage') == 'Series B' ? 'selected' : '' }}>Series B</option>
+                            <option value="Series C" {{ old('investment_stage') == 'Series C' ? 'selected' : '' }}>Series C</option>
+                            <option value="Series D" {{ old('investment_stage') == 'Series D' ? 'selected' : '' }}>Series D</option>
                         </select>
+                        
                         @error('investment_stage')
                             <span class="text-red-500 text-sm">{{ $message }}</span>
                         @enderror
