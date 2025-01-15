@@ -39,13 +39,38 @@
         <div class="text-center border-dashed border-2 border-gray-300 rounded-lg p-6">
           <label class="block cursor-pointer">
             <div class="mb-4">
-              <img src="https://via.placeholder.com/150" alt="Upload Placeholder" class="mx-auto rounded-full h-24 w-24">
+              <img id="profile-photo-preview" src="https://via.placeholder.com/150" alt="Upload Placeholder" class="mx-auto rounded-full h-24 w-24">
             </div>
-            <input type="file" name="profile_photo" accept="image/*" class="hidden">
+            <input type="file" id="profile-photo-input" name="profile_photo" accept="image/*" class="hidden">
             <p class="text-gray-500 text-sm">Upload photo</p>
             <p class="text-gray-400 text-xs">Allowed: *.jpeg, *.png, *.gif (Max: 3.1 MB)</p>
           </label>
         </div>
+      </div>
+
+      <script>
+        // Add event listener to the file input
+        document.getElementById('profile-photo-input').addEventListener('change', function (event) {
+          const file = event.target.files[0];
+          const preview = document.getElementById('profile-photo-preview');
+
+          // Check if a file is selected
+          if (file) {
+            const reader = new FileReader();
+
+            // Set the preview image once the file is read
+            reader.onload = function (e) {
+              preview.src = e.target.result;
+            };
+
+            reader.readAsDataURL(file);
+          } else {
+            // Reset the preview to the placeholder if no file is selected
+            preview.src = "https://via.placeholder.com/150";
+          }
+        });
+      </script>
+
 
         <div class="flex items-center space-x-2">
           <span class="text-sm text-gray-600">Active Status</span>
