@@ -4,9 +4,9 @@
 <!-- Section: Header -->
 <section class="container mx-auto mt-16 px-6 lg:flex lg:space-x-12">
     <!-- Left: Images -->
-    <div class="lg:w-1/2 space-y-6">
-        <img src="https://via.placeholder.com/500x350" alt="Handshake" class="rounded-xl shadow-lg w-full object-cover">
-        <img src="https://via.placeholder.com/500x350" alt="Team Photo" class="rounded-xl shadow-lg w-full object-cover">
+    <div class="flex lg:w-1/2 space-y-6">
+        <img src="{{asset('our team/1.jpg')}}" alt="Handshake" class="rounded-xl  w-full object-cover">
+        <img src="{{asset('our team/2.jpg')}}" alt="Team Photo" class="rounded-xl shadow-lg w-full object-cover">
     </div>
 
     <!-- Right: Text Content -->
