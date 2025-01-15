@@ -37,7 +37,7 @@
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <!-- Full Name -->
             <div>
-                <label class="block text-gray-700 font-semibold mb-2" for="full_name">Let's start with an easy one, what is your name? *</label>
+                <label class="block text-gray-700 font-semibold mb-2" for="full_name">First Name</label>
                 <input type="text" id="full_name" name="full_name" placeholder="Full Name" class="w-full rounded-lg border-gray-300 shadow-sm focus:border-green-500 focus:ring focus:ring-green-200" value="{{ old('full_name') }}" required>
             </div>
 

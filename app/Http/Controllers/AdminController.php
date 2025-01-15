@@ -28,7 +28,7 @@ class AdminController extends Controller
     public function viewMembers()
     {
         if(auth()->user()->isAdmin()){
-            $users = User::all(); // Retrieve all users
+            $users = User::with('media')->paginate(10); // Retrieve all users
             return view('admin.members.index', compact('users'));
         } else {
             return redirect()->route('home');
@@ -199,7 +199,7 @@ class AdminController extends Controller
     public function viewDeals()
     {
         if(auth()->user()->isAdmin()){
-            $deals = Deal::all(); // Fetch all deals
+            $deals = Deal::with('media')->get(); // Fetch all deals
             return view('admin.deals.index', compact('deals'));
         } else {
             return redirect()->route('home');
