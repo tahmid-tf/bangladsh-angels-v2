@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::table('deals', function (Blueprint $table) {
             $table->string('substack_link');
             $table->string('action_link');
+            $table->softDeletes();
         });
     }
 
@@ -25,6 +26,7 @@ return new class extends Migration
         Schema::table('deals', function (Blueprint $table) {
             $table->dropColumn('substack_link');
             $table->dropColumn('action_link');
+            $table->dropSoftDeletes();
         });
     }
 };

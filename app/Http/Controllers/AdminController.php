@@ -322,7 +322,27 @@ class AdminController extends Controller
         }
     }
 
-    
+    public function destroyDeal(Deal $deal)
+    {
+        // Check if the authenticated user is an admin
+        if (!auth()->user()->isAdmin()) {
+            return redirect()->route('deal.index')->with('error', 'You are not authorized to perform this action.');
+        }
+
+        // Delete related investments
+        $deal->investments()->delete();
+
+        // Delete associated media files using Spatie Media Library
+        $deal->clearMediaCollection('company_logo'); // Deletes all media in the 'company_logo' collection
+        $deal->clearMediaCollection('company_cover'); // Deletes all media in the 'company_cover' collection
+        $deal->clearMediaCollection('image_gallery'); // Deletes all media in the 'image_gallery' collection
+
+        // Delete the deal record
+        $deal->delete();
+
+        // Redirect back with a success message
+        return redirect()->route('admin.deals')->with('success', 'Deal deleted successfully.');
+    }
 
     public function editDeal(Deal $deal)
     {

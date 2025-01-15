@@ -7,9 +7,27 @@
             <h1 class="text-2xl font-bold mb-1">Edit Deal</h1>
             <p class="text-sm text-gray-500">Dashboard &gt; Deals &gt; Edit Deal</p>
         </div>
-        <button type="submit" form="deal-form" class="mt-4 md:mt-0 px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition">
-            Update Deal
-        </button>
+        <div class="flex">
+            <form action="{{ route('delete.deal', $deal->id) }}" method="POST" onsubmit="return confirmDelete()">
+                @csrf
+                @method('DELETE')
+                <button type="submit" class="mt-4 mr-6 md:mt-0 px-6 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition">
+                    Delete
+                </button>
+            </form>
+            <button type="submit" form="deal-form" class="mt-4  md:mt-0 px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition">
+                Update Deal
+            </button>
+            
+            
+            <script>
+                function confirmDelete() {
+                    return confirm("Are you sure you want to delete this deal? This action cannot be undone.");
+                }
+            </script>
+        </div>
+        
+        
     </header>
 
     <!-- Validation Errors -->
