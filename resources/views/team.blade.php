@@ -30,7 +30,7 @@
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
         <!-- Team Card -->
         <div class="bg-white rounded-xl shadow-lg p-6 text-center hover:shadow-2xl transition">
-            <img src="https://via.placeholder.com/150" alt="Mustavi Khan" class="w-28 h-28 mx-auto rounded-full mb-4">
+            <img src="{{asset('our team/mustavi.png')}}" alt="Mustavi Khan" class="w-28 h-28 mx-auto rounded-full mb-4">
             <h3 class="text-lg font-bold">Mustavi Khan</h3>
             <p class="text-sm text-gray-500">Investment Analyst</p>
             <span class="inline-block bg-blue-100 text-blue-600 px-3 py-1 text-xs font-semibold rounded-full mt-3">Fintech</span>
@@ -39,8 +39,24 @@
 
         <!-- Repeat similar cards -->
         <div class="bg-white rounded-xl shadow-lg p-6 text-center hover:shadow-2xl transition">
-            <img src="https://via.placeholder.com/150" alt="Tazriana Lodhi" class="w-28 h-28 mx-auto rounded-full mb-4">
+            <img src="{{asset('our team/tazriana.png')}}" alt="Tazriana Lodhi" class="w-28 h-28 mx-auto rounded-full mb-4">
             <h3 class="text-lg font-bold">Tazriana Lodhi</h3>
+            <p class="text-sm text-gray-500">Investment Analyst</p>
+            <span class="inline-block bg-blue-100 text-blue-600 px-3 py-1 text-xs font-semibold rounded-full mt-3">Fintech</span>
+            <div class="mt-3 text-blue-600 font-bold text-2xl cursor-pointer">in</div>
+        </div>
+        <!-- Repeat similar cards -->
+        <div class="bg-white rounded-xl shadow-lg p-6 text-center hover:shadow-2xl transition">
+            <img src="{{asset('our team/mohaimenul.png')}}" alt="Mohaimenul Islam" class="w-28 h-28 mx-auto rounded-full mb-4">
+            <h3 class="text-lg font-bold">Mohaimenul Islam</h3>
+            <p class="text-sm text-gray-500">Investment Analyst</p>
+            <span class="inline-block bg-blue-100 text-blue-600 px-3 py-1 text-xs font-semibold rounded-full mt-3">Fintech</span>
+            <div class="mt-3 text-blue-600 font-bold text-2xl cursor-pointer">in</div>
+        </div>
+        <!-- Repeat similar cards -->
+        <div class="bg-white rounded-xl shadow-lg p-6 text-center hover:shadow-2xl transition">
+            <img src="{{asset('our team/farin.png')}}" alt="Farin Sabrina" class="w-28 h-28 mx-auto rounded-full mb-4">
+            <h3 class="text-lg font-bold">Farin Sabrina</h3>
             <p class="text-sm text-gray-500">Investment Analyst</p>
             <span class="inline-block bg-blue-100 text-blue-600 px-3 py-1 text-xs font-semibold rounded-full mt-3">Fintech</span>
             <div class="mt-3 text-blue-600 font-bold text-2xl cursor-pointer">in</div>
@@ -55,13 +71,40 @@
 
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
         <div class="bg-white rounded-xl shadow-lg p-6 text-center hover:shadow-2xl transition">
-            <img src="https://via.placeholder.com/150" alt="Sajid Rehman" class="w-28 h-28 mx-auto rounded-full mb-4">
             <h3 class="text-lg font-bold">Sajid Rehman</h3>
             <p class="text-sm text-gray-500">Chief Executive</p>
+            <p class="text-sm text-gray-500">Telenor Health AS</p>
+            <img src="{{asset('our team/sajid.png')}}" alt="Sajid Rehman" class="mt-3 w-28 h-28 mx-auto rounded-full mb-4">
             <p class="text-xs mt-3 italic text-gray-600">“Scelerisque ornare quisque magna ipsum.”</p>
             <div class="mt-3 text-blue-600 font-bold text-2xl cursor-pointer">in</div>
         </div>
 
+        <div class="bg-white rounded-xl shadow-lg p-6 text-center hover:shadow-2xl transition">
+            <h3 class="text-lg font-bold">Samad Miraly</h3>
+            <p class="text-sm text-gray-500">Co Founder</p>
+            <p class="text-sm text-gray-500">Startup Dhaka</p>
+            <img src="{{asset('our team/samad.png')}}" alt="samad miraly" class="mt-3 w-28 h-28 mx-auto rounded-full mb-4">
+            <p class="text-xs mt-3 italic text-gray-600">“Scelerisque ornare quisque magna ipsum.”</p>
+            <div class="mt-3 text-blue-600 font-bold text-2xl cursor-pointer">in</div>
+        </div>
+
+        <div class="bg-white rounded-xl shadow-lg p-6 text-center hover:shadow-2xl transition">
+            <h3 class="text-lg font-bold">Minhaz Anwar</h3>
+            <p class="text-sm text-gray-500">Chief Storyteller</p>
+            <p class="text-sm text-gray-500">Better Stories</p>
+            <img src="{{asset('our team/minhaz.png')}}" alt="Minhaz Anwar" class="mt-3 w-28 h-28 mx-auto rounded-full mb-4">
+            <p class="text-xs mt-3 italic text-gray-600">“Scelerisque ornare quisque magna ipsum.”</p>
+            <div class="mt-3 text-blue-600 font-bold text-2xl cursor-pointer">in</div>
+        </div>
+
+        <div class="bg-white rounded-xl shadow-lg p-6 text-center hover:shadow-2xl transition">
+            <h3 class="text-lg font-bold">Tina Jabeen</h3>
+            <p class="text-sm text-gray-500">Investment Advisor</p>
+            <p class="text-sm text-gray-500">Startup Bangladesh</p>
+            <img src="{{asset('our team/tina.png')}}" alt="Tina Jabeen" class="mt-3 w-28 h-28 mx-auto rounded-full mb-4">
+            <p class="text-xs mt-3 italic text-gray-600">“Scelerisque ornare quisque magna ipsum.”</p>
+            <div class="mt-3 text-blue-600 font-bold text-2xl cursor-pointer">in</div>
+        </div>
         <!-- Repeat other governing board cards -->
     </div>
 </section>
