@@ -72,7 +72,7 @@
                 <input type="hidden" name="deal_id" value="{{ $deal->id }}">
                 <input type="hidden" name="user_id" value="{{ auth()->id() }}">
                 @if ($deal->type!=="invest")
-                    <a href="{{$deal->action_link}}" class="w-full p-3 mt-4 bg-[#36b37e] text-white py-2 rounded-full font-semibold hover:bg-green-600 transition">
+                    <a href="{{$deal->action_link}}" class="w-full p-3 mt-6 bg-[#36b37e] text-white py-2 rounded-full font-semibold hover:bg-green-600 transition">
                         {{ucfirst($deal->type)}}
                     </a>    
                 @else
