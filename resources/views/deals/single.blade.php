@@ -20,17 +20,20 @@
                     <p class="text-lg font-semibold">$ {{$deal->amount_seeking}}</p>
                 </div>
             </div>
-            <button class="px-6 py-3 bg-green-600 text-white font-semibold rounded-lg hover:bg-green-700 transition">
-                Invest
-            </button>
+            @if ($deal->type!=="invest")
+            <a href="{{$deal->action_link}}" class="px-6 py-3 bg-green-600 text-white font-semibold rounded-lg hover:bg-green-700 transition">
+                {{ucfirst($deal->type)}}
+            </a>
+            @endif
+            
         </div>
 
         <!-- Right Content -->
         <div class="lg:w-1/2 mt-6 lg:mt-0">
             <img src="{{$deal->getCoverUrl()}}" alt="Jatri Image" class="w-full h-auto rounded-lg shadow-md">
-            <button class="mt-4 px-6 py-2 bg-gray-200 text-gray-700 font-semibold rounded-lg shadow hover:bg-gray-300">
+            <a href="{{$deal->pitch_deck_url}}" class="mt-4 px-6 py-2 bg-gray-200 text-gray-700 font-semibold rounded-lg shadow hover:bg-gray-300">
                 View Pitch Deck
-            </button>
+            </a>
         </div>
     </div>
 </section>
