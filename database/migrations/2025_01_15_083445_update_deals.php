@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::table('deals', function (Blueprint $table) {
             $table->enum('type',['commit','invest','review','portfolio'])->change();
+            $table->enum('investment_stage',['Pre Seed','Seed','Series A','Series B','Series C' ,'Series D'])->change();
         });
     }
 
@@ -23,6 +24,7 @@ return new class extends Migration
     {
         Schema::table('deals', function (Blueprint $table) {
             $table->enum('type',['commit','invest','review'])->change();
+            $table->enum('investment_stage',['Pre Seed','Seed','Series A','Series B'])->change();
         });
     }
 };

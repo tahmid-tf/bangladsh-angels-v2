@@ -33,13 +33,50 @@
             <div class="text-center border-dashed border-2 border-gray-300 rounded-lg p-6">
                 <label class="block cursor-pointer">
                     <div class="mb-4">
-                        <img src="{{ asset('upload_dealcover.png') }}" alt="Upload Placeholder" class="mx-auto rounded-full h-24 w-24">
+                        <img 
+                            id="logo-preview" 
+                            src="{{ asset('upload_dealcover.png') }}" 
+                            alt="Upload Placeholder" 
+                            class="mx-auto rounded-full h-24 w-24 object-cover"
+                        >
                     </div>
-                    <input type="file" name="logo" accept="image/*" class="hidden">
+                    <input type="file" name="logo" accept="image/*" class="hidden" id="logo-input">
                     <p class="text-gray-500 text-sm">Upload logo</p>
                     <p class="text-gray-400 text-xs">Allowed: *.jpeg, *.png, *.gif (Max: 3.1 MB)</p>
                 </label>
             </div>
+
+            <script>
+                // Preview Logo
+                const logoInput = document.getElementById('logo-input');
+                const logoPreview = document.getElementById('logo-preview');
+
+                logoInput.addEventListener('change', function () {
+                    const file = this.files[0];
+                    if (file) {
+                        const reader = new FileReader();
+                        reader.onload = function (e) {
+                            logoPreview.src = e.target.result; // Set preview image source
+                            logoPreview.style.display = 'block'; // Ensure the preview is visible
+                        };
+                        reader.readAsDataURL(file);
+                    } else {
+                        // Reset to default placeholder if no file is selected
+                        logoPreview.src = "{{ asset('upload_dealcover.png') }}";
+                    }
+                });
+            </script>
+
+            <style>
+                /* Ensure the preview looks good */
+                #logo-preview {
+                    object-fit: cover; /* Ensures image fills the rounded area proportionally */
+                    border: 2px solid #e2e8f0; /* Add a light border for better visibility */
+                    padding: 0.25rem; /* Add space around the image */
+                    background-color: #f9fafb; /* Matches the field background color */
+                }
+            </style>
+
 
             <!-- Input Fields -->
             <div class="md:col-span-2 space-y-4">
@@ -116,13 +153,52 @@
         <div class="border-dashed border-2 border-gray-300 rounded-lg p-6">
             <label class="block cursor-pointer text-center">
                 <div class="mb-4">
-                    <img src="{{ asset('upload_dealcover.png') }}" alt="Upload Placeholder" class="mx-auto rounded-lg">
+                    <img 
+                        id="company-cover-preview" 
+                        src="{{ asset('upload_dealcover.png') }}" 
+                        alt="Upload Placeholder" 
+                        class="mx-auto rounded-lg h-40 w-full object-cover"
+                        style="display: block;"
+                    >
                 </div>
-                <input type="file" name="company_cover" accept="image/*" class="hidden">
+                <input type="file" name="company_cover" accept="image/*" class="hidden" id="company-cover-input">
                 <p class="text-gray-500 text-sm">Attach Files</p>
                 <p class="text-gray-400 text-xs">Drop files here or click <span class="text-blue-500 underline">browse</span> through your machine</p>
             </label>
         </div>
+
+        <script>
+            // Preview Company Cover
+            const companyCoverInput = document.getElementById('company-cover-input');
+            const companyCoverPreview = document.getElementById('company-cover-preview');
+            
+            companyCoverInput.addEventListener('change', function () {
+                const file = this.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function (e) {
+                        companyCoverPreview.src = e.target.result;
+                        companyCoverPreview.style.display = 'block'; // Ensure image is displayed
+                    };
+                    reader.readAsDataURL(file);
+                } else {
+                    // Reset to the default placeholder if no file is selected
+                    companyCoverPreview.src = "{{ asset('upload_dealcover.png') }}";
+                }
+            });
+        </script>
+
+        <style>
+            /* Add specific styling to ensure the preview looks good */
+            #company-cover-preview {
+                object-fit: cover; /* Ensures the image fills the area proportionally */
+                border: 1px solid #e2e8f0; /* Adds a slight border for better visuals */
+                padding: 0.25rem; /* Space around the image */
+                background-color: #f9fafb; /* Background to match input fields */
+            }
+        </style>
+
+
 
 <!-- Key Metrics Section -->
 <div id="key-metrics-section">
