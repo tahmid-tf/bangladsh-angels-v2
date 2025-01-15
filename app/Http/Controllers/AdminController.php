@@ -50,7 +50,8 @@ class AdminController extends Controller
         $approval = true;
         if(auth()->user()->isAdmin()){
             $validator = Validator::make($request->all(), [
-                'full_name' => 'required|string|max:255',
+                'first_name' => 'required|string|max:255',
+                'last_name' => 'required|string|max:255',
                 'email' => 'required|email|unique:users,email',
                 'phone' => 'required|string|max:20',
                 'gender' => 'required|in:male,female,other',
@@ -73,9 +74,11 @@ class AdminController extends Controller
                 return redirect()->back()->withErrors($validator)->withInput();
             }
 
+            $fullName = $request->first_name . " " . $request->last_name;
+
             // Create the user as an investor
             $user = User::create([
-                'name' => $request->full_name,
+                'name' => $fullName,
                 'email' => $request->email,
                 'password' => Hash::make($request->password), // Hash the password
                 'phone' => $request->phone,
@@ -115,14 +118,13 @@ class AdminController extends Controller
     }
 
 
-    public function memberApply(Request $request, User $user)
+    public function memberApply(Request $request)
     {
-        
-
         $approval = false;
         
         $validator = Validator::make($request->all(), [
-            'full_name' => 'required|string|max:255',
+            'first_name' => 'required|string|max:255',
+            'last_name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email',
             'phone' => 'required|string|max:20',
             'investment_expertise' => 'nullable|string',
@@ -146,11 +148,12 @@ class AdminController extends Controller
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
         }
-
-
+        
+        $fullName = $request->first_name . " " . $request->last_name;
+         
         // Create the user as an investor
         $user = User::create([
-            'name' => $request->full_name,
+            'name' => $fullName,
             'email' => $request->email,
             'password' => Hash::make($request->password), // Hash the password
             'phone' => $request->phone,

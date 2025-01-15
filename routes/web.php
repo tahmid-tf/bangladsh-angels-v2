@@ -70,7 +70,7 @@ Route::get('/dashboard', function () {
 /**
  * Member Routes
  */
-Route::post('/member/create', [AdminController::class, 'memberApply'])->middleware(['auth', 'verified'])->name('member.apply');
+Route::post('/member/create', [AdminController::class, 'memberApply'])->name('member.apply');
 
 /**
  * Authenticated Routes
