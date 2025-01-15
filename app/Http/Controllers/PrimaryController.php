@@ -24,7 +24,7 @@ class PrimaryController extends Controller
             return redirect()->route('upgrade.page');
         }
 
-        $deals = Deal::all();
+        $deals = Deal::with('media')->where('type','portfolio')->get();
         return view('portfolio',compact('deals'));
     }
 
@@ -40,25 +40,25 @@ class PrimaryController extends Controller
 
     public function viewDeals()
     {
-        $deals = Deal::all();
+        $deals = Deal::with('media')->get();
         return view('deals.index', compact('deals'));
     }
 
     public function viewDeals_invest()
     {
-        $deals = Deal::where('type','invest')->get();
+        $deals = Deal::with('media')->where('type','invest')->get();
         return view('deals.invest', compact('deals'));
     }
 
     public function viewDeals_commit()
     {
-        $deals = Deal::where('type','commit')->get();
+        $deals = Deal::with('media')->where('type','commit')->get();
         return view('deals.commit', compact('deals'));
     }
 
     public function viewDeals_review()
     {
-        $deals = Deal::where('type','review')->get();
+        $deals = Deal::with('media')->where('type','review')->get();
         return view('deals.review', compact('deals'));
     }
 

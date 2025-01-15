@@ -66,6 +66,7 @@
                         <option value="commit">Commit</option>
                         <option value="invest">Invest</option>
                         <option value="review">Review</option>
+                        <option value="portfolio">Portfolio</option>
                     </select>
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
