@@ -573,27 +573,6 @@
         </div>
       </div>
     </div>
-
-    <!-- Investment Portfolio -->
-    <div>
-      <h2 class="text-lg font-bold mb-4">Investment Portfolio</h2>
-      <div id="portfolio-container" class="space-y-4">
-        @if (old('company_name'))
-          @foreach (old('company_name') as $index => $company_name)
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <input type="text" name="company_name[]" placeholder="Enter Company Name" class="border border-gray-300 p-2 rounded w-full" value="{{ $company_name }}">
-              <input type="number" name="investment_amount[]" placeholder="Enter Amount" class="border border-gray-300 p-2 rounded w-full" value="{{ old('investment_amount.' . $index) }}">
-            </div>
-          @endforeach
-        @else
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <input type="text" name="company_name[]" placeholder="Enter Company Name" class="border border-gray-300 p-2 rounded w-full">
-            <input type="number" name="investment_amount[]" placeholder="Enter Amount" class="border border-gray-300 p-2 rounded w-full">
-          </div>
-        @endif
-      </div>
-      <button id="add-company-btn" type="button" class="mt-4 px-4 py-2 bg-green-100 text-green-700 rounded-lg">+ Add Another Company</button>
-    </div>
   </form>
   <script>
     // Add another company
