@@ -18,10 +18,11 @@
         <div class="flex flex-wrap items-center gap-4">
             <!-- Tabs -->
             <div class="flex space-x-4">
-                <a href="{{route('admin.deals')}}" class="px-4 py-2 bg-green-100 text-green-700 rounded-full">All</a>
+                <a href="{{route('admin.deals')}}" class="px-4 py-2 text-gray-600 hover:bg-gray-200 rounded-full">All</a>
                 <a href="{{route('admin.deals.invest')}}" class="px-4 py-2 text-gray-600 hover:bg-gray-200 rounded-full">Invest</a>
                 <a href="{{route('admin.deals.commit')}}" class="px-4 py-2 text-gray-600 hover:bg-gray-200 rounded-full">Commit</a>
-                <a href="{{route('admin.deals.review')}}" class="px-4 py-2 text-gray-600 hover:bg-gray-200 rounded-full">Review</a>
+                <a href="{{route('admin.deals.review')}}" class="px-4 py-2 bg-green-100 text-green-700 rounded-full">Review</a>
+                
             </div>
 
             <!-- Filters -->

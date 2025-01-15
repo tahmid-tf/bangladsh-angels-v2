@@ -212,8 +212,36 @@ class AdminController extends Controller
         }
     }
 
-    
+    public function viewDeals_invest()
+    {
+        if(auth()->user()->isAdmin()){
+            $deals = Deal::with('media')->where('type','invest')->get(); // Fetch all deals
+            return view('admin.deals.invest_index', compact('deals'));
+        } else {
+            return redirect()->route('home');
+        }
+    }
 
+    public function viewDeals_commit()
+    {
+        if(auth()->user()->isAdmin()){
+            $deals = Deal::with('media')->where('type','commit')->get(); // Fetch all deals
+            return view('admin.deals.commit_index', compact('deals'));
+        } else {
+            return redirect()->route('home');
+        }
+    }
+
+    public function viewDeals_review()
+    {
+        if(auth()->user()->isAdmin()){
+            $deals = Deal::with('media')->where('type','review')->get(); // Fetch all deals
+            return view('admin.deals.review_index', compact('deals'));
+        } else {
+            return redirect()->route('home');
+        }
+    }
+    
 
     public function addDeal()
     {
