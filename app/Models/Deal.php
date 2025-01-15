@@ -23,6 +23,8 @@ class Deal extends Model implements HasMedia
         'company_logo',
         'company_cover',
         'pitch_deck_url',
+        'substack_link',
+        'action_link',
         'created_by',
         'status',
         'slug',

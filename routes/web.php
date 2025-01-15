@@ -96,6 +96,8 @@ Route::middleware('auth')->group(function () {
         // Deal Routes
         Route::prefix('deals')->group(function () {
             Route::get('/', [AdminController::class, 'viewDeals'])->name('admin.deals');
+            Route::get('/edit/{deal:id}', [AdminController::class, 'editDeal'])->name('edit.deal');
+            Route::post('/update/{deal:id}', [AdminController::class, 'updateDeal'])->name('update.deal');
             Route::get('/invest', [AdminController::class, 'viewDeals_invest'])->name('admin.deals.invest');
             Route::get('/commit', [AdminController::class, 'viewDeals_commit'])->name('admin.deals.commit');
             Route::get('/review', [AdminController::class, 'viewDeals_review'])->name('admin.deals.review');

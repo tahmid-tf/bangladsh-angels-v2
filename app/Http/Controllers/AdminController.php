@@ -268,6 +268,8 @@ class AdminController extends Controller
                 'company_logo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5120',
                 'company_cover' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5120',
                 'pitch_deck_url' => 'nullable|url|max:255',
+                'substack_link' => 'nullable|url|max:255',
+                'action_link' => 'nullable|url|max:255',
                 'monthly_revenue' => 'nullable|numeric|min:0',
                 'total_addressable_market' => 'nullable|string|max:255',
                 'serviceable_addressable_market' => 'nullable|string|max:255',
@@ -302,6 +304,8 @@ class AdminController extends Controller
                 'amount_seeking' => $validatedData['amount_seeking'],
                 'description' => $validatedData['description'],
                 'pitch_deck_url' => $validatedData['pitch_deck_url'] ?? null,
+                'substack_link' => $validatedData['substack_link'] ?? null,
+                'action_link' => $validatedData['action_link'] ?? null,
                 'growth_rate' => $validatedData['growth_rate'] ?? null,
                 'revenue_model' => $validatedData['revenue_model'] ?? null, 
                 'future_plans' => $validatedData['future_plans'] ?? null,
@@ -331,6 +335,39 @@ class AdminController extends Controller
         } else {
             return redirect()->route('home');
         }
+    }
+
+    public function editDeal(Deal $deal)
+    {
+        return view('admin.deals.edit',compact('deal'));
+    }
+
+    public function updateDeal(Request $request,Deal $deal)
+    {
+        $validatedData = $request->validate([
+            'title' => 'required|string|max:255',
+            'sector' => 'required|string',
+            'type' => 'required|in:commit,invest,review,portfolio',
+            'investment_stage' => 'required|in:Pre Seed,Seed,Series A,Series B,Series C,Series D',
+            'amount_seeking' => 'required|numeric|min:0',
+            'description' => 'required|string',
+            'logo' => 'nullable|image|max:3072',
+            'pitch_deck_url' => 'nullable|url',
+            'substack_link' => 'nullable|url',
+            'action_link' => 'nullable|url',
+        ]);
+
+        $deal->update($validatedData);
+    
+        if ($request->hasFile('logo')) {
+            $deal->updateLogo($request->file('logo'));
+        }
+    
+        if ($request->hasFile('company_cover')) {
+            $deal->updateCover($request->file('company_cover'));
+        }
+    
+        return redirect()->route('admin.deals')->with('success', 'Deal updated successfully!');
     }
 
     public function editMember(User $user)

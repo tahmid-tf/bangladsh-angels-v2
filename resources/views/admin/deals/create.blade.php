@@ -88,13 +88,6 @@
                             <span class="text-red-500 text-sm">{{ $message }}</span>
                         @enderror
                     </div>
-                    <div>
-                        <label for="company_name" class="block text-gray-700 font-semibold mb-2">Company Name *</label>
-                        <input type="text" id="company_name" name="company_name" placeholder="Company Name" class="input-field" value="{{ old('company_name') }}" required>
-                        @error('company_name')
-                            <span class="text-red-500 text-sm">{{ $message }}</span>
-                        @enderror
-                    </div>
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <label class="block text-gray-700 font-semibold mb-2" for="type">Deal Type *</label>
@@ -197,33 +190,52 @@
                 background-color: #f9fafb; /* Background to match input fields */
             }
         </style>
-
-
-
-<!-- Key Metrics Section -->
-<div id="key-metrics-section">
-    <h2 class="text-lg font-bold mb-4">Key Metrics</h2>
-    <div id="key-metrics-container" class="space-y-4">
-        @if(is_array(old('key_metrics')))
-            @foreach(old('key_metrics') as $index => $metric)
-                <div class="grid grid-cols-2 gap-4">
-                    <input 
-                        type="text" 
-                        name="key_metrics[{{ $index }}][name]" 
-                        placeholder="Metric Name" 
-                        class="input-field" 
-                        value="{{ $metric['name'] ?? '' }}" 
-                        required
-                    >
-                    <input 
-                        type="text" 
-                        name="key_metrics[{{ $index }}][value]" 
-                        placeholder="Metric Value" 
-                        class="input-field" 
-                        value="{{ $metric['value'] ?? '' }}" 
-                        required
-                    >
-                </div>
+        <div>
+            <label for="pitch_deck_url" class="block text-gray-700 font-semibold mb-2">Pitch Deck URL *</label>
+            <input type="text" id="pitch_deck_url" name="pitch_deck_url" placeholder="Enter link here" class="input-field" value="{{ old('pitch_deck_url') }}" required>
+            @error('pitch_deck_url')
+                <span class="text-red-500 text-sm">{{ $message }}</span>
+            @enderror
+        </div>
+        <div>
+            <label for="substack_link" class="block text-gray-700 font-semibold mb-2">Substack URL *</label>
+            <input type="text" id="substack_link" name="substack_link" placeholder="Enter link here" class="input-field" value="{{ old('substack_link') }}" required>
+            @error('substack_link')
+                <span class="text-red-500 text-sm">{{ $message }}</span>
+            @enderror
+        </div>
+        <div>
+            <label for="action_link" class="block text-gray-700 font-semibold mb-2">Action Link *</label>
+            <input type="text" id="action_link" name="action_link" placeholder="Enter link here" class="input-field" value="{{ old('action_link') }}" required>
+            @error('action_link')
+                <span class="text-red-500 text-sm">{{ $message }}</span>
+            @enderror
+        </div>
+        <!-- Key Metrics Section -->
+        <div id="key-metrics-section">
+            <h2 class="text-lg font-bold mb-4">Key Metrics</h2>
+                <div id="key-metrics-container" class="space-y-4">
+                    @if(is_array(old('key_metrics')))
+                        @foreach(old('key_metrics') as $index => $metric)
+                            <div class="grid grid-cols-2 gap-4">
+                                <input 
+                                    type="text" 
+                                    name="key_metrics[{{ $index }}][name]" 
+                                    placeholder="Metric Name" 
+                                    class="input-field" 
+                                    value="{{ $metric['name'] ?? '' }}" 
+                                    required
+                                >
+                                <input 
+                                    type="text" 
+                                    name="key_metrics[{{ $index }}][value]" 
+                                    placeholder="Metric Value" 
+                                    class="input-field" 
+                                    value="{{ $metric['value'] ?? '' }}" 
+                                    required
+                                >
+                            </div>
+        </div>
             @endforeach
         @else
             <!-- Default empty field -->
