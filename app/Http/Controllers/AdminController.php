@@ -64,7 +64,6 @@ class AdminController extends Controller
                 'strategic_analyst' => 'nullable|in:TL,FS,TB',
                 'photo' => 'nullable|image|max:3072', // Max size: 3MB
                 'profile_photo' => 'nullable|image|max:3072|mimes:jpeg,png,jpg,gif', // Validation for profile_photo
-                'company_name.*' => 'nullable|string|max:255',
                 'investment_amount.*' => 'nullable|numeric|min:0',
                 'password' => 'required|string|min:8|confirmed', // Ensure password and re_password match
             ]);
@@ -84,7 +83,6 @@ class AdminController extends Controller
                 'password' => Hash::make($request->password), // Hash the password
                 'phone' => $phone,
                 'gender' => $request->gender,
-                'company_name' => $request->organization,
                 'designation' => $request->designation,
                 'joining_date' => $request->joining_date,
                 'renewed' => $request->renewed,
@@ -100,17 +98,7 @@ class AdminController extends Controller
                 $user->addMediaFromRequest('profile_photo')->toMediaCollection('profile_photo');
             }
 
-            // Add investment portfolio data if provided
-            if ($request->has('company_name')) {
-                foreach ($request->company_name as $index => $companyName) {
-                    if (!empty($companyName) && !empty($request->investment_amount[$index])) {
-                        $user->portfolio()->create([
-                            'company_name' => $companyName,
-                            'investment_amount' => $request->investment_amount[$index],
-                        ]);
-                    }
-                }
-            }
+            
 
             return redirect()->route('admin.members')->with('success', 'Member created successfully.');
         } else {
@@ -255,13 +243,11 @@ class AdminController extends Controller
     public function storeDeal(Request $request)
     {
         if(auth()->user()->isAdmin()){   
-            
             // Validate incoming request
             $validatedData = $request->validate([
                 'title' => 'required|string|max:255',
-                'company_name' => 'required|string|max:255',
                 'sector' => 'required|string|max:255',
-                'type' => 'required|in:commit,invest,review,portfolio',
+                'type' => 'required',
                 'investment_stage' => 'required|in:Pre Seed,Seed,Series A,Series B,Series C,Series D',
                 'amount_seeking' => 'required|numeric|min:0',
                 'description' => 'required|string',
@@ -289,7 +275,7 @@ class AdminController extends Controller
                 'key_metrics.*.name' => 'required|string|max:255',
                 'key_metrics.*.value' => 'required|string|max:255',
             ]);
-
+           
             // Inside your store method
             $slug = Str::slug($validatedData['title'], '-');
 
@@ -297,7 +283,6 @@ class AdminController extends Controller
             $deal = Deal::create([
                 'title' => $validatedData['title'],
                 'slug' => $slug,
-                'company_name' => $validatedData['company_name'],
                 'sector' => $validatedData['sector'],
                 'type' => $validatedData['type'],
                 'investment_stage' => $validatedData['investment_stage'],
@@ -336,6 +321,8 @@ class AdminController extends Controller
             return redirect()->route('home');
         }
     }
+
+    
 
     public function editDeal(Deal $deal)
     {

@@ -8,7 +8,6 @@
             <p class="text-gray-500">Dashboard &gt; Deals &gt; Add new deal</p>
         </div>
         <div class="flex space-x-4">
-            <button type="button" class="px-4 py-2 bg-gray-200 text-gray-600 rounded-lg shadow">Save as draft</button>
             <button type="submit" form="deal-form" class="px-4 py-2 bg-green-600 text-white rounded-lg shadow hover:bg-green-700">Add new deal</button>
         </div>
     </header>
@@ -90,13 +89,19 @@
                     </div>
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <label class="block text-gray-700 font-semibold mb-2" for="type">Deal Type *</label>
-                    <select name="type" id="type" class="input-field" required>
-                        <option value="">Select Type</option>
+                    
+                    <select name="type"  id="type" class="input-field" required>
+                        <option value="">Deal Type</option>
                         <option value="commit">Commit</option>
                         <option value="invest">Invest</option>
                         <option value="review">Review</option>
                         <option value="portfolio">Portfolio</option>
+                    </select>
+                    <select name="status" id="status" class="input-field" required>
+                        <option value="">Deal Status</option>
+                        <option value="active">Active</option>
+                        <option value="draft">Draft</option>
+                        <option value="closed">Closed</option>
                     </select>
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
