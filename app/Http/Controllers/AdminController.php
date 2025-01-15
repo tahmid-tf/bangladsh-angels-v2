@@ -50,8 +50,7 @@ class AdminController extends Controller
         $approval = true;
         if(auth()->user()->isAdmin()){
             $validator = Validator::make($request->all(), [
-                'first_name' => 'required|string|max:255',
-                'last_name' => 'required|string|max:255',
+                'full_name' => 'required|string|max:255',
                 'email' => 'required|email|unique:users,email',
                 'phone' => 'required|string|max:20',
                 'gender' => 'required|in:male,female,other',
@@ -59,7 +58,8 @@ class AdminController extends Controller
                 'designation' => 'nullable|string|max:255',
                 'joining_date' => 'nullable|date',
                 'renewed' => 'nullable|string|max:255',
-                'country' => 'required|string|max:100',
+                'primary_country' => 'required|string|max:100',
+                'country_code' => 'required|string|max:100',
                 'preference_sector' => 'nullable|string|max:255',
                 'strategic_analyst' => 'nullable|in:TL,FS,TB',
                 'photo' => 'nullable|image|max:3072', // Max size: 3MB
@@ -75,13 +75,14 @@ class AdminController extends Controller
             }
 
             $fullName = $request->first_name . " " . $request->last_name;
+            $phone = $request->country_code .  $request->phone;
 
             // Create the user as an investor
             $user = User::create([
-                'name' => $fullName,
+                'name' => $request->full_name,
                 'email' => $request->email,
                 'password' => Hash::make($request->password), // Hash the password
-                'phone' => $request->phone,
+                'phone' => $phone,
                 'gender' => $request->gender,
                 'company_name' => $request->organization,
                 'designation' => $request->designation,
@@ -134,10 +135,11 @@ class AdminController extends Controller
             'joining_date' => 'nullable|date',
             'renewed' => 'nullable|string|max:255',
             'primary_country' => 'required|string|max:100',
+            'country_code' => 'required|string|max:100',
             'preference_sector' => 'nullable|string|max:255',
             'strategic_analyst' => 'nullable|in:TL,FS,TB',
             'photo' => 'nullable|image|max:3072', // Max size: 3MB
-            'profile_photo' => 'nullable|image|max:3072|mimes:jpeg,png,jpg,gif', // Validation for profile_photo
+            'profile_photo' => 'nullable|image|max:5120|mimes:jpeg,png,jpg,gif', // Max size: 5MB (5120 KB)
             'company_name.*' => 'nullable|string|max:255',
             'investment_amount.*' => 'nullable|numeric|min:0',
             'password' => 'required|string|min:8|confirmed', // Ensure password and re_password match
@@ -150,13 +152,14 @@ class AdminController extends Controller
         }
         
         $fullName = $request->first_name . " " . $request->last_name;
+        $phone = $request->country_code .  $request->phone;
          
         // Create the user as an investor
         $user = User::create([
             'name' => $fullName,
             'email' => $request->email,
             'password' => Hash::make($request->password), // Hash the password
-            'phone' => $request->phone,
+            'phone' => $phone,
             'gender' => $request->gender,
             'organization' => $request->organization,
             'designation' => $request->designation,

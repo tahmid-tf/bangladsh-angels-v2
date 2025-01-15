@@ -84,21 +84,21 @@
             </div> --}}
 
             <!-- Primary Country -->
-            {{-- <div>
-                <label class="block text-gray-700 font-semibold mb-2" for="primary_country">What is the primary country you are in business? *</label>
+            <div>
+                <label class="block text-gray-700 font-semibold mb-2" for="primary_country">Country *</label>
                 <select id="primary_country" name="primary_country" class="w-full rounded-lg border-gray-300 shadow-sm focus:border-green-500 focus:ring focus:ring-green-200" required>
                     <option value="">Select Primary Country</option>
                     <option value="Bangladesh" {{ old('primary_country') == 'Bangladesh' ? 'selected' : '' }}>Bangladesh</option>
                     <option value="India" {{ old('primary_country') == 'India' ? 'selected' : '' }}>India</option>
                     <option value="USA" {{ old('primary_country') == 'USA' ? 'selected' : '' }}>USA</option>
                 </select>
-            </div> --}}
+            </div>
 
             <!-- Phone Number -->
             <div>
                 <label class="block text-gray-700 font-semibold mb-2" for="phone">Phone Number *</label>
                 <span class="flex">
-                    <select name="primary_country" class="w-1/4 p-3 rounded-lg border-gray-300 shadow-sm focus:border-green-500 focus:ring focus:ring-green-200" id="">
+                    <select name="country_code" class="w-1/4 p-3 rounded-lg border-gray-300 shadow-sm focus:border-green-500 focus:ring focus:ring-green-200" id="">
                         <option data-countryCode="BD" value="880">Bangladesh (+880)</option>
                         
                         <option data-countryCode="GB" value="44" Selected>UK (+44)</option>
@@ -377,10 +377,7 @@
                 <input type="checkbox" class="rounded border-gray-300 text-green-500 focus:ring-green-400" name="terms" required>
                 <span class="text-gray-700">I agree to the <a href="#" class="text-green-500 underline">terms and conditions</a> and <a href="#" class="text-green-500 underline">privacy policy</a>.</span>
             </label>
-            <label class="flex items-center space-x-2 mt-2">
-                <input type="checkbox" class="rounded border-gray-300 text-green-500 focus:ring-green-400" name="newsletter">
-                <span class="text-gray-700">I want to sign up for the newsletter to receive exclusive deals directly in my inbox.</span>
-            </label>
+            
         </div>
 
         <!-- Submit Button -->
