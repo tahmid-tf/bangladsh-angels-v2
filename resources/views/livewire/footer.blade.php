@@ -27,10 +27,12 @@
             </span>
             
           <span class="flex flex-row w-full justify-between">
-            <img src="{{asset('ig_icon.webp')}}" class="h-[40px]" alt="instagram">
-            <img src="{{asset('linkedIn.webp')}}" class="h-[40px]" alt="linkedIn">
-            <img src="{{asset('fb_icon.webp')}}" class="h-[40px]" alt="facebook">
-            <img src="{{asset('twitter.webp')}}" class="h-[40px]" alt="twitter">
+            {{-- <img src="{{asset('ig_icon.webp')}}" class="h-[40px]" alt="instagram"> --}}
+            
+            <a target="_blank" href="https://www.linkedin.com/company/bangladesh-angels/"><img src="{{asset('linkedIn.webp')}}" class="h-[40px]" alt="linkedIn"></a>
+            <a target="_blank" href="https://www.facebook.com/bdangels.co"><img src="{{asset('fb_icon.webp')}}" class="h-[40px]" alt="facebook"></a>
+            <a target="_blank" href="https://x.com/BDAngelsNetwork?t=XxABWIT-yVk-X8ujKnYorA&s=09"><img src="{{asset('twitter.webp')}}" class="h-[40px]" alt="twitter"></a>
+            
           </span>
         </div>
       </div>
