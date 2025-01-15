@@ -19,46 +19,7 @@
             </li>
           </ul>
         </div>
-        {{-- Row 2 --}}
-        <div class="flex flex-col text-white ml-6">
-          <h1 class="font-bold">
-            For Startups
-          </h1>
-          <ul class="flex flex-col">
-            <li>
-              <a href="#">About Us</a>
-            </li>
-            <li>
-              <a href="#">Contact Us</a>
-            </li>
-            <li>
-              <a href="#">Angel Academy</a>
-            </li>
-            <li>
-              <a href="#">FAQ</a>
-            </li>
-          </ul>
-        </div>
-        {{-- Row 3 --}}
-        <div class="flex flex-col text-white ml-6">
-          <h1 class="font-bold">
-            For Angels
-          </h1>
-          <ul class="flex flex-col">
-            <li>
-              <a href="#">About Us</a>
-            </li>
-            <li>
-              <a href="#">Contact Us</a>
-            </li>
-            <li>
-              <a href="#">Angel Academy</a>
-            </li>
-            <li>
-              <a href="#">FAQ</a>
-            </li>
-          </ul>
-        </div>
+        
         {{-- Socials --}}
         <div class="flex flex-col h-full  justify-between text-white ml-6">
             <span class="flex justify-end cursor-pointer" onclick="window.scrollTo({ top: 0, behavior: 'smooth' });">

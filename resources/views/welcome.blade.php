@@ -27,9 +27,9 @@
                 <h1 class="my-10 text-[1.5em]">
                     The nation’s first angel investment network created with a mission to nurture the innovation & entrepreneurship in Bangladesh, connecting them to both local & global investors.
                 </h1>
-                <button class="p-3 pl-4 pr-4 rounded-full bg-[#eefff1] font-bold text-[#36b37e]">
+                <a href="{{route('deals')}}" class="p-3 pl-4 pr-4 rounded-full bg-[#eefff1] font-bold text-[#36b37e]">
                     Invest in Startups
-                </button>
+                </a>
             </div>
         </div>
     </section>
@@ -79,9 +79,9 @@
                 <p class="text-[1.7em] text-[#777] mt-3">Take a look at our portfolio companies</p>
             </div>
             <div>
-                <button class="p-3 pl-4 pr-4 rounded-full bg-[#36b37e] font-bold text-white">
+                <a href="{{route('portfolio')}}" class="p-3 pl-4 pr-4 rounded-full bg-[#36b37e] font-bold text-white">
                     View All Portfolios
-                </button>
+                </a>
             </div>
         </div>
 
@@ -349,47 +349,6 @@
         <a href="#" class="p-6 border-box">
           <img src="{{asset('bangladesh venture capital.webp')}}" alt="bcv logo" class="h-[30px]">
         </a>
-      </div>
-    </section>
-    <section class="">
-      <div class="container flex flex-col w-[70%] justify-start p-4 mx-auto md:p-8">
-        <h2 class="mb-3 text-4xl font-bold leading-none text-left sm:text-5xl">FAQ</h2>
-        <p class="mb-12">
-          Got a question? We've got answers.
-        </p>
-        <div class="grid gap-10 md:gap-8 sm:p-3 md:grid-cols-3 lg:px-12 xl:px-32">
-          <div>
-            <h3 class="font-semibold">Who are angel investors? How is it different from a Venture Capital?</h3>
-            <p class="mt-1 text-gray-400">Angel investors are high-net-worth individuals and family offices who invest in early stage of businesses participating mostly in the seed round. Angel funding provides much needed high risk capital to the early stage companies, coming in along with or just subsequent to funding from friends and family. Angel investors </p>
-            <a href="#">Read more</a>
-          </div>
-          <div>
-            <h3 class="font-semibold">Why do I need Angel Investor?</h3>
-            <p class="mt-1 text-gray-400">A good angel investor, apart from providing financial capital- i.e. money- aids the business in multiple ways: being successful businessperson, s/he can provide you strategic input, can add value to the governance process as a board member, can help you navigate business and operational challenges through his/her establish </p>
-            <a href="#">Read more</a>
-          </div>
-          <div>
-            <h3 class="font-semibold">What are the sectors where the angel investors of the network will invest?</h3>
-            <p class="mt-1 text-gray-400">Our investors look at all stages of business and across all sectors from genuine start-ups to more established businesses. The key consideration is whether there are angel investors who have interest in the sector and they are convinced that such investment will yield them returns commensurate the Signiant  </p>
-            <a href="#">Read more</a>
-          </div>
-          <div>
-            <h3 class="font-semibold">What is the investment process like? How long does it take?</h3>
-            <p class="mt-1 text-gray-400">At the beginning of each quarter, the team will conduct an initial screen of prospects to assess the investment thesis based on some set criteria such as scale potential, team strength, business and revenue model, funding need.
-            </p>
-            <a href="#">Read more</a>
-          </div>
-          <div>
-            <h3 class="font-semibold">Are there any fees involved in submitting to the network?</h3>
-            <p class="mt-1 text-gray-400">As a rule, angel networks do not charge founders/entrepreneurs for submissions and solicitations. We will typically seek to get a 2-4% commission on funds raised in the form of success fee.</p>
-            <a href="#">Read more</a>
-          </div>
-          <div>
-            <h3 class="font-semibold">How do you look at valuations?</h3>
-            <p class="mt-1 text-gray-400">Valuing a startup, especially at the early stages without established track record, is quite difficult and requires application of significant judgement. At the stage at which angel investors participate, established valuation meth.. </p>
-            <a href="#">Read more</a>
-          </div>
-        </div>
       </div>
     </section>
     <livewire:footer></livewire:footer>
