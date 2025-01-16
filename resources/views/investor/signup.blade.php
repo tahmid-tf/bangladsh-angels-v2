@@ -1,7 +1,7 @@
 @extends('layouts.guest')
 @section('page_title','Sign up as an Investor')
 @section('page_content')
-<section class="bg-[#0a5554] py-12 text-white">
+<section class="bg-[#0a5554] rounded-3xl py-12 text-white">
     <!-- Hero Section -->
     <div class="container mx-auto px-6 lg:flex lg:items-center lg:space-x-12">
         <!-- Text Content -->
