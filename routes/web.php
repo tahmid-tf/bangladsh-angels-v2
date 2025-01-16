@@ -86,6 +86,8 @@ Route::middleware('auth')->group(function () {
         // Member Routes
         Route::prefix('members')->group(function () {
             Route::get('/', [AdminController::class, 'viewMembers'])->name('admin.members');
+            Route::get('/active', [AdminController::class, 'viewActiveMembers'])->name('admin.active.members');
+            Route::get('/inactive', [AdminController::class, 'viewInactiveMembers'])->name('admin.inactive.members');
             Route::get('/add', [AdminController::class, 'addMember'])->name('member.add');
             Route::post('/add/{approval}', [AdminController::class, 'createMember'])->name('member.create');
             Route::get('/{user:id}/edit', [AdminController::class, 'editMember'])->name('member.edit');

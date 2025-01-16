@@ -15,9 +15,10 @@
     <div class="flex flex-wrap items-center justify-between">
       <!-- Tabs -->
       <div class="flex space-x-4 mb-4 sm:mb-0">
-        <a href="{{route('admin.members')}}" class="px-4 py-2 bg-green-100 text-green-700 font-semibold rounded-lg">All</a>
+        <a href="{{route('admin.members')}}" class="px-4 py-2 text-gray-500 hover:text-green-700">All</a>
         <a href="{{route('admin.active.members')}}" class="px-4 py-2 text-gray-500 hover:text-green-700">Active</a>
-        <a href="{{route('admin.inactive.members')}}" class="px-4 py-2 text-gray-500 hover:text-green-700">Inactive</a>
+        <a href="{{route('admin.inactive.members')}}" class="px-4 py-2 bg-green-100 text-green-700 font-semibold rounded-lg">Inactive</a>
+
       </div>
 
       <!-- Role Filter and Search -->
