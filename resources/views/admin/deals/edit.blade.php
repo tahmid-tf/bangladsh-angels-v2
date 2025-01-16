@@ -140,15 +140,15 @@
         <div class="mt-6 space-y-4">
             <div>
                 <label for="pitch_deck_url" class="block text-sm font-semibold text-gray-700 mb-1">Pitch Deck URL *</label>
-                <input type="text" id="pitch_deck_url" name="pitch_deck_url" class="input-field" value="{{ old('pitch_deck_url', $deal->pitch_deck_url) }}" required>
+                <input type="text" id="pitch_deck_url" name="pitch_deck_url" class="input-field" value="{{ old('pitch_deck_url', $deal->pitch_deck_url) }}">
             </div>
             <div>
                 <label for="substack_link" class="block text-sm font-semibold text-gray-700 mb-1">Substack URL *</label>
-                <input type="text" id="substack_link" name="substack_link" class="input-field" value="{{ old('substack_link', $deal->substack_link) }}" required>
+                <input type="text" id="substack_link" name="substack_link" class="input-field" value="{{ old('substack_link', $deal->substack_link) }}">
             </div>
             <div>
                 <label for="action_link" class="block text-sm font-semibold text-gray-700 mb-1">Action Link *</label>
-                <input type="text" id="action_link" name="action_link" class="input-field" value="{{ old('action_link', $deal->action_link) }}" required>
+                <input type="text" id="action_link" name="action_link" class="input-field" value="{{ old('action_link', $deal->action_link) }}">
             </div>
         </div>
     </form>

@@ -383,9 +383,9 @@ class AdminController extends Controller
             'amount_seeking' => 'required|numeric|min:0',
             'description' => 'required|string',
             'logo' => 'nullable|image|max:3072',
-            'pitch_deck_url' => 'nullable|url',
-            'substack_link' => 'nullable|url',
-            'action_link' => 'nullable|url',
+            'pitch_deck_url' => 'nullable',
+            'substack_link' => 'nullable',
+            'action_link' => 'nullable',
         ]);
 
         $deal->update($validatedData);
