@@ -203,14 +203,14 @@
             @enderror
         </div>
         <div>
-            <label for="substack_link" class="block text-gray-700 font-semibold mb-2">Substack URL *</label>
+            <label for="substack_link" class="block text-gray-700 font-semibold mb-2">Substack Link</label>
             <input type="text" id="substack_link" name="substack_link" placeholder="Enter link here" class="input-field" value="{{ old('substack_link') }}" required>
             @error('substack_link')
                 <span class="text-red-500 text-sm">{{ $message }}</span>
             @enderror
         </div>
         <div>
-            <label for="action_link" class="block text-gray-700 font-semibold mb-2">Action Link *</label>
+            <label for="action_link" class="block text-gray-700 font-semibold mb-2">Action Link</label>
             <input type="text" id="action_link" name="action_link" placeholder="Enter link here" class="input-field" value="{{ old('action_link') }}" required>
             @error('action_link')
                 <span class="text-red-500 text-sm">{{ $message }}</span>

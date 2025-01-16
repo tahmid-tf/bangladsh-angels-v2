@@ -12,8 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('deals', function (Blueprint $table) {
-            $table->string('substack_link');
-            $table->string('action_link');
+            $table->string('substack_link')->nullable();
+            $table->string('action_link')->nullable();
             $table->softDeletes();
         });
     }
