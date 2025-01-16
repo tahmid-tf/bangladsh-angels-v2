@@ -196,7 +196,7 @@
             }
         </style>
         <div>
-            <label for="pitch_deck_url" class="block text-gray-700 font-semibold mb-2">Pitch Deck URL *</label>
+            <label for="pitch_deck_url" class="block text-gray-700 font-semibold mb-2">Pitch Deck URL </label>
             <input type="text" id="pitch_deck_url" name="pitch_deck_url" placeholder="Enter link here" class="input-field" value="{{ old('pitch_deck_url') }}">
             @error('pitch_deck_url')
                 <span class="text-red-500 text-sm">{{ $message }}</span>
