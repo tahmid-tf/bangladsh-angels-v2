@@ -71,6 +71,7 @@ class AdminController extends Controller
         if(auth()->user()->isAdmin()){
             $validator = Validator::make($request->all(), [
                 'full_name' => 'required|string|max:255',
+                'address' => 'required|string|max:255',
                 'email' => 'required|email|unique:users,email',
                 'phone' => 'required|string|max:20',
                 'gender' => 'required|in:male,female,other',
@@ -100,6 +101,7 @@ class AdminController extends Controller
             $user = User::create([
                 'name' => $request->full_name,
                 'email' => $request->email,
+                'address' => $request->address,
                 'password' => Hash::make($request->password), // Hash the password
                 'phone' => $phone,
                 'gender' => $request->gender,
@@ -134,6 +136,7 @@ class AdminController extends Controller
         $validator = Validator::make($request->all(), [
             'first_name' => 'required|string|max:255',
             'last_name' => 'required|string|max:255',
+            'address' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email',
             'phone' => 'required|string|max:20',
             'investment_expertise' => 'nullable|string',
@@ -168,6 +171,7 @@ class AdminController extends Controller
             'email' => $request->email,
             'password' => Hash::make($request->password), // Hash the password
             'phone' => $phone,
+            'address' => $request->address,
             'gender' => $request->gender,
             'organization' => $request->organization,
             'designation' => $request->designation,
