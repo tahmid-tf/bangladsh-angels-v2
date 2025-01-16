@@ -52,7 +52,17 @@
                 <label class="block text-gray-700 font-semibold mb-2" for="email">Email *</label>
                 <input type="email" id="email" name="email" placeholder="Email" class="w-full p-3 rounded-lg border-gray-300 shadow-sm focus:border-green-500 focus:ring focus:ring-green-200" value="{{ old('email') }}" required>
             </div>
-
+            <div>    
+                <label class="block text-gray-700 mt-3 font-semibold my-2" for="address">Billing Address *</label>
+                <input 
+                    type="text" 
+                    id="address"
+                    name="address" 
+                    placeholder="Address" 
+                    value="{{ auth()->user() && auth()->user()->address ? auth()->user()->address : old('address') }}" 
+                    class="w-full border rounded-md px-4 py-2 text-gray-700 focus:ring focus:ring-green-200"
+                >
+            </div>
             <!-- Password -->
             <div>
                 <label class="block text-gray-700 font-semibold mb-2" for="password">Password *</label>
@@ -86,7 +96,7 @@
             <!-- Primary Country -->
             <div>
                 <label class="block text-gray-700 font-semibold mb-2" for="primary_country">Country *</label>
-                <select id="primary_country" name="primary_country" class="w-full rounded-lg border-gray-300 shadow-sm focus:border-green-500 focus:ring focus:ring-green-200" required>
+                <select id="primary_country" name="primary_country" class="w-full p-3 rounded-lg border-gray-300 shadow-sm focus:border-green-500 focus:ring focus:ring-green-200" required>
                     <option value="">Select Primary Country</option>
                     <option value="Bangladesh" {{ old('primary_country') == 'Bangladesh' ? 'selected' : '' }}>Bangladesh</option>
                     <option value="India" {{ old('primary_country') == 'India' ? 'selected' : '' }}>India</option>
@@ -377,7 +387,6 @@
                 <input type="checkbox" class="rounded border-gray-300 text-green-500 focus:ring-green-400" name="terms" required>
                 <span class="text-gray-700">I agree to the <a href="#" class="text-green-500 underline">terms and conditions</a> and <a href="#" class="text-green-500 underline">privacy policy</a>.</span>
             </label>
-            
         </div>
 
         <!-- Submit Button -->

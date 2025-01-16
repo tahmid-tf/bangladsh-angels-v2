@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Subscription;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -34,37 +35,67 @@ class CheckoutController extends Controller
     {
         // Validate input data
         $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'phone' => 'required|string|max:20',
-            'email' => 'required|email',
+            'first_name' => 'required|string|max:255',
+            'last_name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email',
             'address' => 'required|string|max:255',
+            'phone' => 'required|string|max:20',
+            'country_code' => 'required|string',
+            'primary_country' => 'required|string|max:255',
+            'company_name' => 'required|string|max:255',
+            'designation' => 'required|string|max:255',
+            'gender' => 'required|in:male,female,other',
+            'investment_expertise' => 'required|in:beginner,intermediate,expert',
+            'linkedin' => 'required|url|max:255',
+            'password' => 'required|confirmed|min:8',
+            'profile_photo' => 'nullable',
             'plan' => 'required|string',
-            'price' => 'required|numeric',
-            'payment' => 'string',
+            'price' => 'required|numeric|min:0',
+            'payment' => 'nullable|string', // Default is "email"
         ]);
 
-        // Check if the user exists
+        // Check if the user already exists
         $user = User::firstOrCreate(
             ['email' => $validated['email']],
             [
-                'name' => $validated['name'],
-                'phone' => $validated['phone'],
-                'password' => Hash::make('defaultpassword'), // Set a default password
-                'address' => $validated['address'], // Assuming `address` field exists in the `users` table
+                'name' => $validated['first_name'] . ' ' . $validated['last_name'],
+                'phone' => $validated['country_code'] . $validated['phone'],
+                'address' => $validated['address'],
+                'primary_country' => $validated['primary_country'],
+                'company_name' => $validated['company_name'],
+                'designation' => $validated['designation'],
+                'gender' => $validated['gender'],
+                'investment_expertise' => $validated['investment_expertise'],
+                'linkedin' => $validated['linkedin'],
+                'password' => Hash::make($validated['password']),
             ]
         );
 
-        // If the user is not logged in, log them in
+        // Handle profile photo upload
+        if ($request->hasFile('profile_photo')) {
+            $user->addMediaFromRequest('profile_photo')->toMediaCollection('profile_photo');
+        }
+
+        // Log in the user if not already logged in
         if (!Auth::check()) {
             Auth::login($user);
         }
 
-        // Send the email
+        // Save subscription details
+        $subscription = Subscription::create([
+            'user_id' => $user->id,
+            'plan' => $validated['plan'],
+            'price' => $validated['price'],
+            'status' => 'pending', // Set initial status to pending
+        ]);
+
+        // Optionally send a confirmation email (commented out for now)
         // Mail::to($user->email)->send(new CheckoutConfirmation($user, $validated['plan'], $validated['price']));
-        
+
         // Redirect to a success page
-        return redirect()->route('checkout.success');
+        return redirect()->route('checkout.success')->with('success', 'Your subscription is being processed!');
     }
+
 
     
 

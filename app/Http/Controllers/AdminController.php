@@ -469,6 +469,21 @@ class AdminController extends Controller
         return redirect()->route('admin.members')->with('success', 'Member updated successfully.');
     }
 
+    public function updateAccountStatus(Request $request, User $user)
+    {
+        dd($request);
+        $id = $user->id;
+        $validatedData = $request->validate([
+            'account_status' => 'required|in:free,Core,Advanced,Institutional',
+        ]);
+    
+        $user->account_status = $validatedData['account_status'];
+        $user->save();
+    
+        // return response()->with('success','Account status updated successfully!',200);
+        return redirect()->route('admin.members')->with('success', 'Account Status updated successfully.');
+    }
+
     public function showDeal(Deal $deal)
     {
         $otherDeals = $deal->getOtherDeals(5); // Fetch 5 other deals

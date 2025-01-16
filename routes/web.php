@@ -91,6 +91,8 @@ Route::middleware('auth')->group(function () {
             Route::get('/{user:id}/edit', [AdminController::class, 'editMember'])->name('member.edit');
             Route::post('/{user:id}/edit', [AdminController::class, 'updateMember'])->name('member.update');
             Route::get('/{user:id}/remove', [AdminController::class, 'removeMember'])->name('member.remove');
+            Route::patch('/update-status/{user:id}/', [AdminController::class, 'updateAccountStatus'])->name('update.account.status');
+
         });
 
         // Deal Routes

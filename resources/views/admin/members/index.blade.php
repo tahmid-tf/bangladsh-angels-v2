@@ -58,11 +58,13 @@
               <th class="px-6 py-4 font-medium text-gray-600">Subscription</th>
               <th class="px-6 py-4 font-medium text-gray-600">Payment Status</th>
               <th class="px-6 py-4 font-medium text-gray-600">Edit</th>
+              <th class="px-6 py-4 font-medium text-gray-600">Status</th>
           </tr>
       </thead>
       <tbody>
           @foreach ($users as $user)
-          <tr class="border-t">
+          @if ($user->id!==auth()->user()->id)
+            <tr class="border-t">
               <td class="px-6 py-4">
                   <div class="flex items-center space-x-4">
                       <img src="{{ $user->getProfilePhotoUrl() }}" alt="Profile" class="rounded-full w-10 h-10">
@@ -93,7 +95,44 @@
                   <svg class="h-[25px]" fill="#999" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 117.74 122.88" style="enable-background:new 0 0 117.74 122.88" xml:space="preserve"><style type="text/css">.st0{fill-rule:evenodd;clip-rule:evenodd;}</style><g><path class="st0" d="M94.62,2c-1.46-1.36-3.14-2.09-5.02-1.99c-1.88,0-3.56,0.73-4.92,2.2L73.59,13.72l31.07,30.03l11.19-11.72 c1.36-1.36,1.88-3.14,1.88-5.02s-0.73-3.66-2.09-4.92L94.62,2L94.62,2L94.62,2z M41.44,109.58c-4.08,1.36-8.26,2.62-12.35,3.98 c-4.08,1.36-8.16,2.72-12.35,4.08c-9.73,3.14-15.07,4.92-16.22,5.23c-1.15,0.31-0.42-4.18,1.99-13.6l7.74-29.61l0.64-0.66 l30.56,30.56L41.44,109.58L41.44,109.58L41.44,109.58z M22.2,67.25l42.99-44.82l31.07,29.92L52.75,97.8L22.2,67.25L22.2,67.25z"/></g></svg>
                 </a>
               </td>
+              <td>
+                
+              <form id="status-form" method="POST" action="{{route('update.account.status',$user->id)}}">
+                  @csrf
+                  @method('PATCH')
+                  <input type="hidden" name="user_id" id="user_id" value="{{$user->id}}">
+                  <input type="hidden" name="account_status" id="account_status">
+                  <label class="relative inline-flex cursor-pointer items-center">
+                      <input 
+                          id="switch" 
+                          type="checkbox" 
+                          class="peer sr-only" 
+                          onchange="submitStatusForm(this)"
+                          {{ $user->account_status !== 'free' ? 'checked' : '' }}
+                      />
+                      <div class="peer h-6 w-11 rounded-full border bg-slate-200 after:absolute after:left-[2px] after:top-0.5 after:h-5 after:w-5 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-slate-800 peer-checked:after:translate-x-full peer-checked:after:border-white peer-focus:ring-green-300"></div>
+                  </label>
+              </form>
+              <script>
+                function submitStatusForm(checkbox) {
+                const form = document.getElementById('status-form');
+                const accountStatusInput = document.getElementById('account_status');
+
+                if (checkbox.checked) {
+                    accountStatusInput.value = 'core'; // Set the status when the switch is ON
+                } else {
+                    accountStatusInput.value = 'free'; // Set the status when the switch is OFF
+                }
+
+                form.submit(); // Submit the form
+            }
+
+              </script>
+              
+              </td>
           </tr>
+          @endif
+          
           @endforeach
       </tbody>
   </table>
