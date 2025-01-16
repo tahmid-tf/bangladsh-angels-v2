@@ -197,21 +197,21 @@
         </style>
         <div>
             <label for="pitch_deck_url" class="block text-gray-700 font-semibold mb-2">Pitch Deck URL *</label>
-            <input type="text" id="pitch_deck_url" name="pitch_deck_url" placeholder="Enter link here" class="input-field" value="{{ old('pitch_deck_url') }}" required>
+            <input type="text" id="pitch_deck_url" name="pitch_deck_url" placeholder="Enter link here" class="input-field" value="{{ old('pitch_deck_url') }}">
             @error('pitch_deck_url')
                 <span class="text-red-500 text-sm">{{ $message }}</span>
             @enderror
         </div>
         <div>
             <label for="substack_link" class="block text-gray-700 font-semibold mb-2">Substack Link</label>
-            <input type="text" id="substack_link" name="substack_link" placeholder="Enter link here" class="input-field" value="{{ old('substack_link') }}" required>
+            <input type="text" id="substack_link" name="substack_link" placeholder="Enter link here" class="input-field" value="{{ old('substack_link') }}">
             @error('substack_link')
                 <span class="text-red-500 text-sm">{{ $message }}</span>
             @enderror
         </div>
         <div>
             <label for="action_link" class="block text-gray-700 font-semibold mb-2">Action Link</label>
-            <input type="text" id="action_link" name="action_link" placeholder="Enter link here" class="input-field" value="{{ old('action_link') }}" required>
+            <input type="text" id="action_link" name="action_link" placeholder="Enter link here" class="input-field" value="{{ old('action_link') }}">
             @error('action_link')
                 <span class="text-red-500 text-sm">{{ $message }}</span>
             @enderror
