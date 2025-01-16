@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PrimaryController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\InvestmentController;
+use App\Http\Controllers\SubscriptionController;
 use App\Http\Controllers\CheckoutController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
@@ -83,11 +84,18 @@ Route::middleware('auth')->group(function () {
     Route::prefix('admin')->group(function () {
         Route::get('/dashboard', AdminController::class)->name('admin.dashboard');
         
+        // Subscription Routes
+        Route::prefix('subscriptions')->group(function () {
+            Route::get('/', SubscriptionController::class)->name('admin.subscriptions');
+
+        });
+
         // Member Routes
         Route::prefix('members')->group(function () {
             Route::get('/', [AdminController::class, 'viewMembers'])->name('admin.members');
             Route::get('/active', [AdminController::class, 'viewActiveMembers'])->name('admin.active.members');
             Route::get('/inactive', [AdminController::class, 'viewInactiveMembers'])->name('admin.inactive.members');
+            
             Route::get('/add', [AdminController::class, 'addMember'])->name('member.add');
             Route::post('/add/{approval}', [AdminController::class, 'createMember'])->name('member.create');
             Route::get('/{user:id}/edit', [AdminController::class, 'editMember'])->name('member.edit');
