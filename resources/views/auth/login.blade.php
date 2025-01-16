@@ -27,7 +27,7 @@
             class="flex items-center justify-center px-8 py-8 sm:px-12 lg:col-span-7 lg:px-16 lg:py-12 xl:col-span-6"
         >
             <div class="max-w-xl lg:max-w-3xl">
-                <a class="block text-blue-600" href="#">
+                <a href="{{route('home')}}" class="block text-blue-600" href="#">
                     <img src="{{ asset('logo.webp') }}" class="h-[70px]" alt="logo">
                 </a>
 
