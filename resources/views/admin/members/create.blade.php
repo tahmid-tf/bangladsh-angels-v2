@@ -15,7 +15,6 @@
       <p class="text-gray-500">Dashboard > Members > Add new member</p>
     </div>
     <div class="flex space-x-4">
-      <button class="px-4 py-2 bg-gray-200 text-gray-600 rounded-lg shadow">Save as Draft</button>
       <button type="submit" id="add-member-btn" class="px-4 py-2 bg-green-600 text-white rounded-lg shadow hover:bg-green-700">Add Member</button>
     </div>
   </header>
@@ -319,7 +318,17 @@
             <option value="other" {{ old('gender') == 'other' ? 'selected' : '' }}>Other</option>
           </select>
         </div>
-
+        <div>    
+          <label class="block text-gray-700 mt-3 font-semibold my-2" for="address">Billing Address *</label>
+          <input 
+              type="text" 
+              id="address"
+              name="address" 
+              placeholder="Address" 
+              value="{{ old('address') }}" 
+              class="w-full border rounded-md px-4 py-2 text-gray-700 focus:ring focus:ring-green-200"
+          >
+        </div>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
           <input type="text" name="organization" placeholder="Organization" class="border border-gray-300 p-2 rounded w-full" value="{{ old('organization') }}">
           <input type="text" name="designation" placeholder="Designation" class="border border-gray-300 p-2 rounded w-full" value="{{ old('designation') }}">

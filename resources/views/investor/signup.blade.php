@@ -59,7 +59,7 @@
                     id="address"
                     name="address" 
                     placeholder="Address" 
-                    value="{{ auth()->user() && auth()->user()->address ? auth()->user()->address : old('address') }}" 
+                    value="{{ old('address') }}" 
                     class="w-full border rounded-md px-4 py-2 text-gray-700 focus:ring focus:ring-green-200"
                 >
             </div>
