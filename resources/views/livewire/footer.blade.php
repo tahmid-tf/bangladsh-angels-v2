@@ -39,7 +39,7 @@
       <div class="flex flex-row my-6 justify-between text-white">
         <small>© Bangladesh Angels. All rights reserved.</small>
         <div class="flex flex-row justify-between">
-          <a href="#" class="underline mx-2">Terms & Conditions</a>
+          <a href="{{asset('MoU.pdf')}}" class="underline mx-2">Terms & Conditions</a>
         </div>
       </div>
     </section>
