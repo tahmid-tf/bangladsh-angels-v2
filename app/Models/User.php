@@ -10,6 +10,7 @@ use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use App\Models\Investment;
 use App\Models\Subscription;
+use App\Models\Commit;
 
 
 class User extends Authenticatable implements HasMedia
@@ -167,6 +168,11 @@ class User extends Authenticatable implements HasMedia
 
         // Return the formatted string
         return "{$year} Q{$quarter}";
+    }
+
+    public function commits()
+    {
+        return $this->hasMany(Commit::class);
     }
 
     public function investments()

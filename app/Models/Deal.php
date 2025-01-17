@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use App\Models\Investment;
+use App\Models\Commit;
 
 class Deal extends Model implements HasMedia
 {
@@ -86,6 +87,11 @@ class Deal extends Model implements HasMedia
     public function investments()
     {
         return $this->hasMany(Investment::class, 'deal_id');
+    }
+
+    public function commits()
+    {
+        return $this->hasMany(Commit::class);
     }
 
     public function investorsCount()

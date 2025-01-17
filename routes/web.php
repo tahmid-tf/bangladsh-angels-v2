@@ -121,6 +121,12 @@ Route::middleware('auth')->group(function () {
             Route::post('/add', [AdminController::class, 'storeDeal'])->name('deal.store');
         });
 
+       
+        // Investment Controller
+        Route::prefix('investments')->group(function(){
+            Route::get('/',InvestmentController::class)->name('admin.investments');
+        });
+
     });
 
     /**
@@ -130,6 +136,12 @@ Route::middleware('auth')->group(function () {
         Route::get('/', [ProfileController::class, 'edit'])->name('profile.edit');
         Route::patch('/', [ProfileController::class, 'update'])->name('profile.update');
         Route::delete('/', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    });
+
+    // Investment
+    Route::prefix('investments')->group(function () {
+        Route::get('/{deal:id}/commit', [InvestmentController::class, 'commitForm'])->name('deal.commit.form');
+        Route::post('/{deal:id}/commit', [InvestmentController::class, 'commit'])->name('deal.commit');
     });
 });
 

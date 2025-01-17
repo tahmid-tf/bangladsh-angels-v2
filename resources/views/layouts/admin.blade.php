@@ -25,6 +25,7 @@
         <a href="{{route('admin.members')}}" class="block py-2 px-6 hover:bg-green-600">Members</a>
         <a href="{{route('admin.deals')}}" class="block py-2 px-6 hover:bg-green-600">Deals</a>
         <a href="{{route('admin.subscriptions')}}" class="block py-2 px-6 hover:bg-green-600">Subscriptions</a>
+        <a href="{{route('admin.investments')}}" class="block py-2 px-6 hover:bg-green-600">Investments</a>
      
     </nav>
     </aside>

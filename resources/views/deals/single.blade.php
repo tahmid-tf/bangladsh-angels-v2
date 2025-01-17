@@ -1,7 +1,28 @@
 @extends('layouts.investor')
 @section('page_title','Deals | Bangladesh Angels Network Limited')
 @section('page_content')
-<section class="bg-[#0a5554] py-12">
+<section class="bg-[#0a5554] py-12 rounded-3xl border-box w-[95%]">
+    @if ($errors->any())
+        <div class="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 mb-4">
+            <p class="font-bold">Whoops! Something went wrong.</p>
+            <ul class="mt-2 list-disc list-inside">
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+    @if (session('error'))
+        <div class="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 mb-4">
+            {{ session('error') }}
+        </div>
+    @endif
+
+    @if (session('success'))
+        <div class="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 mb-4">
+            {{ session('success') }}
+        </div>
+    @endif
     <!-- Hero Section -->
     <div class="container mx-auto px-6 lg:flex lg:items-center text-white">
         <!-- Left Content -->
@@ -20,20 +41,24 @@
                     <p class="text-lg font-semibold">$ {{$deal->amount_seeking}}</p>
                 </div>
             </div>
-            @if ($deal->type!=="invest")
-            <a href="{{$deal->action_link}}" class="px-6 py-3 bg-green-600 text-white font-semibold rounded-lg hover:bg-green-700 transition">
-                {{ucfirst($deal->type)}}
+            <a href="{{$deal->pitch_deck_url}}" class="my-6 px-6 py-2 bg-gray-200 text-gray-700 font-semibold rounded-lg shadow hover:bg-gray-300">
+                View Pitch Deck
             </a>
-            @endif
+            <form action="{{route('deal.invest', $deal->id)}}" class="mt-6" method="POST">
+                @csrf
+                <input type="text" name="user_id" value="{{auth()->id()}}" hidden id="user_id">
+                <input type="text" name="deal_id" value="{{$deal->id}}" hidden id="deal_id">
+                <input type="submit" value="{{ucfirst($deal->type)}}" class="px-6 py-3 bg-green-600 text-white font-semibold rounded-lg hover:bg-green-700 transition">
+            </form>
+            
+            
             
         </div>
 
         <!-- Right Content -->
-        <div class="lg:w-1/2 mt-6 lg:mt-0">
+        <div class="lg:w-1/2 lg:mt-0">
             <img src="{{$deal->getCoverUrl()}}" alt="Jatri Image" class="w-full h-auto rounded-lg shadow-md">
-            <a href="{{$deal->pitch_deck_url}}" class="mt-4 px-6 py-2 bg-gray-200 text-gray-700 font-semibold rounded-lg shadow hover:bg-gray-300">
-                View Pitch Deck
-            </a>
+            
         </div>
     </div>
 </section>
