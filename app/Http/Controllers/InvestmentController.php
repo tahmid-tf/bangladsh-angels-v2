@@ -12,7 +12,7 @@ class InvestmentController extends Controller
 {
     public function __invoke()
     {
-        $investments = Investment::all();
+        $investments = Investment::with('deal')->get();
         return view('admin.investments.index',compact('investments'));
     }
 
@@ -84,5 +84,24 @@ class InvestmentController extends Controller
             'deadline' => $request->deadline,
         ]);
         return redirect()->route('deal.view',$deal->id)->with('success', 'Commitment recorded successfully!');
+    }
+
+    public function viewInvest()
+    {
+        $investments = Investment::with('deal')->where('type','invest')->get();
+        return view('admin.investments.invest_index', compact('investments'));
+    }
+
+
+    public function viewCommit()
+    {
+        $investments = Investment::with('deal')->where('type','commit')->get();
+        return view('admin.investments.commit_index', compact('investments'));
+    }
+
+    public function viewReview()
+    {
+        $investments = Investment::with('deal')->where('type','review')->get();
+        return view('admin.investments.review_index', compact('investments'));
     }
 }

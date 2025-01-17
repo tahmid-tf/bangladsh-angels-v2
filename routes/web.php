@@ -140,6 +140,11 @@ Route::middleware('auth')->group(function () {
 
     // Investment
     Route::prefix('investments')->group(function () {
+
+        Route::get('/type/invest', [InvestmentController::class, 'viewInvest'])->name('investment.type.invest');
+        Route::get('/type/commit', [InvestmentController::class, 'viewCommit'])->name('investment.type.commit');
+        Route::get('/type/review', [InvestmentController::class, 'viewReview'])->name('investment.type.review');
+
         Route::get('/{deal:id}/commit', [InvestmentController::class, 'commitForm'])->name('deal.commit.form');
         Route::post('/{deal:id}/commit', [InvestmentController::class, 'commit'])->name('deal.commit');
     });
