@@ -9,47 +9,31 @@
 
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         @foreach($deals as $deal)
-        <div class="bg-white rounded-lg shadow-md p-6">
-            <!-- Company Image -->
-            <a href="{{route('deal.view', $deal->id)}}">
-                <div class="rounded-lg overflow-hidden mb-6">
-                    <img src="{{ $deal->getCoverUrl() }}" alt="{{ $deal->title }}" class="w-full h-48 object-cover">
-                </div>
-            </a>
-            
-        
-            <!-- Deal Header -->
-            <div class="flex items-center mb-4">
-                <div class="h-12 w-12 rounded-full bg-yellow-100 flex items-center justify-center text-yellow-500 text-lg font-bold">
-                    <img src="{{ $deal->getLogoUrl() }}" alt="{{ $deal->title }}" class="h-10 w-10 rounded-full border">
-                </div>
-                <div class="ml-4">
-                    <h3 class="text-xl font-bold">{{ $deal->title }}</h3>
-                    <span class="text-sm text-green-600 font-semibold px-2 py-1 bg-green-100 rounded-full">{{ $deal->sector }}</span>
-                </div>
-            </div>
-        
-            <!-- Description -->
-            <p class="text-gray-600 mb-4 leading-relaxed">
-                {{ \Illuminate\Support\Str::limit($deal->description, 200) }}
-            </p>
-        
-            <!-- Key Metrics -->
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-4 text-center">
-                @foreach($deal->getKeyMetrics() as $metric)
-                <div class="flex flex-col items-center bg-gray-100 rounded-lg p-4">
-                    <span class="text-green-600 text-lg font-semibold">{{ $metric['value'] }}</span>
-                    <span class="text-sm text-gray-600">{{ $metric['name'] }}</span>
-                </div>
-                @endforeach
-            </div>
-        
-            <!-- CTA Button -->
-            <div class="mt-6">
-                <a href="{{ $deal->pitch_deck_url }}" target="_blank" class="px-6 py-2 bg-green-600 text-white rounded shadow hover:bg-green-700 transition">
-                    View Pitch Deck
+        <div class="flex flex-col justify-between bg-white rounded-lg shadow-md overflow-hidden">
+            <div class="flex flex-col p-4">
+                <a href="{{ route('deal.view', $deal->id) }}">
+                    <img src="{{ $deal->getCoverUrl() }}" alt="Deal Image" class="w-full h-40 object-cover">
                 </a>
+                <div class="flex items-center mt-6 justify-between">
+                    <h2 class="text-lg font-bold">{{ $deal->title }}</h2>
+                    <span class="bg-gray-200 text-xs px-2 py-1 rounded-full">{{ ucfirst($deal->sector) }}</span>
+                </div>
+                <p class="text-gray-500 text-sm mt-2">
+                    {{ $deal->description }}
+                </p>
+                <div class="flex justify-between items-center mt-4 text-sm">
+                    <div class="text-center">
+                        <p class="text-gray-400">Investment Stage</p>
+                        <p class="font-semibold">{{ $deal->investment_stage }}</p>
+                    </div>
+                    <div class="text-center">
+                        <p class="text-gray-400">Amount Seeking</p>
+                        <p class="font-semibold">$ {{ $deal->amountSeeking() }}</p>
+                    </div>
+                </div>
             </div>
+            
+            <a href="{{route('deal.view', $deal->id)}}" class="px-6 text-center w-full mt-6 py-3 bg-green-600 text-white font-semibold rounded-lg hover:bg-green-700 transition">View Portfolio</a>
         </div>
         
         @endforeach

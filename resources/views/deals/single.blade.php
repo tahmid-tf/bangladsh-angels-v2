@@ -44,12 +44,15 @@
             <a href="{{$deal->pitch_deck_url}}" class="my-6 px-6 py-2 bg-gray-200 text-gray-700 font-semibold rounded-lg shadow hover:bg-gray-300">
                 View Pitch Deck
             </a>
-            <form action="{{route('deal.invest', $deal->id)}}" class="mt-6" method="POST">
+            @if ($deal->type!=="portfolio")
+                <form action="{{route('deal.invest', $deal->id)}}" class="mt-6" method="POST">
                 @csrf
-                <input type="text" name="user_id" value="{{auth()->id()}}" hidden id="user_id">
-                <input type="text" name="deal_id" value="{{$deal->id}}" hidden id="deal_id">
-                <input type="submit" value="{{ucfirst($deal->type)}}" class="px-6 py-3 bg-green-600 text-white font-semibold rounded-lg hover:bg-green-700 transition">
-            </form>
+                    <input type="text" name="user_id" value="{{auth()->id()}}" hidden id="user_id">
+                    <input type="text" name="deal_id" value="{{$deal->id}}" hidden id="deal_id">
+                    <input type="submit" value="{{ucfirst($deal->type)}}" class="px-6 py-3 bg-green-600 text-white font-semibold rounded-lg hover:bg-green-700 transition">
+                </form>
+            @endif
+            
             
             
             
