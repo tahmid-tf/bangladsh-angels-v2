@@ -44,7 +44,7 @@ class InvestmentController extends Controller
         ]);
 
         if($deal->type=="invest"){
-            return back()->with('success', 'Investment recorded successfully! You will receive investment details from the lead investment analyst shortly');
+            return back()->with('success', 'Investment recorded! You will receive investment details from the lead investment analyst shortly');
         } elseif($deal->type=="commit"){
             return redirect()->route('deal.commit.form',$deal->id);
         } elseif($deal->type=="review") {

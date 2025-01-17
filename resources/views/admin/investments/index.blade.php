@@ -8,9 +8,9 @@
             <h1 class="text-2xl font-bold">Investments ({{count($investments)}})</h1>
             <p class="text-gray-500">Dashboard &gt; Deals</p>
         </div>
-        <a href="{{route('deal.add')}}" class="px-4 py-2 bg-green-600 text-white rounded-lg shadow hover:bg-green-700">
-            + Add new deal
-        </a>
+        {{-- <a href="{{route('investment.add')}}" class="px-4 py-2 bg-green-600 text-white rounded-lg shadow hover:bg-green-700">
+            + Add new Investment
+        </a> --}}
     </header>
 
     <!-- Filters -->
