@@ -29,6 +29,10 @@ class InvestmentController extends Controller
         ->first();
 
         if ($existingInvestment) {
+            // Exception for Review Deals
+            if($deal->type=="review"){
+                return redirect()->to($deal->action_link);
+            }
             return back()->with('error', 'You have already invested in this deal.');
         }
 
@@ -69,6 +73,7 @@ class InvestmentController extends Controller
         ->first();
 
         if ($existingCommit) {
+            
             return redirect()->route('deal.view',$deal->id)->with('error', 'You have already committed to this deal.');
         }
 
