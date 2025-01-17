@@ -75,7 +75,7 @@
                     @csrf
                     <input type="text" name="user_id" value="{{auth()->id()}}" hidden id="user_id">
                     <input type="text" name="deal_id" value="{{$deal->id}}" hidden id="deal_id">
-                    <input type="submit" value="{{ucfirst($deal->type)}}" class="px-6 py-3 bg-green-600 text-white font-semibold rounded-lg hover:bg-green-700 transition">
+                    <input type="submit" value="{{ucfirst($deal->type)}}" class="px-6 w-full mt-6 py-3 bg-green-600 text-white font-semibold rounded-lg hover:bg-green-700 transition">
                 </form>
                 
             </form>
