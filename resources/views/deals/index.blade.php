@@ -76,9 +76,12 @@
                         {{ucfirst($deal->type)}}
                     </a>    
                 @else
-                    <button type="submit" class="w-full mt-4 bg-[#36b37e] text-white py-2 rounded-full font-semibold hover:bg-green-600 transition">
-                        Invest
-                    </button>
+                <form action="{{route('deal.invest', $deal->id)}}" class="mt-6" method="POST">
+                    @csrf
+                    <input type="text" name="user_id" value="{{auth()->id()}}" hidden id="user_id">
+                    <input type="text" name="deal_id" value="{{$deal->id}}" hidden id="deal_id">
+                    <input type="submit" value="{{ucfirst($deal->type)}}" class="px-6 py-3 bg-green-600 text-white font-semibold rounded-lg hover:bg-green-700 transition">
+                </form>
                 @endif
                 
             </form>
