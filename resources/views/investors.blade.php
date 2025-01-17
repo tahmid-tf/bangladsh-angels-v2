@@ -7,14 +7,7 @@
         Join a Global network of over 450 executives and operators who have built and expanded companies all over the world.
     </p>
 
-    <!-- Filters -->
-    <div class="flex justify-center space-x-4 mb-8">
-        <button class="px-4 py-2 bg-green-600 text-white rounded-lg shadow hover:bg-green-700">All</button>
-        <button class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300">Fintech</button>
-        <button class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300">Technology</button>
-        <button class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300">Healthcare</button>
-        <button class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300">Finance and Banking</button>
-    </div>
+    
 
     <!-- Cards -->
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
