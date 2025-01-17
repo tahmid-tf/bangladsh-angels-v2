@@ -50,7 +50,7 @@
             <a href="{{ route('deal.view', $deal->id) }}">
                 <img src="{{ $deal->getCoverUrl() }}" alt="Deal Image" class="w-full h-40 object-cover">
             </a>
-            <div class="flex items-center justify-between">
+            <div class="flex items-center mt-6 justify-between">
                 <h2 class="text-lg font-bold">{{ $deal->title }}</h2>
                 <span class="bg-gray-200 text-xs px-2 py-1 rounded-full">{{ ucfirst($deal->sector) }}</span>
             </div>
