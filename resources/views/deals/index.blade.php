@@ -49,8 +49,9 @@
         <a href="{{ route('deal.view', $deal->id) }}">
             <img src="{{ $deal->getCoverUrl() }}" alt="Deal Image" class="w-full h-40 object-cover">
         </a>
-        <div class="p-4">
-            <div class="flex items-center justify-between">
+        <div class="flex flex-col justify-between p-4">
+            <div>
+                <div class="flex items-center justify-between">
                 <h2 class="text-lg font-bold">{{ $deal->title }}</h2>
                 <span class="bg-gray-200 text-xs px-2 py-1 rounded-full">{{ ucfirst($deal->sector) }}</span>
             </div>
@@ -67,6 +68,8 @@
                     <p class="font-semibold">$ {{ $deal->amountSeeking() }}</p>
                 </div>
             </div>
+            </div>
+            
             <form method="POST" action="{{ route('deal.invest',$deal->id) }}" onsubmit="return confirm('Are you sure you want to perform this action?');">
                 @csrf
                 <input type="hidden" name="deal_id" value="{{ $deal->id }}">
