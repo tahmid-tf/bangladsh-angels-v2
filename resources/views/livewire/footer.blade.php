@@ -12,7 +12,7 @@
           <ul class="flex flex-col">
             
             <li>
-              <a href="#">Contact Us</a>
+              <a href="mailto:hello@bdangels.co">Contact Us</a>
             </li>
             <li>
               <a href="{{route('faq')}}">FAQ</a>
