@@ -19,11 +19,11 @@ return new class extends Migration
             $table->date('last_renewed_at')->nullable();
             $table->string('account_owner')->nullable();
             $table->string('primary_contact')->nullable();
-            $table->decimal('total_invested', 15, 2)->default(0.00);
-            $table->decimal('revenue_generated', 15, 2)->default(0.00);
+            $table->decimal('total_invested', 15, 2)->default(0.00)->nullable();
+            $table->decimal('revenue_generated', 15, 2)->default(0.00)->nullable();
             $table->text('notes')->nullable();
-            $table->boolean('is_overseas')->default(false);
-            $table->boolean('was_referred')->default(false);
+            $table->boolean('is_overseas')->default(false)->nullable();
+            $table->boolean('was_referred')->default(false)->nullable();
             $table->string('referred_by')->nullable();
         
             $table->renameColumn('strategic_investment_analyst', 'secondary_contact');
@@ -43,7 +43,7 @@ return new class extends Migration
                 'level',
                 'was_referred',
                 'last_renewed_at',
-                'priamry_contact',
+                'primary_contact',
                 'account_owner',
                 'total_invested',
                 'revenue_generated',
