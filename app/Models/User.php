@@ -26,6 +26,7 @@ class User extends Authenticatable implements HasMedia
     protected $fillable = [
         'name',
         'gender',
+        'primary_country',
         'primary_contact',
         'secondary_contact',
         'preference_sector',
@@ -39,6 +40,7 @@ class User extends Authenticatable implements HasMedia
         'last_renewed_at',
         'account_owner',
         'total_invested',
+        'company_name',
         'revenue_generated',
         'notes',
         'status',
