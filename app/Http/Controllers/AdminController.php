@@ -480,7 +480,7 @@ class AdminController extends Controller
             'phone' => $request->phone,
             'gender' => $request->gender,
             'account_status' => $request->account_status,
-            'account_level' => $request->account_level,
+            'level' => $request->account_level,
             'company_name' => $request->organization,
             'designation' => $request->designation,
             'primary_contact' => $request->primary_contact,

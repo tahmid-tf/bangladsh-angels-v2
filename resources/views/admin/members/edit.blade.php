@@ -377,9 +377,9 @@
                     <label for="account_level" class="block font-semibold text-gray-700">Account Level</label>
                     <select id="account_level" name="account_level" class="border border-gray-300 p-2 rounded w-full">
                         <option value="">Select Account Level</option>
-                        <option value="emerald" {{ old('account_level', $user->account_level) == 'emerald' ? 'selected' : '' }}>Emerald</option>
-                        <option value="ruby" {{ old('account_level', $user->account_level) == 'ruby' ? 'selected' : '' }}>Ruby</option>
-                        <option value="diamond" {{ old('account_level', $user->account_level) == 'diamond' ? 'selected' : '' }}>Diamond</option>
+                        <option value="emerald" {{ old('account_level', $user->level) == 'emerald' ? 'selected' : '' }}>Emerald</option>
+                        <option value="ruby" {{ old('account_level', $user->level) == 'ruby' ? 'selected' : '' }}>Ruby</option>
+                        <option value="diamond" {{ old('account_level', $user->level) == 'diamond' ? 'selected' : '' }}>Diamond</option>
                     </select>
                 </div>
                 <div>
