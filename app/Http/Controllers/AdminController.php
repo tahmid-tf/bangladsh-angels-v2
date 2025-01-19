@@ -28,7 +28,7 @@ class AdminController extends Controller
     public function viewMembers()
     {
         if(auth()->user()->isAdmin()){
-            $users = User::with('media')-get(); // Retrieve all users
+            $users = User::with('media')->get(); // Retrieve all users
             return view('admin.members.index', compact('users'));
         } else {
             return redirect()->route('home');
