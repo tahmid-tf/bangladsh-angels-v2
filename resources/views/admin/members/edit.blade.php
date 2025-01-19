@@ -72,7 +72,7 @@
                 <label for="country" class="block font-semibold text-gray-700">Country</label>
                 <select id="country" name="primary_country" required class="border border-gray-300 p-2 rounded w-full">
                     
-                    <option disabled value="{{$user->primary_country}}">{{ $user->primary_country }}</option>
+                    <option value="{{$user->primary_country}}">{{ $user->primary_country }}</option>
                     <optgroup label="Countries">
                         <option value="Afghanistan">Afghanistan</option>
                         <option value="Åland Islands">Åland Islands</option>
