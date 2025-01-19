@@ -52,6 +52,7 @@ class User extends Authenticatable implements HasMedia
         'is_approved',
         'website_link',
         'secondary_countries',
+        'password',
         'investment_expertise',
         'account_status',
         'payment_status',

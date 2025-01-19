@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\DB;
 
 return new class extends Migration
 {
@@ -12,21 +13,26 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('users', function (Blueprint $table) {
+            // Add new columns
             $table->string('registered_by')->nullable();
-            $table->enum('used_by',['individuai','institutional','co-members'])->nullable();
-            $table->enum('level',['emerald','ruby','diamond'])->nullable();
+            $table->string('used_by')->nullable();
+            $table->text('level')->nullable();
             $table->string('renewed')->nullable();
-            $table->date('last_renewed_at')->nullable();
+            $table->string('last_renewed_at')->nullable();
+            $table->string('gender')->nullable();
             $table->string('account_owner')->nullable();
             $table->string('primary_contact')->nullable();
-            $table->decimal('total_invested', 15, 2)->default(0.00)->nullable();
-            $table->decimal('revenue_generated', 15, 2)->default(0.00)->nullable();
+            
+            // // Use decimal for precision and scale
+            $table->text('total_invested')->nullable();
+            $table->text('revenue_generated')->nullable();
+    
+            // // Add other columns
             $table->text('notes')->nullable();
-            $table->boolean('is_overseas')->default(false)->nullable();
-            $table->boolean('was_referred')->default(false)->nullable();
+            $table->boolean('is_overseas')->default(false);
+            $table->boolean('was_referred')->default(false);
             $table->string('referred_by')->nullable();
-        
-            $table->renameColumn('strategic_investment_analyst', 'secondary_contact');
+    
         });
     }
 
@@ -41,6 +47,7 @@ return new class extends Migration
                 'used_by',
                 'renewed',
                 'level',
+                'gender',
                 'was_referred',
                 'last_renewed_at',
                 'primary_contact',
@@ -51,7 +58,6 @@ return new class extends Migration
                 'is_overseas',
                 'referred_by'
             ]);
-            $table->renameColumn('secondary_contact', 'strategic_investment_analyst');
         });
     }
 };
