@@ -450,17 +450,23 @@ class AdminController extends Controller
             'email' => 'required|email|unique:users,email,' . $user->id, // Ignore the current user's email
             'phone' => 'required|string|max:20',
             'account_status' => 'required|string',
+            'account_level' => 'required|in:emerald,ruby,diamond',
             'gender' => 'required|in:male,female,other',
             'organization' => 'nullable|string|max:255',
             'designation' => 'nullable|string|max:255',
-            'joining_date' => 'nullable|date',
-            'renewed' => 'nullable|string|max:255',
+            'primary_contact' => 'nullable|string|max:255',
+            'secondary_contact' => 'nullable|string|max:255',
             'primary_country' => 'required|string|max:100',
             'preference_sector' => 'nullable|string|max:255',
-            'strategic_analyst' => 'nullable|in:TL,FS,TB',
+            'was_referred' => 'required|boolean',
+            'referred_by' => 'nullable|string|max:255|required_if:was_referred,1', // Validate if referred
+            'renewed' => 'nullable|string|max:255',
+            'last_renewed_at' => 'nullable|date',
+            'total_invested' => 'nullable|numeric|min:0',
+            'revenue_generated' => 'nullable|numeric|min:0',
             'profile_photo' => 'nullable|image|max:3072', // Max size: 3MB
-            'company_name.*' => 'nullable|string|max:255',
-            'investment_amount.*' => 'nullable|numeric|min:0',
+            'notes' => 'nullable|string|max:5000',
+            'status' => 'nullable|string|max:255',
         ]);
 
         if ($validator->fails()) {
@@ -474,13 +480,20 @@ class AdminController extends Controller
             'phone' => $request->phone,
             'gender' => $request->gender,
             'account_status' => $request->account_status,
+            'account_level' => $request->account_level,
             'company_name' => $request->organization,
             'designation' => $request->designation,
-            'joining_date' => $request->joining_date,
-            'renewed' => $request->renewed,
+            'primary_contact' => $request->primary_contact,
+            'secondary_contact' => $request->secondary_contact,
             'primary_country' => $request->primary_country,
             'preference_sector' => $request->preference_sector,
-            'strategic_analyst' => $request->strategic_analyst
+            'was_referred' => $request->was_referred,
+            'referred_by' => $request->was_referred ? $request->referred_by : null,
+            'renewed' => $request->renewed,
+            'last_renewed_at' => $request->last_renewed_at,
+            'total_invested' => $request->total_invested,
+            'revenue_generated' => $request->revenue_generated,
+            'notes' => $request->notes,
         ]);
 
         // Handle profile photo update
@@ -492,6 +505,7 @@ class AdminController extends Controller
         // Redirect with a success message
         return redirect()->route('admin.members')->with('success', 'Member updated successfully.');
     }
+
 
     public function updateAccountStatus(Request $request, User $user)
     {

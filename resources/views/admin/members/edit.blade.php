@@ -1,10 +1,8 @@
 @extends('layouts.admin')
 @section('page_title', 'Edit Member | Bangladesh Angels Network')
 @section('page_content')
-<form id="edit-member-form" class="bg-white p-6 rounded-lg shadow space-y-6" method="POST" action="{{route('member.update',$user->id)}}" enctype="multipart/form-data">
+<form id="edit-member-form" class="bg-white p-6 rounded-lg shadow space-y-6" method="POST" action="{{ route('member.update', $user->id) }}" enctype="multipart/form-data">
     @csrf
-    {{-- @method('PUT') <!-- Use PUT for updating the user --> --}}
-
     <header class="flex justify-between items-center mb-6">
         <div>
             <h1 class="text-2xl font-bold">Edit Member</h1>
@@ -29,8 +27,9 @@
     @endif
 
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <!-- Left: Upload Photo and Active Status -->
+        <!-- Left: Profile Photo and Active Status -->
         <div class="space-y-6">
+            <!-- Profile Photo -->
             <div class="text-center border-dashed border-2 border-gray-300 rounded-lg p-6">
                 <label class="block cursor-pointer">
                     <div class="mb-4">
@@ -41,44 +40,37 @@
                     <p class="text-gray-400 text-xs">Allowed: *.jpeg, *.png, *.gif (Max: 3.1 MB)</p>
                 </label>
             </div>
-
-            <div class="flex items-center space-x-2">
-                <span class="text-sm text-gray-600">Active Status</span>
-                <input type="checkbox" name="active_status" class="toggle-input" {{ $user->active_status ? 'checked' : '' }}>
-            </div>
         </div>
 
         <!-- Middle: General Information -->
         <div class="space-y-4 lg:col-span-2">
+            <!-- Basic Details -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <input type="text" name="full_name" placeholder="Full Name" class="border border-gray-300 p-2 rounded w-full" value="{{ old('full_name', $user->name) }}" required>
-                <input type="email" name="email" placeholder="Email Address" class="border border-gray-300 p-2 rounded w-full" value="{{ old('email', $user->email) }}" required>
-                <input type="text" name="phone" placeholder="Phone Number / WhatsApp" class="border border-gray-300 p-2 rounded w-full" value="{{ old('phone', $user->phone) }}" required>
-                <select name="gender" class="border border-gray-300 p-2 rounded w-full" required>
-                    <option value="">Gender</option>
-                    <option value="male" {{ old('gender', $user->gender) == 'male' ? 'selected' : '' }}>Male</option>
-                    <option value="female" {{ old('gender', $user->gender) == 'female' ? 'selected' : '' }}>Female</option>
-                    <option value="other" {{ old('gender', $user->gender) == 'other' ? 'selected' : '' }}>Other</option>
-                </select>
+                <div>
+                    <label for="full_name" class="block font-semibold text-gray-700">Full Name</label>
+                    <input type="text" id="full_name" name="full_name" placeholder="Full Name" class="border border-gray-300 p-2 rounded w-full" value="{{ old('full_name', $user->name) }}" required>
+                </div>
+                <div>
+                    <label for="email" class="block font-semibold text-gray-700">Email Address</label>
+                    <input type="email" id="email" name="email" placeholder="Email Address" class="border border-gray-300 p-2 rounded w-full" value="{{ old('email', $user->email) }}" required>
+                </div>
+                <div>
+                    <label for="phone" class="block font-semibold text-gray-700">Phone Number / WhatsApp</label>
+                    <input type="text" id="phone" name="phone" placeholder="Phone Number / WhatsApp" class="border border-gray-300 p-2 rounded w-full" value="{{ old('phone', $user->phone) }}" required>
+                </div>
+                <div>
+                    <label for="gender" class="block font-semibold text-gray-700">Gender</label>
+                    <select id="gender" name="gender" class="border border-gray-300 p-2 rounded w-full" required>
+                        <option value="">Gender</option>
+                        <option value="male" {{ old('gender', $user->gender) == 'male' ? 'selected' : '' }}>Male</option>
+                        <option value="female" {{ old('gender', $user->gender) == 'female' ? 'selected' : '' }}>Female</option>
+                        <option value="other" {{ old('gender', $user->gender) == 'other' ? 'selected' : '' }}>Other</option>
+                    </select>
+                </div>
             </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <input type="text" name="organization" placeholder="Organization" class="border border-gray-300 p-2 rounded w-full" value="{{ $user->company_name }}">
-                <input type="text" name="designation" placeholder="Designation" class="border border-gray-300 p-2 rounded w-full" value="{{ old('designation', $user->designation) }}">
-                {{-- <input type="date" name="joining_date" placeholder="Joining Date" class="border border-gray-300 p-2 rounded w-full" value="{{ $user->created_at }}"> --}}
-                <select name="account_status" id="" class="border border-gray-300 p-2 rounded w-full">
-                    <option disabled value="{{$user->account_status}}">{{ ucfirst($user->account_status) }}</option>
-                    <optgroup label="Tiers">
-                        <option value="free">Free</option>
-                        <option value="core">Core</option>
-                        <option value="advanced">Advanced</option>
-                        <option value="institutional">Institutional</option>
-                    </optgroup>
-                </select>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <select id="country" name="primary_country" required class="form-control">
+            <div>
+                <label for="country" class="block font-semibold text-gray-700">Country</label>
+                <select id="country" name="primary_country" required class="border border-gray-300 p-2 rounded w-full">
                     <option value="Afghanistan">Afghanistan</option>
                     <option value="Åland Islands">Åland Islands</option>
                     <option value="Albania">Albania</option>
@@ -324,31 +316,103 @@
                     <option value="Zambia">Zambia</option>
                     <option value="Zimbabwe">Zimbabwe</option>
                 </select>
-                <input type="text" name="preference_sector" placeholder="Preference Sector" class="border border-gray-300 p-2 rounded w-full" value="{{ old('preference_sector', $user->preference_sector) }}">
-                <select name="strategic_analyst" class="border border-gray-300 p-2 rounded w-full">
-                    <option disabled value="{{$user->strategic_investment_analyst}}">{{ ($user->strategic_investment_analyst) ? ucfirst($user->strategic_investment_analyst) : "Select" }}</option>
-                    <option value="TL" {{ old('strategic_investment_analyst', $user->strategic_investment_analyst) == 'TL' ? 'selected' : '' }}>TL</option>
-                    <option value="FS" {{ old('strategic_investment_analyst', $user->strategic_investment_analyst) == 'FS' ? 'selected' : '' }}>FS</option>
-                    <option value="TB" {{ old('strategic_investment_analyst', $user->strategic_investment_analyst) == 'TB' ? 'selected' : '' }}>TB</option>
-                </select>
+                <label for="preference_sector" class="block font-semibold text-gray-700 mt-3">Preference Sector</label>
+                <input type="text" id="preference_sector" name="preference_sector" placeholder="Preference Sector" class="border border-gray-300 p-2 rounded w-full" value="{{ old('preference_sector', $user->preference_sector) }}">
+            </div>
+            <!-- Membership and Contact Details -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                    <label for="organization" class="block font-semibold text-gray-700">Organization</label>
+                    <input type="text" id="organization" name="organization" placeholder="Organization" class="border border-gray-300 p-2 rounded w-full" value="{{ $user->company_name }}">
+                </div>
+                <div>
+                    <label for="designation" class="block font-semibold text-gray-700">Designation</label>
+                    <input type="text" id="designation" name="designation" placeholder="Designation" class="border border-gray-300 p-2 rounded w-full" value="{{ old('designation', $user->designation) }}">
+                </div>
+                <div>
+                    <label for="account_status" class="block font-semibold text-gray-700">Account Status</label>
+                    <select id="account_status" name="account_status" class="border border-gray-300 p-2 rounded w-full">
+                        <option disabled value="{{ $user->account_status }}">{{ ucfirst($user->account_status) }}</option>
+                        <optgroup label="Tiers">
+                            <option value="free">Free</option>
+                            <option value="core">Core</option>
+                            <option value="advanced">Advanced</option>
+                            <option value="institutional">Institutional</option>
+                        </optgroup>
+                    </select>
+                </div>
+                <div class="mb-4">
+                    <label for="total_invested" class="block font-semibold text-gray-700">Total Invested (USD)</label>
+                    <input 
+                        type="number" 
+                        id="total_invested" 
+                        name="total_invested" 
+                        placeholder="Enter total invested amount" 
+                        class="border border-gray-300 p-2 rounded w-full" 
+                        value="{{ old('total_invested', $user->total_invested) }}" 
+                        step="0.01" 
+                        min="0" 
+                        required>
+                </div>
+                <div class="mb-4">
+                    <label for="revenue_generated" class="block font-semibold text-gray-700">Revenue Generated (USD)</label>
+                    <input 
+                        type="number" 
+                        id="revenue_generated" 
+                        name="revenue_generated" 
+                        placeholder="Enter total revenue generated" 
+                        class="border border-gray-300 p-2 rounded w-full" 
+                        value="{{ old('revenue_generated', $user->revenue_generated) }}" 
+                        step="0.01" 
+                        min="0" 
+                        required>
+                </div>
+                                
+                <div>
+                    <label for="account_level" class="block font-semibold text-gray-700">Account Level</label>
+                    <select id="account_level" name="account_level" class="border border-gray-300 p-2 rounded w-full">
+                        <option value="">Select Account Level</option>
+                        <option value="emerald" {{ old('account_level', $user->account_level) == 'emerald' ? 'selected' : '' }}>Emerald</option>
+                        <option value="ruby" {{ old('account_level', $user->account_level) == 'ruby' ? 'selected' : '' }}>Ruby</option>
+                        <option value="diamond" {{ old('account_level', $user->account_level) == 'diamond' ? 'selected' : '' }}>Diamond</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="primary_contact" class="block font-semibold text-gray-700">Primary Contact</label>
+                    <input type="text" id="primary_contact" name="primary_contact" placeholder="Primary Contact" class="border border-gray-300 p-2 rounded w-full" value="{{ old('primary_contact', $user->primary_contact) }}">
+                </div>
+                <div>
+                    <label for="secondary_contact" class="block font-semibold text-gray-700">Secondary Contact</label>
+                    <input type="text" id="secondary_contact" name="secondary_contact" placeholder="Secondary Contact (e.g., Analyst)" class="border border-gray-300 p-2 rounded w-full" value="{{ old('secondary_contact', $user->secondary_contact) }}">
+                </div>
+            </div>
+
+            <!-- Referred By -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                    <label for="was_referred" class="block font-semibold text-gray-700">Was Referred</label>
+                    <select id="was_referred" name="was_referred" class="border border-gray-300 p-2 rounded w-full" onchange="toggleReferredByInput(this)">
+                        <option value="0" {{ old('was_referred', $user->was_referred) == 0 ? 'selected' : '' }}>Not Referred</option>
+                        <option value="1" {{ old('was_referred', $user->was_referred) == 1 ? 'selected' : '' }}>Referred</option>
+                    </select>
+                </div>
+                <div id="referred_by_container" style="display: {{ old('was_referred', $user->was_referred) == 1 ? 'block' : 'none' }};">
+                    <label for="referred_by" class="block font-semibold text-gray-700">Referred By</label>
+                    <input type="text" id="referred_by" name="referred_by" placeholder="Referred By" class="border border-gray-300 p-2 rounded w-full" value="{{ old('referred_by', $user->referred_by) }}">
+                </div>
             </div>
         </div>
     </div>
-
-   
 </form>
 
 <script>
-    // Add another company
-    document.getElementById('add-company-btn').addEventListener('click', () => {
-        const container = document.getElementById('portfolio-container');
-        const newField = `
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <input type="text" name="company_name[]" placeholder="Enter Company Name" class="border border-gray-300 p-2 rounded w-full">
-                <input type="number" name="investment_amount[]" placeholder="Enter Amount" class="border border-gray-300 p-2 rounded w-full">
-            </div>
-        `;
-        container.insertAdjacentHTML('beforeend', newField);
-    });
+    function toggleReferredByInput(select) {
+        const referredByContainer = document.getElementById('referred_by_container');
+        if (select.value == "1") {
+            referredByContainer.style.display = "block";
+        } else {
+            referredByContainer.style.display = "none";
+        }
+    }
 </script>
 @endsection
