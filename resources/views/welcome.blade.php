@@ -13,63 +13,62 @@
 <livewire:navigation-bar></livewire:navigation-bar>
 <body class="flex flex-col items-center mt-[150px] w-full justify-center">
   
-    {{-- Hero --}}
-    <section class="flex justify-center">
-        <div class="flex w-full h-[70vh] py-[120px] justify-center items-center" style="background-image: url('{{ asset('world_map_4x.webp') }}');">
-            <img src="{{asset('landing.png')}}" alt="coverphoto" draggable="false">
-            <div class="p-3 ml-6 w-1/3">
-                <h1 class="text-[1.5em] font-bold">
-                    Accelerate your Startup
-                </h1>
-                <h1 class="text-[3em] leading-none font-bold mt-5">
-                    Elevating Entrepreneurs<br>in Bangladesh
-                </h1>
-                <h1 class="my-10 text-[1.5em]">
-                    The nation’s first angel investment network created with a mission to nurture the innovation & entrepreneurship in Bangladesh, connecting them to both local & global investors.
-                </h1>
-                <a href="{{route('deals')}}" class="p-3 pl-4 pr-4 rounded-full bg-[#eefff1] font-bold text-[#36b37e]">
-                    Invest in Startups
-                </a>
-            </div>
+  <section class="flex justify-center">
+    <div class="flex flex-col md:flex-row w-full h-auto md:h-[70vh] py-[60px] md:py-[120px] justify-center items-center bg-cover bg-center" style="background-image: url('{{ asset('world_map_4x.webp') }}');">
+        <img src="{{ asset('landing.png') }}" alt="coverphoto" draggable="false" class="w-3/4 md:w-auto mb-6 md:mb-0">
+        <div class="p-3 md:ml-6 w-full md:w-1/3 text-center md:text-left">
+            <h1 class="text-[1.2em] md:text-[1.5em] font-bold">
+                Accelerate your Startup
+            </h1>
+            <h1 class="text-[2em] md:text-[3em] leading-none font-bold mt-5">
+                Elevating Entrepreneurs<br>in Bangladesh
+            </h1>
+            <p class="my-6 text-[1em] md:text-[1.5em]">
+                The nation’s first angel investment network created with a mission to nurture the innovation & entrepreneurship in Bangladesh, connecting them to both local & global investors.
+            </p>
+            <a href="{{ route('deals') }}" class="p-3 px-6 rounded-full bg-[#eefff1] font-bold text-[#36b37e]">
+                Invest in Startups
+            </a>
         </div>
-    </section>
-   
-    {{-- Meet the investors --}}
-    <div class="flex w-full flex-col justify-center items-center p-6 bg-gradient-to-b from-green-50 pt-[200px] border-box to-white">
-        <h1 class="text-[3em] font-bold">
-            Meet the Investors
-        </h1>
-        <p class="mt-3 text-center text-[1.5em]">
-            Join a Global network of over 450 executives and operators<br>who have built and expanded companies in all parts of the world.
-        </p>
-        <div class="flex p-3 mt-6">
-            <div class="flex flex-col">
-                <img src="{{asset('investors/1.png')}}" class="rounded-lg h-[200px] w-auto my-4 shadow-md" alt="">
-                <img src="{{asset('investors/2.png')}}" class="rounded-lg h-[200px] w-auto my-4 shadow-md" alt="">
-            </div>
-
-            <div class="flex flex-col mt-16 ml-6">
-                <img src="{{asset('investors/3.png')}}" class="rounded-lg h-[200px] w-auto my-4 shadow-md" alt="">
-                <img src="{{asset('investors/4.png')}}" class="rounded-lg h-[200px] w-auto my-4 shadow-md" alt="">
-            </div>
-
-            <div class="flex flex-col ml-6">
-                <img src="{{asset('investors/5.png')}}" class="rounded-lg h-[200px] w-auto my-4 shadow-md" alt="">
-                <img src="{{asset('investors/6.png')}}" class="rounded-lg h-[200px] w-auto my-4 shadow-md" alt="">
-            </div>
-
-            <div class="flex flex-col mt-16 ml-6">
-                <img src="{{asset('investors/7.png')}}" class="rounded-lg h-[200px] w-auto my-4 shadow-md" alt="">
-                <img src="{{asset('investors/8.png')}}" class="rounded-lg h-[200px] w-auto my-4 shadow-md" alt="">
-            </div>
-
-            <div class="flex flex-col ml-6">
-                <img src="{{asset('investors/9.png')}}" class="rounded-lg h-[200px] w-auto my-4 shadow-md" alt="">
-                <img src="{{asset('investors/10.png')}}" class="rounded-lg h-[200px] w-auto my-4 shadow-md" alt="">
-            </div>
-        </div>
-        
     </div>
+  </section>
+
+   
+  <div class="flex w-full flex-col justify-center items-center p-6 bg-gradient-to-b from-green-50 pt-[100px] md:pt-[200px] border-box to-white">
+    <h1 class="text-[2em] md:text-[3em] font-bold text-center">
+        Meet the Investors
+    </h1>
+    <p class="mt-3 text-center text-[1em] md:text-[1.5em]">
+        Join a Global network of over 450 executives and operators<br class="hidden md:block">who have built and expanded companies in all parts of the world.
+    </p>
+    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-6 p-3 mt-6">
+        <div class="flex flex-col items-center">
+            <img src="{{ asset('investors/1.png') }}" class="rounded-lg h-auto max-h-[200px] w-auto shadow-md" alt="">
+            <img src="{{ asset('investors/2.png') }}" class="rounded-lg h-auto max-h-[200px] w-auto shadow-md mt-4" alt="">
+        </div>
+
+        <div class="flex flex-col items-center mt-0 md:mt-16">
+            <img src="{{ asset('investors/3.png') }}" class="rounded-lg h-auto max-h-[200px] w-auto shadow-md" alt="">
+            <img src="{{ asset('investors/4.png') }}" class="rounded-lg h-auto max-h-[200px] w-auto shadow-md mt-4" alt="">
+        </div>
+
+        <div class="flex flex-col items-center">
+            <img src="{{ asset('investors/5.png') }}" class="rounded-lg h-auto max-h-[200px] w-auto shadow-md" alt="">
+            <img src="{{ asset('investors/6.png') }}" class="rounded-lg h-auto max-h-[200px] w-auto shadow-md mt-4" alt="">
+        </div>
+
+        <div class="flex flex-col items-center mt-0 md:mt-16">
+            <img src="{{ asset('investors/7.png') }}" class="rounded-lg h-auto max-h-[200px] w-auto shadow-md" alt="">
+            <img src="{{ asset('investors/8.png') }}" class="rounded-lg h-auto max-h-[200px] w-auto shadow-md mt-4" alt="">
+        </div>
+
+        <div class="flex flex-col items-center">
+            <img src="{{ asset('investors/9.png') }}" class="rounded-lg h-auto max-h-[200px] w-auto shadow-md" alt="">
+            <img src="{{ asset('investors/10.png') }}" class="rounded-lg h-auto max-h-[200px] w-auto shadow-md mt-4" alt="">
+        </div>
+    </div>
+</div>
+
 
     {{-- Portfolio Companies --}}
     <section class="flex mt-[6em] flex-col w-full justify-center items-center">
