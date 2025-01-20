@@ -48,7 +48,7 @@ class AdminController extends Controller
     public function viewInactiveMembers()
     {
         if(auth()->user()->isAdmin()){
-            $users = User::with('media')->where('account_status','!=','free')->paginate(10); // Retrieve all users
+            $users = User::with('media')->where('account_status','free')->paginate(10); // Retrieve all users
             return view('admin.members.inactive_index', compact('users'));
         } else {
             return redirect()->route('home');
