@@ -18,18 +18,8 @@ class AdminController extends Controller
         if(auth()->user()->isAdmin()){
             $users = User::all(); // Retrieve all users
             $deals = Deal::all(); // Retrieve all deals
-            
-            $memberCounts = User::selectRaw('DATE(created_at) as date, COUNT(*) as count')
-                ->groupBy('date')
-                ->orderBy('date', 'asc')
-                ->get();
 
-            // Prepare data for the chart
-            $dates = $memberCounts->pluck('date'); // Array of dates
-            $counts = $memberCounts->pluck('count'); // Array of counts
-
-
-            return view('admin.index', compact('users','deals','dates','counts'));
+            return view('admin.index', compact('users','deals'));
         } else {
             return redirect()->route('home');
         }
