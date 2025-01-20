@@ -41,315 +41,227 @@
     <p class="mt-3 text-center text-[1em] md:text-[1.5em]">
         Join a Global network of over 450 executives and operators<br class="hidden md:block">who have built and expanded companies in all parts of the world.
     </p>
-    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-6 p-3 mt-6">
-        <div class="flex flex-col items-center">
-            <img src="{{ asset('investors/1.png') }}" class="rounded-lg h-auto max-h-[200px] w-auto shadow-md" alt="">
-            <img src="{{ asset('investors/2.png') }}" class="rounded-lg h-auto max-h-[200px] w-auto shadow-md mt-4" alt="">
-        </div>
+    <div class="grid  grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-6 p-3 mt-6">
+            <div class="flex flex-col items-center">
+                <img src="{{ asset('investors/1.png') }}" class="rounded-lg h-auto max-h-[200px] w-auto shadow-md" alt="">
+                <img src="{{ asset('investors/2.png') }}" class="rounded-lg h-auto max-h-[200px] w-auto shadow-md mt-4" alt="">
+            </div>
 
-        <div class="flex flex-col items-center mt-0 md:mt-16">
-            <img src="{{ asset('investors/3.png') }}" class="rounded-lg h-auto max-h-[200px] w-auto shadow-md" alt="">
-            <img src="{{ asset('investors/4.png') }}" class="rounded-lg h-auto max-h-[200px] w-auto shadow-md mt-4" alt="">
-        </div>
+            <div class="flex flex-col items-center mt-0 md:mt-16">
+                <img src="{{ asset('investors/3.png') }}" class="rounded-lg h-auto max-h-[200px] w-auto shadow-md" alt="">
+                <img src="{{ asset('investors/4.png') }}" class="rounded-lg h-auto max-h-[200px] w-auto shadow-md mt-4" alt="">
+            </div>
 
-        <div class="flex flex-col items-center">
-            <img src="{{ asset('investors/5.png') }}" class="rounded-lg h-auto max-h-[200px] w-auto shadow-md" alt="">
-            <img src="{{ asset('investors/6.png') }}" class="rounded-lg h-auto max-h-[200px] w-auto shadow-md mt-4" alt="">
-        </div>
+            <div class="flex flex-col items-center">
+                <img src="{{ asset('investors/5.png') }}" class="rounded-lg h-auto max-h-[200px] w-auto shadow-md" alt="">
+                <img src="{{ asset('investors/6.png') }}" class="rounded-lg h-auto max-h-[200px] w-auto shadow-md mt-4" alt="">
+            </div>
 
-        <div class="flex flex-col items-center mt-0 md:mt-16">
-            <img src="{{ asset('investors/7.png') }}" class="rounded-lg h-auto max-h-[200px] w-auto shadow-md" alt="">
-            <img src="{{ asset('investors/8.png') }}" class="rounded-lg h-auto max-h-[200px] w-auto shadow-md mt-4" alt="">
-        </div>
+            <div class="flex flex-col items-center mt-0 md:mt-16">
+                <img src="{{ asset('investors/7.png') }}" class="rounded-lg h-auto max-h-[200px] w-auto shadow-md" alt="">
+                <img src="{{ asset('investors/8.png') }}" class="rounded-lg h-auto max-h-[200px] w-auto shadow-md mt-4" alt="">
+            </div>
 
-        <div class="flex flex-col items-center">
-            <img src="{{ asset('investors/9.png') }}" class="rounded-lg h-auto max-h-[200px] w-auto shadow-md" alt="">
-            <img src="{{ asset('investors/10.png') }}" class="rounded-lg h-auto max-h-[200px] w-auto shadow-md mt-4" alt="">
+            <div class="flex flex-col items-center">
+                <img src="{{ asset('investors/9.png') }}" class="rounded-lg h-auto max-h-[200px] w-auto shadow-md" alt="">
+                <img src="{{ asset('investors/10.png') }}" class="md:block hidden rounded-lg h-auto max-h-[200px] w-auto shadow-md mt-4" alt="">
+            </div>
+            <div class="flex flex-col items-center">
+              <img src="{{ asset('investors/10.png') }}" class="md:hidden rounded-lg h-auto max-h-[200px] w-auto shadow-md mt-4" alt="">
+            </div>
         </div>
     </div>
-</div>
 
 
     {{-- Portfolio Companies --}}
-    <section class="flex mt-[6em] flex-col w-full justify-center items-center">
-        <div class="flex w-[68vw] flex-row justify-between items-center">
-            <div class="flex flex-col justify-start">
-                <h1 class="text-[3em] font-bold leading-none">Portfolio Companies</h1>
-                <p class="text-[1.7em] text-[#777] mt-3">Take a look at our portfolio companies</p>
-            </div>
-            <div>
-                <a href="{{route('portfolio')}}" class="p-3 pl-4 pr-4 rounded-full bg-[#36b37e] font-bold text-white">
-                    View All Portfolios
-                </a>
-            </div>
-        </div>
-
-        <div class="flex w-[70vw]">
-            <livewire:portfolio-company></livewire:portfolio-company>
-            <livewire:portfolio-company></livewire:portfolio-company>
-            <livewire:portfolio-company></livewire:portfolio-company>
-            
-        </div>
+    <section class="flex mt-[6em] flex-col w-full justify-center items-center px-4">
+      <!-- Header Section -->
+      <div class="flex flex-col md:flex-row w-full md:w-[68vw] justify-between items-center">
+          <div class="flex flex-col justify-start mb-4 md:mb-0 text-center md:text-left">
+              <h1 class="text-[2em] md:text-[3em] font-bold leading-none">Portfolio Companies</h1>
+              <p class="text-[1em] md:text-[1.7em] text-[#777] mt-3">
+                  Take a look at our portfolio companies
+              </p>
+          </div>
+          <div>
+              <a href="{{route('portfolio')}}" class="p-3 px-6 rounded-full bg-[#36b37e] font-bold text-white">
+                  View All Portfolios
+              </a>
+          </div>
+      </div>
+  
+      <!-- Portfolio Grid -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 md:gap-6 w-[90%] md:w-[70vw] mt-6">
+          <livewire:portfolio-company></livewire:portfolio-company>
+          <livewire:portfolio-company></livewire:portfolio-company>
+          <livewire:portfolio-company></livewire:portfolio-company>
+      </div>
     </section>
+  
+  
     {{-- Pitch your Startup --}}
-    <section class="flex mt-[6em] flex-row w-full p-[100px] border-box justify-between items-center">
-        <div class="flex flex-col justify-between w-[1/2] h-full">
-            <span class="flex flex-col">
-                <h1 class="text-[3em] font-bold leading-none">Pitch your Startup</h1>
-                <p class="mt-6">
-                    The network looks to invest between Taka 80 Lakhs to 5 Crores in innovative, high-growth companies. We welcome entrepreneurs from all backgrounds including first time entrepreneurs or those who have failed in their earlier attempts. Here’s what we look for:
-                </p>
-            </span>
-            
-
-            <button class="p-3 w-1/4 shadow-md shadow-gray-200 mt-10 pl-4 pr-4 rounded-full bg-[#eefff1] font-bold text-[#36b37e]">
-                Send Your Pitch
-            </button>
-        </div>
-        <div class="flex flex-col w-[1/2]">
-            <img src="{{asset('team.webp')}}" alt="team photo">
-        </div>
+    <section class="flex flex-col-reverse md:flex-row mt-[6em] w-full p-6 md:p-[100px] border-box justify-between items-center">
+      <!-- Text Content -->
+      <div class="flex flex-col justify-between w-full md:w-[1/2] h-full text-center md:text-left">
+          <span class="flex flex-col">
+              <h1 class="text-[2em] md:text-[3em] font-bold leading-none">Pitch your Startup</h1>
+              <p class="mt-6 text-[1em] md:text-[1.2em]">
+                  The network looks to invest between Taka 80 Lakhs to 5 Crores in innovative, high-growth companies. 
+                  We welcome entrepreneurs from all backgrounds, including first-time entrepreneurs or those who have 
+                  failed in their earlier attempts. Here’s what we look for:
+              </p>
+          </span>
+          <button class="p-3 px-6 shadow-md shadow-gray-200 mt-6 md:mt-10 rounded-full bg-[#eefff1] font-bold text-[#36b37e] self-center md:self-start">
+              Send Your Pitch
+          </button>
+      </div>
+  
+      <!-- Image Section -->
+      <div class="flex flex-col w-full md:w-[1/2] mb-6 md:mb-0">
+          <img src="{{ asset('team.webp') }}" alt="team photo" class="w-full h-auto max-h-[300px] md:max-h-[500px] object-cover rounded-lg">
+      </div>
     </section>
+  
     @auth
       {{-- Deal Listings --}}
-    <section class="flex mt-[6em] flex-col w-full bg-[#00877a] py-[200px] border-box text-white  border-box justify-center items-center">
-      <h1 class="text-[3em] font-bold">
-          Deal Listings
-      </h1>
-      <p class="my-10 text-[1.5em]">
-          Live Details to review and invest today!
-      </p>
-      <div class="flex flex-row w-[70vw] justify-between">
-          <button>
-              <img src="{{asset('icons/disabled previous btn.webp')}}" class="1/4 h-[6em]" alt="previous btn">
-          </button>
-          <div class="w-1/3 m-3 z-0">
-              <a href="#" class="group relative block rounded-lg overflow-hidden">
-                  
-                
-                  <img
-                    src="https://images.unsplash.com/photo-1628202926206-c63a34b1618f?q=80&w=2574&auto=format&fit=crop"
-                    alt=""
-                    class="h-64 w-full object-cover transition duration-500 group-hover:scale-105 sm:h-72"
-                  />
-                  <div class="ml-3 absolute top-[15em] flex items-center">
-                      <img class="h-10 w-10 -mx-1.5 ring ring-white rounded-full object-cover" src="https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=4&w=880&h=880&q=100" alt="">
-                      <img class="h-10 w-10 -mx-1.5 ring ring-white rounded-full object-cover" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=4&w=687&h=687&q=80" alt="">
-                      <img class="h-10 w-10 -mx-1.5 ring ring-white rounded-full object-cover" src="https://images.unsplash.com/photo-1464863979621-258859e62245?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=4&w=686&h=686&q=80" alt="">
-                      <img class="h-10 w-10 -mx-1.5 ring ring-white rounded-full object-cover" src="https://images.unsplash.com/photo-1485178575877-1a13bf489dfe?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=4&w=1401&h=1401&q=80" alt="">
-                      <img class="h-10 w-10 -mx-1.5 ring ring-white rounded-full object-cover" src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=4&w=880&h=880&q=80" alt="">
-                  </div>
-                  <div class="flex flex-col border w-full border-gray-100 bg-white p-6 border-box">
-                    <div class="flex w-full">
-                      <p class="flex w-1/3 text-gray-400 bg-gray-100 font-bold text-[0.7em] justify-center self-start rounded-full p-3">
-                          Audio Technology
-                      </p>
-                      <p class="flex w-1/3 text-gray-400 bg-gray-100 font-bold text-[0.7em] justify-center self-start rounded-full p-3">
-                      Artifical Intelligence
-                      </p>
+      <section class="flex flex-col mt-[6em] w-full bg-[#00877a] py-[100px] md:py-[200px] text-white justify-center items-center">
+        <h1 class="text-[2em] md:text-[3em] font-bold text-center">
+            Deal Listings
+        </h1>
+        <p class="my-6 text-[1em] md:text-[1.5em] text-center">
+            Live Details to review and invest today!
+        </p>
+    
+        <div class="flex flex-wrap items-center justify-between w-full max-w-[90%] md:max-w-[70vw] mt-6 gap-6">
+            <!-- Previous Button -->
+            <button class="flex-shrink-0">
+                <img src="{{asset('icons/disabled previous btn.webp')}}" class="h-[3em] md:h-[6em]" alt="previous btn">
+            </button>
+    
+            <!-- Deal Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 w-full">
+                <div class="group relative block rounded-lg overflow-hidden bg-white shadow-md">
+                    <img
+                        src="https://images.unsplash.com/photo-1628202926206-c63a34b1618f?q=80&w=2574&auto=format&fit=crop"
+                        alt=""
+                        class="h-40 md:h-64 w-full object-cover transition duration-500 group-hover:scale-105"
+                    />
+                    <div class="absolute top-[8em] md:top-[15em] left-3 flex items-center">
+                        <img class="h-8 w-8 md:h-10 md:w-10 -mx-1.5 ring ring-white rounded-full object-cover" src="https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=4&w=880&h=880&q=100" alt="">
+                        <img class="h-8 w-8 md:h-10 md:w-10 -mx-1.5 ring ring-white rounded-full object-cover" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=4&w=687&h=687&q=80" alt="">
+                        <img class="h-8 w-8 md:h-10 md:w-10 -mx-1.5 ring ring-white rounded-full object-cover" src="https://images.unsplash.com/photo-1464863979621-258859e62245?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=4&w=686&h=686&q=80" alt="">
                     </div>
-                      
-                    <h3 class="mt-1.5 text-lg font-medium text-gray-900">Wireless Headphones</h3>
-                
-                    <p class="mt-1.5 line-clamp-3 text-gray-700">
-                      Lorem ipsum dolor sit amet consectetur adipisicing elit. Labore nobis iure obcaecati pariatur.
-                      Officiis qui, enim cupiditate aliquam corporis iste.
-                    </p>
-                
-                    <div class="flex w-full justify-between">
-                      <h1 class="rounded-full text-gray-700  p-3 self-end my-6 font-bold transition hover:scale-105"
-                    >
-                      Pre-Seed
-                    </h1>
-                    <button
-                        type="button"
-                        class="rounded-full border-2 w-[8em] border-[#36b37e] text-[#36b37e]  p-3 self-end my-6 font-bold transition hover:scale-105"
-                      >
-                        Invest Now
-                      </button>
+                    <div class="flex flex-col p-4">
+                        <div class="flex flex-wrap gap-2">
+                            <p class="text-gray-400 bg-gray-100 font-bold text-[0.7em] rounded-full px-3 py-1">Audio Technology</p>
+                            <p class="text-gray-400 bg-gray-100 font-bold text-[0.7em] rounded-full px-3 py-1">AI</p>
+                        </div>
+                        <h3 class="mt-3 text-lg font-medium text-gray-900">Wireless Headphones</h3>
+                        <p class="mt-2 text-gray-700 text-sm line-clamp-3">
+                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Labore nobis iure obcaecati pariatur.
+                        </p>
+                        <div class="flex justify-between mt-4">
+                            <h1 class="rounded-full text-gray-700 px-3 py-1 font-bold">Pre-Seed</h1>
+                            <button
+                                class="rounded-full border-2 w-[8em] border-[#36b37e] text-[#36b37e] px-3 py-1 font-bold transition hover:scale-105"
+                            >
+                                Invest Now
+                            </button>
+                        </div>
                     </div>
-                  </div>
-                </a>
-          </div>
-          <div class="w-1/3 m-3 z-0">
-              <a href="#" class="group relative block rounded-lg overflow-hidden">
-                  
-                
-                  <img
-                    src="https://images.unsplash.com/photo-1628202926206-c63a34b1618f?q=80&w=2574&auto=format&fit=crop"
-                    alt=""
-                    class="h-64 w-full object-cover transition duration-500 group-hover:scale-105 sm:h-72"
-                  />
-                  <div class="ml-3 absolute top-[15em] flex items-center">
-                      <img class="h-10 w-10 -mx-1.5 ring ring-white rounded-full object-cover" src="https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=4&w=880&h=880&q=100" alt="">
-                      <img class="h-10 w-10 -mx-1.5 ring ring-white rounded-full object-cover" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=4&w=687&h=687&q=80" alt="">
-                      <img class="h-10 w-10 -mx-1.5 ring ring-white rounded-full object-cover" src="https://images.unsplash.com/photo-1464863979621-258859e62245?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=4&w=686&h=686&q=80" alt="">
-                      <img class="h-10 w-10 -mx-1.5 ring ring-white rounded-full object-cover" src="https://images.unsplash.com/photo-1485178575877-1a13bf489dfe?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=4&w=1401&h=1401&q=80" alt="">
-                      <img class="h-10 w-10 -mx-1.5 ring ring-white rounded-full object-cover" src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=4&w=880&h=880&q=80" alt="">
-                  </div>
-                  <div class="flex flex-col border w-full border-gray-100 bg-white p-6 border-box">
-                    <div class="flex w-full">
-                      <p class="flex w-1/3 text-gray-400 bg-gray-100 font-bold text-[0.7em] justify-center self-start rounded-full p-3">
-                          Audio Technology
-                      </p>
-                      <p class="flex w-1/3 text-gray-400 bg-gray-100 font-bold text-[0.7em] justify-center self-start rounded-full p-3">
-                      Artifical Intelligence
-                      </p>
-                    </div>
-                      
-                    <h3 class="mt-1.5 text-lg font-medium text-gray-900">Wireless Headphones</h3>
-                
-                    <p class="mt-1.5 line-clamp-3 text-gray-700">
-                      Lorem ipsum dolor sit amet consectetur adipisicing elit. Labore nobis iure obcaecati pariatur.
-                      Officiis qui, enim cupiditate aliquam corporis iste.
-                    </p>
-                
-                    <div class="flex w-full justify-between">
-                      <h1 class="rounded-full text-gray-700  p-3 self-end my-6 font-bold transition hover:scale-105"
-                    >
-                      Pre-Seed
-                    </h1>
-                    <button
-                        type="button"
-                        class="rounded-full border-2 w-[8em] border-[#36b37e] text-[#36b37e]  p-3 self-end my-6 font-bold transition hover:scale-105"
-                      >
-                        Invest Now
-                      </button>
-                    </div>
-                  </div>
-                </a>
-          </div>
-          <div class="w-1/3 m-3 z-0">
-              <a href="#" class="group relative block rounded-lg overflow-hidden">
-                  
-                
-                  <img
-                    src="https://images.unsplash.com/photo-1628202926206-c63a34b1618f?q=80&w=2574&auto=format&fit=crop"
-                    alt=""
-                    class="h-64 w-full object-cover transition duration-500 group-hover:scale-105 sm:h-72"
-                  />
-                  <div class="ml-3 absolute top-[15em] flex items-center">
-                      <img class="h-10 w-10 -mx-1.5 ring ring-white rounded-full object-cover" src="https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=4&w=880&h=880&q=100" alt="">
-                      <img class="h-10 w-10 -mx-1.5 ring ring-white rounded-full object-cover" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=4&w=687&h=687&q=80" alt="">
-                      <img class="h-10 w-10 -mx-1.5 ring ring-white rounded-full object-cover" src="https://images.unsplash.com/photo-1464863979621-258859e62245?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=4&w=686&h=686&q=80" alt="">
-                      <img class="h-10 w-10 -mx-1.5 ring ring-white rounded-full object-cover" src="https://images.unsplash.com/photo-1485178575877-1a13bf489dfe?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=4&w=1401&h=1401&q=80" alt="">
-                      <img class="h-10 w-10 -mx-1.5 ring ring-white rounded-full object-cover" src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=4&w=880&h=880&q=80" alt="">
-                  </div>
-                  <div class="flex flex-col border w-full border-gray-100 bg-white p-6 border-box">
-                    <div class="flex w-full">
-                      <p class="flex w-1/3 text-gray-400 bg-gray-100 font-bold text-[0.7em] justify-center self-start rounded-full p-3">
-                          Audio Technology
-                      </p>
-                      <p class="flex w-1/3 text-gray-400 bg-gray-100 font-bold text-[0.7em] justify-center self-start rounded-full p-3">
-                      Artifical Intelligence
-                      </p>
-                    </div>
-                      
-                    <h3 class="mt-1.5 text-lg font-medium text-gray-900">Wireless Headphones</h3>
-                
-                    <p class="mt-1.5 line-clamp-3 text-gray-700">
-                      Lorem ipsum dolor sit amet consectetur adipisicing elit. Labore nobis iure obcaecati pariatur.
-                      Officiis qui, enim cupiditate aliquam corporis iste.
-                    </p>
-                
-                    <div class="flex w-full justify-between">
-                      <h1 class="rounded-full text-gray-700  p-3 self-end my-6 font-bold transition hover:scale-105"
-                    >
-                      Pre-Seed
-                    </h1>
-                    <button
-                        type="button"
-                        class="rounded-full border-2 w-[8em] border-[#36b37e] text-[#36b37e]  p-3 self-end my-6 font-bold transition hover:scale-105"
-                      >
-                        Invest Now
-                      </button>
-                    </div>
-                  </div>
-                </a>
-          </div>
-          <button>
-              <img src="{{asset('icons/enabled next btn.webp')}}" class="1/4 h-[6em]" alt="next btn">
-          </button>
-      </div>
-      <button class="p-3 pl-4 pr-4 rounded-full bg-white mt-6 font-bold text-[#00877a]">
-          Explore All Deals
-      </button>
+                </div>
+                <!-- Repeat for other deal cards -->
+            </div>
+    
+            <!-- Next Button -->
+            <button class="flex-shrink-0">
+                <img src="{{asset('icons/enabled next btn.webp')}}" class="h-[3em] md:h-[6em]" alt="next btn">
+            </button>
+        </div>
+    
+        <a href="{{route('admin.deals')}}" class="p-3 px-6 mt-8 rounded-full bg-white font-bold text-[#00877a]">
+            Explore All Deals
+        </a>
     </section>
+    
     @endauth
     
-    <section class="flex flex-col justify-center text-center w-full py-[100px] border-box">
-      <h1 class="text-[3em] font-bold">
-        BAN Resources
+    <section class="flex flex-col justify-center text-center w-full py-[50px] md:py-[100px] border-box">
+      <h1 class="text-[2em] md:text-[3em] font-bold">
+          BAN Resources
       </h1>
-      <p class="mt-3 text-center text-[1.5em]">
-        Bangladesh Angels Hosts events for start-ups and Angel Investors.<br>Join any of our events to connect with people today!
+      <p class="mt-3 text-[1em] md:text-[1.5em]">
+          Bangladesh Angels Hosts events for start-ups and Angel Investors.<br class="hidden md:block">
+          Join any of our events to connect with people today!
       </p>
       <div class="bg-white py-6 sm:py-8 lg:py-[20px]">
-        <div class="mx-auto max-w-screen-xl px-4 md:px-8">
-          <div class="flex flex-col overflow-hidden text-white justify-start rounded-lg bg-gradient-to-br to-[#022e2e] from-[#156755] sm:flex-row md:h-80">
-            <!-- image - start -->
-            <div class="order-first h-48 w-full bg-gray-300 sm:order-none sm:h-auto sm:w-1/2 lg:w-2/5">
-              <img src="{{asset('resourcesCover.webp')}}" loading="lazy" alt="Photo by Andras Vas" class="h-full w-full object-cover object-center" />
-            </div>
-            <!-- image - end -->
-      
-            <!-- content - start -->
-            <div class="flex w-full justify-start flex-col p-4 sm:w-1/2 sm:p-8 lg:w-3/5">
-              <h2 class="mb-4 text-xl self-start font-bold md:text-2xl lg:text-2xl">Networking Event<br>hosted by ShopUp</h2>
-              <span class="flex justify-start my-2 items-center">
-                <div class="flex bg-white rounded-full p-5">
-                  <img src="{{asset('dateicon.webp')}}" alt="date_icon" class="h-[20px]" draggable="false">
-                </div>
-                <p class="text-left ml-3">
-                  16 - 22 December, 2023<br>
-                  08:00 AM to 06:00 PM
-                </p>
-              </span>
-              <span class="flex justify-start my-2 items-center">
-                <div class="flex bg-white rounded-full p-5">
-                  <img src="{{asset('locationicon.webp')}}" alt="date_icon" class="h-[20px]" draggable="false">
-                </div>
-                <p class="text-left ml-3">
-                  64–65, Kazi Nazrul Islam Avenue,<br>Dhaka-1215  
-                </p>
-              </span>
-              <div class="mt-auto self-start">
-                <a href="#" class="inline-block rounded-full bg-white px-8 py-3 text-center text-sm font-semibold text-gray-800 outline-none ring-indigo-300 transition duration-100 hover:bg-gray-100 focus-visible:ring active:bg-gray-200 md:text-base">Register</a>
+          <div class="mx-auto max-w-screen-xl px-4 md:px-8">
+              <div class="flex flex-col sm:flex-row overflow-hidden text-white justify-start rounded-lg bg-gradient-to-br to-[#022e2e] from-[#156755]">
+                  <!-- Image Section -->
+                  <div class="h-48 sm:h-auto sm:w-1/2 lg:w-2/5 bg-gray-300">
+                      <img src="{{asset('resourcesCover.webp')}}" loading="lazy" alt="BAN Event" class="h-full w-full object-cover">
+                  </div>
+                  <!-- Content Section -->
+                  <div class="flex flex-col justify-between p-4 sm:w-1/2 lg:w-3/5 sm:p-8">
+                      <h2 class="mb-4 text-xl md:text-2xl lg:text-3xl font-bold">Networking Event<br>hosted by ShopUp</h2>
+                      <div class="flex items-center my-2">
+                          <div class="bg-white rounded-full p-3">
+                              <img src="{{asset('dateicon.webp')}}" alt="Date Icon" class="h-[20px]" draggable="false">
+                          </div>
+                          <p class="text-left ml-3 text-sm md:text-base">
+                              16 - 22 December, 2023<br>
+                              08:00 AM to 06:00 PM
+                          </p>
+                      </div>
+                      <div class="flex items-center my-2">
+                          <div class="bg-white rounded-full p-3">
+                              <img src="{{asset('locationicon.webp')}}" alt="Location Icon" class="h-[20px]" draggable="false">
+                          </div>
+                          <p class="text-left ml-3 text-sm md:text-base">
+                              64–65, Kazi Nazrul Islam Avenue,<br>Dhaka-1215
+                          </p>
+                      </div>
+                      <div class="mt-4">
+                          <a href="#" class="inline-block rounded-full bg-white px-6 py-2 text-center text-sm font-semibold text-gray-800 md:text-base">
+                              Register
+                          </a>
+                      </div>
+                  </div>
               </div>
-            </div>
-            <!-- content - end -->
+              <button class="mt-8 px-6 py-3 rounded-full bg-[#eefff1] font-bold text-[#36b37e]">
+                  Discover BAN Resources
+              </button>
           </div>
-          <button class="p-3 pl-4 my-10 pr-4 rounded-full bg-[#eefff1] font-bold text-[#36b37e]">
-            Discover BAN Resources
-        </button>
-        </div>
       </div>
-    </section>
-    <section class="flex flex-col justify-center items-center py-[100px] text-center w-full">
-      <h1 class="text-[2em] font-bold">
-        Our Partners
+  </section>
+  
+  <section class="flex flex-col justify-center items-center py-[50px] md:py-[100px] text-center w-full">
+      <h1 class="text-[1.5em] md:text-[2em] font-bold">
+          Our Partners
       </h1>
-      <p class="mt-3 text-center text-[1em]">
-        We co-invest alongside top-tier firms in the region.<br>We are mentors and advisors with the best accelerator programs in Bangladesh.A selection of our partners are represented here.
+      <p class="mt-3 text-[0.9em] md:text-[1em]">
+          We co-invest alongside top-tier firms in the region.<br class="hidden md:block">
+          We are mentors and advisors with the best accelerator programs in Bangladesh.<br>A selection of our partners are represented here.
       </p>
-      <div class="partnerLogos flex justify-between w-[70%] px-[100px]">
-        <a href="#" class="p-6 border-box">
-          <img src="{{asset('sajidafoundation.webp')}}" alt="sajida logo" class="h-[30px]">
-        </a>
-        <a href="#" class="p-6 border-box">
-          <img src="{{asset('bidalogo.webp')}}" alt="bida logo" class="h-[30px]">
-        </a>
-        <a href="#" class="p-6 border-box">
-          <img src="{{asset('foreignaffairsnetherland.webp')}}" alt="foreign affairs logo" class="h-[30px]">
-        </a>
-        <a href="#" class="p-6 border-box">
-          <img src="{{asset('capital logo.webp')}}" alt="capital logo" class="h-[30px]">
-        </a>
-        <a href="#" class="p-6 border-box">
-          <img src="{{asset('bangladesh venture capital.webp')}}" alt="bcv logo" class="h-[30px]">
-        </a>
+      <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 mt-8 w-[80%] md:w-[70%]">
+          <a href="#" class="flex justify-center items-center p-3">
+              <img src="{{asset('sajidafoundation.webp')}}" alt="Sajida Foundation Logo" class="h-[20px] md:h-[30px]">
+          </a>
+          <a href="#" class="flex justify-center items-center p-3">
+              <img src="{{asset('bidalogo.webp')}}" alt="BIDA Logo" class="h-[20px] md:h-[30px]">
+          </a>
+          <a href="#" class="flex justify-center items-center p-3">
+              <img src="{{asset('foreignaffairsnetherland.webp')}}" alt="Foreign Affairs Logo" class="h-[20px] md:h-[30px]">
+          </a>
+          <a href="#" class="flex justify-center items-center p-3">
+              <img src="{{asset('capital logo.webp')}}" alt="Capital Logo" class="h-[20px] md:h-[30px]">
+          </a>
+          <a href="#" class="flex justify-center items-center p-3">
+              <img src="{{asset('bangladesh venture capital.webp')}}" alt="BCV Logo" class="h-[20px] md:h-[30px]">
+          </a>
       </div>
-    </section>
+  </section>
+  
     <livewire:footer></livewire:footer>
     <livewire:scripts />
 </body>
