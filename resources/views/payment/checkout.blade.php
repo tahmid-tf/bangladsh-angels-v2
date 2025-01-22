@@ -644,10 +644,10 @@
                 <button type="submit" class="mt-6 bg-green-600 text-white w-full py-2 rounded-full hover:bg-green-700 transition">
                     Complete Checkout
                 </button>
-                <p class="text-center text-sm text-gray-500 mt-4">
+                {{-- <p class="text-center text-sm text-gray-500 mt-4">
                     Secure credit card payment <br>
                     This is a secure 128-bit SSL encrypted payment
-                </p>
+                </p> --}}
             </div>
         </div>
     </form>
