@@ -70,7 +70,7 @@
             </div>
             <div>
                 <label for="country" class="block font-semibold text-gray-700">Country</label>
-                <select id="country" name="primary_country" required class="border border-gray-300 p-2 rounded w-full">
+                <select id="country" name="primary_country" class="border border-gray-300 p-2 rounded w-full">
                     
                     <option value="{{$user->primary_country}}">{{ $user->primary_country }}</option>
                     <optgroup label="Countries">
@@ -356,8 +356,7 @@
                         class="border border-gray-300 p-2 rounded w-full" 
                         value="{{ old('total_invested', $user->total_invested) }}" 
                         step="0.01" 
-                        min="0" 
-                        required>
+                        min="0">
                 </div>
                 <div class="mb-4">
                     <label for="revenue_generated" class="block font-semibold text-gray-700">Revenue Generated (USD)</label>
@@ -370,7 +369,7 @@
                         value="{{ old('revenue_generated', $user->revenue_generated) }}" 
                         step="0.01" 
                         min="0" 
-                        required>
+                        >
                 </div>
                                 
                 <div>
