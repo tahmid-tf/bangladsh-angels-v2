@@ -44,7 +44,8 @@ class PrimaryController extends Controller
         $deals = Deal::with('media')
         ->where(function ($query) {
             $query->where('type', '!=', 'portfolio')
-                  ->where('type', '!=', 'draft');
+                  ->where('status', '!=', 'closed')
+                  ->where('status', '!=', 'draft');
         })
         ->get();
         return view('deals.index', compact('deals'));
@@ -54,7 +55,8 @@ class PrimaryController extends Controller
     {
         $deals = Deal::with('media')->where(function ($query) {
             $query->where('type','invest')
-                  ->where('type', '!=', 'draft');
+                  ->where('status', '!=', 'closed')
+                  ->where('status', '!=', 'draft');
         })
         ->get();
         return view('deals.invest', compact('deals'));
@@ -65,7 +67,8 @@ class PrimaryController extends Controller
         $deals = Deal::with('media')
         ->where(function ($query) {
             $query->where('type','commit')
-                  ->where('type', '!=', 'draft');
+                  ->where('status', '!=', 'closed')
+                  ->where('status', '!=', 'draft');
         })
         ->get();
         return view('deals.commit', compact('deals'));
@@ -76,7 +79,8 @@ class PrimaryController extends Controller
         $deals = Deal::with('media')
         ->where(function ($query) {
             $query->where('type','review')
-                  ->where('type', '!=', 'draft');
+                  ->where('status', '!=', 'closed')
+                  ->where('status', '!=', 'draft');
         })
         ->get();
         return view('deals.review', compact('deals'));
