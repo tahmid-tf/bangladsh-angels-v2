@@ -332,7 +332,7 @@
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
           <input type="text" name="organization" placeholder="Organization" class="border border-gray-300 p-2 rounded w-full" value="{{ old('organization') }}">
           <input type="text" name="designation" placeholder="Designation" class="border border-gray-300 p-2 rounded w-full" value="{{ old('designation') }}">
-          <input type="date" name="joining_date" placeholder="Joining Date" class="border border-gray-300 p-2 rounded w-full" value="{{ old('joining_date') }}" required>
+          <input type="date" name="joining_date" placeholder="Joining Date" class="border border-gray-300 p-2 rounded w-full" value="{{ old('joining_date') }}">
           <select name="account_status" id="" class="border border-gray-300 p-2 rounded w-full">
             <option value="">Select</option>
             <optgroup label="Tiers">
@@ -345,7 +345,7 @@
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <select id="country" name="primary_country" required class="form-control">
+        <select id="country" name="primary_country" class="form-control">
             <option value="Afghanistan">Afghanistan</option>
             <option value="Åland Islands">Åland Islands</option>
             <option value="Albania">Albania</option>
