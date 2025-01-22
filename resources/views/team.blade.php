@@ -4,15 +4,17 @@
 <!-- Section: Header -->
 <section class="container mx-auto mt-16 px-6 lg:flex lg:space-x-12">
     <!-- Left: Images -->
-    <div class="flex lg:w-1/2 space-y-6">
-        <img src="{{asset('our team/1.jpg')}}" alt="Handshake" class="rounded-xl  w-full object-cover">
-        <img src="{{asset('our team/2.jpg')}}" alt="Team Photo" class="rounded-xl shadow-lg w-full object-cover">
+    <div class="lg:w-1/2 grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <img src="{{asset('our team/1.jpg')}}" alt="Handshake" class="rounded-xl w-full h-auto object-cover">
+        <img src="{{asset('our team/2.jpg')}}" alt="Team Photo" class="rounded-xl w-full h-auto object-cover shadow-lg">
     </div>
 
     <!-- Right: Text Content -->
-    <div class="lg:w-1/2 flex items-center">
+    <div class="mt-12 lg:mt-0 lg:w-1/2 flex items-center">
         <div>
-            <h2 class="text-4xl font-extrabold text-gray-800 mb-6">What are Bangladesh Angels?</h2>
+            <h2 class="text-4xl font-extrabold text-gray-800 mb-6 leading-tight">
+                What are Bangladesh Angels?
+            </h2>
             <p class="text-lg leading-relaxed text-gray-600">
                 Bangladesh Angels is the country’s first angel investing platform, founded with a mission to elevate the country’s startup entrepreneurs to the highest level.
                 Registered as an independent, not-for-profit company, it is a collaborative endeavor led by Avashikhar & the Dutch Global Good Fund, 
@@ -21,6 +23,8 @@
         </div>
     </div>
 </section>
+
+
 
 <!-- Section: Team and Management -->
 <section class="container mx-auto mt-20 px-6">
@@ -110,30 +114,4 @@
     </div>
 </section>
 
-<!-- Section: Testimonials -->
-<section class="bg-green-900 text-white py-20 mt-16">
-    <div class="container mx-auto px-6">
-        <h2 class="text-4xl font-extrabold mb-6">People who love us</h2>
-        <p class="max-w-2xl mb-12 text-gray-300 leading-relaxed">
-            With an aim to fill the early-stage financing gap and provide advisory support to startups, 
-            the network engages in multiple activities...
-        </p>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <div>
-                <h3 class="text-lg font-bold">Jesmin Akhter</h3>
-                <p class="text-sm italic mt-3 text-gray-300">
-                    "I’m eager to learn from BAN’s expertise and leverage their network..."
-                </p>
-            </div>
-
-            <div>
-                <h3 class="text-lg font-bold">Zahin Rahman</h3>
-                <p class="text-sm italic mt-3 text-gray-300">
-                    "I feel as though Bangladesh’s startup ecosystem is on the cusp of growth..."
-                </p>
-            </div>
-        </div>
-    </div>
-</section>
 @endsection
