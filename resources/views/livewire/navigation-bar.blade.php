@@ -68,9 +68,9 @@
         <div id="mobile-menu" class="hidden flex-col items-center bg-white w-full shadow-md md:hidden absolute top-[70px] left-0 z-20">
             <ul class="flex flex-col text-gray-700">
                 <li class="px-4 py-2 border-b"><a href="{{ route('deals') }}">Deals</a></li>
-                <li class="px-4 py-2 border-b"><a href="#">BAN Investors</a></li>
-                <li class="px-4 py-2 border-b"><a href="#">Portfolio</a></li>
-                <li class="px-4 py-2 border-b"><a href="#">BAN Resources</a></li>
+                <li class="px-4 py-2 border-b"><a href="{{ route('investors')}}">BAN Investors</a></li>
+                <li class="px-4 py-2 border-b"><a href="{{ route('portfolio') }}">Portfolio</a></li>
+                <li class="px-4 py-2 border-b"><a href="{{ route('resources') }}">BAN Resources</a></li>
                 <li class="px-4 py-2"><a href="{{ route('team') }}">Our Team</a></li>
             </ul>
         </div>
