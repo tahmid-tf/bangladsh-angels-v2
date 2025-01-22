@@ -17,7 +17,7 @@
         </div>
 
         <!-- User Actions (Right for Desktop) -->
-        <div class="flex items-center">
+        <div class="flex items-end hidden md:block">
             @auth
             <div class="relative">
                 <!-- User Avatar -->
@@ -57,7 +57,12 @@
 
         <!-- Hamburger Menu (Mobile) -->
         <div class="md:hidden flex items-center justify-end">
-            <button id="mobile-menu-button" onclick="toggleMobileMenu()" class="focus:outline-none">
+           
+         
+            <button id="mobile-menu-button" onclick="toggleMobileMenu()" class="flex items-center focus:outline-none">
+                 <!-- User Avatar -->
+                <img src="{{ auth()->user()->getProfilePhotoUrl() }}" alt="User Avatar" class="h-10 mr-3 w-10 rounded-full">
+
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
                 </svg>

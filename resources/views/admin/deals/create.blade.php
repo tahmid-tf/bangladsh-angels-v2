@@ -160,7 +160,7 @@
                     >
                 </div>
                 <input type="file" name="company_cover" accept="image/*" class="hidden" id="company-cover-input">
-                <p class="text-gray-500 text-sm">Attach Files</p>
+                <p class="text-gray-500 text-sm">Select Deal Cover Image</p>
                 <p class="text-gray-400 text-xs">Drop files here or click <span class="text-blue-500 underline">browse</span> through your machine</p>
             </label>
         </div>
