@@ -45,46 +45,7 @@
 <div class="grid grid-cols-1 md:grid-cols-3 gap-6 w-[70%]">
     <!-- Card Component -->
     @forelse ($deals as $deal)
-    <div class="flex flex-col justify-between bg-white rounded-lg shadow-md overflow-hidden">
-        <div class="flex flex-col p-4">
-            <a href="{{ route('deal.view', $deal->id) }}">
-                <img src="{{ $deal->getCoverUrl() }}" alt="Deal Image" class="w-full h-40 object-cover">
-            </a>
-            <div class="flex items-center mt-6 justify-between">
-                <h2 class="text-lg font-bold">{{ $deal->title }}</h2>
-                <span class="bg-gray-200 text-xs px-2 py-1 rounded-full">{{ ucfirst($deal->sector) }}</span>
-            </div>
-            <p class="text-gray-500 text-sm mt-2">
-                {{ $deal->description }}
-            </p>
-            <div class="flex justify-between items-center mt-4 text-sm">
-                <div class="text-center">
-                    <p class="text-gray-400">Investment Stage</p>
-                    <p class="font-semibold">{{ $deal->investment_stage }}</p>
-                </div>
-                <div class="text-center">
-                    <p class="text-gray-400">Amount Seeking</p>
-                    <p class="font-semibold">$ {{ $deal->amountSeeking() }}</p>
-                </div>
-            </div>
-        </div>
-        
-        <div class="p-4">
-            <form method="POST" action="{{ route('deal.invest',$deal->id) }}" onsubmit="return confirm('Are you sure you want to perform this action?');">
-                @csrf
-                <input type="hidden" name="deal_id" value="{{ $deal->id }}">
-                <input type="hidden" name="user_id" value="{{ auth()->id() }}">
-                <form action="{{route('deal.invest', $deal->id)}}" class="mt-6" method="POST">
-                    @csrf
-                    <input type="text" name="user_id" value="{{auth()->id()}}" hidden id="user_id">
-                    <input type="text" name="deal_id" value="{{$deal->id}}" hidden id="deal_id">
-                    <input type="submit" value="{{ucfirst($deal->type)}}" class="px-6 w-full mt-6 py-3 bg-green-600 text-white font-semibold rounded-lg hover:bg-green-700 transition">
-                </form>
-                
-            </form>
-        </div>
-    </div>
-        
+    <livewire:deal-card :deal="$deal"></livewire:deal-card>
     @empty
     No Deals in this section
     @endforelse

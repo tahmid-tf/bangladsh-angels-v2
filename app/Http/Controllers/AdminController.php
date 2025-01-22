@@ -396,6 +396,7 @@ class AdminController extends Controller
             'pitch_deck_url' => 'nullable',
             'substack_link' => 'nullable',
             'action_link' => 'nullable',
+            'status' => 'required|string',
         ]);
 
         $deal->update($validatedData);

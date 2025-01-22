@@ -1,25 +1,44 @@
-<div class="bg-white rounded-lg shadow-md overflow-hidden">
-    <img src="https://via.placeholder.com/300x150" alt="Deal Image" class="w-full h-40 object-cover">
-    <div class="p-4">
-        <div class="flex items-center justify-between">
-            <h2 class="text-lg font-bold">Jatri</h2>
-            <span class="bg-gray-200 text-xs px-2 py-1 rounded-full">Transport</span>
+<div class="flex flex-col justify-between bg-white rounded-lg shadow-md overflow-hidden">
+    <div class="flex flex-col p-4">
+        <a href="{{ route('deal.view', $deal->id) }}">
+            <img src="{{ $deal->getCoverUrl() }}" alt="Deal Image" class="w-full h-40 object-cover">
+        </a>
+        <div class="flex items-center mt-6 justify-between">
+            <h2 class="text-lg font-bold">{{ $deal->title }}</h2>
+            <span class="bg-gray-200 text-xs px-2 py-1 rounded-full">{{ ucfirst($deal->sector) }}</span>
         </div>
         <p class="text-gray-500 text-sm mt-2">
-            One-stop travel solution for Car Rental, online Bus & Launch Tickets. Simplify your travel!
+            {{ $deal->description }}
         </p>
         <div class="flex justify-between items-center mt-4 text-sm">
             <div class="text-center">
-                <p class="text-gray-400">Investment stage</p>
-                <p class="font-semibold">Pre Seed</p>
+                <p class="text-gray-400">Investment Stage</p>
+                <p class="font-semibold">{{ $deal->investment_stage }}</p>
             </div>
             <div class="text-center">
                 <p class="text-gray-400">Amount Seeking</p>
-                <p class="font-semibold">৳ 9,80,000</p>
+                <p class="font-semibold">$ {{ $deal->amountSeeking() }}</p>
             </div>
         </div>
-        <button class="w-full mt-4 bg-[#36b37e] text-white py-2 rounded-full font-semibold hover:bg-green-600 transition">
-            Invest
-        </button>
+    </div>
+    
+    <div class="p-4">
+        <form method="POST" action="{{ route('deal.invest',$deal->id) }}">
+            @csrf
+            <input type="hidden" name="deal_id" value="{{ $deal->id }}">
+            <input type="hidden" name="user_id" value="{{ auth()->id() }}">
+            <form action="{{route('deal.invest', $deal->id)}}" class="mt-6" method="POST">
+                @csrf
+                <input type="text" name="user_id" value="{{auth()->id()}}" hidden id="user_id">
+                <input type="text" name="deal_id" value="{{$deal->id}}" hidden id="deal_id">
+                <input type="submit" value="{{
+                
+                ($deal->type!=="review") ? ucfirst($deal->type) : "Join WhatsApp Group"
+                
+                
+                }}" class="px-6 w-full cursor-pointer mt-6 py-3 bg-green-600 text-white font-semibold rounded-lg hover:bg-green-700 transition">
+            </form>
+            
+        </form>
     </div>
 </div>

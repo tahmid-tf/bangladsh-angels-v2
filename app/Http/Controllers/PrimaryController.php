@@ -40,25 +40,45 @@ class PrimaryController extends Controller
 
     public function viewDeals()
     {
-        $deals = Deal::with('media')->get();
+        //Get All Deals except Portfolio and Draft
+        $deals = Deal::with('media')
+        ->where(function ($query) {
+            $query->where('type', '!=', 'portfolio')
+                  ->where('type', '!=', 'draft');
+        })
+        ->get();
         return view('deals.index', compact('deals'));
     }
 
     public function viewDeals_invest()
     {
-        $deals = Deal::with('media')->where('type','invest')->get();
+        $deals = Deal::with('media')->where(function ($query) {
+            $query->where('type','invest')
+                  ->where('type', '!=', 'draft');
+        })
+        ->get();
         return view('deals.invest', compact('deals'));
     }
 
     public function viewDeals_commit()
     {
-        $deals = Deal::with('media')->where('type','commit')->get();
+        $deals = Deal::with('media')
+        ->where(function ($query) {
+            $query->where('type','commit')
+                  ->where('type', '!=', 'draft');
+        })
+        ->get();
         return view('deals.commit', compact('deals'));
     }
 
     public function viewDeals_review()
     {
-        $deals = Deal::with('media')->where('type','review')->get();
+        $deals = Deal::with('media')
+        ->where(function ($query) {
+            $query->where('type','review')
+                  ->where('type', '!=', 'draft');
+        })
+        ->get();
         return view('deals.review', compact('deals'));
     }
 

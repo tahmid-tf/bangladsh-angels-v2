@@ -102,6 +102,15 @@
                         <option value="portfolio" {{ old('type', $deal->type) == 'portfolio' ? 'selected' : '' }}>Portfolio</option>
                     </select>
                 </div>
+                <!-- Deal Status -->
+                <div>
+                    <label for="status" class="block text-sm font-semibold text-gray-700 mb-1">Status *</label>
+                    <select id="status" name="type" class="input-field" required>
+                        <option value="active" {{ old('type', $deal->type) == 'active' ? 'selected' : '' }}>Active</option>
+                        <option value="closed" {{ old('type', $deal->type) == 'closed' ? 'selected' : '' }}>Closed</option>
+                        <option value="draft" {{ old('type', $deal->type) == 'draft' ? 'selected' : '' }}>Draft</option>
+                    </select>
+                </div>
 
                 <!-- Investment Stage -->
                 <div>
