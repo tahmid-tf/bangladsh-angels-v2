@@ -44,13 +44,15 @@
             <a href="{{$deal->pitch_deck_url}}" class="my-6 px-6 py-2 bg-gray-200 text-gray-700 font-semibold rounded-lg shadow hover:bg-gray-300">
                 View Pitch Deck
             </a>
+            @if ($deal->substack_link)
+            <a href="{{$deal->substack_link}}" class="my-6 m-3 px-6 py-2 bg-gray-200 text-gray-700 font-semibold rounded-lg shadow hover:bg-gray-300">
+                View on Substack
+            </a>
+            @endif
             @if ($deal->type!=="portfolio")
-                <form action="{{route('deal.invest', $deal->id)}}" class="mt-6" method="POST">
-                @csrf
-                    <input type="text" name="user_id" value="{{auth()->id()}}" hidden id="user_id">
-                    <input type="text" name="deal_id" value="{{$deal->id}}" hidden id="deal_id">
-                    <input type="submit" value="{{ucfirst($deal->type)}}" class="px-6 py-3 bg-green-600 text-white font-semibold rounded-lg hover:bg-green-700 transition">
-                </form>
+            <div class="w-1/2">
+                <livewire:deal-action-button :deal="$deal"></livewire:deal-action-button>
+            </div>
             @endif
             
             

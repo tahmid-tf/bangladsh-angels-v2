@@ -22,22 +22,13 @@
         </div>
     </div>
     
-    <div class="p-4">
-        <a href="{{ ($deal->type!=="review") ? route('deal.view',$deal->id) : $deal->action_link }}">{{
+    <div class="flex border-box p-4 w-full">
+        <a href="{{ ($deal->type!=="review") ? route('deal.view',$deal->id) : $deal->action_link }}" class="px-6 w-full text-center cursor-pointer mt-6 py-3 bg-green-600 text-white font-semibold rounded-lg hover:bg-green-700 transition">{{
                 
                 ($deal->type!=="review") ? ucfirst($deal->type) : "Join WhatsApp Group"
             
             }}</a>
-        <form method="POST" action="{{ route('deal.invest',$deal->id) }}">
-            @csrf
-            <input type="hidden" name="deal_id" value="{{ $deal->id }}">
-            <input type="hidden" name="user_id" value="{{ auth()->id() }}">
-            <form action="{{route('deal.invest', $deal->id)}}" class="mt-6" method="POST">
-                @csrf
-                <input type="text" name="user_id" value="{{auth()->id()}}" hidden id="user_id">
-                <input type="text" name="deal_id" value="{{$deal->id}}" hidden id="deal_id">
-                <input type="submit" value="" class="px-6 w-full cursor-pointer mt-6 py-3 bg-green-600 text-white font-semibold rounded-lg hover:bg-green-700 transition">
-            </form>
+        
             
         </form>
     </div>
