@@ -111,9 +111,9 @@ class User extends Authenticatable implements HasMedia
     /**
      * Check if the user is a seeker.
      */
-    public function isSeeker()
+    public function isFree()
     {
-        return $this->role === 'seeker';
+        return $this->account_status === 'free';
     }
     /**
      * Check user account status.

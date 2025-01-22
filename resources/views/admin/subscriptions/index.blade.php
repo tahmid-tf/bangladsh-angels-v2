@@ -64,7 +64,7 @@
       <tbody>
         
           @foreach ($subscriptions as $subscription)
-            @if ($subscription->user->id!==auth()->user()->id)
+            @if ($subscription->user->id!==auth()->user()->id && !$subscription->user->isFree())
               <tr class="border-t">
                   <td class="px-6 py-4">
                       <div class="flex items-center space-x-4">
