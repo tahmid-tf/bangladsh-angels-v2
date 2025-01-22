@@ -221,16 +221,12 @@
                               64–65, Kazi Nazrul Islam Avenue,<br>Dhaka-1215
                           </p>
                       </div>
-                      <div class="mt-4">
-                          <a href="#" class="inline-block rounded-full bg-white px-6 py-2 text-center text-sm font-semibold text-gray-800 md:text-base">
-                              Register
-                          </a>
-                      </div>
+                      
                   </div>
               </div>
-              <button class="mt-8 px-6 py-3 rounded-full bg-[#eefff1] font-bold text-[#36b37e]">
+              <a href="{{route('resources')}}" class="mt-8 px-6 py-3 rounded-full bg-[#eefff1] font-bold text-[#36b37e]">
                   Discover BAN Resources
-              </button>
+              </a>
           </div>
       </div>
   </section>

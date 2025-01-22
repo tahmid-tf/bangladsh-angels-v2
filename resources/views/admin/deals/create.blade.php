@@ -229,7 +229,7 @@
                                     placeholder="Metric Name" 
                                     class="input-field" 
                                     value="{{ $metric['name'] ?? '' }}" 
-                                    required
+                                    
                                 >
                                 <input 
                                     type="text" 
@@ -237,7 +237,7 @@
                                     placeholder="Metric Value" 
                                     class="input-field" 
                                     value="{{ $metric['value'] ?? '' }}" 
-                                    required
+                                    
                                 >
                             </div>
         </div>
