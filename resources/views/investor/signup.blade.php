@@ -1,5 +1,5 @@
 @extends('layouts.guest')
-@section('page_title','Sign up as an Investor')
+@section('page_title','Investor Sign Up | Bangladesh Angels Network')
 @section('page_content')
 <section class="bg-[#0a5554] rounded-3xl py-12 text-white">
     <!-- Hero Section -->
