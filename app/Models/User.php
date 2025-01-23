@@ -35,7 +35,7 @@ class User extends Authenticatable implements HasMedia
         'registered_by',
         'phone',
         'email',
-        'joined_at',
+        'joining_date',
         'renewed',
         'last_renewed_at',
         'account_owner',
