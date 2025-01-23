@@ -79,7 +79,7 @@
               <td class="px-6 py-4">{{ $user->phone ?? '-' }}</td>
               <td class="px-6 py-4 text-sm text-gray-600">{{ $user->email }}</td>
               <td class="px-6 py-4 text-sm text-gray-600">
-                  {{ $user->joinedAt() }}
+                  {{ $user->joining_date }}
               </td>
               <td class="px-6 py-4 text-sm text-gray-600">
                   {{ $user->renewedAt() }}
