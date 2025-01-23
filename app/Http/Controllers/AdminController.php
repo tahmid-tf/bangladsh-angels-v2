@@ -183,7 +183,7 @@ class AdminController extends Controller
             'phone' => $phone,
             'address' => $request->address,
             'gender' => $request->gender,
-            'organization' => $request->organization,
+            'company_name' => $request->organization,
             'designation' => $request->designation,
             'investment_expertise' => $request->investment_expertise,
             'joining_date' => $request->joining_date,
