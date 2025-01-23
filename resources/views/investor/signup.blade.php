@@ -363,17 +363,6 @@
                 </select>
             </div>
 
-            <!-- Strategic Investment Analyst -->
-            <div>
-                <label class="block text-gray-700 font-semibold mb-2" for="strategic_analyst">Strategic Investment Analyst</label>
-                <select id="strategic_analyst" name="strategic_analyst" class="w-full rounded-lg border-gray-300 shadow-sm focus:border-green-500 focus:ring focus:ring-green-200">
-                    <option value="">Select Analyst</option>
-                    <option value="TL" {{ old('strategic_analyst') == 'TL' ? 'selected' : '' }}>TL</option>
-                    <option value="FS" {{ old('strategic_analyst') == 'FS' ? 'selected' : '' }}>FS</option>
-                    <option value="TB" {{ old('strategic_analyst') == 'TB' ? 'selected' : '' }}>TB</option>
-                </select>
-            </div>
-
             <!-- Photo Upload -->
             <div>
                 <label class="block text-gray-700 font-semibold mb-2" for="photo">Upload Your Photo</label>
