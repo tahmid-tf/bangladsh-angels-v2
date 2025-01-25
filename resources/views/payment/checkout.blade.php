@@ -4,12 +4,21 @@
 
 <!-- Page Container -->
 <div class="container mx-auto px-4 py-12">
+    
     <!-- Header -->
     <div class="text-center mb-8">
         <h1 class="text-2xl font-bold text-gray-800">Let’s finish powering you up!</h1>
         <p class="text-gray-500">Your selected plan is shown below.</p>
     </div>
-
+    @if ($errors->any())
+        <div class="bg-red-100 text-red-700 p-4 rounded-lg mb-4">
+            <ul class="list-disc pl-5">
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
     <!-- Main Content -->
     <form action="{{ route('checkout.process') }}" method="POST">
         @csrf
@@ -29,15 +38,7 @@
                     <a href="{{ route('plans') }}" class="text-green-600 hover:underline">Change Plan</a>
                 </div>
             </div>
-            @if ($errors->any())
-            <div class="bg-red-100 text-red-700 p-4 rounded-lg mb-4">
-                <ul class="list-disc pl-5">
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
+              
         
             <!-- Left: Billing Address -->
             <div class="lg:col-span-2 bg-white shadow-md rounded-lg p-6">
