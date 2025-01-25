@@ -50,11 +50,11 @@
                         <div class="flex">
                             <div class="flex flex-col w-1/2">
                                 <label class="block text-gray-700 font-semibold my-2" for="first_name">First Name</label>
-                                <input type="text" id="first_name" placeholder="John" name="first_name" class="w-full p-3 rounded-lg border-gray-300 shadow-sm focus:border-green-500 focus:ring focus:ring-green-200" value="{{ old('full_name') }}" required>
+                                <input type="text" id="first_name" placeholder="John" name="first_name" value="{{old('first_name')}}" class="w-full p-3 rounded-lg border-gray-300 shadow-sm focus:border-green-500 focus:ring focus:ring-green-200" value="{{ old('full_name') }}" required>
                             </div>
                             <div class="flex flex-col w-1/2 ml-3">
                                 <label class="block text-gray-700 font-semibold my-2" for="last_name">Last Name</label>
-                                <input type="text" id="last_name" placeholder="Doe" name="last_name" class="w-full  p-3 rounded-lg border-gray-300 shadow-sm focus:border-green-500 focus:ring focus:ring-green-200" value="{{ old('full_name') }}" required>
+                                <input type="text" id="last_name" placeholder="Doe" name="last_name" value="{{old('last_name')}}" class="w-full  p-3 rounded-lg border-gray-300 shadow-sm focus:border-green-500 focus:ring focus:ring-green-200" value="{{ old('full_name') }}" required>
                             </div>
                         </div>
                 <div>
@@ -341,7 +341,7 @@
 
                         <div>
                             <label class="block text-gray-700 font-semibold my-2" for="primary_country">Country *</label>
-                            <select id="primary_country" name="primary_country" class="w-full p-3 rounded-lg border-gray-300 shadow-sm focus:border-green-500 focus:ring focus:ring-green-200" required>
+                            <select id="primary_country" name="primary_country" value="{{old('primary_country')}}" class="w-full p-3 rounded-lg border-gray-300 shadow-sm focus:border-green-500 focus:ring focus:ring-green-200" required>
                                 <option value="">Select Primary Country</option>
                                 <option value="Afghanistan">Afghanistan</option>
                                 <option value="Åland Islands">Åland Islands</option>
