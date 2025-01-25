@@ -51,8 +51,10 @@ class AdminController extends Controller
     public function viewActiveMembers()
     {
         if(auth()->user()->isAdmin()){
-            $users = User::with('media')->where('account_status','!=','free')->paginate(10); // Retrieve all users
-            return view('admin.members.active_index', compact('users'));
+            // Retrieve users with pagination
+            $allUsers = User::with('media')->where('account_status','!=','free')->get(); // All Users
+            $users = User::with('media')->where('account_status','!=','free')->paginate(50); // 50 users per page
+            return view('admin.members.active_index', compact('users','allUsers'));
         } else {
             return redirect()->route('home');
         }
@@ -61,8 +63,9 @@ class AdminController extends Controller
     public function viewInactiveMembers()
     {
         if(auth()->user()->isAdmin()){
-            $users = User::with('media')->where('account_status','free')->paginate(10); // Retrieve all users
-            return view('admin.members.inactive_index', compact('users'));
+            $allUsers = User::with('media')->where('account_status','free')->get(); // Retrieve all users
+            $users = User::with('media')->where('account_status','free')->paginate(50); // Retrieve all users
+            return view('admin.members.inactive_index', compact('users','allUsers'));
         } else {
             return redirect()->route('home');
         }
@@ -523,7 +526,7 @@ class AdminController extends Controller
 
     public function updateAccountStatus(Request $request, User $user)
     {
-        dd($request);
+        // dd($request);
         $id = $user->id;
         $validatedData = $request->validate([
             'account_status' => 'required|in:free,Core,Advanced,Institutional',
