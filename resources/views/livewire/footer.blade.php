@@ -26,14 +26,24 @@
                 <img src="{{ asset('up_arrow.webp') }}" alt="up_arrow" class="h-[50px]">
             </span>
             
-          <span class="flex flex-row w-full justify-between">
-            {{-- <img src="{{asset('ig_icon.webp')}}" class="h-[40px]" alt="instagram"> --}}
-            
-            <a target="_blank" href="https://www.linkedin.com/company/bangladesh-angels/"><img src="{{asset('linkedIn.webp')}}" class="h-[40px]" alt="linkedIn"></a>
-            <a target="_blank" href="https://www.facebook.com/bdangels.co"><img src="{{asset('fb_icon.webp')}}" class="h-[40px]" alt="facebook"></a>
-            <a target="_blank" href="https://x.com/BDAngelsNetwork?t=XxABWIT-yVk-X8ujKnYorA&s=09"><img src="{{asset('twitter.webp')}}" class="h-[40px]" alt="twitter"></a>
-            
+            <span class="flex flex-row flex-wrap w-full justify-center sm:justify-between gap-4">
+              <a target="_blank" href="https://www.linkedin.com/company/bangladesh-angels/">
+                  <div class="flex items-center justify-center w-[40px] h-[40px]">
+                      <img src="{{asset('linkedIn.webp')}}" class="w-auto h-full" alt="linkedIn">
+                  </div>
+              </a>
+              <a target="_blank" href="https://www.facebook.com/bdangels.co">
+                  <div class="flex items-center justify-center w-[40px] h-[40px]">
+                      <img src="{{asset('fb_icon.webp')}}" class="w-auto h-full" alt="facebook">
+                  </div>
+              </a>
+              <a target="_blank" href="https://x.com/BDAngelsNetwork?t=XxABWIT-yVk-X8ujKnYorA&s=09">
+                  <div class="flex items-center justify-center w-[40px] h-[40px]">
+                      <img src="{{asset('twitter.webp')}}" class="w-auto h-full" alt="twitter">
+                  </div>
+              </a>
           </span>
+          
         </div>
       </div>
       <div class="flex flex-row my-6 justify-between text-white">

@@ -46,14 +46,6 @@
         <!-- Additional cards would go here following the same format -->
     </div>
 
-    <!-- Pagination -->
-    <div class="flex justify-center space-x-2 mt-8">
-        <button class="px-4 py-2 bg-gray-200 rounded-lg hover:bg-gray-300">&lt;</button>
-        <button class="px-4 py-2 bg-green-600 text-white rounded-lg">1</button>
-        <button class="px-4 py-2 bg-gray-200 rounded-lg hover:bg-gray-300">2</button>
-        <button class="px-4 py-2 bg-gray-200 rounded-lg hover:bg-gray-300">3</button>
-        <button class="px-4 py-2 bg-gray-200 rounded-lg hover:bg-gray-300">&gt;</button>
-    </div>
 </section>
 
 @endsection
