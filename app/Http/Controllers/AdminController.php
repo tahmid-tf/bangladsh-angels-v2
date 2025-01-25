@@ -37,13 +37,16 @@ class AdminController extends Controller
 
     public function viewMembers()
     {
-        if(auth()->user()->isAdmin()){
-            $users = User::with('media')->get(); // Retrieve all users
-            return view('admin.members.index', compact('users'));
+        if (auth()->user()->isAdmin()) {
+            // Retrieve users with pagination
+            $allUsers = User::with('media')->get(); // All Users
+            $users = User::with('media')->paginate(50); // 50 users per page
+            return view('admin.members.index', compact('users','allUsers'));
         } else {
             return redirect()->route('home');
         }
     }
+
 
     public function viewActiveMembers()
     {
