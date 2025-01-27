@@ -16,9 +16,9 @@
                 What are Bangladesh Angels?
             </h2>
             <p class="text-lg leading-relaxed text-gray-600">
-                Bangladesh Angels is the country’s first angel investing platform, founded with a mission to elevate the country’s startup entrepreneurs to the highest level.
-                Registered as an independent, not-for-profit company, it is a collaborative endeavor led by Avashikhar & the Dutch Global Good Fund, 
-                bringing together leaders in the local entrepreneurial ecosystem to share a passion to create value and growth for startups.
+                Bangladesh Angels Network (BAN) is the country’s largest and first angel investing platform, connecting visionary entrepreneurs with a diverse collective of seasoned investors, fostering an ecosystem that drives innovation and economic growth.
+With $21.7M+ USD invested across 50+ startups, we provide capital, mentorship, and strategic backing to early-stage companies that are solving real problems and scaling fast. Our network is a dynamic mix of local and global investors, business leaders, and founders who collaborate to unlock market-changing opportunities. We don’t just invest, we build, nurture, and accelerate ventures that have the potential to reshape industries. Whether you're looking to back or build the next industry-defining company, BAN is where it happens.
+
             </p>
         </div>
     </div>
