@@ -156,8 +156,16 @@
                 <input type="text" id="substack_link" name="substack_link" class="input-field" value="{{ old('substack_link', $deal->substack_link) }}">
             </div>
             <div>
-                <label for="action_link" class="block text-sm font-semibold text-gray-700 mb-1">Action Link</label>
-                <input type="text" id="action_link" name="action_link" class="input-field" value="{{ old('action_link', $deal->action_link) }}">
+                <label for="invest_link" class="block text-sm font-semibold text-gray-700 mb-1">Invest Link</label>
+                <input type="text" id="invest_link" name="invest_link" class="input-field" value="{{ old('invest_link', $deal->invest_link) }}">
+            </div>
+            <div>
+                <label for="commit_link" class="block text-sm font-semibold text-gray-700 mb-1">Commit Link</label>
+                <input type="text" id="commit_link" name="commit_link" class="input-field" value="{{ old('commit_link', $deal->commit_link) }}">
+            </div>
+            <div>
+                <label for="groupchat_invite_link" class="block text-sm font-semibold text-gray-700 mb-1">Groupchat Invite Link</label>
+                <input type="text" id="groupchat_invite_link" name="groupchat_invite_link" class="input-field" value="{{ old('groupchat_invite_link', $deal->groupchat_invite_link) }}">
             </div>
         </div>
     </form>

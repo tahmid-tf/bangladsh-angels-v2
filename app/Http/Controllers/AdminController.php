@@ -295,9 +295,10 @@ class AdminController extends Controller
                 'company_cover' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5120',
                 'pitch_deck_url' => 'nullable|max:255',
                 'substack_link' => 'nullable|max:255',
-                'action_link' => 'nullable|max:255',
-                'monthly_revenue' => 'nullable|numeric|min:0',
-                'total_addressable_market' => 'nullable|string|max:255',
+                'invest_link' => 'nullable|max:255',
+                'commit_link' => 'nullable|max:255',
+                'groupchat_invite_link' => 'nullable|max:255',
+                'public_profile' => 'nullable|max:255',
                 'serviceable_addressable_market' => 'nullable|string|max:255',
                 'growth_rate' => 'nullable|string|max:255',
                 'revenue_model' => 'nullable|string',
@@ -312,8 +313,8 @@ class AdminController extends Controller
                 'image_gallery.*' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5120',
                 'status' => 'nullable|in:active,closed,draft',
                 'key_metrics' => 'nullable|array',
-                'key_metrics.*.name' => 'required|string|max:255',
-                'key_metrics.*.value' => 'required|string|max:255',
+                'key_metrics.*.name' => 'nullable|string|max:255',
+                'key_metrics.*.value' => 'nullable|string|max:255',
             ]);
            
             // Inside your store method
@@ -330,7 +331,9 @@ class AdminController extends Controller
                 'description' => $validatedData['description'],
                 'pitch_deck_url' => $validatedData['pitch_deck_url'] ?? null,
                 'substack_link' => $validatedData['substack_link'] ?? null,
-                'action_link' => $validatedData['action_link'] ?? null,
+                'invest_link' => $validatedData['invest_link'] ?? null,
+                'commit_link' => $validatedData['commit_link'] ?? null,
+                'groupchat_invite_link' => $validatedData['groupchat_invite_link'] ?? null,
                 'growth_rate' => $validatedData['growth_rate'] ?? null,
                 'revenue_model' => $validatedData['revenue_model'] ?? null, 
                 'future_plans' => $validatedData['future_plans'] ?? null,
@@ -401,7 +404,9 @@ class AdminController extends Controller
             'logo' => 'nullable|image|max:3072',
             'pitch_deck_url' => 'nullable',
             'substack_link' => 'nullable',
-            'action_link' => 'nullable',
+            'invest_link' => 'nullable',
+            'commit_link' => 'nullable',
+            'groupchat_invite_link' => 'nullable',
             'status' => 'required|string',
         ]);
 

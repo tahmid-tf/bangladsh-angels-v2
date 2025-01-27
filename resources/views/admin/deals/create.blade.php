@@ -210,9 +210,23 @@
             @enderror
         </div>
         <div>
-            <label for="action_link" class="block text-gray-700 font-semibold mb-2">Action Link</label>
-            <input type="text" id="action_link" name="action_link" placeholder="Enter link here" class="input-field" value="{{ old('action_link') }}">
-            @error('action_link')
+            <label for="invest_link" class="block text-gray-700 font-semibold mb-2">Invest Link</label>
+            <input type="text" id="invest_link" name="invest_link" placeholder="Enter link here (if Applicable)" class="input-field" value="{{ old('invest_link') }}">
+            @error('invest_link')
+                <span class="text-red-500 text-sm">{{ $message }}</span>
+            @enderror
+        </div>
+        <div>
+            <label for="commit_link" class="block text-gray-700 font-semibold mb-2">Commit Link</label>
+            <input type="text" id="commit_link" name="commit_link" placeholder="Enter link here (if Applicable)" class="input-field" value="{{ old('commit_link') }}">
+            @error('commit_link')
+                <span class="text-red-500 text-sm">{{ $message }}</span>
+            @enderror
+        </div>
+        <div>
+            <label for="groupchat_invite_link" class="block text-gray-700 font-semibold mb-2">WhatsApp Groupchat Invite Link</label>
+            <input type="text" id="groupchat_invite_link" name="groupchat_invite_link" placeholder="Enter link here (if Applicable)" class="input-field" value="{{ old('groupchat_invite_link') }}">
+            @error('groupchat_invite_link')
                 <span class="text-red-500 text-sm">{{ $message }}</span>
             @enderror
         </div>
@@ -250,14 +264,14 @@
                     name="key_metrics[0][name]" 
                     placeholder="Metric Name" 
                     class="input-field" 
-                    required
+            
                 >
                 <input 
                     type="text" 
                     name="key_metrics[0][value]" 
                     placeholder="Metric Value" 
                     class="input-field" 
-                    required
+                    
                 >
             </div>
         @endif
@@ -285,14 +299,12 @@
                     name="key_metrics[${metricCounter}][name]" 
                     placeholder="Metric Name" 
                     class="input-field" 
-                    required
                 >
                 <input 
                     type="text" 
                     name="key_metrics[${metricCounter}][value]" 
                     placeholder="Metric Value" 
                     class="input-field" 
-                    required
                 >
             </div>`;
         container.insertAdjacentHTML('beforeend', newField);

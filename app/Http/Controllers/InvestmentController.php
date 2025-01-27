@@ -31,7 +31,7 @@ class InvestmentController extends Controller
         if ($existingInvestment) {
             // Exception for Review Deals
             if($deal->type=="review"){
-                return redirect()->to($deal->action_link);
+                return redirect()->to($deal->groupchat_invite_link);
             }
             return back()->with('error', 'You have already invested in this deal.');
         }
@@ -44,11 +44,15 @@ class InvestmentController extends Controller
         ]);
 
         if($deal->type=="invest"){
-            return back()->with('success', 'Investment recorded! You will receive investment details from the lead investment analyst shortly');
-        } elseif($deal->type=="commit"){
+            if($deal->invest_link){
+                return redirect()->to($deal->invest_link);
+            } else {
+                return back()->with('success', 'Investment recorded! You will receive investment details from the lead investment analyst shortly');
+            }
+        } elseif($deal->type=="commit"){ 
             return redirect()->route('deal.commit.form',$deal->id);
         } elseif($deal->type=="review") {
-            return redirect()->to($deal->action_link);
+            return redirect()->to($deal->groupchat_invite_link);
         }
         return back()->with('success', 'Investment recorded successfully!');
     }
@@ -73,7 +77,6 @@ class InvestmentController extends Controller
         ->first();
 
         if ($existingCommit) {
-            
             return redirect()->route('deal.view',$deal->id)->with('error', 'You have already committed to this deal.');
         }
 
@@ -83,7 +86,11 @@ class InvestmentController extends Controller
             'amount' => $request->amount,
             'deadline' => $request->deadline,
         ]);
-        return redirect()->route('deal.view',$deal->id)->with('success', 'Commitment recorded successfully!');
+        if($deal->commit_link){
+            return redirect()->to($deal->commit_link);
+        } else {
+            return redirect()->route('deal.view',$deal->id)->with('success', 'Commitment recorded successfully!');
+        }
     }
 
     public function viewInvest()

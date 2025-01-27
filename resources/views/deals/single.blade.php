@@ -75,47 +75,26 @@
         {{$deal->description}}
     </p>
 </section>
+@if ($deal->hasKeyMetric())
+    <section class="container mx-auto px-6 py-12">
+        <h2 class="text-3xl font-bold mb-8 text-center">Key Metrics</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            @forelse($deal->getKeyMetrics() as $metric)
+            <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
+                <h3 class="text-lg font-bold mb-3 text-gray-900">{{ $metric['name'] }}</h3>
+                <p class="text-gray-600 text-sm leading-relaxed">
+                    {{ $metric['value'] }}
+                </p>
+            </div>
+            @empty
+            <div class="col-span-full text-center text-gray-500">
+                <p>No Key Metrics available for this deal.</p>
+            </div>
+            @endforelse
+        </div>
+    </section>    
+@endif
 
-{{-- <!-- Metrics Section -->
-<section class="bg-gray-50 py-12">
-    <div class="container mx-auto px-6">
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div class="text-center">
-                <p class="text-2xl font-bold">
-                    Over 2 million registered users
-                </p>
-                <p class="text-gray-500">With 15% month-over-month growth in adoption.</p>
-            </div>
-            <div class="text-center">
-                <p class="text-2xl font-bold">
-                    ৳50,000+ monthly revenue
-                </p>
-                <p class="text-gray-500">With 60% derived from recurring partnerships with fleet operators.</p>
-            </div>
-            <div class="text-center">
-                <p class="text-2xl font-bold">TAM of $3 billion in South Asia</p>
-                <p class="text-gray-500">In the urban transport market, with $200M directly addressable in Bangladesh.</p>
-            </div>
-        </div>
-    </div>
-</section> --}}
-<section class="container mx-auto px-6 py-12">
-    <h2 class="text-3xl font-bold mb-8 text-center">Key Metrics</h2>
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-        @forelse($deal->getKeyMetrics() as $metric)
-        <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
-            <h3 class="text-lg font-bold mb-3 text-gray-900">{{ $metric['name'] }}</h3>
-            <p class="text-gray-600 text-sm leading-relaxed">
-                {{ $metric['value'] }}
-            </p>
-        </div>
-        @empty
-        <div class="col-span-full text-center text-gray-500">
-            <p>No Key Metrics available for this deal.</p>
-        </div>
-        @endforelse
-    </div>
-</section>
 
 
 <!-- More Live Deals Section -->
@@ -124,7 +103,9 @@
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
         @forelse ($otherDeals as $otherDeal)
             <div class="bg-white p-6 rounded-lg shadow">
-                <img src="{{$otherDeal->getCoverUrl()}}" alt="Deal Image" class="w-full h-40 object-cover rounded-lg mb-4">
+                <a href="{{route('deal.view',$otherDeal->id)}}">
+                    <img src="{{$otherDeal->getCoverUrl()}}" alt="Deal Image" class="w-full h-40 object-cover rounded-lg mb-4">
+                </a>
                 <h3 class="text-lg font-bold">{{ $otherDeal->title }}</h3>
                 <p class="text-gray-500 text-sm mb-4">
                     {{$otherDeal->description}}

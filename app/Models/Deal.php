@@ -25,7 +25,9 @@ class Deal extends Model implements HasMedia
         'company_cover',
         'pitch_deck_url',
         'substack_link',
-        'action_link',
+        'invest_link',
+        'commit_link',
+        'groupchat_invite_link',
         'created_by',
         'status',
         'slug',
@@ -65,6 +67,28 @@ class Deal extends Model implements HasMedia
     public function creator()
     {
         return $this->belongsTo(User::class, 'created_by');
+    }
+
+    public function hasKeyMetric(): bool
+    {
+        // Decode the JSON value from the key_metrics column
+        $keyMetrics = json_decode($this->key_metrics, true);
+
+        // Check if key_metrics is not a valid array or empty
+        if (!is_array($keyMetrics) || empty($keyMetrics)) {
+            return false; // Invalid key metrics
+        }
+
+        // Check if the key_metrics contains only one item with null values
+        foreach ($keyMetrics as $metric) {
+            if (isset($metric['name'], $metric['value'])) {
+                if ($metric['name'] !== null || $metric['value'] !== null) {
+                    return true; // Valid key metric found
+                }
+            }
+        }
+
+        return false; // No valid key metrics found
     }
 
     public function getKeyMetrics()
