@@ -29,11 +29,19 @@ With $21.7M+ USD invested across 50+ startups, we provide capital, mentorship, a
 <!-- Section: Team and Management -->
 <section class="container mx-auto mt-20 px-6">
     <h2 class="text-center text-4xl font-extrabold mb-4">Team and Management</h2>
-    <p class="text-center text-gray-500 mb-12">The faces behind Bangladesh Angels</p>
-    
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+    <div class="flex items-center my-10 justify-center">
         <!-- Team Card -->
         <div class="bg-white rounded-xl shadow-lg p-6 text-center hover:shadow-2xl transition">
+            <img src="{{asset('our team/ivy.png')}}" alt="Ivy Huq Russell" class="w-28 h-28 mx-auto rounded-full mb-4">
+            <h3 class="text-lg font-bold">Ivy Huq Russell</h3>
+            <p class="text-sm text-gray-500">CEO</p>
+            <span class="inline-block bg-blue-100 text-blue-600 px-3 py-1 text-xs font-semibold rounded-full mt-3">Fintech</span>
+            <br><a href="https://www.linkedin.com/in/ivy-huq-russell-417487/" class="mt-3 text-blue-600 font-bold text-2xl cursor-pointer">in</a>
+        </div>
+    </div>
+    <div class="flex justify-center items-center">
+        <!-- Team Card -->
+        <div class="bg-white rounded-xl shadow-lg mx-10 p-6 text-center hover:shadow-2xl transition">
             <img src="{{asset('our team/mustavi.png')}}" alt="Mustavi Khan" class="w-28 h-28 mx-auto rounded-full mb-4">
             <h3 class="text-lg font-bold">Mustavi Khan</h3>
             <p class="text-sm text-gray-500">Investment Analyst</p>
@@ -42,16 +50,7 @@ With $21.7M+ USD invested across 50+ startups, we provide capital, mentorship, a
         </div>
 
         <!-- Repeat similar cards -->
-        <div class="bg-white rounded-xl shadow-lg p-6 text-center hover:shadow-2xl transition">
-            <img src="{{asset('our team/tazriana.png')}}" alt="Tazriana Lodhi" class="w-28 h-28 mx-auto rounded-full mb-4">
-            <h3 class="text-lg font-bold">Tazriana Lodhi</h3>
-            <p class="text-sm text-gray-500">Investment Analyst</p>
-            <span class="inline-block bg-blue-100 text-blue-600 px-3 py-1 text-xs font-semibold rounded-full mt-3">Fintech</span>
-            <br>
-            <a href="https://www.linkedin.com/in/tazriana-lodhi-/" class="mt-3 text-blue-600 font-bold text-2xl cursor-pointer">in</a>
-        </div>
-        <!-- Repeat similar cards -->
-        <div class="bg-white rounded-xl shadow-lg p-6 text-center hover:shadow-2xl transition">
+        <div class="bg-white rounded-xl mx-10 shadow-lg p-6 text-center hover:shadow-2xl transition">
             <img src="{{asset('our team/mohaimenul.png')}}" alt="Mohaimenul Islam" class="w-28 h-28 mx-auto rounded-full mb-4">
             <h3 class="text-lg font-bold">Mohaimenul Islam</h3>
             <p class="text-sm text-gray-500">Investment Analyst</p>
@@ -59,7 +58,7 @@ With $21.7M+ USD invested across 50+ startups, we provide capital, mentorship, a
             <br><a href="https://www.linkedin.com/in/mohaimenul8/" class="mt-3 text-blue-600 font-bold text-2xl cursor-pointer">in</a>
         </div>
         <!-- Repeat similar cards -->
-        <div class="bg-white rounded-xl shadow-lg p-6 text-center hover:shadow-2xl transition">
+        <div class="bg-white rounded-xl mx-10 shadow-lg p-6 text-center hover:shadow-2xl transition">
             <img src="{{asset('our team/farin.png')}}" alt="Farin Sabrina" class="w-28 h-28 mx-auto rounded-full mb-4">
             <h3 class="text-lg font-bold">Farin Sabrina</h3>
             <p class="text-sm text-gray-500">Investment Analyst</p>
@@ -72,7 +71,6 @@ With $21.7M+ USD invested across 50+ startups, we provide capital, mentorship, a
 <!-- Section: Governing Board -->
 <section class="container mx-auto mt-20 px-6">
     <h2 class="text-center text-4xl font-extrabold mb-6">Governing Board</h2>
-    <p class="text-center text-gray-500 mb-12">Bangladesh Angels will provide you support if you have any problems.</p>
 
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
         <div class="bg-white rounded-xl shadow-lg p-6 text-center hover:shadow-2xl transition">
@@ -80,7 +78,7 @@ With $21.7M+ USD invested across 50+ startups, we provide capital, mentorship, a
             <p class="text-sm text-gray-500">Chief Executive</p>
             <p class="text-sm text-gray-500">Telenor Health AS</p>
             <img src="{{asset('our team/sajid.png')}}" alt="Sajid Rehman" class="mt-3 w-28 h-28 mx-auto rounded-full mb-4">
-            <p class="text-xs mt-3 italic text-gray-600">“Scelerisque ornare quisque magna ipsum.”</p>
+           
             <br><a href="https://www.linkedin.com/in/rahmansajid/" class="mt-3 text-blue-600 font-bold text-2xl cursor-pointer">in</a>
         </div>
 
@@ -89,7 +87,7 @@ With $21.7M+ USD invested across 50+ startups, we provide capital, mentorship, a
             <p class="text-sm text-gray-500">Co Founder</p>
             <p class="text-sm text-gray-500">Startup Dhaka</p>
             <img src="{{asset('our team/samad.png')}}" alt="samad miraly" class="mt-3 w-28 h-28 mx-auto rounded-full mb-4">
-            <p class="text-xs mt-3 italic text-gray-600">“Scelerisque ornare quisque magna ipsum.”</p>
+   
             <a href="https://www.linkedin.com/in/miraly/" class="mt-3 text-blue-600 font-bold text-2xl cursor-pointer">in</a>
         </div>
 
@@ -98,7 +96,7 @@ With $21.7M+ USD invested across 50+ startups, we provide capital, mentorship, a
             <p class="text-sm text-gray-500">Chief Storyteller</p>
             <p class="text-sm text-gray-500">Better Stories</p>
             <img src="{{asset('our team/minhaz.png')}}" alt="Minhaz Anwar" class="mt-3 w-28 h-28 mx-auto rounded-full mb-4">
-            <p class="text-xs mt-3 italic text-gray-600">“Scelerisque ornare quisque magna ipsum.”</p>
+            
             <br><a href="https://www.linkedin.com/in/minhazanwar/" class="mt-3 text-blue-600 font-bold text-2xl cursor-pointer">in</a>
         </div>
 
@@ -107,7 +105,7 @@ With $21.7M+ USD invested across 50+ startups, we provide capital, mentorship, a
             <p class="text-sm text-gray-500">Investment Advisor</p>
             <p class="text-sm text-gray-500">Startup Bangladesh</p>
             <img src="{{asset('our team/tina.png')}}" alt="Tina Jabeen" class="mt-3 w-28 h-28 mx-auto rounded-full mb-4">
-            <p class="text-xs mt-3 italic text-gray-600">“Scelerisque ornare quisque magna ipsum.”</p>
+            
             <br><a href="https://www.linkedin.com/in/tinajabeen/" class="mt-3 text-blue-600 font-bold text-2xl cursor-pointer">in</a>
         </div>
         <!-- Repeat other governing board cards -->
