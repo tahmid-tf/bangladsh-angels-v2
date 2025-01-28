@@ -6,12 +6,14 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 use App\Models\Deal;
+use App\Models\User;
 
 class PrimaryController extends Controller
 {
     public function __invoke()
     {
-        return view('welcome');
+        $deals = Deal::where('type','portfolio')->take(3)->get();
+        return view('welcome',compact('deals'));
     }
 
     public function upgradePage(){

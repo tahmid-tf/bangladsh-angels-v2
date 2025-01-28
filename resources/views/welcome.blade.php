@@ -92,9 +92,9 @@
   
       <!-- Portfolio Grid -->
       <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 md:gap-6 w-[90%] md:w-[70vw] mt-6">
-          <livewire:portfolio-company></livewire:portfolio-company>
-          <livewire:portfolio-company></livewire:portfolio-company>
-          <livewire:portfolio-company></livewire:portfolio-company>
+        @foreach ($deals as $deal)
+            <livewire:portfolio-company :deal="$deal"></livewire:portfolio-company>
+        @endforeach  
       </div>
     </section>
   

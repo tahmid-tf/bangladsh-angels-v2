@@ -13,7 +13,7 @@
     <div class="mt-12 lg:mt-0 lg:w-1/2 flex items-center">
         <div>
             <h2 class="text-4xl font-extrabold text-gray-800 mb-6 leading-tight">
-                What are Bangladesh Angels?
+                What is Bangladesh Angels Network?
             </h2>
             <p class="text-lg leading-relaxed text-gray-600">
                 Bangladesh Angels Network (BAN) is the country’s largest and first angel investing platform, connecting visionary entrepreneurs with a diverse collective of seasoned investors, fostering an ecosystem that drives innovation and economic growth.
