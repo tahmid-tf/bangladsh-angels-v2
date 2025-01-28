@@ -23,10 +23,6 @@ class PrimaryController extends Controller
 
     public function viewPortfolio()
     {
-        if (!Auth::check()) {
-            return redirect()->route('upgrade.page');
-        }
-
         $deals = Deal::with('media')->where('type','portfolio')->get();
         return view('portfolio',compact('deals'));
     }

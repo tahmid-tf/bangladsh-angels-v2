@@ -41,11 +41,11 @@
                     <p class="text-lg font-semibold">$ {{$deal->amount_seeking}}</p>
                 </div>
             </div>
-            <a href="{{$deal->pitch_deck_url}}" class="my-6 px-6 py-2 bg-gray-200 text-gray-700 font-semibold rounded-lg shadow hover:bg-gray-300">
+            <a href="{{ (auth()->user()) ? $deal->pitch_deck_url : route('plans')}}" class="my-6 px-6 py-2 bg-gray-200 text-gray-700 font-semibold rounded-lg shadow hover:bg-gray-300">
                 View Pitch Deck
             </a>
             @if ($deal->substack_link)
-            <a href="{{$deal->substack_link}}" class="my-6 m-3 px-6 py-2 bg-gray-200 text-gray-700 font-semibold rounded-lg shadow hover:bg-gray-300">
+            <a href="{{ (auth()->user()) ? $deal->substack_link : route('plans')}}" class="my-6 m-3 px-6 py-2 bg-gray-200 text-gray-700 font-semibold rounded-lg shadow hover:bg-gray-300">
                 View on Substack
             </a>
             @endif
@@ -96,17 +96,19 @@
 @endif
 
 
-
-<!-- More Live Deals Section -->
-<section class="container mx-auto px-6 py-12">
-    <h2 class="text-3xl font-bold mb-8">More Live Deals</h2>
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        @forelse ($otherDeals as $otherDeal)
-            <livewire:deal-card :deal="$otherDeal"></livewire:deal-card>
-        @empty
+@if (count($otherDeals)>0)
+    <!-- More Live Deals Section -->
+    <section class="container mx-auto px-6 py-12">
+        <h2 class="text-3xl font-bold mb-8">More Live Deals</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            @forelse ($otherDeals as $otherDeal)
+                <livewire:deal-card :deal="$otherDeal"></livewire:deal-card>
+            @empty
+                
+            @endforelse
             
-        @endforelse
-        
-    </div>
-</section>
+        </div>
+    </section>
+@endif
+
 @endsection

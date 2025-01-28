@@ -53,6 +53,8 @@ class InvestmentController extends Controller
             return redirect()->route('deal.commit.form',$deal->id);
         } elseif($deal->type=="review") {
             return redirect()->to($deal->groupchat_invite_link);
+        } elseif($deal->type=="portfolio"){
+            return redirect()->route('deal.public.view',$deal->id);
         }
         return back()->with('success', 'Investment recorded successfully!');
     }

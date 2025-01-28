@@ -72,7 +72,7 @@ Route::get('/dashboard', function () {
  * Member Routes
  */
 Route::post('/member/create', [AdminController::class, 'memberApply'])->name('member.apply');
-
+Route::get('/view/{deal:id}',[AdminController::class,'showDeal'])->name('deal.public.view');
 /**
  * Authenticated Routes
  */

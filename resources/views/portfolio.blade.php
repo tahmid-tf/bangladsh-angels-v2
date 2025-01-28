@@ -33,7 +33,7 @@
                 </div>
             </div>
             
-            <a href="{{route('deal.view', $deal->id)}}" class="px-6 text-center w-full mt-6 py-3 bg-green-600 text-white font-semibold rounded-lg hover:bg-green-700 transition">View Portfolio</a>
+            <a href="{{route('deal.public.view', $deal->id)}}" class="px-6 text-center w-full mt-6 py-3 bg-green-600 text-white font-semibold rounded-lg hover:bg-green-700 transition">View Portfolio</a>
         </div>
         
         @endforeach
