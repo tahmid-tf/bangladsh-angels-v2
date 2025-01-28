@@ -133,10 +133,7 @@
         </p>
     
         <div class="flex flex-wrap items-center justify-between w-full max-w-[90%] md:max-w-[70vw] mt-6 gap-6">
-            <!-- Previous Button -->
-            <button class="flex-shrink-0">
-                <img src="{{asset('icons/disabled previous btn.webp')}}" class="h-[3em] md:h-[6em]" alt="previous btn">
-            </button>
+           
     
             <!-- Deal Cards -->
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6 w-full">
@@ -144,14 +141,9 @@
                     <livewire:deal-card :deal="$deal"></livewire:deal-card>
                 @endforeach
             </div>
-    
-            <!-- Next Button -->
-            <button class="flex-shrink-0">
-                <img src="{{asset('icons/enabled next btn.webp')}}" class="h-[3em] md:h-[6em]" alt="next btn">
-            </button>
         </div>
     
-        <a href="{{route('admin.deals')}}" class="p-3 px-6 mt-8 rounded-full bg-white font-bold text-[#00877a]">
+        <a href="{{route('deals')}}" class="p-3 px-6 mt-8 rounded-full bg-white font-bold text-[#00877a]">
             Explore All Deals
         </a>
     </section>
