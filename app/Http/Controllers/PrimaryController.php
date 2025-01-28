@@ -12,8 +12,9 @@ class PrimaryController extends Controller
 {
     public function __invoke()
     {
-        $deals = Deal::where('type','portfolio')->take(3)->get();
-        return view('welcome',compact('deals'));
+        $portfolioDeals = Deal::where('type','portfolio')->take(3)->get();
+        $deals = Deal::take(3)->get();
+        return view('welcome',compact('portfolioDeals','deals'));
     }
 
     public function upgradePage(){

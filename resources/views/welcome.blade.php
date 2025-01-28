@@ -92,7 +92,7 @@
   
       <!-- Portfolio Grid -->
       <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 md:gap-6 w-[90%] md:w-[70vw] mt-6">
-        @foreach ($deals as $deal)
+        @foreach ($portfolioDeals as $deal)
             <livewire:portfolio-company :deal="$deal"></livewire:portfolio-company>
         @endforeach  
       </div>
@@ -140,37 +140,9 @@
     
             <!-- Deal Cards -->
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6 w-full">
-                <div class="group relative block rounded-lg overflow-hidden bg-white shadow-md">
-                    <img
-                        src="https://images.unsplash.com/photo-1628202926206-c63a34b1618f?q=80&w=2574&auto=format&fit=crop"
-                        alt=""
-                        class="h-40 md:h-64 w-full object-cover transition duration-500 group-hover:scale-105"
-                    />
-                    <div class="absolute top-[8em] md:top-[15em] left-3 flex items-center">
-                        <img class="h-8 w-8 md:h-10 md:w-10 -mx-1.5 ring ring-white rounded-full object-cover" src="https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=4&w=880&h=880&q=100" alt="">
-                        <img class="h-8 w-8 md:h-10 md:w-10 -mx-1.5 ring ring-white rounded-full object-cover" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=4&w=687&h=687&q=80" alt="">
-                        <img class="h-8 w-8 md:h-10 md:w-10 -mx-1.5 ring ring-white rounded-full object-cover" src="https://images.unsplash.com/photo-1464863979621-258859e62245?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=4&w=686&h=686&q=80" alt="">
-                    </div>
-                    <div class="flex flex-col p-4">
-                        <div class="flex flex-wrap gap-2">
-                            <p class="text-gray-400 bg-gray-100 font-bold text-[0.7em] rounded-full px-3 py-1">Audio Technology</p>
-                            <p class="text-gray-400 bg-gray-100 font-bold text-[0.7em] rounded-full px-3 py-1">AI</p>
-                        </div>
-                        <h3 class="mt-3 text-lg font-medium text-gray-900">Wireless Headphones</h3>
-                        <p class="mt-2 text-gray-700 text-sm line-clamp-3">
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Labore nobis iure obcaecati pariatur.
-                        </p>
-                        <div class="flex justify-between mt-4">
-                            <h1 class="rounded-full text-gray-700 px-3 py-1 font-bold">Pre-Seed</h1>
-                            <button
-                                class="rounded-full border-2 w-[8em] border-[#36b37e] text-[#36b37e] px-3 py-1 font-bold transition hover:scale-105"
-                            >
-                                Invest Now
-                            </button>
-                        </div>
-                    </div>
-                </div>
-                <!-- Repeat for other deal cards -->
+                @foreach ($deals as $deal)
+                    <livewire:deal-card :deal="$deal"></livewire:deal-card>
+                @endforeach
             </div>
     
             <!-- Next Button -->
