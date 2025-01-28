@@ -73,6 +73,9 @@
         <!-- Mobile Menu -->
         <div id="mobile-menu" class="hidden flex-col items-center bg-white w-full shadow-md md:hidden absolute top-[70px] left-0 z-20">
             <ul class="flex flex-col text-gray-700">
+                @guest
+                <li class="px-4 py-2 border-b"><a href="{{ route('login') }}">Login/Sign Up</a></li>
+                @endguest
                 <li class="px-4 py-2 border-b"><a href="{{ route('deals') }}">Deals</a></li>
                 <li class="px-4 py-2 border-b"><a href="{{ route('investors')}}">BAN Investors</a></li>
                 <li class="px-4 py-2 border-b"><a href="{{ route('portfolio') }}">Portfolio</a></li>

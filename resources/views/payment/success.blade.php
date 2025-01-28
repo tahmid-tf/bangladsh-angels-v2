@@ -9,35 +9,35 @@
         <th>Analyst</th>
         <th>Contact</th>
         <tr>
-            <td>
+            <td class="text-left">
                 Mohaimenul Islam
             </td>
-            <td>
+            <td class="text-left">
                 <a href="tel:+8801731814993">+8801731814993</a>
             </td>
         </tr>
         <tr>
-            <td>
+            <td class="text-left">
                 Mustavi Khan
             </td>
-            <td>
+            <td class="text-left">
                 <a href="tel:+8801727612346">+8801727612346</a>
                 
             </td>
         </tr>
         <tr>
-            <td>
+            <td class="text-left">
                 Farin Sabrina
             </td>
-            <td>
+            <td class="text-left">
                 <a href="tel:+8801705181801">+8801705181801</a>
             </td>
         </tr>
         <tr>
-            <td>
+            <td class="text-left">
                 Rifat Ara Bohny
             </td>
-            <td>
+            <td class="text-left">
                 <a href="tel:+8801687387288">+8801687387288</a> 
             </td>
         </tr>
