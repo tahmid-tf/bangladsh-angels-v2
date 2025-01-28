@@ -23,7 +23,7 @@
     </div>
     
     <div class="flex border-box p-4 w-full">
-        <a href="{{ ($deal->type!=="review") ? route('deal.view',$deal->id) : $deal->action_link }}" class="px-6 w-full text-center cursor-pointer mt-6 py-3 bg-green-600 text-white font-semibold rounded-lg hover:bg-green-700 transition">{{
+        <a href="{{ ($deal->type!=="review") ? route('deal.view',$deal->id) : $deal->groupchat_invite_link }}" class="px-6 w-full text-center cursor-pointer mt-6 py-3 bg-green-600 text-white font-semibold rounded-lg hover:bg-green-700 transition">{{
                 
                 ($deal->type!=="review") ? ucfirst($deal->type) : "Join WhatsApp Group"
             
