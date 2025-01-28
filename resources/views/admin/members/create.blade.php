@@ -335,13 +335,18 @@
           <input type="date" name="joining_date" placeholder="Joining Date" class="border border-gray-300 p-2 rounded w-full" value="{{ old('joining_date') }}">
           <select name="account_status" id="" class="border border-gray-300 p-2 rounded w-full">
             <option value="">Select</option>
-            <optgroup label="Tiers">
-                <option value="free">Free</option>
-                <option value="core">Core</option>
-                <option value="advanced">Advanced</option>
-                <option value="institutional">Institutional</option>
-            </optgroup>
-        </select>
+              <optgroup label="Tiers">
+                  <option value="free">Free</option>
+                  <option value="core">Core</option>
+                  <option value="advanced">Advanced</option>
+                  <option value="institutional">Institutional</option>
+              </optgroup>
+          </select>
+          <select name="public_profile" id="" placeholder="Profile Visibility" class="border border-gray-300 p-2 rounded w-full">
+            <option value="">Select Profile Visibility</option> 
+            <option value="false">Private</option>
+            <option value="true">Public</option>
+          </select>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">

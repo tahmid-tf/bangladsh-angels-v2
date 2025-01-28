@@ -30,6 +30,7 @@ class User extends Authenticatable implements HasMedia
         'primary_contact',
         'secondary_contact',
         'preference_sector',
+        'public_profile',
         'designation',
         'organization',
         'registered_by',

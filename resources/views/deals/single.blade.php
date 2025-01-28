@@ -103,18 +103,6 @@
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
         @forelse ($otherDeals as $otherDeal)
             <livewire:deal-card :deal="$otherDeal"></livewire:deal-card>
-            {{-- <div class="bg-white p-6 rounded-lg shadow">
-                <a href="{{route('deal.view',$otherDeal->id)}}">
-                    <img src="{{$otherDeal->getCoverUrl()}}" alt="Deal Image" class="w-full h-40 object-cover rounded-lg mb-4">
-                </a>
-                <h3 class="text-lg font-bold">{{ $otherDeal->title }}</h3>
-                <p class="text-gray-500 text-sm mb-4">
-                    {{$otherDeal->description}}
-                </p>
-                <button class="px-6 py-2 bg-green-500 text-white font-semibold rounded-lg hover:bg-green-600 transition">
-                    Invest
-                </button>
-            </div> --}}
         @empty
             
         @endforelse

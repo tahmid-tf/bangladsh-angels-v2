@@ -67,6 +67,14 @@
                         <option value="other" {{ old('gender', $user->gender) == 'other' ? 'selected' : '' }}>Other</option>
                     </select>
                 </div>
+                <div>
+                    <label for="public_profile" class="block font-semibold text-gray-700">Profile Visibility</label>
+                    <select name="public_profile" id="public_profile" placeholder="Profile Visibility" class="border border-gray-300 p-2 rounded w-full">
+                        <option value="">Select Profile Visibility</option> 
+                        <option value="false">Private</option>
+                        <option value="true">Public</option>
+                      </select>
+                </div>
             </div>
             <div>
                 <label for="country" class="block font-semibold text-gray-700">Country</label>

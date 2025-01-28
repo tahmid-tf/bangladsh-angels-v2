@@ -90,6 +90,7 @@ class AdminController extends Controller
                 'address' => 'required|string|max:255',
                 'email' => 'required|email|unique:users,email',
                 'phone' => 'required|string|max:20',
+                'public_profile' => 'nullable',
                 'gender' => 'required|in:male,female,other',
                 'organization' => 'nullable|string|max:255',
                 'designation' => 'nullable|string|max:255',
@@ -118,6 +119,7 @@ class AdminController extends Controller
                 'name' => $request->full_name,
                 'email' => $request->email,
                 'address' => $request->address,
+                'public_profile' => $request->public_profile,
                 'password' => Hash::make($request->password), // Hash the password
                 'phone' => $phone,
                 'gender' => $request->gender,
@@ -471,6 +473,7 @@ class AdminController extends Controller
             'full_name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email,' . $user->id, // Ignore the current user's email
             'phone' => 'required|string|max:20',
+            'public_profile' => 'nullable',
             'account_status' => 'required|string',
             'account_level' => 'required|in:emerald,ruby,diamond',
             'gender' => 'required|in:male,female,other',
@@ -502,6 +505,7 @@ class AdminController extends Controller
             'phone' => $request->phone,
             'gender' => $request->gender,
             'account_status' => $request->account_status,
+            'public_profile' => $request->public_profile,
             'level' => $request->account_level,
             'company_name' => $request->organization,
             'designation' => $request->designation,

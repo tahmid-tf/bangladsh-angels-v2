@@ -19,7 +19,6 @@
                 <p class="text-gray-600 text-sm mb-2">16-22 December, 2023</p>
                 <p class="text-gray-600 text-sm mb-2">08:00 AM - 06:00 PM</p>
                 <p class="text-gray-600 text-sm mb-4">64-65, Kazi Nazrul Islam Avenue, Dhaka-1215</p>
-                <button class="bg-green-500 text-white px-4 py-2 rounded-lg w-full hover:bg-green-600">Register</button>
             </div>
             <!-- Repeat the above card as needed -->
         </div>

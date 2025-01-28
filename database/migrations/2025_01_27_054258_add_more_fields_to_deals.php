@@ -15,7 +15,6 @@ return new class extends Migration
             $table->text('groupchat_invite_link')->nullable();
             $table->text('commit_link')->nullable();
             $table->text('invest_link')->nullable();
-            $table->boolean('public_profile')->default(false)->nullable();
             $table->dropColumn('action_link');
         });
     }
