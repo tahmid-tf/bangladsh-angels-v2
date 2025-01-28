@@ -113,8 +113,8 @@
                         @enderror
                     </div>
                     <div>
-                        <label for="investment_stage" class="block text-gray-700 font-semibold mb-2">Investment Stage *</label>
-                        <select id="investment_stage" name="investment_stage" class="input-field" required>
+                        <label for="investment_stage" class="block text-gray-700 font-semibold mb-2">Investment Stage</label>
+                        <select id="investment_stage" name="investment_stage" class="input-field">
                             <option value="">Investment Stage</option>
                             <option value="Pre Seed" {{ old('investment_stage') == 'Pre Seed' ? 'selected' : '' }}>Pre Seed</option>
                             <option value="Seed" {{ old('investment_stage') == 'Seed' ? 'selected' : '' }}>Seed</option>
@@ -130,8 +130,8 @@
                     </div>
                 </div>
                 <div>
-                    <label for="amount_seeking" class="block text-gray-700 font-semibold mb-2">Amount Seeking *</label>
-                    <input type="number" id="amount_seeking" name="amount_seeking" placeholder="Amount Seeking" class="input-field" value="{{ old('amount_seeking') }}" required>
+                    <label for="amount_seeking" class="block text-gray-700 font-semibold mb-2">Amount Seeking</label>
+                    <input type="number" id="amount_seeking" name="amount_seeking" placeholder="Amount Seeking" class="input-field" value="{{ old('amount_seeking') }}">
                     @error('amount_seeking')
                         <span class="text-red-500 text-sm">{{ $message }}</span>
                     @enderror

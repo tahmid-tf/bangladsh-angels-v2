@@ -114,8 +114,8 @@
 
                 <!-- Investment Stage -->
                 <div>
-                    <label for="investment_stage" class="block text-sm font-semibold text-gray-700 mb-1">Investment Stage *</label>
-                    <select id="investment_stage" name="investment_stage" class="input-field" required>
+                    <label for="investment_stage" class="block text-sm font-semibold text-gray-700 mb-1">Investment Stage</label>
+                    <select id="investment_stage" name="investment_stage" class="input-field">
                         <option value="Pre Seed" {{ old('investment_stage', $deal->investment_stage) == 'Pre Seed' ? 'selected' : '' }}>Pre Seed</option>
                         <option value="Seed" {{ old('investment_stage', $deal->investment_stage) == 'Seed' ? 'selected' : '' }}>Seed</option>
                         <option value="Series A" {{ old('investment_stage', $deal->investment_stage) == 'Series A' ? 'selected' : '' }}>Series A</option>
@@ -135,7 +135,7 @@
             <!-- Amount Seeking -->
             <div>
                 <label for="amount_seeking" class="block text-sm font-semibold text-gray-700 mb-1">Amount Seeking *</label>
-                <input type="number" id="amount_seeking" name="amount_seeking" class="input-field" value="{{ old('amount_seeking', $deal->amount_seeking) }}" required>
+                <input type="number" id="amount_seeking" name="amount_seeking" class="input-field" value="{{ old('amount_seeking', $deal->amount_seeking) }}" >
             </div>
 
             <!-- Description -->
