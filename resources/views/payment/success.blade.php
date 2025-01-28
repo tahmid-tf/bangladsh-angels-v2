@@ -5,7 +5,7 @@
     <h1 class="text-3xl font-bold text-gray-800 mb-4">Thank You for Your Purchase!</h1>
     <p class="text-gray-500">We’ve sent an email to your provided email address with the payment details.</p>
     <p class="text-gray-500">Feel free to contact us if you have any questions.</p>
-    <table>
+    <table class="mt-6">
         <th>Analyst</th>
         <th>Contact</th>
         <tr>
