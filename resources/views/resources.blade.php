@@ -44,7 +44,6 @@
                 <p class="text-gray-600 text-sm mb-2">Sunday, October 13</p>
                 <p class="text-gray-600 text-sm mb-2">7:00 PM - 9:00 PM GMT+6</p>
                 <p class="text-gray-600 text-sm mb-4">Zoom</p>
-                <button class="bg-green-500 text-white px-4 py-2 rounded-lg w-full hover:bg-green-600">Register</button>
             </div>
             <!-- Repeat the above card as needed -->
         </div>
