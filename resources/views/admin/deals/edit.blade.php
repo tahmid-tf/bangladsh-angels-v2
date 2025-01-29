@@ -106,9 +106,9 @@
                 <div>
                     <label for="status" class="block text-sm font-semibold text-gray-700 mb-1">Status *</label>
                     <select id="status" name="status" class="input-field" required>
-                        <option value="active" {{ old('type', $deal->type) == 'active' ? 'selected' : '' }}>Active</option>
-                        <option value="closed" {{ old('type', $deal->type) == 'closed' ? 'selected' : '' }}>Closed</option>
-                        <option value="draft" {{ old('type', $deal->type) == 'draft' ? 'selected' : '' }}>Draft</option>
+                        <option value="active" {{ old('status', $deal->status) == 'active' ? 'selected' : '' }}>Active</option>
+                        <option value="closed" {{ old('status', $deal->status) == 'closed' ? 'selected' : '' }}>Closed</option>
+                        <option value="draft" {{ old('status', $deal->status) == 'draft' ? 'selected' : '' }}>Draft</option>
                     </select>
                 </div>
 
@@ -116,6 +116,7 @@
                 <div>
                     <label for="investment_stage" class="block text-sm font-semibold text-gray-700 mb-1">Investment Stage</label>
                     <select id="investment_stage" name="investment_stage" class="input-field">
+                        <option value="">Not Applicable</option>
                         <option value="Pre Seed" {{ old('investment_stage', $deal->investment_stage) == 'Pre Seed' ? 'selected' : '' }}>Pre Seed</option>
                         <option value="Seed" {{ old('investment_stage', $deal->investment_stage) == 'Seed' ? 'selected' : '' }}>Seed</option>
                         <option value="Series A" {{ old('investment_stage', $deal->investment_stage) == 'Series A' ? 'selected' : '' }}>Series A</option>

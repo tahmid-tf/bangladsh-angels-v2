@@ -115,7 +115,8 @@
                     <div>
                         <label for="investment_stage" class="block text-gray-700 font-semibold mb-2">Investment Stage</label>
                         <select id="investment_stage" name="investment_stage" class="input-field">
-                            <option value="">Investment Stage</option>
+                            <option value="">Select Investment Stage</option>
+                            <option value="">Not Applicable</option>
                             <option value="Pre Seed" {{ old('investment_stage') == 'Pre Seed' ? 'selected' : '' }}>Pre Seed</option>
                             <option value="Seed" {{ old('investment_stage') == 'Seed' ? 'selected' : '' }}>Seed</option>
                             <option value="Series A" {{ old('investment_stage') == 'Series A' ? 'selected' : '' }}>Series A</option>
