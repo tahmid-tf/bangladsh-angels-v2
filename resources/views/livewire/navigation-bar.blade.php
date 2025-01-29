@@ -1,5 +1,6 @@
 <section class="fixed flex z-10 top-0 text-center justify-center items-center w-full">
     <div class="align-self-center w-full md:w-[70vw] bg-gray-100/30 backdrop-blur-lg z-50 shadow-md flex flex-row justify-between items-center rounded-lg md:rounded-full mt-6 px-4">
+        
         <!-- Logo (Left for Desktop) -->
         <a href="{{ route('home') }}" class="flex justify-start">
             <img src="{{ asset('logo.webp') }}" class="h-[40px] my-4 md:mx-[40px]" alt="Bangladesh Angels Network Logo">
@@ -17,7 +18,7 @@
         </div>
 
         <!-- User Actions (Right for Desktop) -->
-        <div class="flex items-end hidden md:block">
+        <div class="hidden md:flex items-center space-x-4">
             @auth
             <div class="relative">
                 <!-- User Avatar -->
@@ -27,17 +28,11 @@
                 <!-- Dropdown Menu -->
                 <div id="dropdown-menu" class="hidden absolute right-0 mt-2 bg-white border rounded-lg shadow-lg w-48">
                     <ul class="text-left text-gray-700">
-                        <li class="px-4 py-2 hover:bg-gray-100">
-                            <a href="{{ route('profile.edit') }}">Profile</a>
-                        </li>
+                        <li class="px-4 py-2 hover:bg-gray-100"><a href="{{ route('profile.edit') }}">Profile</a></li>
                         @if (auth()->user()->isAdmin())
-                            <li class="px-4 py-2 hover:bg-gray-100">
-                                <a href="{{ route('admin.dashboard') }}">Admin Panel</a>
-                            </li>
+                            <li class="px-4 py-2 hover:bg-gray-100"><a href="{{ route('admin.dashboard') }}">Admin Panel</a></li>
                         @endif
-                        <li class="px-4 py-2 hover:bg-gray-100">
-                            <a href="{{ route('dashboard') }}">Dashboard</a>
-                        </li>
+                        <li class="px-4 py-2 hover:bg-gray-100"><a href="{{ route('dashboard') }}">Dashboard</a></li>
                         <li class="px-4 py-2 hover:bg-gray-100">
                             <form method="POST" action="{{ route('logout') }}">
                                 @csrf
@@ -48,22 +43,21 @@
                 </div>
             </div>
             @endauth
+
             @guest
-            <a href="{{ route('login') }}" class="p-3 pl-4 pr-4 rounded-full bg-[#36b37e] font-bold text-white">
+            <a href="{{ route('login') }}" class="inline-flex items-center justify-center px-6 py-3 rounded-full bg-[#36b37e] font-bold text-white text-center whitespace-nowrap min-w-max">
                 Login / Sign Up
             </a>
             @endguest
         </div>
 
-        <!-- Hamburger Menu (Mobile) -->
+        <!-- Mobile Menu Button (With Avatar if Logged In) -->
         <div class="md:hidden flex items-center justify-end">
-           
-         
             <button id="mobile-menu-button" onclick="toggleMobileMenu()" class="flex items-center focus:outline-none">
-                 <!-- User Avatar -->
-                @if(auth()->user())
-                <img src="{{ auth()->user()->getProfilePhotoUrl() }}" alt="User Avatar" class="h-10 mr-3 w-10 rounded-full">
-                @endif
+                <!-- User Avatar for Mobile -->
+                @auth
+                <img src="{{ auth()->user()->getProfilePhotoUrl() }}" alt="User Avatar" class="h-10 w-10 rounded-full mr-3">
+                @endauth
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
                 </svg>
@@ -72,7 +66,21 @@
 
         <!-- Mobile Menu -->
         <div id="mobile-menu" class="hidden flex-col items-center bg-white w-full shadow-md md:hidden absolute top-[70px] left-0 z-20">
-            <ul class="flex flex-col text-gray-700">
+            <ul class="flex flex-col text-gray-700 w-full">
+                @auth
+                <li class="px-4 py-2 border-b flex items-center">
+                    <img src="{{ auth()->user()->getProfilePhotoUrl() }}" alt="User Avatar" class="h-10 w-10 rounded-full mr-3">
+                    <span>{{ auth()->user()->name }}</span>
+                </li>
+                <li class="px-4 py-2 border-b"><a href="{{ route('dashboard') }}">Dashboard</a></li>
+                <li class="px-4 py-2 border-b"><a href="{{ route('profile.edit') }}">Profile</a></li>
+                <li class="px-4 py-2 border-b">
+                    <form method="POST" action="{{ route('logout') }}">
+                        @csrf
+                        <button type="submit" class="w-full text-left">Logout</button>
+                    </form>
+                </li>
+                @endauth
                 @guest
                 <li class="px-4 py-2 border-b"><a href="{{ route('login') }}">Login/Sign Up</a></li>
                 @endguest
@@ -109,10 +117,11 @@
 
     <style>
         @media (max-width: 768px) {
-            /* Mobile-specific styles */
+            /* Ensure elements stack properly */
             .flex-row {
                 flex-direction: row;
             }
+            /* Adjust dropdown width for mobile */
             #dropdown-menu {
                 width: 100%;
                 left: 0;
