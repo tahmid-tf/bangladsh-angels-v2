@@ -26,7 +26,7 @@
                 </div>    
             @endif
             
-            @if ($deal->amount_seeking!==0)
+            @if ($deal->amount_seeking)
                 <div class="text-center">
                     <p class="text-gray-400">Amount Seeking</p>
                     <p class="font-semibold">$ {{ $deal->amountSeeking() }}</p>

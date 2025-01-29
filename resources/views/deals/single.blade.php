@@ -32,14 +32,18 @@
                 {{$deal->description}}
             </p>
             <div class="flex items-center space-x-8 mb-6">
+                @if ($deal->investment_stage)
                 <div>
                     <p class=" text-sm">Investment Stage</p>
                     <p class="text-lg font-semibold">{{ $deal->investment_stage }}</p>
                 </div>
+                @endif
+                @if ($deal->amount_seeking)
                 <div>
                     <p class=" text-sm">Amount Seeking</p>
                     <p class="text-lg font-semibold">$ {{$deal->amount_seeking}}</p>
                 </div>
+                @endif
             </div>
             <a href="{{ (auth()->user()) ? $deal->pitch_deck_url : route('plans')}}" class="my-6 px-6 py-2 bg-gray-200 text-gray-700 font-semibold rounded-lg shadow hover:bg-gray-300">
                 View Pitch Deck
