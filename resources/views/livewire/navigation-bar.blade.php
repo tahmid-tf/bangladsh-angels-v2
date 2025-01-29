@@ -68,18 +68,12 @@
         <div id="mobile-menu" class="hidden flex-col items-center bg-white w-full shadow-md md:hidden absolute top-[70px] left-0 z-20">
             <ul class="flex flex-col text-gray-700 w-full">
                 @auth
-                <li class="px-4 py-2 border-b flex items-center">
-                    <img src="{{ auth()->user()->getProfilePhotoUrl() }}" alt="User Avatar" class="h-10 w-10 rounded-full mr-3">
-                    <span>{{ auth()->user()->name }}</span>
+                <li class="px-4 py-2 border-b w-full flex items-end justify-end">
+                    {{-- <img src="{{ auth()->user()->getProfilePhotoUrl() }}" alt="User Avatar" class="h-10 w-10 rounded-full mr-3"> --}}
+                    <span class="flex font-bold text-right sef-end">{{ auth()->user()->name }}</span>
                 </li>
                 <li class="px-4 py-2 border-b"><a href="{{ route('dashboard') }}">Dashboard</a></li>
                 <li class="px-4 py-2 border-b"><a href="{{ route('profile.edit') }}">Profile</a></li>
-                <li class="px-4 py-2 border-b">
-                    <form method="POST" action="{{ route('logout') }}">
-                        @csrf
-                        <button type="submit" class="w-full text-left">Logout</button>
-                    </form>
-                </li>
                 @endauth
                 @guest
                 <li class="px-4 py-2 border-b"><a href="{{ route('login') }}">Login/Sign Up</a></li>
@@ -89,6 +83,15 @@
                 <li class="px-4 py-2 border-b"><a href="{{ route('portfolio') }}">Portfolio</a></li>
                 <li class="px-4 py-2 border-b"><a href="{{ route('resources') }}">BAN Resources</a></li>
                 <li class="px-4 py-2"><a href="{{ route('team') }}">Our Team</a></li>
+                @auth
+                <hr>
+                <li class="flex w-full px-4 py-2 border-b">
+                    <form method="POST" action="{{ route('logout') }}" class="flex w-full text-center items-center justify-center">
+                        @csrf
+                        <button type="submit" class="flex w-full self-center justify-center items-center text-center">Logout</button>
+                    </form>
+                </li>
+                @endauth
             </ul>
         </div>
     </div>
