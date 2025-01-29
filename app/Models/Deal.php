@@ -142,4 +142,24 @@ class Deal extends Model implements HasMedia
         return $this->investments()->where('type', 'review')->count();
     }
 
+    public function updateLogo($file)
+    {
+        // Remove the old logo if exists
+        $this->clearMediaCollection('company_logo');
+
+        // Add new logo to media library
+        $this->addMedia($file)
+            ->toMediaCollection('company_logo');
+    }
+
+    public function updateCover($file)
+    {
+        // Remove the old cover if exists
+        $this->clearMediaCollection('company_cover');
+
+        // Add new cover to media library
+        $this->addMedia($file)
+            ->toMediaCollection('company_cover');
+    }
+
 }

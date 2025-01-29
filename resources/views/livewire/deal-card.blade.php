@@ -19,14 +19,20 @@
             {{ $deal->description }}
         </p>
         <div class="flex justify-between items-center mt-4 text-sm">
-            <div class="text-center">
-                <p class="text-gray-400">Investment Stage</p>
-                <p class="font-semibold">{{ $deal->investment_stage }}</p>
-            </div>
-            <div class="text-center">
-                <p class="text-gray-400">Amount Seeking</p>
-                <p class="font-semibold">$ {{ $deal->amountSeeking() }}</p>
-            </div>
+            @if ($deal->investment_stage)
+                <div class="text-center">
+                    <p class="text-gray-400">Investment Stage</p>
+                    <p class="font-semibold">{{ $deal->investment_stage }}</p>
+                </div>    
+            @endif
+            
+            @if ($deal->amount_seeking!==0)
+                <div class="text-center">
+                    <p class="text-gray-400">Amount Seeking</p>
+                    <p class="font-semibold">$ {{ $deal->amountSeeking() }}</p>
+                </div>
+            @endif
+            
         </div>
     </div>
     
