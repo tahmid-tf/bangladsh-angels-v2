@@ -103,8 +103,8 @@ class PrimaryController extends Controller
         if (!Auth::check()) {
             return redirect()->route('upgrade.page');
         }
-
-        return view('investors');
+        $investors = User::where('public_profile','true')->get();
+        return view('investors',compact('investors'));
     }
 
     public function viewResources()

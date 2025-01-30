@@ -11,35 +11,27 @@
 
     <!-- Cards -->
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        <!-- Investor Card -->
-        <div class="bg-white p-6 rounded-lg shadow-lg">
-            <div class="flex items-center mb-4">
-                <img src="https://via.placeholder.com/64" alt="Investor" class="w-16 h-16 rounded-full mr-4">
-                <div>
-                    <h3 class="text-lg font-semibold">Sajid Amit</h3>
-                    <p class="text-sm text-gray-500">Fintech Expert, Center for Enterprise and Society, ULAB</p>
+        
+        @forelse ($investors as $investor)
+            <!-- Investor Card -->
+            <div class="bg-white p-6 rounded-lg shadow-lg">
+                <div class="flex items-center mb-4">
+                    <img src="{{ $investor->getProfilePhotoUrl() }}" alt="Investor" class="w-16 h-16 rounded-full mr-4">
+                    <div>
+                        <h3 class="text-lg font-semibold">{{ $investor->name }}</h3>
+                        <p class="text-sm text-gray-500">{{ $investor->designation }}, {{ $investor->company_name }}</p>
+                    </div>
                 </div>
+                @if ($investor->joining_date)
+                    <p class="text-gray-500 text-sm">Member Since: {{ $investor->joining_date }}</p>
+                @endif
+                @if ($investor->linkedin)
+                    <a href="{{$investor->linkedin}}" class="text-blue-600 mt-4 inline-block"><i class="fab fa-linkedin"></i> LinkedIn</a>
+                @endif
             </div>
-            
-            <p class="text-gray-500 text-sm">Member Since: 2012</p>
-            <a href="#" class="text-blue-600 mt-4 inline-block"><i class="fab fa-linkedin"></i> LinkedIn</a>
-        </div>
-
-        <!-- Copy above card for each investor -->
-        <div class="bg-white p-6 rounded-lg shadow-lg">
-            <div class="flex items-center mb-4">
-                <img src="https://via.placeholder.com/64" alt="Investor" class="w-16 h-16 rounded-full mr-4">
-                <div>
-                    <h3 class="text-lg font-semibold">Sayma Rahman</h3>
-                    <p class="text-sm text-gray-500">Founder and CEO, SR Ventures and Consultancy</p>
-                </div>
-            </div>
-            
-            <p class="text-gray-500 text-sm">Member Since: 2012</p>
-            <a href="#" class="text-blue-600 mt-4 inline-block"><i class="fab fa-linkedin"></i> LinkedIn</a>
-        </div>
-
-        <!-- Additional cards would go here following the same format -->
+        @empty
+            No Investors to Show
+        @endforelse
     </div>
 
 </section>
