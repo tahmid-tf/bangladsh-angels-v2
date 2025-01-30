@@ -1,6 +1,6 @@
 <div class="w-[1/3] m-6">
     <article class="overflow-hidden rounded-lg shadow transition hover:shadow-lg">
-      <a href="{{route('deal.view',$deal->id)}}">
+      <a href="{{route('deal.public.view',$deal->id)}}">
         <img
           alt=""
           src="{{$deal->getCoverUrl()}}"
