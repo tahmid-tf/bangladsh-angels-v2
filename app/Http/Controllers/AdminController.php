@@ -475,7 +475,7 @@ class AdminController extends Controller
             'phone' => 'required|string|max:20',
             'public_profile' => 'nullable',
             'account_status' => 'required|string',
-            'account_level' => 'required|in:emerald,ruby,diamond',
+            'account_level' => 'nullable|in:emerald,ruby,diamond',
             'gender' => 'required|in:male,female,other',
             'organization' => 'nullable|string|max:255',
             'designation' => 'nullable|string|max:255',
