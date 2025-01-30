@@ -12,7 +12,7 @@
         <div class="bg-white p-4 sm:p-6">
           <time datetime="2022-10-10" class="block text-xs text-gray-500"> {{$deal->created_at->diffForHumans()}} </time>
       
-          <a href="{{route('deal.view',$deal->id)}}">
+          <a href="{{route('deal.public.view',$deal->id)}}">
             <h3 class="mt-0.5 text-lg text-gray-900">{{$deal->title}}</h3>
           </a>
       
