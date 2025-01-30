@@ -72,10 +72,10 @@
                                  class="w-8 h-8 md:w-10 md:h-10 rounded-full">
                             <div class="min-w-[120px]">
                                 <p class="font-medium">{{ $user->name }}</p>
-                                <p class="text-xs text-gray-500 md:hidden">
+                                <p class="text-xs text-gray-500">
                                     {{ $user->email }}
                                 </p>
-                                <p class="text-xs text-gray-500 md:hidden mt-1">
+                                <p class="text-xs text-gray-500 mt-1">
                                     Joined: {{ $user->joining_date }}
                                 </p>
                             </div>

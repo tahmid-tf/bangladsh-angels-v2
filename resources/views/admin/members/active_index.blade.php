@@ -70,10 +70,10 @@
                                 class="w-8 h-8 md:w-10 md:h-10 rounded-full">
                             <div class="min-w-[120px]">
                                 <p class="font-medium">{{ $user->name }}</p>
-                                <p class="text-xs text-gray-500 md:hidden">
+                                <p class="text-xs text-gray-500 ">
                                     {{ $user->email }}
                                 </p>
-                                <p class="text-xs text-gray-500 md:hidden mt-1">
+                                <p class="text-xs text-gray-500  mt-1">
                                     Joined: {{ $user->joining_date }}
                                 </p>
                             </div>
@@ -92,7 +92,7 @@
                                       {{ $user->account_status !== 'free' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800' }}">
                                 {{ ucfirst($user->account_status) }}
                             </span>
-                            <span class="text-xs text-gray-500 md:hidden">
+                            <span class="text-xs text-gray-500 ">
                                 Renewed: {{ $user->renewedAt() }}
                             </span>
                         </div>
