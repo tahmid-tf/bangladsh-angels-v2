@@ -5,7 +5,7 @@
     <!-- Header -->
     <header class="flex justify-between items-center mb-6">
         <div>
-            <h1 class="text-2xl font-bold">Deals ({{count($deals)}})</h1>
+            <h1 class="text-2xl font-bold">Deals & Portfolios({{count($deals)}})</h1>
             <p class="text-gray-500">Dashboard &gt; Deals</p>
         </div>
         <a href="{{route('deal.add')}}" class="px-4 py-2 bg-green-600 text-white rounded-lg shadow hover:bg-green-700">
