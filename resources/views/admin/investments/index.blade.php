@@ -11,10 +11,10 @@
                 <tr class="bg-gray-100">
                     <th class="px-6 py-4 font-medium text-gray-600">Deal</th>
                     <th class="px-6 py-4 font-medium text-gray-600">Total Investors</th>
-                    <th class="px-6 py-4 font-medium text-gray-600">Investment Stage</th>
+                    <th class="px-6 py-4 font-medium text-gray-600">Stage</th>
                     <th class="px-6 py-4 font-medium text-gray-600">Amount Seeking</th>
                     <th class="px-6 py-4 font-medium text-gray-600">Investors</th>
-                    <th class="px-6 py-4 font-medium text-gray-600">Investment Type</th>
+                    <th class="px-6 py-4 font-medium text-gray-600">Type</th>
                 </tr>
             </thead>
             <tbody>
