@@ -103,10 +103,19 @@ class Deal extends Model implements HasMedia
     public function getOtherDeals($limit = 5)
     {
         if(auth()->user()){
-            return self::where('id', '!=', $this->id)
-            ->orderBy('created_at', 'desc') // Order by the most recently created
-            ->take($limit) // Limit the number of deals fetched
-            ->get();
+            if(auth()->user()->isFree()){
+                return self::where('id', '!=', $this->id)
+                ->where('type','portfolio')
+                ->orderBy('created_at', 'desc') // Order by the most recently created
+                ->take($limit) // Limit the number of deals fetched
+                ->get();
+            } else {
+                return self::where('id', '!=', $this->id)
+                ->orderBy('created_at', 'desc') // Order by the most recently created
+                ->take($limit) // Limit the number of deals fetched
+                ->get();
+            }
+            
         } else {
             return self::where('id', '!=', $this->id)
             ->where('type','portfolio')

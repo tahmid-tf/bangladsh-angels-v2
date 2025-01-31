@@ -12,7 +12,12 @@
             </a>
         @endguest
         <div class="flex items-center mt-6 justify-between">
-            <h2 class="text-lg font-bold">{{ $deal->title }}</h2>
+            @guest
+                <a href="{{route('public.deal.view',$deal->id)}}" class="text-lg font-bold">{{ $deal->title }}</a>
+            @endguest
+            @auth
+                <a href="{{route('deal.view',$deal->id)}}" class="text-lg font-bold">{{ $deal->title }}</a>
+            @endauth
             <span class="bg-gray-200 text-xs px-2 py-1 rounded-full">{{ ucfirst($deal->sector) }}</span>
         </div>
         <p class="text-gray-500 text-sm mt-2">
