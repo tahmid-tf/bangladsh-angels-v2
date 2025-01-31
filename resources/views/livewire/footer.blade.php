@@ -1,5 +1,5 @@
 <footer class="flex w-full mt-[100px]">
-  <div class="flex w-full sm:w-1/4 justify-center py-[10vw] px-[5vw] items-center border-box shadow-inner">
+  <div class="flex w-full sm:w-1/4 justify-center py-[3vw] px-[5vw] items-center border-box shadow-inner">
     <img src="{{ asset('logo.webp') }}" class="h-[50px] w-auto max-w-[150px] sm:max-w-[200px] object-contain" alt="Logo">
   </div>
 
@@ -23,7 +23,7 @@
         
         {{-- Socials --}}
         <div class="flex flex-col h-full  justify-between text-white ml-6">
-            <span class="flex justify-end cursor-pointer" onclick="window.scrollTo({ top: 0, behavior: 'smooth' });">
+            <span class="flex justify-end cursor-pointer mb-[100px]" onclick="window.scrollTo({ top: 0, behavior: 'smooth' });">
                 <img src="{{ asset('up_arrow.webp') }}" alt="up_arrow" class="h-[50px]">
             </span>
             
