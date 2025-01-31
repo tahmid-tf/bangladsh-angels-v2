@@ -53,10 +53,17 @@
                 View on Substack
             </a>
             @endif
+            @if ($deal->type!=="review" && $deal->groupchat_invite_link)
+            <br><br>
+            <a target="_blank" href="{{ (auth()->user() && !auth()->user()->isFree()) ? $deal->groupchat_invite_link : route('plans')}}" class="px-6 w-full text-center cursor-pointer mt-6 py-3 bg-green-600 text-white font-semibold rounded-lg hover:bg-green-700 transition">
+                Join WhatsApp Group
+            </a>
+            @endif
             @if ($deal->type!=="portfolio")
             <div class="w-1/2">
                 <livewire:deal-action-button :deal="$deal"></livewire:deal-action-button>
             </div>
+            
             @endif
             
             
@@ -65,7 +72,7 @@
         </div>
 
         <!-- Right Content -->
-        <div class="lg:w-1/2 lg:mt-0">
+        <div class="lg:w-1/2 mt-6 lg:mt-0">
             <img src="{{$deal->getCoverUrl()}}" alt="Jatri Image" class="w-full h-auto rounded-lg shadow-md">
             
         </div>
