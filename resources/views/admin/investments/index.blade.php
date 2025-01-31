@@ -1,121 +1,101 @@
 @extends('layouts.admin')
 @section('page_title','Deals | Dashboard')
-@section('page_content')<header class="flex justify-between items-center p-6 bg-white shadow">
-    <h1 class="text-xl font-bold">Investments ({{count($totalInvestments)}})</h1>
-</header>
+@section('page_content')<div class="overflow-x-auto">
+    <table class="min-w-full border-collapse border border-gray-200 text-left text-sm">
+        <thead class="bg-gray-100">
+            <tr>
+                <th class="px-4 py-3 text-gray-700 font-semibold">Deal</th>
+                <th class="px-4 py-3 text-gray-700 font-semibold hidden md:table-cell">Investors</th>
+                <th class="px-4 py-3 text-gray-700 font-semibold">Investment Summary</th>
+                <th class="px-4 py-3 text-gray-700 font-semibold">Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach ($investments as $dealId => $dealInvestments)
+                @php
+                    $deal = $dealInvestments->first()->deal ?? null;
+                    $statusMap = ['active' => 'Raising Now', 'closed' => 'Raising Closed', 'draft' => 'In Draft'];
+                    $statusClass = ['active' => 'bg-green-100 text-green-700', 'closed' => 'bg-red-100 text-red-700', 'draft' => 'bg-gray-100 text-gray-700'];
 
-<div class="p-6 bg-white shadow mt-4">
-    <div class="overflow-x-auto">
-        <table class="min-w-full border-collapse border border-gray-200 text-left text-sm">
-            <thead>
-                <tr class="bg-gray-100">
-                    <th class="px-6 py-4 font-medium text-gray-600">Deal</th>
-                    <th class="px-6 py-4 font-medium text-gray-600">Total Investors</th>
-                    <th class="px-6 py-4 font-medium text-gray-600">Stage</th>
-                    <th class="px-6 py-4 font-medium text-gray-600">Amount Seeking</th>
-                    <th class="px-6 py-4 font-medium text-gray-600">Investors</th>
-                    <th class="px-6 py-4 font-medium text-gray-600">Type</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($investments as $dealId => $dealInvestments)
-                    @php
-                        $deal = $dealInvestments->first()->deal; // Fetch deal data
-                        $investorCount = $dealInvestments->count(); // Count investors per deal
-                        $dealCover = $deal->getFirstMediaUrl('company_cover', 'thumb') ?? asset('default-deal-cover.jpg');
-                        $dealDescription = Str::limit($deal->description, 100, '...');
-                        $investmentStage = $deal->investment_stage ?? 'Not Provided';
-                        $amountSeeking = $deal->amount_seeking ? number_format($deal->amount_seeking, 2) . ' USD' : 'Not Disclosed';
-                    @endphp
-                    <tr class="border-t">
-                        <!-- Deal Title with Cover Image & Brief Description -->
-                        <td class="px-6 py-4 flex items-center space-x-4">
-                            <img src="{{ $dealCover }}" 
-                                 alt="Company Cover" 
-                                 class="h-16 w-16 object-cover rounded-lg shadow-md">
+                    $dealStatus = $statusMap[$deal->status ?? 'draft'] ?? 'Unknown';
+                    $statusColorClass = $statusClass[$deal->status ?? 'draft'] ?? 'bg-gray-100 text-gray-700';
 
+                    // Define colors for investment stages
+                    $stageColors = [
+                        'pre-seed' => 'bg-purple-100 text-purple-700',
+                        'seed' => 'bg-blue-100 text-blue-700',
+                        'series-a' => 'bg-green-100 text-green-700',
+                        'series-b' => 'bg-yellow-100 text-yellow-700',
+                        'growth' => 'bg-red-100 text-red-700',
+                        'ipo' => 'bg-gray-100 text-gray-700'
+                    ];
+                    $investmentStage = strtolower($deal->investment_stage ?? 'unknown');
+                    $stageColorClass = $stageColors[$investmentStage] ?? 'bg-gray-100 text-gray-700';
+                @endphp
+                <tr class="border-t">
+                    <!-- Deal Information -->
+                    <td class="px-4 py-4">
+                        <div class="flex items-center space-x-3">
+                            <img src="{{ $deal ? $deal->getFirstMediaUrl('company_cover') : asset('default-company.jpg') }}" 
+                                 class="w-14 h-14 rounded-md hidden md:block">
                             <div>
-                                <a href="{{ route('deal.public.view', $deal->id) }}" class="text-blue-600 font-semibold hover:underline">
-                                    {{ $deal->title }}
+                                <a href="{{ $deal ? route('deal.public.view', $deal->id) : '#' }}" class="text-blue-600 font-semibold hover:underline">
+                                    {{ $deal->title ?? 'No Title Available' }}
                                 </a>
-                                <p class="text-sm text-gray-500">{{ $dealDescription }}</p>
+                                <p class="text-gray-500 text-xs md:text-sm">
+                                    {{ $deal ? Str::limit($deal->description, 60) : 'No description available' }}
+                                </p>
                             </div>
-                        </td>
+                        </div>
+                    </td>
 
-                        <!-- Total Investors -->
-                        <td class="px-6 py-4 font-bold text-center">
-                            {{ $investorCount }}
-                        </td>
+                    <!-- Investors (Prioritized on Mobile) -->
+                    <td class="px-4 py-4">
+                        <ul class="list-none">
+                            @foreach ($dealInvestments as $investment)
+                                @php $user = $investment->user ?? null; @endphp
+                                <li class="flex items-center space-x-3 my-2">
+                                    <img src="{{ $user ? $user->getFirstMediaUrl('profile_photo') : asset('default-user.png') }}" 
+                                         class="w-8 h-8 rounded-full">
+                                    <div>
+                                        <p class="font-medium">{{ $user->name ?? 'Unknown Investor' }}</p>
+                                        <p class="text-xs text-gray-500">
+                                            {{ $investment->created_at->diffForHumans() }}
+                                        </p>
+                                        <p class="text-xs text-gray-600">
+                                            {{ $user->designation ?? 'No Designation' }} @ 
+                                            {{ $user->company_name ?? 'No Company' }}
+                                        </p>
+                                        <p class="text-xs text-gray-400">{{ $user->email ?? 'No Email' }} | {{ $user->phone ?? 'No Phone' }}</p>
+                                    </div>
+                                </li>
+                            @endforeach
+                        </ul>
+                    </td>
 
-                        <!-- Investment Stage -->
-                        <td class="px-6 py-4 text-center">
-                            {{ ucfirst($investmentStage) }}
-                        </td>
+                    <!-- Investment Summary -->
+                    <td class="px-4 py-4 hidden md:table-cell">
+                        <div class="flex flex-col space-y-2">
+                            <span class="text-gray-700 text-sm font-semibold">Amount Seeking:</span>
+                            <span class="text-lg font-bold text-gray-800">
+                                ${{ $deal->amount_seeking ? number_format($deal->amount_seeking, 2) : 'N/A' }}
+                            </span>
+                            <span class="px-2 py-1 rounded text-xs font-semibold {{ $stageColorClass }}">
+                                {{ ucfirst($deal->investment_stage ?? 'Unknown') }} Stage
+                            </span>
+                        </div>
+                    </td>
 
-                        <!-- Amount Seeking -->
-                        <td class="px-6 py-4 text-center">
-                            {{ $amountSeeking }}
-                        </td>
-
-                        <!-- Investor Details with Profile Photos -->
-                        <td class="px-6 py-4">
-                            <ul class="list-disc ml-4 space-y-3">
-                                @foreach ($dealInvestments as $investment)
-                                    <li class="flex items-center space-x-4">
-                                        <!-- Profile Photo -->
-                                        <img src="{{ $investment->user->getProfilePhotoUrl() }}" 
-                                             alt="Profile Photo" 
-                                             class="h-10 w-10 object-cover rounded-full shadow-sm">
-
-                                        <div>
-                                            <!-- Name -->
-                                            <span class="font-semibold">{{ $investment->user->name }}</span>
-
-                                            <!-- Designation & Company -->
-                                            <br>
-                                            <span class="text-gray-500 text-sm">
-                                                {{ $investment->user->designation ?? 'No Designation' }}
-                                                @if(!empty($investment->user->company_name))
-                                                    at {{ $investment->user->company_name }}
-                                                @endif
-                                            </span>
-
-                                            <!-- Contact Info -->
-                                            <br>
-                                            <span class="text-gray-500 text-xs">
-                                                📧 
-                                                @if(!empty($investment->user->email))
-                                                    <a href="mailto:{{ $investment->user->email }}" class="text-blue-600 hover:underline">
-                                                        {{ $investment->user->email }}
-                                                    </a>
-                                                @else
-                                                    <span class="text-gray-400 italic">No Email</span>
-                                                @endif
-                                                
-                                                | 📞 
-                                                @if(!empty($investment->user->phone))
-                                                    <a href="tel:{{ $investment->user->phone }}" class="text-blue-600 hover:underline">
-                                                        {{ $investment->user->phone }}
-                                                    </a>
-                                                @else
-                                                    <span class="text-gray-400 italic">No Phone</span>
-                                                @endif
-                                            </span>
-                                        </div>
-                                    </li>
-                                @endforeach
-                            </ul>
-                        </td>
-
-                        <!-- Investment Type -->
-                        <td class="px-6 py-4 text-center">
-                            {{ ucfirst($dealInvestments->first()->type) }}
-                        </td>
-                    </tr>
-                @endforeach
-            </tbody>
-        </table>
-    </div>
+                    <!-- Status Indicator -->
+                    <td class="px-4 py-4">
+                        <span class="px-3 py-1 rounded text-xs font-semibold {{ $statusColorClass }}">
+                            {{ $dealStatus }}
+                        </span>
+                    </td>
+                </tr>
+            @endforeach
+        </tbody>
+    </table>
 </div>
 
 @endsection
