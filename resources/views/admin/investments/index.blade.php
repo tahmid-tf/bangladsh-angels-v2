@@ -5,13 +5,14 @@
 </header>
 
 <div class="p-6 bg-white shadow mt-4">
-
     <div class="overflow-x-auto">
         <table class="min-w-full border-collapse border border-gray-200 text-left text-sm">
             <thead>
                 <tr class="bg-gray-100">
                     <th class="px-6 py-4 font-medium text-gray-600">Deal</th>
                     <th class="px-6 py-4 font-medium text-gray-600">Total Investors</th>
+                    <th class="px-6 py-4 font-medium text-gray-600">Investment Stage</th>
+                    <th class="px-6 py-4 font-medium text-gray-600">Amount Seeking</th>
                     <th class="px-6 py-4 font-medium text-gray-600">Investors</th>
                     <th class="px-6 py-4 font-medium text-gray-600">Investment Type</th>
                 </tr>
@@ -19,26 +20,41 @@
             <tbody>
                 @foreach ($investments as $dealId => $dealInvestments)
                     @php
-                        $deal = $dealInvestments->first()->deal; // Fetch the deal once
+                        $deal = $dealInvestments->first()->deal; // Fetch deal data
                         $investorCount = $dealInvestments->count(); // Count investors per deal
+                        $dealCover = $deal->getFirstMediaUrl('company_cover', 'thumb') ?? asset('default-deal-cover.jpg');
+                        $dealDescription = Str::limit($deal->description, 100, '...');
+                        $investmentStage = $deal->investment_stage ?? 'Not Provided';
+                        $amountSeeking = $deal->amount_seeking ? number_format($deal->amount_seeking, 2) . ' USD' : 'Not Disclosed';
                     @endphp
                     <tr class="border-t">
-                        <!-- Deal Title with Company Cover -->
+                        <!-- Deal Title with Cover Image & Brief Description -->
                         <td class="px-6 py-4 flex items-center space-x-4">
-                            <img src="{{ $deal->getFirstMediaUrl('company_cover', 'thumb') ?? asset('default-deal-cover.jpg') }}" 
+                            <img src="{{ $dealCover }}" 
                                  alt="Company Cover" 
-                                 class="h-12 w-12 object-cover rounded-lg shadow-md">
+                                 class="h-16 w-16 object-cover rounded-lg shadow-md">
 
                             <div>
                                 <a href="{{ route('deal.public.view', $deal->id) }}" class="text-blue-600 font-semibold hover:underline">
                                     {{ $deal->title }}
                                 </a>
+                                <p class="text-sm text-gray-500">{{ $dealDescription }}</p>
                             </div>
                         </td>
 
                         <!-- Total Investors -->
                         <td class="px-6 py-4 font-bold text-center">
                             {{ $investorCount }}
+                        </td>
+
+                        <!-- Investment Stage -->
+                        <td class="px-6 py-4 text-center">
+                            {{ ucfirst($investmentStage) }}
+                        </td>
+
+                        <!-- Amount Seeking -->
+                        <td class="px-6 py-4 text-center">
+                            {{ $amountSeeking }}
                         </td>
 
                         <!-- Investor Details with Profile Photos -->
