@@ -196,30 +196,32 @@
   </section>
   
   <section class="flex flex-col justify-center items-center py-[50px] md:py-[100px] text-center w-full">
-      <h1 class="text-[1.5em] md:text-[2em] font-bold">
-          Our Partners
-      </h1>
-      <p class="mt-3 text-[0.9em] md:text-[1em]">
-          We co-invest alongside top-tier firms in the region.<br class="hidden md:block">
+    <h1 class="text-[2em] md:text-[3em] font-bold">
+        Our Partners
+    </h1>
+    <p class="mt-3 text-[1em] md:text-[1.5em]">
+        We co-invest alongside top-tier firms in the region.<br class="hidden md:block">
           We are mentors and advisors with the best accelerator programs in Bangladesh.<br>A selection of our partners are represented here.
-      </p>
-      <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 mt-8 w-[80%] md:w-[70%]">
-          <a href="#" class="flex justify-center items-center p-3">
-              <img src="{{asset('sajidafoundation.webp')}}" alt="Sajida Foundation Logo" class="h-[20px] md:h-[30px]">
-          </a>
-          <a href="#" class="flex justify-center items-center p-3">
-              <img src="{{asset('bidalogo.webp')}}" alt="BIDA Logo" class="h-[20px] md:h-[30px]">
-          </a>
-          <a href="#" class="flex justify-center items-center p-3">
-              <img src="{{asset('foreignaffairsnetherland.webp')}}" alt="Foreign Affairs Logo" class="h-[20px] md:h-[30px]">
-          </a>
-          <a href="#" class="flex justify-center items-center p-3">
-              <img src="{{asset('capital logo.webp')}}" alt="Capital Logo" class="h-[20px] md:h-[30px]">
-          </a>
-          <a href="#" class="flex justify-center items-center p-3">
-              <img src="{{asset('bangladesh venture capital.webp')}}" alt="BCV Logo" class="h-[20px] md:h-[30px]">
-          </a>
-      </div>
+    </p>
+      
+    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6 mt-8 w-[90%] md:w-[80%] mx-auto">
+        <a href="#" class="flex justify-center items-center p-4">
+            <img src="{{asset('sajidafoundation.webp')}}" alt="Sajida Foundation Logo" class="max-w-[150px] h-auto md:max-w-[180px]">
+        </a>
+        <a href="#" class="flex justify-center items-center p-4">
+            <img src="{{asset('bidalogo.webp')}}" alt="BIDA Logo" class="max-w-[150px] h-auto md:max-w-[180px]">
+        </a>
+        <a href="#" class="flex justify-center items-center p-4">
+            <img src="{{asset('foreignaffairsnetherland.webp')}}" alt="Foreign Affairs Logo" class="max-w-[150px] h-auto md:max-w-[180px]">
+        </a>
+        <a href="#" class="flex justify-center items-center p-4">
+            <img src="{{asset('capital logo.webp')}}" alt="Capital Logo" class="max-w-[150px] h-auto md:max-w-[180px]">
+        </a>
+        <a href="#" class="flex justify-center items-center p-4">
+            <img src="{{asset('bangladesh venture capital.webp')}}" alt="BCV Logo" class="max-w-[150px] h-auto md:max-w-[180px]">
+        </a>
+    </div>
+    
   </section>
   
     <livewire:footer></livewire:footer>
