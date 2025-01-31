@@ -5,7 +5,6 @@
 </header>
 
 <div class="p-6 bg-white shadow mt-4">
-    <h2 class="text-lg font-semibold mb-4">Investments Grouped by Deal</h2>
 
     <div class="overflow-x-auto">
         <table class="min-w-full border-collapse border border-gray-200 text-left text-sm">
