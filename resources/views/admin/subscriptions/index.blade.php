@@ -139,19 +139,6 @@
   </table>
   
 
-    <!-- Pagination -->
-    <div class="flex justify-between items-center mt-4">
-      <p class="text-sm text-gray-600">Rows per page:</p>
-      <select class="border-gray-300 rounded-lg text-sm">
-        <option>5</option>
-        <option>10</option>
-        <option>20</option>
-      </select>
-      <p class="text-sm text-gray-600">6-10 of 11</p>
-      <div class="flex space-x-2">
-        <button class="px-2 py-1 text-gray-500 hover:text-green-600">&larr;</button>
-        <button class="px-2 py-1 text-gray-500 hover:text-green-600">&rarr;</button>
-      </div>
-    </div>
+    
   </div>
 @endsection
