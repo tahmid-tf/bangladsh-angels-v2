@@ -513,6 +513,7 @@ class AdminController extends Controller
             'email' => 'required|email|unique:users,email,' . $user->id, // Ignore the current user's email
             'phone' => 'required|string|max:20',
             'public_profile' => 'nullable',
+            'role' => 'nullable|string',
             'account_status' => 'required|string',
             'account_level' => 'nullable|in:emerald,ruby,diamond',
             'gender' => 'required|in:male,female,other',
@@ -560,6 +561,12 @@ class AdminController extends Controller
             'revenue_generated' => $request->revenue_generated,
             'notes' => $request->notes,
         ]);
+
+        if($request->role){
+            $user->update([
+                'role' => $request->role,
+            ]);
+        }
 
         // Handle profile photo update
         if ($request->hasFile('profile_photo')) {
