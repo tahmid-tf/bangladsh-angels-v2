@@ -2,16 +2,10 @@
 @section('page_title','Deals | Dashboard')
 @section('page_content')
 <section class="container mx-auto p-6">
-    <!-- Header -->
-    <header class="flex justify-between items-center mb-6">
-        <div>
-            <h1 class="text-2xl font-bold">Investments ({{count($investments)}})</h1>
-            <p class="text-gray-500">Dashboard &gt; Deals</p>
-        </div>
-        {{-- <a href="{{route('investment.add')}}" class="px-4 py-2 bg-green-600 text-white rounded-lg shadow hover:bg-green-700">
-            + Add new Investment
-        </a> --}}
-    </header>
+    <!-- Header Section -->
+    <div class="flex flex-col md:flex-row justify-between items-start md:items-center p-4 bg-white shadow">
+        <h1 class="text-lg md:text-xl font-bold mb-2 md:mb-0">Investments ({{count($investments)}})</h1>
+    </div>
 
     <!-- Filters -->
     <div class="bg-white rounded-lg shadow p-4 mb-6">
@@ -23,14 +17,6 @@
                 <a href="{{route('investment.type.commit')}}" class="px-4 py-2 text-gray-600 hover:bg-gray-200 rounded-full">Commit</a>
                 <a href="{{route('investment.type.review')}}" class="px-4 py-2 bg-green-100 text-green-700 rounded-full">Review</a>
             </div>
-
-            <!-- Filters -->
-            <select class="px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring focus:ring-green-200 focus:border-green-500">
-                <option>Investment stage</option>
-                <option>Pre Seed</option>
-                <option>Series A</option>
-                <option>Growth</option>
-            </select>
 
             <input
                 type="text"
@@ -96,15 +82,6 @@
         
     </div>
 
-    <!-- Pagination -->
-    <div class="flex justify-between items-center mt-4">
-        <p class="text-sm text-gray-500">Rows per page: <span class="font-semibold">6</span></p>
-        <p class="text-sm text-gray-500">6-10 of 240</p>
-        <div class="flex space-x-2">
-            <button class="px-2 py-1 bg-gray-200 text-gray-500 rounded hover:bg-gray-300">&lt;</button>
-            <button class="px-2 py-1 bg-gray-200 text-gray-500 rounded hover:bg-gray-300">&gt;</button>
-        </div>
-    </div>
 </section>
 
 <style>
