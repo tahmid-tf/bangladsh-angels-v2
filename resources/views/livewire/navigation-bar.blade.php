@@ -3,8 +3,13 @@
         
         <!-- Logo (Left for Desktop) -->
         <a href="{{ route('home') }}" class="flex justify-start">
-            <img src="{{ asset('logo.webp') }}" class="h-[40px] my-4 md:mx-[40px]" alt="Bangladesh Angels Network Logo">
+            <img 
+                src="{{ asset('logo.webp') }}" 
+                alt="Bangladesh Angels Network Logo"
+                class="h-[40px] w-auto max-w-[150px] md:max-w-[200px] my-4 md:mx-[40px] object-contain"
+            />
         </a>
+
 
         <!-- Navigation Menu (Center for Desktop) -->
         <div class="hidden md:flex flex-1 justify-center">

@@ -109,10 +109,6 @@ class PrimaryController extends Controller
 
     public function viewResources()
     {
-        if (!Auth::check()) {
-            return redirect()->route('upgrade.page');
-        }
-
         return view('resources');
     }
 

@@ -1,7 +1,8 @@
 <footer class="flex w-full mt-[100px]">
-    <div class="flex w-1/4 justify-center py-[100px] px-[50px] border-box items-center" style="box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);">
-      <img src="{{asset('logo.webp')}}" class="h-[50px]" alt="">
-    </div>
+  <div class="flex w-full sm:w-1/4 justify-center py-[10vw] px-[5vw] items-center border-box shadow-inner">
+    <img src="{{ asset('logo.webp') }}" class="h-[50px] w-auto max-w-[150px] sm:max-w-[200px] object-contain" alt="Logo">
+  </div>
+
     <section class="flex flex-col pt-[100px] px-[50px] border-box bg-[#1b7f69] w-full">
       <div class="flex flex-row justify-between w-full">
         {{-- Row 1 --}}
