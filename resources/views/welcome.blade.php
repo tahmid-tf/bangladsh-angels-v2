@@ -166,8 +166,8 @@
                       <img src="{{asset('resourcesCover.webp')}}" loading="lazy" alt="BAN Event" class="h-full w-full object-cover">
                   </div>
                   <!-- Content Section -->
-                  <div class="flex flex-col justify-between p-4 sm:w-1/2 lg:w-3/5 sm:p-8">
-                      <h2 class="mb-4 text-xl md:text-2xl lg:text-3xl font-bold">Networking Event<br>hosted by ShopUp</h2>
+                  <div class="flex flex-col justify-between p-4 sm:w-1/2 lg:w-3/5 sm:p-8 items-start">
+                      <h2 class="mb-4 text-xl md:text-2xl lg:text-3xl font-bold text-left">Networking Event<br>hosted by ShopUp</h2>
                       <div class="flex items-center my-2">
                           <div class="bg-white rounded-full p-3">
                               <img src="{{asset('dateicon.webp')}}" alt="Date Icon" class="h-[20px]" draggable="false">
@@ -187,8 +187,8 @@
                       </div>
                       
                   </div>
-              </div>
-              <a href="{{route('resources')}}" class="mt-8 px-6 py-3 rounded-full bg-[#eefff1] font-bold text-[#36b37e]">
+              </div><br><br>
+              <a href="{{route('resources')}}" class="px-6 py-3 rounded-full bg-[#eefff1] font-bold text-[#36b37e]">
                   Discover BAN Resources
               </a>
           </div>
