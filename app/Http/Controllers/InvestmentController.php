@@ -12,8 +12,12 @@ class InvestmentController extends Controller
 {
     public function __invoke()
     {
-        $investments = Investment::with('deal')->get();
-        return view('admin.investments.index',compact('investments'));
+        $totalInvestments = Investment::all();
+
+        $investments = Investment::with(['user', 'deal'])
+        ->get()
+        ->groupBy('deal_id'); // Groups investments by each deal
+        return view('admin.investments.index',compact('investments','totalInvestments'));
     }
 
     public function invest(Request $request, Deal $deal)
