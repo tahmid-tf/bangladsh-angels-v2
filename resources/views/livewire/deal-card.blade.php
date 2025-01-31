@@ -21,7 +21,7 @@
             <span class="bg-gray-200 text-xs px-2 py-1 rounded-full">{{ ucfirst($deal->sector) }}</span>
         </div>
         <p class="text-gray-500 text-sm mt-2">
-            {{ $deal->description }}
+            {{ $deal->getExcerpt() }}
         </p>
         <div class="flex justify-between items-center mt-4 text-sm">
             @if ($deal->investment_stage)

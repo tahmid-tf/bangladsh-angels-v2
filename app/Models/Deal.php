@@ -9,6 +9,9 @@ use Spatie\MediaLibrary\InteractsWithMedia;
 use App\Models\Investment;
 use App\Models\Commit;
 
+use Illuminate\Support\Str;
+
+
 class Deal extends Model implements HasMedia
 {
     use HasFactory, InteractsWithMedia;
@@ -124,6 +127,17 @@ class Deal extends Model implements HasMedia
             ->get();
         }
         
+    }
+
+    public function getExcerpt(): string
+    {
+        $excerpt = Str::limit($this->description, 75, '...');
+        
+        if (strlen($this->description) > 75) {
+            return $excerpt . ' [Read more]';
+        }
+
+        return $excerpt;
     }
 
     public function investments()
