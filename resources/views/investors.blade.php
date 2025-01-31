@@ -19,7 +19,7 @@
                     <img src="{{ $investor->getProfilePhotoUrl() }}" alt="Investor" class="w-16 h-16 rounded-full mr-4">
                     <div>
                         <h3 class="text-lg font-semibold">{{ $investor->name }}</h3>
-                        <p class="text-sm text-gray-500">{{ $investor->designation }}, {{ $investor->company_name }}</p>
+                        <p class="text-sm text-gray-500">{{ $investor->designation }}{{ ($investor->company_name) ? ', ' . $investor->company_name : '' }}</p>
                     </div>
                 </div>
                 @if ($investor->joining_date)
