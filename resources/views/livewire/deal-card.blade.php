@@ -38,11 +38,15 @@
     
     <div class="flex border-box p-4 w-full">
         @auth
-        <a href="{{ ($deal->type!=="review") ? route('deal.view',$deal->id) : $deal->groupchat_invite_link }}" class="px-6 w-full text-center cursor-pointer mt-6 py-3 bg-green-600 text-white font-semibold rounded-lg hover:bg-green-700 transition">{{
-                
-            ($deal->type!=="review") ? ucfirst($deal->type) : "Join WhatsApp Group"
-        
-        }}</a>
+        <a href="{{ ($deal->type!=="review") ? route('deal.view',$deal->id) : $deal->groupchat_invite_link }}" class="px-6 w-full text-center cursor-pointer mt-6 py-3 bg-green-600 text-white font-semibold rounded-lg hover:bg-green-700 transition">@php
+            if ($deal->type=="review") {
+                echo "Join WhatsApp Group";
+            } else if($deal->type == "portfolio") {
+                echo "View Portfolio";
+            } else { 
+                echo ucfirst($deal->type);
+            }
+        @endphp</a>
         @endauth
         @guest
         <a href="{{ route('deal.public.view',$deal->id) }}" class="px-6 w-full text-center cursor-pointer mt-6 py-3 bg-green-600 text-white font-semibold rounded-lg hover:bg-green-700 transition">{{
