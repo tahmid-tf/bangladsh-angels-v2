@@ -60,7 +60,7 @@
                             @foreach ($dealInvestments as $investment)
                                 @php $user = $investment->user ?? null; @endphp
                                 <li class="flex items-center space-x-3 my-2">
-                                    <img src="{{ $user ? $user->getProfilePhotoUrl()}}" 
+                                    <img src="{{ $user->getProfilePhotoUrl() }}" 
                                          class="w-8 h-8 rounded-full">
                                     <div>
                                         <p class="font-medium">{{ $user->name ?? 'Unknown Investor' }}</p>
