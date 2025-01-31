@@ -31,19 +31,24 @@
                     ];
                     $investmentStage = strtolower($deal->investment_stage ?? 'unknown');
                     $stageColorClass = $stageColors[$investmentStage] ?? 'bg-gray-100 text-gray-700';
+                    
+                    $investorCount = count($dealInvestments);
                 @endphp
                 <tr class="border-t">
-                    <!-- Deal Information -->
+                    <!-- Deal Information with Investor Count -->
                     <td class="px-4 py-4">
                         <div class="flex items-center space-x-3">
                             <img src="{{ $deal ? $deal->getFirstMediaUrl('company_cover') : asset('default-company.jpg') }}" 
-                                 class="w-14 h-14 rounded-md hidden md:block">
+                                 class="w-16 h-16 rounded-md hidden md:block">
                             <div>
                                 <a href="{{ $deal ? route('deal.public.view', $deal->id) : '#' }}" class="text-blue-600 font-semibold hover:underline">
                                     {{ $deal->title ?? 'No Title Available' }}
                                 </a>
                                 <p class="text-gray-500 text-xs md:text-sm">
                                     {{ $deal ? Str::limit($deal->description, 60) : 'No description available' }}
+                                </p>
+                                <p class="text-xs text-gray-600 font-medium mt-1">
+                                    👥 {{ $investorCount }} Investor{{ $investorCount !== 1 ? 's' : '' }}
                                 </p>
                             </div>
                         </div>
@@ -92,6 +97,7 @@
                             {{ $dealStatus }}
                         </span>
                     </td>
+
                 </tr>
             @endforeach
         </tbody>
