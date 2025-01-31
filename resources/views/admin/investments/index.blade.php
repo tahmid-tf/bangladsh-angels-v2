@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 @section('page_title','Deals | Dashboard')
 @section('page_content')<header class="flex justify-between items-center p-6 bg-white shadow">
-    <h1 class="text-xl font-bold">Investments</h1>
+    <h1 class="text-xl font-bold">Investments ({{count($totalInvestments)}})</h1>
 </header>
 
 <div class="p-6 bg-white shadow mt-4">
