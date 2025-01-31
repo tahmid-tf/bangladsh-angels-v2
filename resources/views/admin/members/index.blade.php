@@ -22,11 +22,7 @@
 
         <!-- Role Filter and Search -->
         <div class="flex flex-col md:flex-row gap-2 w-full md:w-auto">
-            <select class="border-gray-300 rounded-lg shadow-sm text-gray-600">
-                <option>Role</option>
-                <option>Admin</option>
-                <option>Investor</option>
-            </select>
+            
             <input type="text" placeholder="Search..." class="border-gray-300 rounded-lg shadow-sm px-4 py-2 md:w-64">
         </div>
     </div>
