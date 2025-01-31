@@ -22,15 +22,10 @@
                 <a href="{{route('admin.deals.invest')}}" class="px-4 py-2 bg-green-100 text-green-700 rounded-full">Invest</a>
                 <a href="{{route('admin.deals.commit')}}" class="px-4 py-2 text-gray-600 hover:bg-gray-200 rounded-full">Commit</a>
                 <a href="{{route('admin.deals.review')}}" class="px-4 py-2 text-gray-600 hover:bg-gray-200 rounded-full">Review</a>
+                <a href="{{route('admin.deals.portfolio')}}" class="px-4 py-2 text-gray-600 hover:bg-gray-200 rounded-full">Portfolio</a>
             </div>
 
-            <!-- Filters -->
-            <select class="px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring focus:ring-green-200 focus:border-green-500">
-                <option>Investment stage</option>
-                <option>Pre Seed</option>
-                <option>Series A</option>
-                <option>Growth</option>
-            </select>
+            
 
             <input
                 type="text"
@@ -92,15 +87,7 @@
         
     </div>
 
-    <!-- Pagination -->
-    <div class="flex justify-between items-center mt-4">
-        <p class="text-sm text-gray-500">Rows per page: <span class="font-semibold">6</span></p>
-        <p class="text-sm text-gray-500">6-10 of 240</p>
-        <div class="flex space-x-2">
-            <button class="px-2 py-1 bg-gray-200 text-gray-500 rounded hover:bg-gray-300">&lt;</button>
-            <button class="px-2 py-1 bg-gray-200 text-gray-500 rounded hover:bg-gray-300">&gt;</button>
-        </div>
-    </div>
+   
 </section>
 
 <style>

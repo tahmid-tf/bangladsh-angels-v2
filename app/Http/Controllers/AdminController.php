@@ -300,6 +300,16 @@ class AdminController extends Controller
             return redirect()->route('home');
         }
     }
+
+    public function viewDeals_portfolio()
+    {
+        if(auth()->user()->isAdmin()){
+            $deals = Deal::with('media')->where('type','portfolio')->get(); // Fetch all deals
+            return view('admin.deals.portfolio_index', compact('deals'));
+        } else {
+            return redirect()->route('home');
+        }
+    }
     
 
     public function addDeal()
