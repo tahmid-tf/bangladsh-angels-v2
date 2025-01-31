@@ -20,31 +20,11 @@
     </div>
 </section>
 
-<!-- Cards Section -->
-<section class="container flex justify-center items-center w-full">
-    <!-- Card 1 -->
-    <div class="flex items-center justify-center border rounded-lg p-8 shadow-lg bg-white hover:shadow-2xl transition duration-200">
-        <div class="flex items-center text-center">
-            <img src="{{asset('pitch.webp')}}" alt="Pitch Icon" class="w-16 mx-auto mb-4">
-            <p class="text-lg font-bold text-gray-700 ml-3">I want to pitch</p>
-        </div>
-    </div>
 
-    <!-- Card 2 -->
-    <div class="flex items-center justify-center border rounded-lg p-8 shadow-lg bg-white hover:shadow-2xl transition duration-200">
-        <div class="flex items-center text-center">
-            <img src="{{asset('investicon.webp')}}" alt="Invest Icon" class="w-16 mx-auto mb-4">
-            <p class="text-lg font-bold text-gray-700 ml-3">I want to invest</p>
-        </div>
-    </div>
-</section>
 
 <!-- FAQ Section -->
 <section class="container mx-auto mt-16 px-4">
     <h2 class="text-center text-3xl font-bold mb-8 text-gray-800">FAQ</h2>
-    <p class="text-center text-gray-500 mb-8">
-        Discover frequently asked questions that people face
-    </p>
     
     <!-- FAQ List -->
     <div class="space-y-4 max-w-3xl mx-auto">
