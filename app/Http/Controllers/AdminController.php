@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use App\Models\Deal;
+use App\Models\Subscription;
 use App\Models\Payment;
 
 use Illuminate\Support\Str;
@@ -19,6 +20,7 @@ class AdminController extends Controller
             $users = User::all(); // Retrieve all users
             $deals = Deal::all(); // Retrieve all deals
             
+            //Member Sign up Analytics
             $memberCounts = User::selectRaw('DATE(created_at) as date, COUNT(*) as count')
                 ->groupBy('date')
                 ->orderBy('date', 'asc')
@@ -28,8 +30,35 @@ class AdminController extends Controller
             $dates = $memberCounts->pluck('date'); // Array of dates
             $counts = $memberCounts->pluck('count'); // Array of counts
 
+            //Subscription Analytics
+            $subscriptionCounts = Subscription::selectRaw('DATE(created_at) as date, COUNT(*) as count')
+                ->groupBy('date')
+                ->orderBy('date', 'asc')
+                ->get();
+            // Prepare data for the chart
+            $subscriptionDates = $subscriptionCounts->pluck('date'); // Array of dates
+            $subsCounts = $subscriptionCounts->pluck('count'); // Array of counts
 
-            return view('admin.index', compact('users','deals','dates','counts'));
+            //Deal Analytics
+            $dealCounts = Deal::selectRaw('DATE(created_at) as date, COUNT(*) as count')
+                ->groupBy('date')
+                ->orderBy('date', 'asc')
+                ->get();
+            // Prepare data for the chart
+            $dealDates = $dealCounts->pluck('date'); // Array of dates
+            $dCounts = $dealCounts->pluck('count'); // Array of counts
+            return view('admin.index', compact(
+                'users',
+                'deals',
+                'dates',
+                'counts',
+                'subscriptionCounts',
+                'subscriptionDates',
+                'subsCounts',
+                'dealCounts',
+                'dealDates',
+                'dCounts'
+            ));
         } else {
             return redirect()->route('home');
         }

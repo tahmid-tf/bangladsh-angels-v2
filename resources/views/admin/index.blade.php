@@ -21,10 +21,10 @@
   </div>
 
   <!-- Charts & Member Status -->
-  <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6">
     <!-- Pie Chart -->
     <div class="p-4 bg-white rounded-lg shadow">
-      <h2 class="text-lg font-bold mb-4">Current Member Status</h2>
+      <h2 class="text-lg font-bold mb-4">Member Sign Ups</h2>
       <div class="flex justify-center">
         <canvas id="memberChart" width="400" height="200"></canvas>
         <script>
@@ -70,9 +70,94 @@
 
     <!-- Line Chart -->
     <div class="p-4 bg-white rounded-lg shadow">
-      <h2 class="text-lg font-bold mb-4">Payment Analytics</h2>
-      <div>
-        <img src="https://via.placeholder.com/300x150" alt="Line Chart" class="w-full">
+      <h2 class="text-lg font-bold mb-4">Subscriptions</h2>
+      <div class="flex justify-center">
+        <canvas id="subscriptionChart" width="400" height="200"></canvas>
+        <script>
+          // Data passed from the controller
+          const subDates = {!! json_encode($subscriptionDates) !!};
+          const subCounts = {!! json_encode($subsCounts) !!};
+      
+          // Initialize the Chart.js chart
+          const ctx2 = document.getElementById('subscriptionChart').getContext('2d');
+          new Chart(ctx2, {
+              type: 'bar', // Use 'bar', 'pie', etc., for different chart types
+              data: {
+                  labels: subDates,
+                  datasets: [{
+                      label: 'Number of Members who subscribed',
+                      data: subCounts,
+                      backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                      borderColor: 'rgba(75, 192, 192, 1)',
+                      borderWidth: 1
+                  }]
+              },
+              options: {
+                  scales: {
+                      x: {
+                          title: {
+                              display: true,
+                              text: 'Date'
+                          }
+                      },
+                      y: {
+                          beginAtZero: true,
+                          title: {
+                              display: true,
+                              text: 'Total Subscriptions'
+                          }
+                      }
+                  }
+              }
+          });
+      </script>
+      </div>
+    </div>
+    <!-- Line Chart -->
+    <div class="p-4 bg-white rounded-lg shadow">
+      <h2 class="text-lg font-bold mb-4">Deals Added</h2>
+      <div class="flex justify-center">
+        <canvas id="dealChart" width="400" height="200"></canvas>
+        <script>
+  // Data passed from the controller
+          const dealDates = {!! json_encode($dealDates) !!};
+          const dealCounts = {!! json_encode($dCounts) !!};
+          // Initialize the Chart.js chart
+          
+          const ctx3 = document.getElementById('dealChart').getContext('2d');
+
+          new Chart(ctx3, {
+              type: 'bar', // Use 'bar', 'pie', etc., for different chart types
+              data: {
+                  labels: dealDates,
+                  datasets: [{
+                      label: 'Number of Deals that have been added',
+                      data: dealCounts,
+                      backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                      borderColor: 'rgba(75, 192, 192, 1)',
+                      borderWidth: 1
+                  }]
+              },
+              options: {
+                  scales: {
+                      x: {
+                          title: {
+                              display: true,
+                              text: 'Date'
+                          }
+                      },
+                      y: {
+                          beginAtZero: true,
+                          title: {
+                              display: true,
+                              text: 'Total Deals'
+                          }
+                      }
+                  }
+              }
+          });
+          
+      </script>
       </div>
     </div>
   </div>
