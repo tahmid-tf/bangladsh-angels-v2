@@ -111,9 +111,9 @@
                   failed in their earlier attempts. Here’s what we look for:
               </p>
           </span>
-          <button class="p-3 px-6 shadow-md shadow-gray-200 mt-6 md:mt-10 rounded-full bg-[#eefff1] font-bold text-[#36b37e] self-center md:self-start">
+          <a target="_blank" href="https://forms.gle/Pr5KdwuZyeiTbq6P7" class="p-3 px-6 shadow-md shadow-gray-200 mt-6 md:mt-10 rounded-full bg-[#eefff1] font-bold text-[#36b37e] self-center md:self-start">
               Send Your Pitch
-          </button>
+          </a>
       </div>
   
       <!-- Image Section -->

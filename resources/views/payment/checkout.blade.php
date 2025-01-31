@@ -48,20 +48,17 @@
                         <h2 class="text-lg font-semibold text-gray-800 mb-4">Billing Information</h2>
                         <!-- Full Name -->
                         <div class="flex">
-                            <div class="flex flex-col w-1/2">
-                                <label class="block text-gray-700 font-semibold my-2" for="first_name">First Name</label>
-                                <input type="text" id="first_name" placeholder="John" name="first_name" value="{{old('first_name')}}" class="w-full p-3 rounded-lg border-gray-300 shadow-sm focus:border-green-500 focus:ring focus:ring-green-200" value="{{ old('full_name') }}" required>
+                            <div class="flex flex-col w-full">
+                                <label class="block text-gray-700 font-semibold my-2" for="name">Full Name</label>
+                                <input type="text" id="name" placeholder="John" name="name" value="{{auth()->user() && auth()->user()->name ? old('name',auth()->user()->name) : ''}}" class="w-full p-3 rounded-lg border-gray-300 shadow-sm focus:border-green-500 focus:ring focus:ring-green-200" required>
                             </div>
-                            <div class="flex flex-col w-1/2 ml-3">
-                                <label class="block text-gray-700 font-semibold my-2" for="last_name">Last Name</label>
-                                <input type="text" id="last_name" placeholder="Doe" name="last_name" value="{{old('last_name')}}" class="w-full  p-3 rounded-lg border-gray-300 shadow-sm focus:border-green-500 focus:ring focus:ring-green-200" value="{{ old('full_name') }}" required>
-                            </div>
+                            
                         </div>
                 <div>
                     <!-- Email -->
                     <div>
                         <label class="block text-gray-700 font-semibold my-2" for="email">Email *</label>
-                        <input type="email" id="email" name="email" placeholder="Email" class="w-full border rounded-md px-4 py-2 text-gray-700 focus:ring focus:ring-green-200" value="{{ old('email') }}" required>
+                        <input type="email" id="email" name="email" placeholder="Email" class="w-full border rounded-md px-4 py-2 text-gray-700 focus:ring focus:ring-green-200" value="{{auth()->user() && auth()->user()->email ? old('email',auth()->user()->email) : ''}}" required>
                     </div>
                 </div>
                 <div>
@@ -72,7 +69,7 @@
                             id="address"
                             name="address" 
                             placeholder="Address" 
-                            value="{{ auth()->user() && auth()->user()->address ? auth()->user()->address : old('address') }}" 
+                            value="{{auth()->user() && auth()->user()->address ? old('address',auth()->user()->address) : ''}}" 
                             class="w-full border rounded-md px-4 py-2 text-gray-700 focus:ring focus:ring-green-200"
                         >
                     </div>
@@ -302,17 +299,20 @@
                     </select>
                     <input type="text" id="phone" name="phone" placeholder="Phone Number" class="w-full p-3 rounded-lg border-gray-300 shadow-sm focus:border-green-500 focus:ring focus:ring-green-200" value="{{ old('phone') }}" required>
                 </span>
-                <!-- Password -->
-            <div>
-                <label class="block text-gray-700 font-semibold my-2" for="password">Password *</label>
-                <input type="password" id="password" name="password" placeholder="Enter a password for logging into the platform" class="w-full p-3 rounded-lg border-gray-300 shadow-sm focus:border-green-500 focus:ring focus:ring-green-200" required>
-            </div>
-
-            <!-- Re-enter Password -->
-            <div>
-                <label class="block text-gray-700 font-semibold my-2" for="re_password">Re-enter password *</label>
-                <input type="password" id="re_password" name="password_confirmation" placeholder="Re-enter password" class="w-full p-3 rounded-lg border-gray-300 shadow-sm focus:border-green-500 focus:ring focus:ring-green-200" required>
-            </div>
+                @guest
+                <div>
+                    <label class="block text-gray-700 font-semibold my-2" for="password">Password *</label>
+                    <input type="password" id="password" name="password" placeholder="Enter a password for logging into the platform" class="w-full p-3 rounded-lg border-gray-300 shadow-sm focus:border-green-500 focus:ring focus:ring-green-200" required>
+                </div>
+    
+                <!-- Re-enter Password -->
+                <div>
+                    <label class="block text-gray-700 font-semibold my-2" for="re_password">Re-enter password *</label>
+                    <input type="password" id="re_password" name="password_confirmation" placeholder="Re-enter password" class="w-full p-3 rounded-lg border-gray-300 shadow-sm focus:border-green-500 focus:ring focus:ring-green-200" required>
+                </div>
+                @endguest
+            <!-- Password -->
+            
             <!-- Investment Expertise -->
             <div>
                 <label class="block text-gray-700 font-semibold my-2" for="investment_expertise">Level of Investment Expertise *</label>
@@ -330,18 +330,18 @@
                         <!-- Company Name -->
                         <div>
                             <label class="block text-gray-700 font-semibold my-2" for="company_name">Company Name *</label>
-                            <input type="text" id="company_name" name="company_name" placeholder="Company Name" class="w-full p-3 rounded-lg border-gray-300 shadow-sm focus:border-green-500 focus:ring focus:ring-green-200" value="{{ old('company_name') }}" required>
+                            <input type="text" id="company_name" name="company_name" value="{{auth()->user() && auth()->user()->company_name ? old('company_name',auth()->user()->company_name) : ''}}" placeholder="Company Name" class="w-full p-3 rounded-lg border-gray-300 shadow-sm focus:border-green-500 focus:ring focus:ring-green-200" value="{{ old('company_name') }}" required>
                         </div>
 
                         <!-- Designation -->
                         <div>
                             <label class="block text-gray-700 font-semibold my-2" for="designation">Designation *</label>
-                            <input type="text" id="designation" name="designation" placeholder="Designation in the company" class="w-full p-3 rounded-lg border-gray-300 shadow-sm focus:border-green-500 focus:ring focus:ring-green-200" value="{{ old('designation') }}" required>
+                            <input type="text" id="designation" name="designation" placeholder="Designation in the company" class="w-full p-3 rounded-lg border-gray-300 shadow-sm focus:border-green-500 focus:ring focus:ring-green-200" value="{{auth()->user() && auth()->user()->designation ? old('designation',auth()->user()->designation) : ''}}" required>
                         </div>
 
                         <div>
                             <label class="block text-gray-700 font-semibold my-2" for="primary_country">Country *</label>
-                            <select id="primary_country" name="primary_country" value="{{old('primary_country')}}" class="w-full p-3 rounded-lg border-gray-300 shadow-sm focus:border-green-500 focus:ring focus:ring-green-200" required>
+                            <select id="primary_country" name="primary_country" value="{{auth()->user() && auth()->user()->primary_country ? old('primary_country',auth()->user()->primary_country) : ''}}" class="w-full p-3 rounded-lg border-gray-300 shadow-sm focus:border-green-500 focus:ring focus:ring-green-200" required>
                                 <option value="">Select Primary Country</option>
                                 <option value="Afghanistan">Afghanistan</option>
                                 <option value="Åland Islands">Åland Islands</option>
@@ -594,22 +594,38 @@
                             <label class="block text-gray-700 font-semibold my-2" for="gender">Gender *</label>
                             <select id="gender" name="gender" class="w-full p-3 rounded-lg border-gray-300 shadow-sm focus:border-green-500 focus:ring focus:ring-green-200" required>
                                 <option value="">Select Gender</option>
-                                <option value="male" {{ old('gender') == 'male' ? 'selected' : '' }}>Male</option>
-                                <option value="female" {{ old('gender') == 'female' ? 'selected' : '' }}>Female</option>
-                                <option value="other" {{ old('gender') == 'other' ? 'selected' : '' }}>Other</option>
+                                
+                                <option value="male" 
+                                    {{ (old('gender') ? old('gender') : (auth()->check() ? auth()->user()->gender : '')) == 'male' ? 'selected' : '' }}>
+                                    Male
+                                </option>
+                            
+                                <option value="female" 
+                                    {{ (old('gender') ? old('gender') : (auth()->check() ? auth()->user()->gender : '')) == 'female' ? 'selected' : '' }}>
+                                    Female
+                                </option>
+                            
+                                <option value="other" 
+                                    {{ (old('gender') ? old('gender') : (auth()->check() ? auth()->user()->gender : '')) == 'other' ? 'selected' : '' }}>
+                                    Other
+                                </option>
                             </select>
+                            
+                            
                         </div>
                         <!-- LinkedIn -->
                         <div>
                             <label class="block text-gray-700 font-semibold my-2" for="linkedin">LinkedIn *</label>
-                            <input type="text" id="linkedin" name="linkedin" placeholder="Please add the link to your LinkedIn profile" class="w-full p-3 rounded-lg border-gray-300 shadow-sm focus:border-green-500 focus:ring focus:ring-green-200" value="{{ old('linkedin') }}" required>
+                            <input type="text" id="linkedin" name="linkedin" placeholder="Please add the link to your LinkedIn profile" class="w-full p-3 rounded-lg border-gray-300 shadow-sm focus:border-green-500 focus:ring focus:ring-green-200" value="{{auth()->user() && auth()->user()->linkedin ? old('linkedin',auth()->user()->linkedin) : ''}}" required>
                         </div>
-                        
-                        <!-- Photo Upload -->
+                        @guest
                         <div>
                             <label class="block text-gray-700 font-semibold my-2" for="photo">Upload Your Photo</label>
                             <input type="file" id="photo" name="profile_photo" accept="image/*" class="w-full rounded-lg border-gray-300 shadow-sm focus:border-green-500 focus:ring focus:ring-green-200">
                         </div>
+                        @endguest
+                        <!-- Photo Upload -->
+                        
                         <h2 class="text-lg font-semibold text-gray-800 my-4">Payment Method</h2>
                         <div class="space-y-4">
                             <!-- Send Payment Details -->

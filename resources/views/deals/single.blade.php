@@ -45,11 +45,11 @@
                 </div>
                 @endif
             </div>
-            <a href="{{ (auth()->user()) ? $deal->pitch_deck_url : route('plans')}}" class="my-6 px-6 py-2 bg-gray-200 text-gray-700 font-semibold rounded-lg shadow hover:bg-gray-300">
+            <a href="{{ (auth()->user() && !auth()->user()->isFree()) ? $deal->pitch_deck_url : route('plans')}}" class="my-6 px-6 py-2 bg-gray-200 text-gray-700 font-semibold rounded-lg shadow hover:bg-gray-300">
                 View Pitch Deck
             </a>
             @if ($deal->substack_link)
-            <a href="{{ (auth()->user()) ? $deal->substack_link : route('plans')}}" class="my-6 m-3 px-6 py-2 bg-gray-200 text-gray-700 font-semibold rounded-lg shadow hover:bg-gray-300">
+            <a href="{{ (auth()->user() && !auth()->user()->isFree()) ? $deal->substack_link : route('plans')}}" class="my-6 m-3 px-6 py-2 bg-gray-200 text-gray-700 font-semibold rounded-lg shadow hover:bg-gray-300">
                 View on Substack
             </a>
             @endif

@@ -35,8 +35,7 @@ class CheckoutController extends Controller
     {
         // Validate input data
         $validated = $request->validate([
-            'first_name' => 'required|string|max:255',
-            'last_name' => 'required|string|max:255',
+            'name' => 'required|string|max:255',
             'email' => 'required|email',
             'address' => 'required|string|max:255',
             'phone' => 'required|string|max:20',
@@ -47,7 +46,7 @@ class CheckoutController extends Controller
             'gender' => 'required|in:male,female,other',
             'investment_expertise' => 'required|in:beginner,intermediate,expert',
             'linkedin' => 'required|url|max:255',
-            'password' => 'required|confirmed|min:8',
+            'password' => (auth()->user()) ? '' : 'required','|confirmed|min:8',
             'profile_photo' => 'nullable',
             'plan' => 'required|string',
             'price' => 'required|numeric|min:0',
@@ -58,7 +57,7 @@ class CheckoutController extends Controller
         $user = User::firstOrCreate(
             ['email' => $validated['email']],
             [
-                'name' => $validated['first_name'] . ' ' . $validated['last_name'],
+                'name' => $validated['name'],
                 'phone' => $validated['country_code'] . $validated['phone'],
                 'address' => $validated['address'],
                 'primary_country' => $validated['primary_country'],
@@ -67,7 +66,7 @@ class CheckoutController extends Controller
                 'gender' => $validated['gender'],
                 'investment_expertise' => $validated['investment_expertise'],
                 'linkedin' => $validated['linkedin'],
-                'password' => Hash::make($validated['password']),
+                'password' => ($request->password) ? $validated['password'] : auth()->user()->password,
             ]
         );
 
