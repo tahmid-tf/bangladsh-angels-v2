@@ -74,7 +74,6 @@
             <ul class="flex flex-col text-gray-700 w-full">
                 @auth
                 <li class="px-4 py-2 border-b w-full flex items-end justify-end">
-                    {{-- <img src="{{ auth()->user()->getProfilePhotoUrl() }}" alt="User Avatar" class="h-10 w-10 rounded-full mr-3"> --}}
                     <span class="flex font-bold text-right sef-end">{{ auth()->user()->name }}</span>
                 </li>
                 <li class="px-4 py-2 border-b"><a href="{{ route('dashboard') }}">Dashboard</a></li>

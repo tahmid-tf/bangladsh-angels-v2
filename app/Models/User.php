@@ -98,7 +98,7 @@ class User extends Authenticatable implements HasMedia
      */
     public function isAdmin()
     {
-        return $this->role === 'admin';
+        return $this->role === 'admin' || $this->role ==="superadmin";
     }
 
     /**
