@@ -24,7 +24,7 @@
                 Elevating Entrepreneurs<br>in Bangladesh
             </h1>
             <p class="my-6 text-[1em] md:text-[1.5em]">
-                The nation’s first angel investment network created with a mission to nurture the innovation & entrepreneurship in Bangladesh, connecting them to both local & global investors.
+                The Nation’s first and largest angel investment platform, connecting early-stage startups with investors who bring not just capital, but decades of experience and industry insight. We support founders solving real-world challenges, providing funding, mentorship, and a network that extends across Bangladesh and beyond. If you're building something scalable and need the right backing, BAN helps turn ambition into action.
             </p>
             <a href="{{ route('deals') }}" class="p-3 px-6 rounded-full bg-[#eefff1] font-bold text-[#36b37e]">
                 Invest in Startups
@@ -106,9 +106,8 @@
           <span class="flex flex-col">
               <h1 class="text-[2em] md:text-[3em] font-bold leading-none">Pitch your Startup</h1>
               <p class="mt-6 text-[1em] md:text-[1.2em]">
-                  The network looks to invest between Taka 80 Lakhs to 5 Crores in innovative, high-growth companies. 
-                  We welcome entrepreneurs from all backgrounds, including first-time entrepreneurs or those who have 
-                  failed in their earlier attempts. Here’s what we look for:
+                Qualify for our monthly showcase to pitch in front of prospective investors.<br>We are a network of 500+ members always looking for startups to invest in.
+
               </p>
           </span>
           <a target="_blank" href="https://forms.gle/Pr5KdwuZyeiTbq6P7" class="p-3 px-6 shadow-md shadow-gray-200 mt-6 md:mt-10 rounded-full bg-[#eefff1] font-bold text-[#36b37e] self-center md:self-start">
@@ -200,8 +199,8 @@
         Our Partners
     </h1>
     <p class="mt-3 text-[1em] md:text-[1.5em]">
-        We co-invest alongside top-tier firms in the region.<br class="hidden md:block">
-          We are mentors and advisors with the best accelerator programs in Bangladesh.<br>A selection of our partners are represented here.
+        We collaborate with leading investment firms and accelerator programs across the region,<br>co-investing in high-potential startups and guiding founders with industry expertise. Some of our key partners are showcased here.
+
     </p>
       
     <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6 mt-8 w-[90%] md:w-[80%] mx-auto">
