@@ -4,9 +4,9 @@
 <!-- Section: Header -->
 <section class="container mx-auto mt-16 px-6 lg:flex lg:space-x-12">
     <!-- Left: Images -->
-    <div class="lg:w-1/2 grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <img src="{{asset('our team/1.jpg')}}" alt="Handshake" class="rounded-xl w-full h-auto object-cover">
-        <img src="{{asset('our team/2.jpg')}}" alt="Team Photo" class="rounded-xl w-full h-auto object-cover shadow-lg">
+    <div class="lg:w-1/2 grid grid-cols-1 lg:grid-cols-2 gap-6 items-center justify-center">
+        <img src="{{asset('DI4A6345.jpg')}}" alt="Handshake" class="rounded-xl w-full h-auto object-cover">
+        <img src="{{asset('DSC00467.jpg')}}" alt="Team Photo" class="rounded-xl w-full h-auto object-cover shadow-lg">
     </div>
 
     <!-- Right: Text Content -->
