@@ -1,5 +1,5 @@
 @extends('layouts.guest')
-@section('page_title','Upgrade Plan | Bangladesh Angels Network')
+@section('page_title','Forgot Password | Bangladesh Angels Network')
 @section('page_content')
     <x-auth-session-status class="mb-4" :status="session('status')" />
 
