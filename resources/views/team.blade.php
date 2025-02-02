@@ -16,8 +16,8 @@
                 What is Bangladesh Angels Network?
             </h2>
             <p class="text-lg leading-relaxed text-gray-600">
-                Bangladesh Angels Network (BAN) is the country’s largest and first angel investing platform, connecting visionary entrepreneurs with a diverse collective of seasoned investors, fostering an ecosystem that drives innovation and economic growth.
-With $21.7M+ USD invested across 50+ startups, we provide capital, mentorship, and strategic backing to early-stage companies that are solving real problems and scaling fast. Our network is a dynamic mix of local and global investors, business leaders, and founders who collaborate to unlock market-changing opportunities. We don’t just invest, we build, nurture, and accelerate ventures that have the potential to reshape industries. Whether you're looking to back or build the next industry-defining company, BAN is where it happens.
+                Bangladesh Angels Network (BAN) is the country’s first and largest angel investing platform, connecting visionary entrepreneurs with seasoned investors, fostering an ecosystem that drives innovation and economic growth.
+                <br><br>With $21.7M+ USD invested across 50+ startups, we provide capital, mentorship, and strategic backing to early-stage companies that are solving real problems and scaling fast. Our network is a mix of local and global investors, business leaders, and founders who collaborate to unlock market-changing opportunities. We don’t just invest, we build, nurture, and accelerate ventures that have the potential to reshape industries. Whether you're looking to back or build the next industry-defining company, BAN is where it happens.
 
             </p>
         </div>
