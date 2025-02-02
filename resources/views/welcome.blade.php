@@ -117,7 +117,7 @@
   
       <!-- Image Section -->
       <div class="flex flex-col w-full md:w-[1/2] mb-6 md:mb-0">
-          <img src="{{ asset('team.webp') }}" alt="team photo" class="w-full h-auto max-h-[300px] md:max-h-[500px] object-cover rounded-lg">
+          <img src="{{ asset('IMG_0944.jpg') }}" alt="team photo" class="w-full h-auto max-h-[300px] md:max-h-[500px] object-cover rounded-lg">
       </div>
     </section>
   
