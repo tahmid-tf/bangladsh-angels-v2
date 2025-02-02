@@ -15,7 +15,7 @@
     <div class="flex flex-col p-4">
         <div class="flex items-center mt-6 justify-between">
             @guest
-                <a href="{{route('public.deal.view',$deal->id)}}" class="text-lg font-bold">{{ $deal->title }}</a>
+                <a href="{{route('deal.public.view',$deal->id)}}" class="text-lg font-bold">{{ $deal->title }}</a>
             @endguest
             @auth
                 <a href="{{route('deal.view',$deal->id)}}" class="text-lg font-bold">{{ $deal->title }}</a>
