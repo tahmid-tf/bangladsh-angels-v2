@@ -23,8 +23,10 @@
             <h1 class="text-[2em] md:text-[3em] leading-none font-bold mt-5">
                 Elevating Entrepreneurs<br>in Bangladesh
             </h1>
-            <p class="my-6 text-[1em] md:text-[1.5em]">
-                The Nation’s first and largest angel investment platform, connecting early-stage startups with investors who bring not just capital, but decades of experience and industry insight. We support founders solving real-world challenges, providing funding, mentorship, and a network that extends across Bangladesh and beyond. If you're building something scalable and need the right backing, BAN helps turn ambition into action.
+            <p class="my-6 text-[1em] md:text-[1.1em]">
+                Bangladesh Angels Network (BAN) is the country’s first and largest angel investing platform, connecting visionary entrepreneurs with seasoned investors, fostering an ecosystem that drives innovation and economic growth.
+                <br><br>With $21.7M+ USD invested across 50+ startups, we provide capital, mentorship, and strategic backing to early-stage companies that are solving real problems and scaling fast. Our network is a mix of local and global investors, business leaders, and founders who collaborate to unlock market-changing opportunities. We don’t just invest, we build, nurture, and accelerate ventures that have the potential to reshape industries. Whether you're looking to back or build the next industry-defining company, BAN is where it happens.
+
             </p>
             <a href="{{ route('deals') }}" class="p-3 px-6 rounded-full bg-[#eefff1] font-bold text-[#36b37e]">
                 Invest in Startups
