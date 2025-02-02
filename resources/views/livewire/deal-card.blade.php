@@ -26,6 +26,9 @@
         <p class="text-gray-500 text-sm mt-2">
             {{ $deal->getExcerpt() }}
         </p>
+    </div>
+    
+    <div class="flex flex-col border-box p-4 w-full">
 
         <div class="flex justify-between items-center mt-4 text-sm">
             @if ($deal->investment_stage)
@@ -42,9 +45,7 @@
                 </div>
             @endif
         </div>
-    </div>
-    
-    <div class="flex border-box p-4 w-full">
+
         @auth
             <a href="{{ ($deal->type!=="review") ? route('deal.view',$deal->id) : $deal->groupchat_invite_link }}" 
                class="px-6 w-full text-center cursor-pointer mt-6 py-3 bg-green-600 text-white font-semibold rounded-lg hover:bg-green-700 transition">
