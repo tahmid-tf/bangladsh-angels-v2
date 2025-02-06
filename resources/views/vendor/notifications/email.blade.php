@@ -42,7 +42,7 @@
     <tr>
         <td align="center" style="color: #333; font-size: 12px;">
             © {{ date('Y') }} Bangladesh Angels, all rights reserved <br>
-            Telephone: +8801823998877 | hello@ban.bd
+            Telephone: +8801823998877 | hello@bdangels.co
         </td>
     </tr>
 </table>
