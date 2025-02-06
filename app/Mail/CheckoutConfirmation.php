@@ -46,7 +46,7 @@ class CheckoutConfirmation extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Checkout Confirmation',
+            subject: 'Complete Your Membership Purchase | Bangladesh Angels Network',
         );
     }
 
