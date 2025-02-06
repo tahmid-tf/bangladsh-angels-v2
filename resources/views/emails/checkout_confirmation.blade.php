@@ -149,7 +149,7 @@
         <tr>
             <td style="background: #f4f4f4; padding: 20px; text-align: center; font-size: 12px; color: #777;">
                 <p style="margin: 0;">© 2025 Bangladesh Angels, all rights reserved</p>
-                <p style="margin: 5px 0;">Telephone +8801823998877 | hello@ban.bd</p>
+                <p style="margin: 5px 0;">Telephone +8801823998877 | hello@bdangels.co</p>
             </td>
         </tr>
     </table>
