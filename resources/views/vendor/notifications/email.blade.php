@@ -4,7 +4,7 @@
 <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="padding: 20px; text-align: center;">
     <tr>
         <td align="center">
-            <img src="{{ asset('Logo Base.svg') }}" alt="Bangladesh Angels Logo" style="height: 50px;">
+            <img src="{{ url('storage/Logo Base.svg') }}" alt="Bangladesh Angels Logo" style="height: 50px;">
         </td>
     </tr>
 </table>
