@@ -89,7 +89,7 @@ class CheckoutController extends Controller
         ]);
 
         // Optionally send a confirmation email (commented out for now)
-        // Mail::to($user->email)->send(new CheckoutConfirmation($user, $validated['plan'], $validated['price']));
+        Mail::to($user->email)->send(new CheckoutConfirmation($user, $validated['plan'], $validated['price']));
 
         // Redirect to a success page
         return redirect()->route('checkout.success')->with('success', 'Your subscription is being processed!');
