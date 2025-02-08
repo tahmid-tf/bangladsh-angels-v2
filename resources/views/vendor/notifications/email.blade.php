@@ -1,11 +1,6 @@
 <x-mail::message>
 
-{{-- Header with Logo --}}
-<table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="padding: 20px; text-align: center;">
-    <tr>
-        
-    </tr>
-</table>
+
 
 {{-- Greeting --}}
 @if (! empty($greeting))
