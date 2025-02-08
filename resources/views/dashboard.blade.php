@@ -10,13 +10,15 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="flex flex-col p-6 text-gray-900">
                     <span class="flex">
-                        <strong>Your Investments : </strong>{{auth()->user()->investments->count()}}
+                        <strong>Your Investment Portfolio (</strong>{{auth()->user()->investments->count()}})
                     </span>
                     <!-- Table -->
-                    <div class="bg-white rounded-lg mt-6 shadow overflow-x-auto">
+                    <div class="flex flex-col md:flex-row bg-white rounded-lg mt-6 shadow overflow-x-auto">
                         @foreach (auth()->user()->investments as $investment)
+                            <span class="w-full md:w-1/3 m-3">
                                 <livewire:deal-card :deal="$investment->deal"></livewire:deal-card>
-                                @endforeach
+                            </span>
+                        @endforeach
                     </div>
                 </div>
             </div>
