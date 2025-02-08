@@ -83,9 +83,9 @@
                 <li class="px-4 py-2 border-b"><a href="{{ route('login') }}">Login/Sign Up</a></li>
                 @endguest
                 <li class="px-4 py-2 border-b"><a href="{{ route('deals') }}">Deals</a></li>
-                <li class="px-4 py-2 border-b"><a href="{{ route('investors')}}">BAN Investors</a></li>
+                <li class="px-4 py-2 border-b"><a href="{{ route('investors')}}">Investors</a></li>
                 <li class="px-4 py-2 border-b"><a href="{{ route('portfolio') }}">Portfolio</a></li>
-                <li class="px-4 py-2 border-b"><a href="{{ route('resources') }}">BAN Resources</a></li>
+                <li class="px-4 py-2 border-b"><a href="{{ route('resources') }}">Resources</a></li>
                 <li class="px-4 py-2"><a href="{{ route('team') }}">Our Team</a></li>
                 @auth
                 <hr>
