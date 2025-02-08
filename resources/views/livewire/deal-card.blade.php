@@ -34,7 +34,7 @@
             @if ($deal->investment_stage)
                 <div class="text-center">
                     <p class="text-gray-400">Investment Stage</p>
-                    <p class="font-semibold text-blue-600">{{ $deal->investment_stage }}</p>
+                    <p class="font-semibold">{{ $deal->investment_stage }}</p>
                 </div>    
             @endif
             
@@ -48,7 +48,7 @@
 
         @auth
             <a href="{{ ($deal->type!=="review") ? route('deal.view',$deal->id) : $deal->groupchat_invite_link }}" 
-               class="px-6 w-full text-center cursor-pointer mt-6 py-3 bg-green-600 text-white font-semibold rounded-lg hover:bg-green-700 transition">
+               class="px-6 w-full text-center cursor-pointer mt-6 py-3 bg-[#18736a] text-white font-semibold rounded-lg hover:bg-[#20978c] transition">
                 @php
                     if ($deal->type=="review") {
                         echo "Join WhatsApp Group";

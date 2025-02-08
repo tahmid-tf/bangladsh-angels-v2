@@ -50,7 +50,7 @@
             @endauth
 
             @guest
-            <a href="{{ route('login') }}" class="inline-flex items-center justify-center px-6 py-3 rounded-full bg-[#36b37e] font-bold text-white text-center whitespace-nowrap min-w-max">
+            <a href="{{ route('login') }}" class="inline-flex items-center justify-center px-6 py-3 rounded-full bg-[#00877a] font-bold text-white text-center whitespace-nowrap min-w-max">
                 Login / Sign Up
             </a>
             @endguest
