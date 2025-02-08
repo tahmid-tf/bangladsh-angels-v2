@@ -1,4 +1,4 @@
-<section class="fixed flex z-10 top-0 text-center justify-center items-center w-full">
+<section class="fixed flex flex-col z-10 top-0 text-center justify-center items-center w-full">
     <div class="align-self-center w-full md:w-[70vw] bg-gray-100/30 backdrop-blur-lg z-50 shadow-md flex flex-row justify-between items-center rounded-lg md:rounded-full mt-6 px-4">
         
         <!-- Logo (Left for Desktop) -->
@@ -99,6 +99,20 @@
             </ul>
         </div>
     </div>
+
+    @auth
+    @if (!auth()->user()->email_verified_at)
+        <div x-data="{ show: true }" x-show="show" class="bg-[rgb(246,240,213)] justify-center items-center border-l-4 w-[70vw] mt-6 text-[#494130] p-4 rounded-lg mb-4 relative">
+            <button @click="show = false" class="absolute top-auto right-2 text-[#494130] hover:text-[#7a734f] transition">
+                ✖
+            </button>
+            <p><strong>Welcome!</strong> Please verify your email address by clicking 
+                <a href="{{ route('verification.notice') }}" class="font-bold">here</a>.
+            </p>
+        </div>
+    @endif
+@endauth
+
 
     <script>
         // Toggle dropdown menu
