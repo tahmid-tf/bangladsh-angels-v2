@@ -3,9 +3,7 @@
 {{-- Header with Logo --}}
 <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="padding: 20px; text-align: center;">
     <tr>
-        <td align="center">
-
-        </td>
+        
     </tr>
 </table>
 
