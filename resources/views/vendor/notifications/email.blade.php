@@ -14,7 +14,7 @@
 @if ($level === 'error')
 # @lang('Whoops!')
 @else
-# @lang('Hello ' . auth()->user()->name . '!')
+# @lang('Hello!')
 @endif
 @endif
 
