@@ -27,7 +27,7 @@
 
             <!-- Submit Button -->
             <div class="mt-6">
-                <button type="submit" class="w-full bg-[#00877a] text-white py-3 rounded-lg font-semibold hover:bg-green-700 focus:ring focus:ring-green-300 transition duration-200">
+                <button type="submit" class="w-full bg-[#00877a] text-white py-3 rounded-lg font-semibold hover:bg-[#20978c] focus:ring focus:ring-[#20978c] transition duration-200">
                     Send Password Reset Link
                 </button>
             </div>
