@@ -63,7 +63,7 @@
                                     <img src="{{ $user->getProfilePhotoUrl() }}" 
                                          class="w-8 h-8 rounded-full">
                                     <div>
-                                        <p class="font-medium">{{ $user->name ?? 'Unknown Investor' }}</p>
+                                        <p class="font-medium">{{ $user->name ?? 'Unknown Investor' }} <small class="bg-gray-900 uppercase text-white p-2 mx-2 border-box rounded-md">{{ ucfirst($investment->type) }}</small></p>
                                         <p class="text-xs text-gray-500">
                                             {{ $investment->created_at->diffForHumans() }}
                                         </p>
