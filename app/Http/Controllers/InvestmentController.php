@@ -25,27 +25,37 @@ class InvestmentController extends Controller
         $validated = $request->validate([
             'deal_id' => 'required|exists:deals,id',
             'user_id' => 'required|exists:users,id',
+            'type' => 'nullable|string', //Handles Added Buttons
         ]);
 
-        // Check if the user has already invested in the deal
-        $existingInvestment = Investment::where('user_id', $request->user_id)
-        ->where('deal_id', $request->deal_id)
-        ->first();
+        if(isset($request->type) && $request->type=="review"){
+            //Do not check if investment exists
+        } else {
+            // Check if the user has already invested in the deal
+            $existingInvestment = Investment::where('user_id', $request->user_id)
+            ->where('deal_id', $request->deal_id)
+            ->first();
 
-        if ($existingInvestment) {
-            // Exception for Review Deals
-            if($deal->type=="review"){
-                return redirect()->to($deal->groupchat_invite_link);
+            if ($existingInvestment) {
+                // Exception for Review Deals
+                if($deal->type=="review"){
+                    return redirect()->to($deal->groupchat_invite_link);
+                }
+                return back()->with('error', 'You have already invested in this deal.');
             }
-            return back()->with('error', 'You have already invested in this deal.');
+
         }
 
         // Create a new investment record
         Investment::create([
             'deal_id' => $request->deal_id,
             'user_id' => $request->user_id,
-            'type' => $deal->type, // Default type
+            'type' => (!$request->type) ? $deal->type : $request->type, // If a Type is defined in initial request, use that defined type as opposed to the native type of the investment
         ]);
+        
+        if(isset($request->type) && $request->type=="review"){
+            return redirect()->to($deal->groupchat_invite_link);
+        }
 
         if($deal->type=="invest"){
             if($deal->invest_link){

@@ -55,9 +55,19 @@
             @endif
             @if ($deal->type!=="review" && $deal->groupchat_invite_link)
             <br><br>
-            <a target="_blank" href="{{ (auth()->user() && !auth()->user()->isFree()) ? $deal->groupchat_invite_link : route('plans')}}" class="px-6 w-full text-center cursor-pointer mt-6 py-3 bg-green-600 text-white font-semibold rounded-lg hover:bg-green-700 transition">
+            <form action="{{route('deal.invest',$deal->id)}}" method="POST" class="w-1/4">
+                @csrf
+                <input type="text" hidden name="user_id" value="{{auth()->user()->id}}">
+                <input type="text" hidden name="deal_id" value="{{$deal->id}}">
+                <input type="text" hidden name="type" value="review">
+                <button type="submit" class="px-6 w-full text-center cursor-pointer mt-6 py-3 bg-green-600 text-white font-semibold rounded-lg hover:bg-green-700 transition">
+                    Join WhatsApp Group
+                </button>
+
+            </form>
+            {{-- <a target="_blank" href="{{ (auth()->user() && !auth()->user()->isFree()) ? $deal->groupchat_invite_link : route('plans')}}" class="px-6 w-full text-center cursor-pointer mt-6 py-3 bg-green-600 text-white font-semibold rounded-lg hover:bg-green-700 transition">
                 Join WhatsApp Group
-            </a>
+            </a> --}}
             @endif
             @if ($deal->type!=="portfolio")
             <div class="w-1/2">
