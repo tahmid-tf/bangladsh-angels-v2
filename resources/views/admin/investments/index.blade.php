@@ -59,11 +59,11 @@
                         <ul class="list-none">
                             @foreach ($dealInvestments as $investment)
                                 @php $user = $investment->user ?? null; @endphp
-                                <li class="flex items-center space-x-3 my-2">
+                                <li class="flex items-center w-full my-2 bg-white rounded-lg p-3 border-box shadow-md">
                                     <img src="{{ $user->getProfilePhotoUrl() }}" 
                                          class="w-8 h-8 rounded-full">
-                                    <div>
-                                        <p class="font-medium">{{ $user->name ?? 'Unknown Investor' }} <small class="bg-gray-900 uppercase text-white p-2 mx-2 border-box rounded-md">{{ ucfirst($investment->type) }}</small></p>
+                                    <div class="w-full ml-3">
+                                        <p class="font-medium w-full flex justify-between items-center">{{ $user->name ?? 'Unknown Investor' }} <small class="bg-gray-900 uppercase w-1/3 m-2 text-center text-white p-2 mx-2 border-box rounded-md">{{ ucfirst($investment->type) }}</small></p>
                                         <p class="text-xs text-gray-500">
                                             {{ $investment->created_at->diffForHumans() }}
                                         </p>
