@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PrimaryController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\InvestmentController;
+use App\Http\Controllers\MailController;
 use App\Http\Controllers\SubscriptionController;
 use App\Http\Controllers\CheckoutController;
 use Illuminate\Support\Facades\Route;
@@ -103,6 +104,12 @@ Route::middleware('auth')->group(function () {
             Route::get('/{user:id}/remove', [AdminController::class, 'removeMember'])->name('member.remove');
             Route::patch('/update-status/{user:id}/', [AdminController::class, 'updateAccountStatus'])->name('update.account.status');
 
+        });
+
+        Route::prefix('mail-list')->group(function(){
+            Route::get('/', MailController::class)->name('admin.mail');
+            Route::post('/send', [MailController::class, 'send'])->name('mail.send');
+            
         });
 
         // Deal Routes
