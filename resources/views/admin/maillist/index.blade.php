@@ -2,7 +2,7 @@
 @section('page_title','Email List | Dashboard')
 @section('page_content')
 <div class="max-w-5xl mx-auto mt-10 bg-white shadow-lg rounded-lg p-6">
-    <h2 class="text-2xl font-bold mb-4">Member Emails List</h2>
+    <h2 class="text-2xl font-bold mb-4">Member Emails List ({{count($validEmails)}})</h2>
 
     <form id="emailForm" action="{{route('mail.send')}}" method="POST">
         @csrf
