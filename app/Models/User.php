@@ -12,6 +12,8 @@ use App\Models\Investment;
 use App\Models\Subscription;
 use App\Models\Commit;
 
+use Illuminate\Support\Carbon;
+
 
 class User extends Authenticatable implements HasMedia
 {
@@ -91,6 +93,22 @@ class User extends Authenticatable implements HasMedia
     public function subscriptions()
     {
         return $this->hasMany(Subscription::class);
+    }
+
+    public function getLastRenewedAtAttribute($value)
+    {
+        if (!empty($value)) {
+            try {
+                // Trim and ensure consistent format
+                return Carbon::createFromFormat('d/m/y', trim($value));
+            } catch (\Exception $e) {
+                // Log the issue or handle invalid formats
+                \Log::error('Failed to parse last_renewed_at: ' . $value);
+                return null;
+            }
+        }
+
+        return null;
     }
 
     /**

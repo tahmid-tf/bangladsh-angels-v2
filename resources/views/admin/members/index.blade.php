@@ -52,6 +52,7 @@
                     <th class="hidden md:table-cell px-6 py-4 font-medium text-gray-600">Designation</th>
                     <th class="hidden lg:table-cell px-6 py-4 font-medium text-gray-600">Organization</th>
                     <th class="hidden md:table-cell px-6 py-4 font-medium text-gray-600">Phone</th>
+                    <th class="hidden md:table-cell px-6 py-4 font-medium text-gray-600">Last Renewed</th>
                     <th class="pl-2 pr-4 md:px-6 py-4 font-medium text-gray-600">Status</th>
                     <th class="px-4 md:px-6 py-4 font-medium text-gray-600">Actions</th>
                 </tr>
@@ -81,7 +82,11 @@
                     <td class="hidden md:table-cell px-6 py-4">{{ $user->designation ?? '-' }}</td>
                     <td class="hidden lg:table-cell px-6 py-4">{{ $user->company_name ?? '-' }}</td>
                     <td class="hidden md:table-cell px-6 py-4 whitespace-nowrap">{{ $user->phone ?? '-' }}</td>
-
+                    <td>
+                    @if ($user->last_renewed_at)
+                        {{$user->last_renewed_at->format('jS F, Y')}}    
+                    @endif
+                    </td>
                     <!-- Status Column -->
                     <td class="pl-2 pr-4 md:px-6 py-4">
                         <span class="px-2 py-1 rounded-full text-xs md:text-sm 
