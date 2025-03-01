@@ -11,7 +11,7 @@
             <div class="flex flex-col md:flex-row gap-2 w-full md:w-auto relative items-center">
                 <!-- Loading Indicator -->
                 <div wire:loading wire:target="searchUsers" class="absolute left-[-40px]">
-                    <img src="https://i.gifer.com/origin/34/34338d26023e5515f6cc8969aa027bca_w200.gif" alt="Loading..." class="h-6 w-6">
+                    <img src="{{asset('loading.gif')}}" alt="Loading..." class="h-6 w-6">
                 </div>
             
                 <!-- Search Input -->
