@@ -4,62 +4,51 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use App\Models\User;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Str; // Import this class
+use Illuminate\Support\Str;
+use Carbon\Carbon;
 
 class ImportUsersFromCSV extends Command
 {
     /**
      * The name and signature of the console command.
-     *
-     * @var string
      */
     protected $signature = 'import:users';
 
-
     /**
      * The console command description.
-     *
-     * @var string
      */
-    protected $description = 'Import users from a CSV file';
-    
+    protected $description = 'Import users from a CSV file and log passwords.';
 
     /**
      * Execute the console command.
      */
     public function handle()
     {
-        $filePath = storage_path('app/imports/users.csv'); // Adjust file path if necessary
-        $passwordLogFile = storage_path('app/imports/passwords_log.txt'); // File to store raw passwords
-        $skippedRowsFile = storage_path('app/imports/skipped_rows_log.txt'); // File to store skipped rows
+        $filePath = storage_path('app/imports/users.csv');
+        $passwordLogFile = storage_path('app/imports/passwords_log.txt');
+        $skippedRowsFile = storage_path('app/imports/skipped_rows_log.txt');
 
         if (!file_exists($filePath)) {
-            $this->error('File not found!');
+            $this->error("❌ CSV file not found at: $filePath");
             return;
         }
 
         $data = array_map('str_getcsv', file($filePath));
-        $headers = array_map('trim', $data[0]); // First row as column names
-        unset($data[0]); // Remove header row
+        $headers = array_map('trim', $data[0]);
+        unset($data[0]);
 
-        $passwordLog = fopen($passwordLogFile, 'w'); // Open the log file for writing
-        $skippedRowsLog = fopen($skippedRowsFile, 'w'); // Open the log file for skipped rows
+        $passwordLog = fopen($passwordLogFile, 'w');
+        $skippedRowsLog = fopen($skippedRowsFile, 'w');
+
+        $successCount = 0;
+        $skipCount = 0;
 
         foreach ($data as $index => $row) {
-            // Ensure the row has the same number of elements as headers
-            if (count($row) < count($headers)) {
-                // Pad the row with null values
-                $row = array_pad($row, count($headers), null);
-            } elseif (count($row) > count($headers)) {
-                // Truncate the row to match headers if it has extra columns
-                $row = array_slice($row, 0, count($headers));
-            }
-
-            // Combine headers and row data
+            $row = array_map(fn($item) => trim(preg_replace('/\s+/', ' ', $item)), $row);
+            $row = array_pad($row, count($headers), null);
             $row = array_combine($headers, $row);
 
-            // Apply default values for all missing keys
+            // Default values for missing fields
             $defaults = [
                 'Name' => 'Unknown',
                 'Gender' => 'other',
@@ -87,70 +76,92 @@ class ImportUsersFromCSV extends Command
 
             $row = array_merge($defaults, $row);
 
-            // Handle email null case
-            if (is_null($row['Email'])) {
-                $this->warn("Row missing email: " . json_encode($row));
-                fwrite($skippedRowsLog, "Skipped Row (Missing Email): " . json_encode($row) . PHP_EOL);
-                continue; // Skip the row
+            // Validate email
+            if (empty($row['Email']) || !filter_var($row['Email'], FILTER_VALIDATE_EMAIL)) {
+                fwrite($skippedRowsLog, "❌ Skipped (Invalid Email): " . json_encode($row) . PHP_EOL);
+                $skipCount++;
+                continue;
             }
 
-            // Handle boolean and integer fields properly
-            $row['Referred'] = filter_var($row['Referred'], FILTER_VALIDATE_BOOLEAN) ? 1 : 0; // Convert to 1 or 0
+            // Handle multi-line cells and sanitize dates
+            $row['Last Renewed'] = $this->parseDate(explode("\n", $row['Last Renewed'])[0], $row['Email']);
+            $row['Joining Date'] = $this->parseDate($row['Joining Date'], $row['Email']);
+
+            // Convert boolean fields
+            $row['Referred'] = filter_var($row['Referred'], FILTER_VALIDATE_BOOLEAN) ? 1 : 0;
             $row['Overseas'] = filter_var($row['Overseas'], FILTER_VALIDATE_BOOLEAN) ? 1 : 0;
 
-            // Generate a unique password
-            $rawPassword = Str::random(12); // Generate a random 12-character password
-            $hashedPassword = bcrypt($rawPassword); // Hash the password for storage
+            // Generate password
+            $rawPassword = Str::random(12);
+            $hashedPassword = bcrypt($rawPassword);
 
-            // Insert or update user data in the database
             try {
                 $user = User::updateOrCreate(
-                    ['email' => $row['Email']], // Match by unique email
+                    ['email' => $row['Email']],
                     [
-                        'name' => $row['Name'],
-                        'password' => $hashedPassword, // Store the hashed password
-                        'gender' => strtolower($row['Gender']),
-                        'primary_contact' => $row['1st Point of Contact'],
-                        'secondary_contact' => $row['2nd Point of Contact (Strategic Investment Analyst)'],
-                        'designation' => $row['Designation'],
-                        'joining_date' => $row['Joining Date'],
-                        'company_name' => $row['Organization'],
-                        'registered_by' => $row['Who signed up'],
-                        'level' => $row['Nature of Membership'],
-                        'phone' => $row['Phone/Whatsapp'],
-                        'was_referred' => $row['Referred'], // Ensure boolean is set correctly
-                        'renewed' => $row['Renewed'],
-                        'last_renewed_at' => $row['Last Renewed'],
-                        'account_owner' => $row['Owner'],
-                        'total_invested' => $row['Invested'],
-                        'revenue_generated' => $row['Revenue Generated for BAN (Commissions & Membership Fees, USD)'],
-                        'notes' => $row['Notes'],
-                        'is_overseas' => $row['Overseas'], // Ensure boolean is set correctly
-                        'primary_country' => $row['Country/region'],
+                        'name'               => $row['Name'],
+                        'password'           => $hashedPassword,
+                        'gender'             => strtolower($row['Gender']),
+                        'primary_contact'    => $row['1st Point of Contact'],
+                        'secondary_contact'  => $row['2nd Point of Contact (Strategic Investment Analyst)'],
+                        'designation'        => $row['Designation'],
+                        'joining_date'       => $row['Joining Date'],
+                        'company_name'       => $row['Organization'],
+                        'registered_by'      => $row['Who signed up'],
+                        'level'              => $row['Nature of Membership'],
+                        'phone'              => $row['Phone/Whatsapp'],
+                        'was_referred'       => $row['Referred'],
+                        'renewed'            => $row['Renewed'],
+                        'last_renewed_at'    => $row['Last Renewed'],
+                        'account_owner'      => $row['Owner'],
+                        'total_invested'     => $row['Invested'],
+                        'revenue_generated'  => $row['Revenue Generated for BAN (Commissions & Membership Fees, USD)'],
+                        'notes'              => $row['Notes'],
+                        'is_overseas'        => $row['Overseas'],
+                        'primary_country'    => $row['Country/region'],
                     ]
                 );
 
-                // Log the raw password and corresponding user ID to the file
-                fwrite($passwordLog, "User ID: {$user->id}, Email: {$row['Email']}, Password: {$rawPassword}" . PHP_EOL);
-
-                $this->info('Processed row: ' . json_encode($row));
+                fwrite($passwordLog, "✅ User ID: {$user->id}, Email: {$row['Email']}, Password: {$rawPassword}" . PHP_EOL);
+                $this->info("✅ Successfully imported: {$row['Email']}");
+                $successCount++;
             } catch (\Exception $e) {
-                $this->error("Error inserting/updating row: " . json_encode($row));
-                fwrite($skippedRowsLog, "Skipped Row (Database Error): " . json_encode($row) . PHP_EOL);
-                fwrite($skippedRowsLog, "Error: " . $e->getMessage() . PHP_EOL);
+                fwrite($skippedRowsLog, "❌ Failed: {$row['Email']} - {$e->getMessage()}" . PHP_EOL);
+                $this->error("⚠️ Failed to import {$row['Email']}: {$e->getMessage()}");
+                $skipCount++;
             }
         }
 
-        fclose($passwordLog); // Close the log file
-        fclose($skippedRowsLog); // Close the skipped rows log file
-        $this->info('Import completed successfully!');
-        $this->info('Passwords have been logged to: ' . $passwordLogFile);
-        $this->info('Skipped rows have been logged to: ' . $skippedRowsFile);
+        fclose($passwordLog);
+        fclose($skippedRowsLog);
+
+        $this->info("\n🎉 Import completed successfully!");
+        $this->info("✅ Successfully imported: {$successCount} users.");
+        $this->info("🚫 Skipped rows: {$skipCount}.");
+        $this->info("🔑 Passwords logged at: {$passwordLogFile}");
+        $this->info("📜 Skipped rows logged at: {$skippedRowsFile}");
     }
 
+    /**
+     * Parse dates safely and standardize to Y-m-d format.
+     */
+    private function parseDate($date, $email)
+    {
+        if (empty($date)) {
+            return null;
+        }
 
+        $formats = ['d/m/y', 'd/m/Y', 'Y-m-d', 'm/d/Y'];
 
+        foreach ($formats as $format) {
+            try {
+                return Carbon::createFromFormat($format, trim($date))->format('Y-m-d');
+            } catch (\Exception $e) {
+                continue;
+            }
+        }
 
-
-    
+        fwrite(fopen(storage_path('app/imports/skipped_rows_log.txt'), 'a'), "⚠️ Invalid Date for {$email}: {$date}\n");
+        return null;
+    }
 }
