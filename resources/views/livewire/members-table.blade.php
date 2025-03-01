@@ -8,19 +8,26 @@
                 <a href="{{route('admin.inactive.members')}}" class="px-4 py-2 text-gray-500 hover:text-green-700">Inactive</a>
             </div>
 
-            <!-- Search Box with Enter Key Handling -->
-            <div class="flex flex-col md:flex-row gap-2 w-full md:w-auto">
+            <div class="flex flex-col md:flex-row gap-2 w-full md:w-auto relative items-center">
+                <!-- Loading Indicator -->
+                <div wire:loading wire:target="searchUsers" class="absolute left-[-40px]">
+                    <img src="https://i.gifer.com/origin/34/34338d26023e5515f6cc8969aa027bca_w200.gif" alt="Loading..." class="h-6 w-6">
+                </div>
+            
+                <!-- Search Input -->
                 <input type="text" 
                     wire:model.defer="search"
                     wire:keydown.enter="searchUsers"
                     placeholder="Search members..."
                     class="border-gray-300 rounded-lg shadow-sm px-4 py-2 md:w-64 focus:ring-green-500 focus:border-green-500">
-                
+            
+                <!-- Search Button -->
                 <button wire:click="searchUsers"
                     class="px-4 py-2 bg-green-600 text-white font-semibold rounded-lg hover:bg-green-700 focus:ring focus:ring-green-300 transition duration-200">
                     Search
                 </button>
             </div>
+            
         </div>
     </div>
 
