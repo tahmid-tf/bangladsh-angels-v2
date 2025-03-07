@@ -13,9 +13,9 @@ class PrimaryController extends Controller
     // Landing Page
     public function __invoke()
     {
-        if(!auth()->user() || !auth()->user()->isAdmin() ){
-            return view('soon');
-        }
+        // if(!auth()->user() || !auth()->user()->isAdmin() ){
+        //     return view('soon');
+        // }
         
         $portfolioDeals = Deal::where('type','portfolio')->take(3)->get();
         $deals = Deal::take(3)->get();
