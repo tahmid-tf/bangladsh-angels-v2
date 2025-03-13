@@ -21,7 +21,7 @@
                 Accelerate your Startup
             </h1>
             <h1 class="text-[2em] md:text-[3em] leading-none font-bold mt-5">
-                Elevating Entrepreneurs<br>in Bangladesh
+                Elevating Entrepreneurs<br>in Bangladeshs
             </h1>
             <p class="my-6 text-[1em] md:text-[1.1em]">
                 Bangladesh Angels Network (BAN) is the country’s first and largest angel investing platform, connecting visionary entrepreneurs with seasoned investors, fostering an ecosystem that drives innovation and economic growth.
