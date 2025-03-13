@@ -27,7 +27,9 @@ Route::prefix('upgrade')->group(function () {
     Route::get('/plans', [PrimaryController::class, 'viewPlans'])->name('plans');
     Route::match(['get', 'post'], '/pay', [CheckoutController::class, 'checkout'])->name('checkout');
     Route::post('/checkout', [CheckoutController::class, 'processCheckout'])->name('checkout.process');
-    Route::get('/success',[CheckoutController::class,'success'])->name('checkout.success');
+    Route::post('/success',[CheckoutController::class,'success'])->name('checkout.success');
+    Route::post('/fail',[CheckoutController::class,'fail'])->name('checkout.fail');
+    Route::post('/cancel',[CheckoutController::class,'cancel'])->name('checkout.cancel');
 });
 
 Route::get('/deals', function () {

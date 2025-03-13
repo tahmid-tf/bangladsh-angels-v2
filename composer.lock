@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f578950492a67e87bbf8ce11601bb84f",
+    "content-hash": "3f021d3c5a3c8c44b2299ff71d77a1cd",
     "packages": [
         {
             "name": "brick/math",
@@ -3531,6 +3531,72 @@
                 }
             ],
             "time": "2024-04-27T21:32:50+00:00"
+        },
+        {
+            "name": "shipu/php-aamarpay-payment",
+            "version": "v2.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Shipu/php-aamarpay-payment.git",
+                "reference": "814ae012f22b7c7c74f4a413f0a78377842a2d66"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Shipu/php-aamarpay-payment/zipball/814ae012f22b7c7c74f4a413f0a78377842a2d66",
+                "reference": "814ae012f22b7c7c74f4a413f0a78377842a2d66",
+                "shasum": ""
+            },
+            "require": {
+                "guzzlehttp/guzzle": "^6.2|^7.0",
+                "php": ">=5.6.4"
+            },
+            "require-dev": {
+                "symfony/var-dumper": "^4.3"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "aliases": {
+                        "Aamarpay": "Shipu\\Aamarpay\\Facades\\Aamarpay"
+                    },
+                    "providers": [
+                        "Shipu\\Aamarpay\\AamarpayServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "files": [
+                    "src/helpers.php"
+                ],
+                "psr-4": {
+                    "Shipu\\Aamarpay\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "CC-BY-3.0"
+            ],
+            "authors": [
+                {
+                    "name": "Shipu Ahamed",
+                    "email": "shipuahamed01@gmail.com"
+                }
+            ],
+            "description": "PHP client for Aamarpay Payment Gateway API",
+            "keywords": [
+                "aamarpay",
+                "api",
+                "gateway",
+                "laravel",
+                "lumen",
+                "php",
+                "php-aamarpay"
+            ],
+            "support": {
+                "issues": "https://github.com/Shipu/php-aamarpay-payment/issues",
+                "source": "https://github.com/Shipu/php-aamarpay-payment/tree/v2.0.0"
+            },
+            "time": "2021-08-09T21:15:28+00:00"
         },
         {
             "name": "spatie/image",

@@ -5,11 +5,23 @@
 <!-- Page Container -->
 <div class="container mx-auto px-4 py-12">
     
+
     <!-- Header -->
     <div class="text-center mb-8">
         <h1 class="text-2xl font-bold text-gray-800">Let’s finish powering you up!</h1>
         <p class="text-gray-500">Your selected plan is shown below.</p>
     </div>
+
+    @if(session('error'))
+        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mt-4" role="alert">
+            <strong class="font-bold">Error!</strong>
+            <span class="block sm:inline">{{ session('error') }}</span>
+            <button onclick="this.parentElement.remove()" class="absolute top-0 bottom-0 right-0 px-4 py-3">
+                ✖
+            </button>
+        </div>
+    @endif
+    
     @if ($errors->any())
         <div class="bg-red-100 text-red-700 p-4 rounded-lg mb-4">
             <ul class="list-disc pl-5">
