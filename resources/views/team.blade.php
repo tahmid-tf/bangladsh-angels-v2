@@ -32,39 +32,33 @@
 
     <!-- CEO Section (Centered) -->
     <div class="flex justify-center mb-10">
-        <div class="bg-white rounded-xl shadow-lg p-6 text-center hover:shadow-2xl transition w-80">
-            <img src="{{asset('our team/ivy.png')}}" alt="Ivy Huq Russell" class="w-32 h-32 mx-auto rounded-full mb-4">
-            <h3 class="text-xl font-bold">Ivy Huq Russell</h3>
+        <div class="bg-white flex flex-col items-center rounded-xl shadow-lg p-6 w-full sm:w-[40vw] md:w-[20vw] text-center hover:shadow-2xl transition">
+            <img src="{{asset('our team/ivy.png')}}" alt="Ivy Huq Russell" class="w-28 h-28 mx-auto rounded-full mb-4">
+            <h3 class="text-lg font-bold">Ivy Huq Russell</h3>
             <p class="text-sm text-gray-500">CEO</p>
             <a href="https://www.linkedin.com/in/ivy-huq-russell-417487/" class="mt-3 text-blue-600 font-bold text-2xl cursor-pointer block">in</a>
         </div>
     </div>
 
     <!-- Other Team Members (Grid Layout) -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 justify-center items-center">
+    <div class="flex flex-wrap justify-center items-center gap-6">
         <!-- Team Card -->
-        <div class="bg-white rounded-xl shadow-lg p-6 text-center hover:shadow-2xl transition">
+        <div class="bg-white flex flex-col items-center rounded-xl shadow-lg p-6 w-full sm:w-[40vw] md:w-[20vw] text-center hover:shadow-2xl transition">
             <img src="{{asset('our team/mustavi.png')}}" alt="Mustavi Khan" class="w-28 h-28 mx-auto rounded-full mb-4">
             <h3 class="text-lg font-bold">Mustavi Khan</h3>
             <p class="text-sm text-gray-500">Investment Analyst</p>
             <a href="https://www.linkedin.com/in/mustavikhan05/" class="mt-3 text-blue-600 font-bold text-2xl cursor-pointer block">in</a>
         </div>
 
-        <div class="bg-white rounded-xl shadow-lg p-6 text-center hover:shadow-2xl transition">
+        <div class="bg-white flex flex-col items-center rounded-xl shadow-lg p-6 w-full sm:w-[40vw] md:w-[20vw] text-center hover:shadow-2xl transition">
             <img src="{{asset('our team/mohaimenul.png')}}" alt="Mohaimenul Islam" class="w-28 h-28 mx-auto rounded-full mb-4">
             <h3 class="text-lg font-bold">Mohaimenul Islam</h3>
             <p class="text-sm text-gray-500">Investment Analyst</p>
             <a href="https://www.linkedin.com/in/mohaimenul8/" class="mt-3 text-blue-600 font-bold text-2xl cursor-pointer block">in</a>
         </div>
-
-        <div class="bg-white rounded-xl shadow-lg p-6 text-center hover:shadow-2xl transition">
-            <img src="{{asset('our team/farin.png')}}" alt="Farin Sabrina" class="w-28 h-28 mx-auto rounded-full mb-4">
-            <h3 class="text-lg font-bold">Farin Sabrina</h3>
-            <p class="text-sm text-gray-500">Investment Analyst</p>
-            <a href="https://www.linkedin.com/in/farinsabrina/" class="mt-3 text-blue-600 font-bold text-2xl cursor-pointer block">in</a>
-        </div>
     </div>
 </section>
+
 
 
 <!-- Section: Governing Board -->
