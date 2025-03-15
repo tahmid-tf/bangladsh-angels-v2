@@ -17,15 +17,12 @@
     <div class="flex flex-col md:flex-row w-full h-auto md:h-[70vh] py-[60px] md:py-[120px] justify-center items-center bg-cover bg-center" style="background-image: url('{{ asset('world_map_4x.webp') }}');">
         <img src="{{ asset('landing.png') }}" alt="coverphoto" draggable="false" class="w-3/4 md:w-auto mb-6 md:mb-0">
         <div class="p-3 md:ml-6 w-full md:w-1/3 text-center md:text-left">
-            <h1 class="text-[1.2em] md:text-[1.5em] font-bold">
-                Accelerate your Startup
-            </h1>
             <h1 class="text-[2em] md:text-[3em] leading-none font-bold mt-5">
-                Elevating Entrepreneurs<br>in Bangladesh
+                Accelerate Your Startup
             </h1>
             <p class="my-6 text-[1em] md:text-[1.1em]">
-                Bangladesh Angels Network (BAN) is the country’s first and largest angel investing platform, connecting visionary entrepreneurs with seasoned investors, fostering an ecosystem that drives innovation and economic growth.
-                <br><br>With $21.7M+ USD invested across 50+ startups, we provide capital, mentorship, and strategic backing to early-stage companies that are solving real problems and scaling fast. Our network is a mix of local and global investors, business leaders, and founders who collaborate to unlock market-changing opportunities. We don’t just invest, we build, nurture, and accelerate ventures that have the potential to reshape industries. Whether you're looking to back or build the next industry-defining company, BAN is where it happens.
+                Bangladesh’s first and largest angel investment platform, BAN connects early-stage startups with investors who bring capital, expertise, and a global network. We back founders solving real challenges, turning ambition into action.
+
 
             </p>
             <a href="{{ route('deals') }}" class="p-3 px-6 rounded-full bg-[#eefff1] font-bold text-[#36b37e]">
