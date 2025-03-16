@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PrimaryController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\InvestmentController;
+use App\Http\Controllers\ResourceController;
 use App\Http\Controllers\MailController;
 use App\Http\Controllers\SubscriptionController;
 use App\Http\Controllers\CheckoutController;
@@ -81,11 +82,15 @@ Route::get('/view/{deal:id}',[AdminController::class,'showDeal'])->name('deal.pu
  */
 Route::middleware('auth')->group(function () {
 
+
     /**
      * Admin Dashboard Routes
      */
     Route::prefix('admin')->group(function () {
         Route::get('/dashboard', AdminController::class)->name('admin.dashboard');
+        Route::get('/resources',ResourceController::class)->name('admin.resources');
+        Route::get('/resources/create',[ResourceController::class,'create'])->name('resource.create');
+        Route::post('/resources/create',[ResourceController::class,'store'])->name('resource.store');
         
         // Subscription Routes
         Route::prefix('subscriptions')->group(function () {

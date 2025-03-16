@@ -59,6 +59,7 @@
         <nav class="flex-1 flex flex-col pb-6">
             <a href="{{ route('admin.dashboard') }}" class="py-3 px-6 hover:bg-green-600">Dashboard</a>
             <a href="{{ route('admin.members') }}" class="py-3 px-6 hover:bg-green-600">Members</a>
+            <a href="{{ route('admin.resources') }}" class="py-3 px-6 hover:bg-green-600">Resources</a>
             <a href="{{ route('admin.deals') }}" class="py-3 px-6 hover:bg-green-600">Deals</a>
             <a href="{{ route('admin.subscriptions') }}" class="py-3 px-6 hover:bg-green-600">Subscriptions</a>
             <a href="{{ route('admin.investments') }}" class="py-3 px-6 hover:bg-green-600">Investments</a>
