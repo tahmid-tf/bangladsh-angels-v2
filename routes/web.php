@@ -77,6 +77,7 @@ Route::get('/dashboard', function () {
  */
 Route::post('/member/create', [AdminController::class, 'memberApply'])->name('member.apply');
 Route::get('/view/{deal:id}',[AdminController::class,'showDeal'])->name('deal.public.view');
+Route::get('/resources/{resource:id}',[ResourceController::class,'view'])->name('resource.public.view');
 /**
  * Authenticated Routes
  */
@@ -91,6 +92,12 @@ Route::middleware('auth')->group(function () {
         Route::get('/resources',ResourceController::class)->name('admin.resources');
         Route::get('/resources/create',[ResourceController::class,'create'])->name('resource.create');
         Route::post('/resources/create',[ResourceController::class,'store'])->name('resource.store');
+
+        Route::get('/resources/{resource:id}/edit',[ResourceController::class,'edit'])->name('resource.edit');
+        Route::put('/resources/{resource:id}/update',[ResourceController::class,'update'])->name('resource.update');
+
+        Route::post('/resources/{resource:id}/delete',[ResourceController::class,'destroy'])->name('resource.destory');
+
         
         // Subscription Routes
         Route::prefix('subscriptions')->group(function () {

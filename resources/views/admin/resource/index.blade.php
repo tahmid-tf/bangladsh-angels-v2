@@ -48,10 +48,75 @@
         </div>
     @endif
 
-    <!-- Resource Listing (Livewire or standard table) -->
-    <!-- Example using Livewire: -->
-    {{-- <livewire:resources-table /> --}}
-
+    <!-- Resource Listing -->
+    <div class="bg-white shadow overflow-hidden sm:rounded-lg p-4">
+        <table class="min-w-full">
+            <thead>
+                <tr>
+                    <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        Title
+                    </th>
+                    <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        Type
+                    </th>
+                    <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        Date
+                    </th>
+                    <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        Time
+                    </th>
+                    <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        Location
+                    </th>
+                    <th class="px-6 py-3 bg-gray-50"></th>
+                </tr>
+            </thead>
+            <tbody class="bg-white divide-y divide-gray-200">
+                @forelse($resources as $resource)
+                    <tr>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-700">
+                            {{ $resource->title }}
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
+                            {{ ucfirst($resource->type) }}
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
+                            @if($resource->date)
+                                {{ $resource->date->format('M d, Y') }}
+                            @else
+                                —
+                            @endif
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
+                            @if($resource->start_time && $resource->end_time)
+                                {{ $resource->start_time->format('g:i A') }} - {{ $resource->end_time->format('g:i A') }}
+                            @elseif($resource->start_time)
+                                {{ $resource->start_time->format('g:i A') }}
+                            @else
+                                —
+                            @endif
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
+                            {{ $resource->location ?: '—' }}
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                            <a href="{{ route('resource.edit', $resource->id) }}"
+                               class="text-blue-600 hover:text-blue-900">
+                                Edit
+                            </a>
+                            {{-- Optionally add a Delete button or a Show link here --}}
+                        </td>
+                    </tr>
+                @empty
+                    <tr>
+                        <td colspan="6" class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">
+                            No resources found.
+                        </td>
+                    </tr>
+                @endforelse
+            </tbody>
+        </table>
+    </div>
 
 </section>
 
@@ -70,5 +135,4 @@
         background: #34d399;
     }
 </style>
-
 @endsection

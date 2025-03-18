@@ -87,6 +87,24 @@
                 @enderror
             </div>
 
+            <!-- Type (Enum) -->
+            <div>
+                <label for="type" class="block text-gray-700 font-semibold mb-2">Type *</label>
+                <select
+                    id="type"
+                    name="type"
+                    class="input-field"
+                    required
+                >
+                    <option value="">Select Type</option>
+                    <option value="event"   {{ old('type') === 'event'   ? 'selected' : '' }}>Event</option>
+                    <option value="webinar" {{ old('type') === 'webinar' ? 'selected' : '' }}>Webinar</option>
+                </select>
+                @error('type')
+                    <span class="text-red-500 text-sm">{{ $message }}</span>
+                @enderror
+            </div>
+
             <!-- Location -->
             <div>
                 <label for="location" class="block text-gray-700 font-semibold mb-2">Location</label>

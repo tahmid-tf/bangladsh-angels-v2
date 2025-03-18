@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 
 use App\Models\Deal;
 use App\Models\User;
+use App\Models\Resource;
 
 class PrimaryController extends Controller
 {
@@ -132,7 +133,10 @@ class PrimaryController extends Controller
     // View Resources Page 
     public function viewResources()
     {
-        return view('resources');
+        $events = Resource::where('type', 'event')->latest()->get();
+        $webinars = Resource::where('type', 'webinar')->latest()->get();
+
+        return view('resources', compact('events', 'webinars'));
     }
 
     public function checkout(Request $request)

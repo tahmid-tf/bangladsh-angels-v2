@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('resources', function (Blueprint $table) {
             $table->id();
             $table->string('title');
+            $table->enum('type',['event','webinar'])->default('event');
             $table->text('description')->nullable();
             $table->date('date')->nullable();
             $table->time('start_time')->nullable();
