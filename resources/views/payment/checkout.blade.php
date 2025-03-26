@@ -221,8 +221,17 @@
                         <!-- Company Name -->
                         <div>
                             <label class="block text-gray-700 font-semibold my-2" for="company_name">Company Name *</label>
-                            <input type="text" id="company_name" name="company_name" value="{{auth()->user()->company_name}}" placeholder="Company Name" class="w-full p-3 rounded-lg border-gray-300 shadow-sm focus:border-green-500 focus:ring focus:ring-green-200" value="{{ old('company_name') }}" required>
+                            <input 
+                                type="text" 
+                                id="company_name" 
+                                name="company_name"
+                                value="{{ old('company_name', optional(auth()->user())->company_name) }}"
+                                placeholder="Company Name"
+                                class="w-full p-3 rounded-lg border-gray-300 shadow-sm focus:border-green-500 focus:ring focus:ring-green-200"
+                                required
+                            >
                         </div>
+
 
                         <!-- Designation -->
                         <div>
