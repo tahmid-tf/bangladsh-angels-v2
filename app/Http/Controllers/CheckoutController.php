@@ -95,6 +95,7 @@ class CheckoutController extends Controller
 
         $url = "https://​sandbox​.aamarpay.com/jsonpost.php"; // for Live Transection use "https://secure.aamarpay.com/jsonpost.php"
 
+            
         $curl = curl_init();
         
         curl_setopt_array($curl, array(
@@ -109,9 +110,9 @@ class CheckoutController extends Controller
         CURLOPT_POSTFIELDS =>'{
             "store_id": "'.$store_id.'",
             "tran_id": "'.$tran_id.'",
-            "success_url": "'.route('checkout.success').'",
-            "fail_url": "'.route('checkout.fail').'",
-            "cancel_url": "'.route('checkout.cancel').'",
+            "success_url": "https://secure.bdangels.co/callback.php",
+            "fail_url": "https://secure.bdangels.co/callback.php",
+            "cancel_url": "https://secure.bdangels.co/callback.php",
             "amount": "'.$amount.'",
             "currency": "'.$currency.'",
             "signature_key": "'.$signature_key.'",
