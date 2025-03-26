@@ -188,16 +188,32 @@
                 @endguest
             <!-- Password -->
             
-            <!-- Investment Expertise -->
             <div>
-                <label class="block text-gray-700 font-semibold my-2" for="investment_expertise">Level of Investment Expertise *</label>
-                <select id="investment_expertise" name="investment_expertise" class="w-full p-3 rounded-lg border-gray-300 shadow-sm focus:border-green-500 focus:ring focus:ring-green-200" required>
+                <label class="block text-gray-700 font-semibold my-2" for="investment_expertise">
+                    Level of Investment Expertise *
+                </label>
+                <select id="investment_expertise" name="investment_expertise"
+                        class="w-full p-3 rounded-lg border-gray-300 shadow-sm focus:border-green-500 focus:ring focus:ring-green-200"
+                        required>
                     <option value="">Select level of investment expertise</option>
-                    <option value="beginner" {{ (auth()->user()->investment_expertise == 'beginner') ? 'selected' : '' }}>Beginner</option>
-                    <option value="intermediate" {{ (auth()->user()->investment_expertise == 'intermediate') ? 'selected' : '' }}>Intermediate</option>
-                    <option value="expert" {{ (auth()->user()->investment_expertise == 'expert') ? 'selected' : '' }}>Expert</option>
+                    
+                    <option value="beginner"
+                        {{ (auth()->check() && auth()->user()->investment_expertise == 'beginner') ? 'selected' : '' }}>
+                        Beginner
+                    </option>
+                    
+                    <option value="intermediate"
+                        {{ (auth()->check() && auth()->user()->investment_expertise == 'intermediate') ? 'selected' : '' }}>
+                        Intermediate
+                    </option>
+                    
+                    <option value="expert"
+                        {{ (auth()->check() && auth()->user()->investment_expertise == 'expert') ? 'selected' : '' }}>
+                        Expert
+                    </option>
                 </select>
             </div>
+            
             </div>  
 
                     <!-- Payment Method -->
