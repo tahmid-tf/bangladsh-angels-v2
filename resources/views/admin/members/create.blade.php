@@ -214,7 +214,7 @@
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <select id="country" name="primary_country" class="form-control">
+        <select id="country" name="primary_country" class="border border-gray-300 p-2 rounded w-full">
             <option value="Afghanistan">Afghanistan</option>
             <option value="Åland Islands">Åland Islands</option>
             <option value="Albania">Albania</option>
@@ -462,12 +462,7 @@
         </select>
 
           <input type="text" name="preference_sector" placeholder="Preference Sector" class="border border-gray-300 p-2 rounded w-full" value="{{ old('preference_sector') }}">
-          <select name="strategic_analyst" class="border border-gray-300 p-2 rounded w-full">
-            <option value="">Strategic Investment Analyst</option>
-            <option value="TL" {{ old('strategic_analyst') == 'TL' ? 'selected' : '' }}>TL</option>
-            <option value="FS" {{ old('strategic_analyst') == 'FS' ? 'selected' : '' }}>FS</option>
-            <option value="TB" {{ old('strategic_analyst') == 'TB' ? 'selected' : '' }}>TB</option>
-          </select>
+          
         </div>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
           <input type="password" name="password" placeholder="Set a strong password" class="border border-gray-300 p-2 rounded w-full" value="{{ old('password') }}" required>

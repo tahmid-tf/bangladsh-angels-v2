@@ -128,7 +128,6 @@ class AdminController extends Controller
                 'primary_country' => 'required|string|max:100',
                 'country_code' => 'required|string|max:100',
                 'preference_sector' => 'nullable|string|max:255',
-                'strategic_analyst' => 'nullable|in:TL,FS,TB',
                 'photo' => 'nullable|image|max:3072', // Max size: 3MB
                 'profile_photo' => 'nullable|image|max:3072|mimes:jpeg,png,jpg,gif', // Validation for profile_photo
                 'investment_amount.*' => 'nullable|numeric|min:0',
@@ -157,7 +156,6 @@ class AdminController extends Controller
                 'renewed' => $request->renewed,
                 'primary_country' => $request->primary_country,
                 'preference_sector' => $request->preference_sector,
-                'strategic_analyst' => $request->strategic_analyst,
                 'role' => 'investor', // Assign the investor role
                 'is_approved' => $approval,
             ]);
