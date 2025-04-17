@@ -101,17 +101,22 @@
     </div>
 
     @auth
-    @if (!auth()->user()->email_verified_at)
-        <div x-data="{ show: true }" x-show="show" class="bg-[rgb(246,240,213)] justify-center items-center border-l-4 w-[70vw] mt-6 text-[#494130] p-4 rounded-lg mb-4 relative">
-            <button @click="show = false" class="absolute top-auto right-2 text-[#494130] hover:text-[#7a734f] transition">
-                ✖
-            </button>
-            <p><strong>Welcome!</strong> Please verify your email address by clicking 
-                <a href="{{ route('verification.notice') }}" class="font-bold">here</a>.
-            </p>
-        </div>
-    @endif
-@endauth
+        @if (!auth()->user()->email_verified_at)
+            <div x-data="{ show: true }" x-show="show" class="bg-[rgb(246,240,213)] justify-center items-center border-l-4 w-[70vw] mt-6 text-[#494130] p-4 rounded-lg mb-4 relative">
+                <button @click="show = false" class="absolute top-auto right-2 text-[#494130] hover:text-[#7a734f] transition">
+                    ✖
+                </button>
+                <p><strong>Welcome!</strong> Please verify your email address by 
+                    <button wire:click="sendVerificationEmail" class="font-bold underline cursor-pointer">clicking here</button>.
+                </p>
+                @if (session('verification-notice'))
+                    <p class="mt-2 text-sm font-medium text-[#494130]">
+                        {{ session('verification-notice') }}
+                    </p>
+                @endif
+            </div>
+        @endif
+    @endauth
 
 
     <script>
