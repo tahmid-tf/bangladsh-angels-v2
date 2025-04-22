@@ -65,7 +65,7 @@
 <section class="container mx-auto mt-20 px-6">
     <h2 class="text-center text-4xl font-extrabold mb-6">Governing Board</h2>
 
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-8">
         <div class="bg-white rounded-xl shadow-lg p-6 text-center hover:shadow-2xl transition">
             <h3 class="text-lg font-bold">Sajid Rahman</h3>
             <p class="text-sm text-gray-500">Chief Executive</p>
@@ -100,6 +100,14 @@
             <img src="{{asset('our team/tina.png')}}" alt="Tina Jabeen" class="mt-3 w-28 h-28 mx-auto rounded-full mb-4">
             
             <br><a href="https://www.linkedin.com/in/tinajabeen/" class="mt-3 text-blue-600 font-bold text-2xl cursor-pointer">in</a>
+        </div>
+        <div class="bg-white rounded-xl shadow-lg p-6 text-center hover:shadow-2xl transition">
+            <h3 class="text-lg font-bold">Sanchayan Chakraborty</h3>
+            <p class="text-sm text-gray-500">Partner</p>
+            <p class="text-sm text-gray-500">Aavishkaar Capital</p>
+            <img src="{{asset('our team/sanchayan.png')}}" alt="Sanchayan Chakraborty" class="mt-3 w-28 h-28 mx-auto rounded-full mb-4">
+            
+            <br><a href="https://www.linkedin.com/in/sanchayan-chakraborty-5353105/" class="mt-3 text-blue-600 font-bold text-2xl cursor-pointer">in</a>
         </div>
         <!-- Repeat other governing board cards -->
     </div>
