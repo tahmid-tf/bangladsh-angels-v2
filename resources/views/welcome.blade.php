@@ -204,17 +204,18 @@
       
     <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6 mt-8 w-[90%] md:w-[80%] mx-auto">
         <a href="#" class="flex justify-center items-center p-4">
-            <img src="{{asset('sajidafoundation.webp')}}" alt="Sajida Foundation Logo" class="max-w-[150px] h-auto md:max-w-[180px]">
-        </a>
-        <a href="#" class="flex justify-center items-center p-4">
-            <img src="{{asset('bidalogo.webp')}}" alt="BIDA Logo" class="max-w-[150px] h-auto md:max-w-[180px]">
-        </a>
-        <a href="#" class="flex justify-center items-center p-4">
             <img src="{{asset('foreignaffairsnetherland.webp')}}" alt="Foreign Affairs Logo" class="max-w-[150px] h-auto md:max-w-[180px]">
         </a>
         <a href="#" class="flex justify-center items-center p-4">
             <img src="{{asset('capital logo.webp')}}" alt="Capital Logo" class="max-w-[150px] h-auto md:max-w-[180px]">
         </a>
+        <a href="#" class="flex justify-center items-center p-4">
+            <img src="{{asset('sajidafoundation.webp')}}" alt="Sajida Foundation Logo" class="max-w-[150px] h-auto md:max-w-[180px]">
+        </a>
+        <a href="#" class="flex justify-center items-center p-4">
+            <img src="{{asset('bidalogo.webp')}}" alt="BIDA Logo" class="max-w-[150px] h-auto md:max-w-[180px]">
+        </a>
+        
         <a href="#" class="flex justify-center items-center p-4">
             <img src="{{asset('bangladesh venture capital.webp')}}" alt="BCV Logo" class="max-w-[150px] h-auto md:max-w-[180px]">
         </a>
