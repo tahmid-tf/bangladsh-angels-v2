@@ -202,23 +202,37 @@
 
     </p>
       
-    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6 mt-8 w-[90%] md:w-[80%] mx-auto">
-        <a href="#" class="flex justify-center items-center p-4">
-            <img src="{{asset('foreignaffairsnetherland.webp')}}" alt="Foreign Affairs Logo" class="max-w-[150px] h-auto md:max-w-[180px]">
-        </a>
-        <a href="#" class="flex justify-center items-center p-4">
-            <img src="{{asset('capital logo.webp')}}" alt="Capital Logo" class="max-w-[150px] h-auto md:max-w-[180px]">
-        </a>
-        <a href="#" class="flex justify-center items-center p-4">
-            <img src="{{asset('sajidafoundation.webp')}}" alt="Sajida Foundation Logo" class="max-w-[150px] h-auto md:max-w-[180px]">
-        </a>
-        <a href="#" class="flex justify-center items-center p-4">
-            <img src="{{asset('bidalogo.webp')}}" alt="BIDA Logo" class="max-w-[150px] h-auto md:max-w-[180px]">
-        </a>
+    <div class="w-[90%] md:w-[80%] mx-auto mt-8">
+        <!-- Founding Partners -->
+        <div class="mb-12">
+            <h3 class="text-xl font-bold text-[#00877a] mb-6 text-center">Founding Partners</h3>
+            <div class="flex flex-wrap justify-center gap-8">
+                <div class="flex justify-center items-center p-5 border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-all bg-white">
+                    <img src="{{asset('foreignaffairsnetherland.webp')}}" alt="Foreign Affairs Logo" class="h-16 md:h-20 w-auto object-contain">
+                </div>
+                <div class="flex justify-center items-center p-5 border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-all bg-white">
+                    <img src="{{asset('capital logo.webp')}}" alt="Capital Logo" class="h-16 md:h-20 w-auto object-contain">
+                </div>
+            </div>
+        </div>
         
-        <a href="#" class="flex justify-center items-center p-4">
-            <img src="{{asset('bangladesh venture capital.webp')}}" alt="BCV Logo" class="max-w-[150px] h-auto md:max-w-[180px]">
-        </a>
+        <!-- Industry Partners -->
+        <div>
+            <h3 class="text-xl font-bold text-[#00877a] mb-6 text-center">Industry Partners</h3>
+            <div class="flex flex-wrap justify-center gap-8">
+                <div class="flex justify-center items-center p-5 border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-all bg-white">
+                    <img src="{{asset('bidalogo.webp')}}" alt="BIDA Logo" class="h-16 md:h-20 w-auto object-contain">
+                </div>
+                <div class="flex justify-center items-center p-5 border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-all bg-white">
+                    <img src="{{asset('bangladesh venture capital.webp')}}" alt="BCV Logo" class="h-16 md:h-20 w-auto object-contain">
+                </div>
+                <div class="flex justify-center">
+                    <div class="flex justify-center items-center p-5 border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-all bg-white max-w-xs">
+                        <img src="{{asset('sajidafoundation.webp')}}" alt="Sajida Foundation Logo" class="h-16 md:h-20 w-auto object-contain">
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
     
   </section>
