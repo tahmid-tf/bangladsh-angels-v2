@@ -111,12 +111,12 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                 
                 // Redirect to Laravel route with payment details
                 header("Location: https://bdangels.co/payment/complete?status_code=" . urlencode($status_code) . 
-                        "&user_id=" . urlencode($user_id) . 
-                        "&payment_id=" . urlencode($payment_id) . 
-                        "&plan=" . urlencode($subscription_plan) . 
-                        "&amount=" . urlencode($amount) . 
-                        "&currency=" . urlencode($currency) . 
-                        "&txn=" . urlencode($pg_txnid));
+                       "&user_id=" . urlencode($user_id) . 
+                       "&payment_id=" . urlencode($payment_id) . 
+                       "&plan=" . urlencode($subscription_plan) . 
+                       "&amount=" . urlencode($amount) . 
+                       "&currency=" . urlencode($currency) . 
+                       "&txn=" . urlencode($pg_txnid));
                 exit;
             } else {
                 error_log("User not found for payment: user_id=$user_id");
@@ -135,13 +135,8 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     } else {
         // Log any other error responses
         error_log("Payment error with status_code=$status_code: mer_txnid=$mer_txnid, pg_txnid=$pg_txnid");
-        error_log("Full response data: " . print_r($data, true));
         header("Location: https://bdangels.co/payment/error?status_code=" . urlencode($status_code) . "&mer_txnid=" . urlencode($mer_txnid));
         exit;
     }
-
-    // This is a fallback redirect in case none of the above conditions are met
-    header("Location: https://bdangels.co/payment/status?status_code=" . urlencode($status_code));
-    exit;
 }
 ?>

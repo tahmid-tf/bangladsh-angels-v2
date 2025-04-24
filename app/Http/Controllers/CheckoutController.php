@@ -110,9 +110,9 @@ class CheckoutController extends Controller
         CURLOPT_POSTFIELDS =>'{
             "store_id": "'.$store_id.'",
             "tran_id": "'.$tran_id.'",
-            "success_url": "'.route('checkout.success').'",
-            "fail_url": "'.route('checkout.fail').'",
-            "cancel_url": "'.route('checkout.cancel').'",
+            "success_url": "https://secure.bdangels.co/callback.php",
+            "fail_url": "https://secure.bdangels.co/callback.php",
+            "cancel_url": "https://secure.bdangels.co/callback.php",
             "amount": "'.$amount.'",
             "currency": "'.$currency.'",
             "signature_key": "'.$signature_key.'",
