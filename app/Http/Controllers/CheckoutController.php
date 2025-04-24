@@ -236,7 +236,7 @@ class CheckoutController extends Controller
                     ]);
 
                     // Record the payment in the database
-                    \App\Models\Payment::create([
+                    $payment = \App\Models\Payment::create([
                         'user_id' => $user_id,
                         'payment_method' => 'aamarpay',
                         'transaction_id' => $pg_txnid,
@@ -251,11 +251,18 @@ class CheckoutController extends Controller
                         'expiry_date' => now()->addYear(), // 1 year subscription
                         'customer_ip' => $request->ip()
                     ]);
-
-                    // Find the latest payment for showing details on success page
-                    $payment = \App\Models\Payment::where('user_id', $user_id)
-                        ->latest()
-                        ->first();
+                    
+                    // Create or update subscription record
+                    $subscription = \App\Models\Subscription::updateOrCreate(
+                        ['user_id' => $user_id, 'plan' => $subscription_plan],
+                        [
+                            'price' => $amount,
+                            'status' => 'active',
+                            'payment_id' => $payment->id,
+                            'start_date' => now(),
+                            'end_date' => now()->addYear(),
+                        ]
+                    );
                     
                     // Log the successful payment
                     \Illuminate\Support\Facades\Log::info("Payment successful for user #$user_id: $amount $currency for $subscription_plan plan");
@@ -340,6 +347,20 @@ class CheckoutController extends Controller
             $payment = \App\Models\Payment::where('user_id', $user_id)
                 ->latest()
                 ->first();
+        }
+        
+        if ($payment && $payment->status == 'completed') {
+            // Create or update subscription record if it doesn't exist
+            \App\Models\Subscription::updateOrCreate(
+                ['user_id' => $payment->user_id, 'plan' => $payment->subscription_plan],
+                [
+                    'price' => $payment->amount,
+                    'status' => 'active',
+                    'payment_id' => $payment->id,
+                    'start_date' => $payment->payment_date,
+                    'end_date' => $payment->expiry_date ?? now()->addYear(),
+                ]
+            );
         }
         
         // Show payment success page with payment details
