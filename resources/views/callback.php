@@ -153,12 +153,33 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         }
     } elseif ($status_code == 7) { // Payment failed
         error_log("Payment failed: mer_txnid=$mer_txnid, pg_txnid=$pg_txnid");
-        header("Location: https://bdangels.co/payment/failed?mer_txnid=" . urlencode($mer_txnid) . "&mode=" . urlencode($gatewayMode));
+        
+        // Extract any available error information
+        $error_message = $data->error_message ?? '';
+        if (empty($error_message) && isset($data->pg_error_code)) {
+            $error_message = "Error code: " . $data->pg_error_code;
+        }
+        
+        // Redirect to the dedicated payment failed page with error details
+        header("Location: https://bdangels.co/payment/failed?mer_txnid=" . urlencode($mer_txnid) . 
+               "&error_message=" . urlencode($error_message) . 
+               "&user_id=" . urlencode($user_id) . 
+               "&mode=" . urlencode($gatewayMode));
         exit;
     } else {
         // Log any other error responses
         error_log("Payment error with status_code=$status_code: mer_txnid=$mer_txnid, pg_txnid=$pg_txnid");
-        header("Location: https://bdangels.co/payment/error?status_code=" . urlencode($status_code) . "&mer_txnid=" . urlencode($mer_txnid) . "&mode=" . urlencode($gatewayMode));
+        
+        // For other error types, also redirect to the failed page with appropriate error information
+        $error_message = "Payment error (code: $status_code)";
+        if (isset($data->pg_error_code) || isset($data->error_message)) {
+            $error_message .= " - " . ($data->error_message ?? $data->pg_error_code);
+        }
+        
+        header("Location: https://bdangels.co/payment/failed?status_code=" . urlencode($status_code) . 
+               "&mer_txnid=" . urlencode($mer_txnid) . 
+               "&error_message=" . urlencode($error_message) . 
+               "&mode=" . urlencode($gatewayMode));
         exit;
     }
 }

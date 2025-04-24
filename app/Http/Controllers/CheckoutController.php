@@ -301,6 +301,40 @@ class CheckoutController extends Controller
     }
 
     /**
+     * Handle failed payment redirect from callback.php
+     */
+    public function paymentFailed(Request $request)
+    {
+        $mer_txnid = $request->mer_txnid;
+        $error_message = $request->error_message;
+        $user_id = $request->user_id;
+        $status_code = $request->status_code;
+        
+        // Log the payment failure
+        \Illuminate\Support\Facades\Log::warning("Payment failed: mer_txnid=$mer_txnid, user_id=$user_id, error=$error_message");
+        
+        // Record the failed payment attempt in database if needed
+        if ($user_id) {
+            try {
+                \App\Models\Payment::create([
+                    'user_id' => $user_id,
+                    'payment_method' => 'aamarpay',
+                    'merchant_txnid' => $mer_txnid,
+                    'status' => 'failed',
+                    'status_code' => $status_code ?? '7',
+                    'payment_date' => now(),
+                    'customer_ip' => $request->ip()
+                ]);
+            } catch (\Exception $e) {
+                \Illuminate\Support\Facades\Log::error("Failed to record failed payment: " . $e->getMessage());
+            }
+        }
+        
+        // Show the dedicated payment failure page with error details
+        return view('payment.failed', compact('mer_txnid', 'error_message', 'user_id'));
+    }
+
+    /**
      * Handle successful payment completion redirect from callback.php
      */
     public function paymentComplete(Request $request)
@@ -322,17 +356,6 @@ class CheckoutController extends Controller
         
         // Show payment success page with payment details
         return view('payment.success', compact('payment', 'plan'));
-    }
-    
-    /**
-     * Handle failed payment redirect from callback.php
-     */
-    public function paymentFailed(Request $request)
-    {
-        $mer_txnid = $request->mer_txnid;
-        
-        return redirect()->route('upgrade.page')
-            ->with('error', 'Your payment was unsuccessful. Please try again or contact support.');
     }
     
     /**
