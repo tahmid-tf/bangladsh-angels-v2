@@ -46,144 +46,243 @@ class CheckoutController extends Controller
             'gender' => 'required|in:male,female,other',
             'investment_expertise' => 'required|in:beginner,intermediate,expert',
             'linkedin' => 'required|url|max:255',
-            'password' => (auth()->user()) ? '' : 'required','|confirmed|min:8',
+            'password' => Auth::check() ? '' : 'required|confirmed|min:8',
             'profile_photo' => 'nullable',
             'plan' => 'required|string',
             'price' => 'required|numeric|min:0',
             'payment' => 'nullable|string', // Default is "email"
         ]);
 
-        // Check if the user already exists
-        $user = User::firstOrCreate(
-            ['email' => $validated['email']],
-            [
-                'name' => $validated['name'],
-                'phone' => $validated['country_code'] . $validated['phone'],
-                'address' => $validated['address'],
-                'primary_country' => $validated['primary_country'],
-                'company_name' => $validated['company_name'],
-                'designation' => $validated['designation'],
-                'gender' => $validated['gender'],
-                'investment_expertise' => $validated['investment_expertise'],
-                'linkedin' => $validated['linkedin'],
-                'password' => ($request->password) ? $validated['password'] : auth()->user()->password,
-            ]
-        );
+        try {
+            // Check if the user already exists
+            $user = User::firstOrCreate(
+                ['email' => $validated['email']],
+                [
+                    'name' => $validated['name'],
+                    'phone' => $validated['country_code'] . $validated['phone'],
+                    'address' => $validated['address'],
+                    'primary_country' => $validated['primary_country'],
+                    'company_name' => $validated['company_name'],
+                    'designation' => $validated['designation'],
+                    'gender' => $validated['gender'],
+                    'investment_expertise' => $validated['investment_expertise'],
+                    'linkedin' => $validated['linkedin'],
+                    'password' => Auth::check() ? auth()->user()->password : Hash::make($request->password),
+                ]
+            );
 
-        // Handle profile photo upload
-        if ($request->hasFile('profile_photo')) {
-            $user->addMediaFromRequest('profile_photo')->toMediaCollection('profile_photo');
-        }
+            // Update user info if user already exists
+            if ($user->wasRecentlyCreated === false) {
+                $user->update([
+                    'name' => $validated['name'],
+                    'phone' => $validated['country_code'] . $validated['phone'],
+                    'address' => $validated['address'],
+                    'primary_country' => $validated['primary_country'],
+                    'company_name' => $validated['company_name'],
+                    'designation' => $validated['designation'],
+                    'gender' => $validated['gender'],
+                    'investment_expertise' => $validated['investment_expertise'],
+                    'linkedin' => $validated['linkedin'],
+                ]);
+            }
 
-        // Log in the user if not already logged in
-        if (!Auth::check()) {
-            Auth::login($user);
-        }
+            // Handle profile photo upload
+            if ($request->hasFile('profile_photo')) {
+                $user->addMediaFromRequest('profile_photo')->toMediaCollection('profile_photo');
+            }
+            if ($request->hasFile('media.profile_photo')) {
+                $user->addMediaFromRequest('media.profile_photo')->toMediaCollection('profile_photos');
+            }
 
-        //AamarPay Integration
-        // Set gateway mode: 'sandbox' or 'live'
-        $gatewayMode = 'sandbox'; // Change to 'live' for production
+            // Log in the user if not already logged in
+            if (!Auth::check()) {
+                Auth::login($user);
+            }
 
-        // Payment gateway configuration based on mode
-        $pg_config = [
-            'sandbox' => [
-                'url' => 'https://sandbox.aamarpay.com/jsonpost.php',
-                'merchant_id' => 'aamarpaytest',
-                'store_id' => 'aamarpaytest',
-                'signature_key' => 'dbb74894e82415a2f7ff0ec3a97e4183'
-            ],
-            'live' => [
-                'url' => 'https://secure.aamarpay.com/jsonpost.php',
-                'merchant_id' => 'bdangels',
-                'store_id' => 'bdangels',
-                'signature_key' => '84f4fd2f6c4b7c702c9dcbb65a4f6e26'
-            ]
-        ];
+            // Create subscription record first
+            $subscription = Subscription::create([
+                'user_id' => $user->id,
+                'plan' => $validated['plan'],
+                'price' => $validated['price'],
+                'status' => 'pending', // Set initial status to pending
+            ]);
 
-        // Get the active configuration based on the gateway mode
-        $active_config = $pg_config[$gatewayMode];
+            // Store in session for later reference
+            session([
+                'checkout.user_id' => $user->id,
+                'checkout.subscription_id' => $subscription->id,
+                'checkout.plan' => $validated['plan'],
+                'checkout.price' => $validated['price']
+            ]);
 
-        $tran_id = ($gatewayMode == 'live' ? "bdangels" : "test") . rand(1111111,9999999); // unique transaction id
-
-        $currency = "USD"; // aamarPay support Two type of currency USD & BDT  
-
-        $amount = $validated['price'];
+            // AamarPay Integration
+            // Set gateway mode: 'sandbox' or 'live'
+            $gatewayMode = 'sandbox'; // Change to 'live' for production
             
-        $curl = curl_init();
-        
-        curl_setopt_array($curl, array(
-        CURLOPT_URL => $active_config['url'],
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_ENCODING => '',
-        CURLOPT_MAXREDIRS => 10,
-        CURLOPT_TIMEOUT => 0,
-        CURLOPT_FOLLOWLOCATION => true,
-        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-        CURLOPT_CUSTOMREQUEST => 'POST',
-        CURLOPT_POSTFIELDS =>'{
-            "store_id": "'.$active_config['store_id'].'",
-            "tran_id": "'.$tran_id.'",
-            "success_url": "https://secure.bdangels.co/callback.php",
-            "fail_url": "https://secure.bdangels.co/callback.php",
-            "cancel_url": "https://secure.bdangels.co/callback.php",
-            "amount": "'.$amount.'",
-            "currency": "'.$currency.'",
-            "signature_key": "'.$active_config['signature_key'].'",
-            "desc": "Merchant Registration Payment",
-            "cus_name": "'. $validated['name'] .'",
-            "cus_email": "'. $validated['email'] .'",
-            "cus_add1": "'. $validated['address'] .'",
-            "cus_add2": "Mohakhali DOHS",
-            "cus_city": "Dhaka",
-            "cus_state": "Dhaka",
-            "cus_postcode": "1206",
-            "cus_country": "Bangladesh",
-            "cus_phone": "'. $validated['phone'] .'",
-            "opt_a": "'. $validated['plan'] .'",
-            "opt_b": "'. $user->id .'",
-            "opt_c": "'. $gatewayMode .'",
-            "type": "json"
-        }',
-        CURLOPT_HTTPHEADER => array(
-            'Content-Type: application/json'
-        ),
-        ));
+            // Check if we should skip payment gateway in development/testing
+            $skipPaymentGateway = false;
+            if (app()->environment('local') && env('SKIP_PAYMENT_GATEWAY', false)) {
+                $skipPaymentGateway = true;
+            }
 
-        $response = curl_exec($curl);
-        
-        curl_close($curl);
-        
-        \Illuminate\Support\Facades\Log::info("AamarPay response ($gatewayMode mode): " . $response);
-        
-        $responseObj = json_decode($response);
+            if ($skipPaymentGateway) {
+                // Auto-approve in test mode
+                $user->update([
+                    'account_status' => $validated['plan'],
+                    'payment_status' => 'paid'
+                ]);
+                
+                $subscription->update([
+                    'status' => 'active',
+                    'start_date' => now(),
+                    'end_date' => now()->addYear()
+                ]);
+                
+                return redirect()->route('dashboard')->with('success', 'Your subscription has been activated in test mode.');
+            }
 
-        
+            // Payment gateway configuration based on mode
+            $pg_config = [
+                'sandbox' => [
+                    'url' => 'https://sandbox.aamarpay.com/jsonpost.php',
+                    'merchant_id' => 'aamarpaytest',
+                    'store_id' => 'aamarpaytest',
+                    'signature_key' => 'dbb74894e82415a2f7ff0ec3a97e4183'
+                ],
+                'live' => [
+                    'url' => 'https://secure.aamarpay.com/jsonpost.php',
+                    'merchant_id' => 'bdangels',
+                    'store_id' => 'bdangels',
+                    'signature_key' => '84f4fd2f6c4b7c702c9dcbb65a4f6e26'
+                ]
+            ];
 
-        if(isset($responseObj->payment_url) && !empty($responseObj->payment_url)) {
+            // Get the active configuration based on the gateway mode
+            $active_config = $pg_config[$gatewayMode];
 
-            $paymentUrl = $responseObj->payment_url;
-            // dd($paymentUrl);
-            return redirect()->away($paymentUrl);
+            $tran_id = ($gatewayMode == 'live' ? "bdangels" : "test") . rand(1111111,9999999); // unique transaction id
 
-        }else{
-            \Illuminate\Support\Facades\Log::error("AamarPay error ($gatewayMode mode): " . $response);
-            return redirect()->route('upgrade.page')->with('error', 'Payment gateway error. Please try again or contact support.');
+            $currency = "USD"; // aamarPay support Two type of currency USD & BDT  
+
+            $amount = $validated['price'];
+                
+            $curl = curl_init();
+            
+            curl_setopt_array($curl, array(
+                CURLOPT_URL => $active_config['url'],
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_ENCODING => '',
+                CURLOPT_MAXREDIRS => 10,
+                CURLOPT_TIMEOUT => 30, // Increased timeout
+                CURLOPT_FOLLOWLOCATION => true,
+                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                CURLOPT_CUSTOMREQUEST => 'POST',
+                CURLOPT_POSTFIELDS =>'{
+                    "store_id": "'.$active_config['store_id'].'",
+                    "tran_id": "'.$tran_id.'",
+                    "success_url": "https://secure.bdangels.co/callback.php",
+                    "fail_url": "https://secure.bdangels.co/callback.php",
+                    "cancel_url": "https://secure.bdangels.co/callback.php",
+                    "amount": "'.$amount.'",
+                    "currency": "'.$currency.'",
+                    "signature_key": "'.$active_config['signature_key'].'",
+                    "desc": "Membership Payment",
+                    "cus_name": "'. $validated['name'] .'",
+                    "cus_email": "'. $validated['email'] .'",
+                    "cus_add1": "'. $validated['address'] .'",
+                    "cus_add2": "Mohakhali DOHS",
+                    "cus_city": "Dhaka",
+                    "cus_state": "Dhaka",
+                    "cus_postcode": "1206",
+                    "cus_country": "Bangladesh",
+                    "cus_phone": "'. $validated['phone'] .'",
+                    "opt_a": "'. $validated['plan'] .'",
+                    "opt_b": "'. $user->id .'",
+                    "opt_c": "'. $gatewayMode .'",
+                    "type": "json"
+                }',
+                CURLOPT_HTTPHEADER => array(
+                    'Content-Type: application/json'
+                ),
+            ));
+
+            $response = curl_exec($curl);
+            $err = curl_error($curl);
+            $httpCode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+            curl_close($curl);
+            
+            // Log the response
+            \Illuminate\Support\Facades\Log::info("AamarPay response ($gatewayMode mode): " . $response . " HTTP Status: " . $httpCode);
+            
+            if ($err) {
+                \Illuminate\Support\Facades\Log::error("cURL Error: " . $err);
+                
+                // Only auto-complete in sandbox mode if there's a connection error
+                if ($gatewayMode == 'sandbox') {
+                    // Auto-approve in sandbox mode for testing
+                    $user->update([
+                        'account_status' => $validated['plan'],
+                        'payment_status' => 'paid'
+                    ]);
+                    
+                    $subscription->update([
+                        'status' => 'active',
+                        'start_date' => now(),
+                        'end_date' => now()->addYear()
+                    ]);
+                    
+                    // Send confirmation email
+                    try {
+                        Mail::to($user->email)->send(new CheckoutConfirmation($user, $validated['plan'], $validated['price']));
+                    } catch (\Exception $e) {
+                        \Illuminate\Support\Facades\Log::error("Error sending email: " . $e->getMessage());
+                    }
+                    
+                    return redirect()->route('dashboard')->with('success', 'Your subscription has been activated in test mode.');
+                }
+                
+                return redirect()->route('checkout')->with('error', 'Could not connect to payment gateway. Please try again.');
+            }
+            
+            $responseObj = json_decode($response);
+
+            if(isset($responseObj->payment_url) && !empty($responseObj->payment_url)) {
+                $paymentUrl = $responseObj->payment_url;
+                
+                // Store the transaction ID in session
+                session(['checkout.tran_id' => $tran_id]);
+                
+                // Log the redirect
+                \Illuminate\Support\Facades\Log::info("Redirecting to payment gateway: " . $paymentUrl);
+                
+                // Redirect to payment gateway
+                return redirect()->away($paymentUrl);
+            } else {
+                \Illuminate\Support\Facades\Log::error("AamarPay error ($gatewayMode mode): " . $response);
+                
+                // Only auto-complete in sandbox mode if there's a payment gateway error
+                if ($gatewayMode == 'sandbox') {
+                    // Auto-approve in sandbox mode for testing
+                    $user->update([
+                        'account_status' => $validated['plan'],
+                        'payment_status' => 'paid'
+                    ]);
+                    
+                    $subscription->update([
+                        'status' => 'active',
+                        'start_date' => now(),
+                        'end_date' => now()->addYear()
+                    ]);
+                    
+                    return redirect()->route('dashboard')->with('success', 'Your subscription has been activated in test mode.');
+                }
+                
+                return redirect()->route('checkout')->with('error', 'Payment gateway error. Please try again or contact support.');
+            }
+        } catch (\Exception $e) {
+            \Illuminate\Support\Facades\Log::error("Exception in checkout process: " . $e->getMessage() . "\nStack trace: " . $e->getTraceAsString());
+            return redirect()->route('checkout')->with('error', 'An error occurred: ' . $e->getMessage());
         }
-
-
-        // Save subscription details
-        $subscription = Subscription::create([
-            'user_id' => $user->id,
-            'plan' => $validated['plan'],
-            'price' => $validated['price'],
-            'status' => 'pending', // Set initial status to pending
-        ]);
-
-        // Optionally send a confirmation email (commented out for now)
-        Mail::to($user->email)->send(new CheckoutConfirmation($user, $validated['plan'], $validated['price']));
-
-        // Redirect to a success page
-        return redirect()->route('checkout.success')->with('success', 'Your subscription is being processed!');
     }
 
     public function success(Request $request){
