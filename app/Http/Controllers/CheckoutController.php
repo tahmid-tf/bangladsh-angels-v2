@@ -93,7 +93,7 @@ class CheckoutController extends Controller
 
         $signature_key = "dbb74894e82415a2f7ff0ec3a97e4183"; 
 
-        $url = "https://​sandbox​.aamarpay.com/jsonpost.php"; // for Live Transection use "https://secure.aamarpay.com/jsonpost.php"
+        $url = "https://sandbox.aamarpay.com/jsonpost.php"; // for Live Transection use "https://secure.aamarpay.com/jsonpost.php"
 
             
         $curl = curl_init();
@@ -190,9 +190,9 @@ class CheckoutController extends Controller
             $request_id = $request->mer_txnid;
             
             //verify the transaction using Search Transaction API 
-            $url = "http://sandbox.aamarpay.com/api/v1/trxcheck/request.php?request_id=$request_id&store_id=aamarpaytest&signature_key=dbb74894e82415a2f7ff0ec3a97e4183&type=json";
+            $url = "https://sandbox.aamarpay.com/api/v1/trxcheck/request.php?request_id=$request_id&store_id=aamarpaytest&signature_key=dbb74894e82415a2f7ff0ec3a97e4183&type=json";
             
-            //For Live Transaction Use "http://secure.aamarpay.com/api/v1/trxcheck/request.php"
+            //For Live Transaction Use "https://secure.aamarpay.com/api/v1/trxcheck/request.php"
             
             $curl = curl_init();
 
