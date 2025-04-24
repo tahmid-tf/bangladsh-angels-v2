@@ -14,9 +14,10 @@ $db_config = [
 
 // Payment gateway configuration
 $pg_config = [
-    'sandbox_url' => 'https://sandbox.aamarpay.com/api/v1/trxcheck/request.php',
-    'store_id' => 'aamarpaytest',
-    'signature_key' => 'dbb74894e82415a2f7ff0ec3a97e4183'
+    'live_url' => 'https://secure.aamarpay.com/api/v1/trxcheck/request.php',
+    'merchant_id' => 'bdangels',
+    'store_id' => 'bdangels',
+    'signature_key' => '84f4fd2f6c4b7c702c9dcbb65a4f6e26'
 ];
 
 // Create a database connection using PDO
@@ -46,8 +47,8 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     $user_id = $_POST['opt_b'] ?? null;
     $currency = $_POST['currency'] ?? 'BDT';
 
-    // Verify transaction with the payment gateway
-    $url = $pg_config['sandbox_url'] . "?request_id=$mer_txnid&store_id={$pg_config['store_id']}&signature_key={$pg_config['signature_key']}&type=json";
+    // Verify transaction with the payment gateway (now using live server)
+    $url = $pg_config['live_url'] . "?request_id=$mer_txnid&store_id={$pg_config['store_id']}&signature_key={$pg_config['signature_key']}&type=json";
     $curl = curl_init();
     curl_setopt_array($curl, array(
         CURLOPT_URL => $url,

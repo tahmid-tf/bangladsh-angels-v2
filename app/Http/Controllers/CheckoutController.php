@@ -82,18 +82,16 @@ class CheckoutController extends Controller
 
         //AamarPay Integration
 
-        $tran_id = "test".rand(1111111,9999999);//unique transection id for every transection 
+        $tran_id = "bdangels".rand(1111111,9999999);//unique transection id for every transection 
 
         $currency= "USD"; //aamarPay support Two type of currency USD & BDT  
 
         $amount = $validated['price'];   //10 taka is the minimum amount for show card option in aamarPay payment gateway
         
-        //For live Store Id & Signature Key please mail to support@aamarpay.com
-        $store_id = "aamarpaytest"; 
-
-        $signature_key = "dbb74894e82415a2f7ff0ec3a97e4183"; 
-
-        $url = "https://sandbox.aamarpay.com/jsonpost.php"; // for Live Transection use "https://secure.aamarpay.com/jsonpost.php"
+        //Live Store Id & Signature Key
+        $store_id = "bdangels"; 
+        $signature_key = "84f4fd2f6c4b7c702c9dcbb65a4f6e26"; 
+        $url = "https://secure.aamarpay.com/jsonpost.php"; 
 
             
         $curl = curl_init();
