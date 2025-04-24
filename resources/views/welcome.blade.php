@@ -248,7 +248,7 @@
             
             // If status_code is 2, redirect to success page
             if (statusCode === '2') {
-                window.location.href = '{{ route("payment.success") }}';
+                window.location.href = '{{ route("payment.complete") }}';
             }
         });
     </script>
