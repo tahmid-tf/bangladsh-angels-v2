@@ -19,6 +19,27 @@ class Payment extends Model
         'status',
         'payment_date',
         'expiry_date',
+        'merchant_txnid',
+        'pg_txnid',
+        'status_code',
+        'risk_title',
+        'risk_level',
+        'gateway_fee',
+        'gateway_fee_pct',
+        'net_amount',
+        'fx_rate',
+        'foreign_amount',
+        'bank_trxid',
+        'approval_code',
+        'verify_status',
+        'customer_ip',
+    ];
+
+    protected $casts = [
+        'status_code' => 'integer',
+        'risk_level' => 'integer',
+        'gateway_fee_pct' => 'float',
+        'fx_rate' => 'float',
     ];
 
     public function user()

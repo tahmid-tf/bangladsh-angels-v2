@@ -168,42 +168,65 @@ class CheckoutController extends Controller
         return redirect()->route('checkout.success')->with('success', 'Your subscription is being processed!');
     }
 
-
     public function success(Request $request){
-     
-        $request_id= $request->mer_txnid;
+        // Check if we have a status_code in the request
+        if ($request->has('status_code')) {
+            $status_code = $request->status_code;
+            
+            // If status_code is 2 (success), show success page
+            if ($status_code == 2) {
+                // Find the latest payment for the authenticated user
+                $payment = \App\Models\Payment::where('user_id', auth()->id())
+                    ->latest()
+                    ->first();
+                
+                return view('payment.success', compact('payment'));
+            } else {
+                // If payment failed or was cancelled
+                return redirect()->route('upgrade.page')->with('error', 'Payment was not successful. Please try again.');
+            }
+        } else {
+            // Handle direct post from payment gateway
+            $request_id = $request->mer_txnid;
+            
+            //verify the transaction using Search Transaction API 
+            $url = "http://sandbox.aamarpay.com/api/v1/trxcheck/request.php?request_id=$request_id&store_id=aamarpaytest&signature_key=dbb74894e82415a2f7ff0ec3a97e4183&type=json";
+            
+            //For Live Transaction Use "http://secure.aamarpay.com/api/v1/trxcheck/request.php"
+            
+            $curl = curl_init();
 
-        //verify the transection using Search Transection API 
+            curl_setopt_array($curl, array(
+            CURLOPT_URL => $url,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'GET',
+            ));
 
-        $url = "http://sandbox.aamarpay.com/api/v1/trxcheck/request.php?request_id=$request_id&store_id=aamarpaytest&signature_key=dbb74894e82415a2f7ff0ec3a97e4183&type=json";
-        
-        //For Live Transection Use "http://secure.aamarpay.com/api/v1/trxcheck/request.php"
-        
-        $curl = curl_init();
-
-        curl_setopt_array($curl, array(
-        CURLOPT_URL => $url,
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_ENCODING => '',
-        CURLOPT_MAXREDIRS => 10,
-        CURLOPT_TIMEOUT => 0,
-        CURLOPT_FOLLOWLOCATION => true,
-        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-        CURLOPT_CUSTOMREQUEST => 'GET',
-        ));
-
-        $response = curl_exec($curl);
-
-        curl_close($curl);
-        echo $response;
-
+            $response = curl_exec($curl);
+            curl_close($curl);
+            
+            $data = json_decode($response);
+            
+            if (isset($data->status_code) && $data->status_code == 2) {
+                // If verification is successful, redirect to success page
+                return redirect()->route('checkout.success', ['status_code' => 2]);
+            } else {
+                // If verification fails, redirect to upgrade page with error
+                return redirect()->route('upgrade.page')->with('error', 'Payment verification failed. Please contact support.');
+            }
+        }
     }
 
     public function fail(Request $request){
-        return $request;
+        return redirect()->route('upgrade.page')->with('error', 'Payment failed. Please try again or contact support if you believe this is an error.');
     }
 
     public function cancel(){
-        return 'Canceled';
+        return redirect()->route('upgrade.page')->with('info', 'Payment was cancelled.');
     }
 }
