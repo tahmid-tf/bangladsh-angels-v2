@@ -15,7 +15,7 @@
                         </svg>
                     </div>
                     
-                    <h1 class="text-3xl font-bold text-gray-900 mb-4">Welcome to Bangladesh Angel Network!</h1>
+                    <h1 class="text-3xl font-bold text-gray-900 mb-4">Welcome to Bangladesh Angels Network!</h1>
                     <p class="text-lg text-gray-600 mb-8">Congratulations! Your payment was successful and your membership is now active.</p>
                     
                     @if($payment)
