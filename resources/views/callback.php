@@ -6,7 +6,7 @@ ini_set('display_errors', 1);
 // Database configuration
 $db_config = [
     'host' => 'localhost',
-    'database' => 'bangladesh_angels', // Replace with your actual database name
+    'database' => 'bdangels', // Replace with your actual database name
     'username' => 'root', // Replace with your actual username
     'password' => '', // Replace with your actual password
     'charset' => 'utf8mb4',
@@ -103,24 +103,45 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                 $payment_stmt->bindParam(':customer_ip', $customer_ip, PDO::PARAM_STR);
                 $payment_stmt->execute();
 
+                // Get the ID of the newly inserted payment
+                $payment_id = $conn->lastInsertId();
+
                 // Log the successful payment
                 error_log("Payment successful for user #$user_id: $amount $currency for $subscription_plan plan");
+                
+                // Redirect to Laravel route with payment details
+                header("Location: https://bdangels.co/payment/complete?status_code=" . urlencode($status_code) . 
+                        "&user_id=" . urlencode($user_id) . 
+                        "&payment_id=" . urlencode($payment_id) . 
+                        "&plan=" . urlencode($subscription_plan) . 
+                        "&amount=" . urlencode($amount) . 
+                        "&currency=" . urlencode($currency) . 
+                        "&txn=" . urlencode($pg_txnid));
+                exit;
             } else {
                 error_log("User not found for payment: user_id=$user_id");
+                header("Location: https://bdangels.co/payment/error?error=user_not_found&user_id=" . urlencode($user_id));
+                exit;
             }
         } catch (Exception $e) {
             error_log("Error processing payment: " . $e->getMessage());
+            header("Location: https://bdangels.co/payment/error?error=processing_error");
+            exit;
         }
     } elseif ($status_code == 7) { // Payment failed
         error_log("Payment failed: mer_txnid=$mer_txnid, pg_txnid=$pg_txnid");
+        header("Location: https://bdangels.co/payment/failed?mer_txnid=" . urlencode($mer_txnid));
+        exit;
     } else {
         // Log any other error responses
         error_log("Payment error with status_code=$status_code: mer_txnid=$mer_txnid, pg_txnid=$pg_txnid");
         error_log("Full response data: " . print_r($data, true));
+        header("Location: https://bdangels.co/payment/error?status_code=" . urlencode($status_code) . "&mer_txnid=" . urlencode($mer_txnid));
+        exit;
     }
 
-    // Redirect back to the application with status code
-    header("Location: https://bdangels.co?status_code=" . urlencode($status_code));
+    // This is a fallback redirect in case none of the above conditions are met
+    header("Location: https://bdangels.co/payment/status?status_code=" . urlencode($status_code));
     exit;
 }
 ?>

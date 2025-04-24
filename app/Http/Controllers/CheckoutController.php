@@ -110,9 +110,9 @@ class CheckoutController extends Controller
         CURLOPT_POSTFIELDS =>'{
             "store_id": "'.$store_id.'",
             "tran_id": "'.$tran_id.'",
-            "success_url": "https://secure.bdangels.co/callback.php",
-            "fail_url": "https://secure.bdangels.co/callback.php",
-            "cancel_url": "https://secure.bdangels.co/callback.php",
+            "success_url": "'.route('checkout.success').'",
+            "fail_url": "'.route('checkout.fail').'",
+            "cancel_url": "'.route('checkout.cancel').'",
             "amount": "'.$amount.'",
             "currency": "'.$currency.'",
             "signature_key": "'.$signature_key.'",
@@ -126,6 +126,8 @@ class CheckoutController extends Controller
             "cus_postcode": "1206",
             "cus_country": "Bangladesh",
             "cus_phone": "'. $validated['phone'] .'",
+            "opt_a": "'. $validated['plan'] .'",
+            "opt_b": "'. $user->id .'",
             "type": "json"
         }',
         CURLOPT_HTTPHEADER => array(
@@ -169,34 +171,23 @@ class CheckoutController extends Controller
     }
 
     public function success(Request $request){
-        // Check if we have a status_code in the request
-        if ($request->has('status_code')) {
-            $status_code = $request->status_code;
-            
-            // If status_code is 2 (success), show success page
-            if ($status_code == 2) {
-                // Find the latest payment for the authenticated user
-                $payment = \App\Models\Payment::where('user_id', auth()->id())
-                    ->latest()
-                    ->first();
-                
-                return view('payment.success', compact('payment'));
-            } else {
-                // If payment failed or was cancelled
-                return redirect()->route('upgrade.page')->with('error', 'Payment was not successful. Please try again.');
-            }
-        } else {
-            // Handle direct post from payment gateway
-            $request_id = $request->mer_txnid;
-            
-            //verify the transaction using Search Transaction API 
-            $url = "https://sandbox.aamarpay.com/api/v1/trxcheck/request.php?request_id=$request_id&store_id=aamarpaytest&signature_key=dbb74894e82415a2f7ff0ec3a97e4183&type=json";
-            
-            //For Live Transaction Use "https://secure.aamarpay.com/api/v1/trxcheck/request.php"
-            
-            $curl = curl_init();
-
-            curl_setopt_array($curl, array(
+        // Get payment parameters from the request
+        $amount_original = $request->amount_original ?? null;
+        $pay_status = $request->pay_status ?? null;
+        $cus_name = $request->cus_name ?? null;
+        $mer_txnid = $request->mer_txnid ?? null;
+        $pg_txnid = $request->pg_txnid ?? null;
+        $subscription_plan = $request->opt_a ?? 'core'; // Plan passed via opt_a
+        $user_id = $request->opt_b ?? null; // User ID passed via opt_b
+        $currency = $request->currency ?? 'BDT';
+        
+        // Verify transaction with the payment gateway
+        $store_id = "aamarpaytest";
+        $signature_key = "dbb74894e82415a2f7ff0ec3a97e4183";
+        $url = "https://sandbox.aamarpay.com/api/v1/trxcheck/request.php?request_id=$mer_txnid&store_id=$store_id&signature_key=$signature_key&type=json";
+        
+        $curl = curl_init();
+        curl_setopt_array($curl, array(
             CURLOPT_URL => $url,
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => '',
@@ -205,28 +196,162 @@ class CheckoutController extends Controller
             CURLOPT_FOLLOWLOCATION => true,
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             CURLOPT_CUSTOMREQUEST => 'GET',
-            ));
+        ));
+        $response = curl_exec($curl);
+        curl_close($curl);
+        $data = json_decode($response);
+        
+        // Extract verified transaction details
+        $pg_txnid = $data->pg_txnid ?? null;
+        $amount = $data->amount ?? null;
+        $status_code = $data->status_code ?? null;
 
-            $response = curl_exec($curl);
-            curl_close($curl);
-            
-            $data = json_decode($response);
-            
-            if (isset($data->status_code) && $data->status_code == 2) {
-                // If verification is successful, redirect to success page
-                return redirect()->route('checkout.success', ['status_code' => 2]);
-            } else {
-                // If verification fails, redirect to upgrade page with error
-                return redirect()->route('upgrade.page')->with('error', 'Payment verification failed. Please contact support.');
+        // Process the payment status
+        if ($status_code == 2) { // Payment successful
+            try {
+                // Find the user
+                $user = \App\Models\User::find($user_id);
+                
+                if ($user) {
+                    // Update user's account and payment status
+                    $user->update([
+                        'account_status' => $subscription_plan,
+                        'payment_status' => 'paid'
+                    ]);
+
+                    // Record the payment in the database
+                    \App\Models\Payment::create([
+                        'user_id' => $user_id,
+                        'payment_method' => 'aamarpay',
+                        'transaction_id' => $pg_txnid,
+                        'merchant_txnid' => $mer_txnid,
+                        'pg_txnid' => $pg_txnid,
+                        'subscription_plan' => $subscription_plan,
+                        'amount' => $amount,
+                        'currency' => $currency,
+                        'status' => 'completed',
+                        'status_code' => $status_code,
+                        'payment_date' => now(),
+                        'expiry_date' => now()->addYear(), // 1 year subscription
+                        'customer_ip' => $request->ip()
+                    ]);
+
+                    // Find the latest payment for showing details on success page
+                    $payment = \App\Models\Payment::where('user_id', $user_id)
+                        ->latest()
+                        ->first();
+                    
+                    // Log the successful payment
+                    \Illuminate\Support\Facades\Log::info("Payment successful for user #$user_id: $amount $currency for $subscription_plan plan");
+                    
+                    // Return success page with payment details
+                    return view('payment.success', compact('payment'));
+                } else {
+                    \Illuminate\Support\Facades\Log::error("User not found for payment: user_id=$user_id");
+                    return redirect()->route('upgrade.page')->with('error', 'User not found. Please contact support.');
+                }
+            } catch (\Exception $e) {
+                \Illuminate\Support\Facades\Log::error("Error processing payment: " . $e->getMessage());
+                return redirect()->route('upgrade.page')->with('error', 'An error occurred while processing your payment. Please contact support.');
             }
+        } elseif ($status_code == 7) { // Payment failed
+            \Illuminate\Support\Facades\Log::warning("Payment failed: mer_txnid=$mer_txnid, pg_txnid=$pg_txnid");
+            return redirect()->route('upgrade.page')->with('error', 'Payment failed. Please try again or contact support.');
+        } else {
+            // Log any other error responses
+            \Illuminate\Support\Facades\Log::error("Payment error with status_code=$status_code: mer_txnid=$mer_txnid, pg_txnid=$pg_txnid");
+            return redirect()->route('upgrade.page')->with('error', 'Payment could not be processed. Please contact support.');
         }
     }
 
     public function fail(Request $request){
+        // Log failed payment details
+        $mer_txnid = $request->mer_txnid ?? null;
+        $user_id = $request->opt_b ?? null;
+        
+        \Illuminate\Support\Facades\Log::warning("Payment failed: mer_txnid=$mer_txnid, user_id=$user_id");
+        
         return redirect()->route('upgrade.page')->with('error', 'Payment failed. Please try again or contact support if you believe this is an error.');
     }
 
-    public function cancel(){
+    public function cancel(Request $request){
+        // Log canceled payment details
+        $mer_txnid = $request->mer_txnid ?? null;
+        $user_id = $request->opt_b ?? null;
+        
+        \Illuminate\Support\Facades\Log::info("Payment canceled: mer_txnid=$mer_txnid, user_id=$user_id");
+        
         return redirect()->route('upgrade.page')->with('info', 'Payment was cancelled.');
+    }
+
+    /**
+     * Handle successful payment completion redirect from callback.php
+     */
+    public function paymentComplete(Request $request)
+    {
+        $status_code = $request->status_code;
+        $user_id = $request->user_id;
+        $payment_id = $request->payment_id;
+        $plan = $request->plan;
+        
+        // Find the payment record
+        $payment = \App\Models\Payment::find($payment_id);
+        
+        if (!$payment) {
+            // Try to find using user_id as fallback
+            $payment = \App\Models\Payment::where('user_id', $user_id)
+                ->latest()
+                ->first();
+        }
+        
+        // Show payment success page with payment details
+        return view('payment.success', compact('payment', 'plan'));
+    }
+    
+    /**
+     * Handle failed payment redirect from callback.php
+     */
+    public function paymentFailed(Request $request)
+    {
+        $mer_txnid = $request->mer_txnid;
+        
+        return redirect()->route('upgrade.page')
+            ->with('error', 'Your payment was unsuccessful. Please try again or contact support.');
+    }
+    
+    /**
+     * Handle payment error redirect from callback.php
+     */
+    public function paymentError(Request $request)
+    {
+        $error = $request->error;
+        $status_code = $request->status_code;
+        
+        $message = 'An error occurred with your payment.';
+        
+        if ($error == 'user_not_found') {
+            $message = 'User account not found. Please contact support.';
+        } elseif ($error == 'processing_error') {
+            $message = 'There was an error processing your payment. Please contact support.';
+        }
+        
+        return redirect()->route('upgrade.page')
+            ->with('error', $message);
+    }
+    
+    /**
+     * Handle general payment status redirect from callback.php
+     */
+    public function paymentStatus(Request $request)
+    {
+        $status_code = $request->status_code;
+        
+        if ($status_code == 2) {
+            return redirect()->route('upgrade.page')
+                ->with('success', 'Your payment was successful!');
+        } else {
+            return redirect()->route('upgrade.page')
+                ->with('error', 'Your payment status could not be determined. Please contact support.');
+        }
     }
 }

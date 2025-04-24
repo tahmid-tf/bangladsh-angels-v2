@@ -239,5 +239,18 @@
   
     <livewire:footer></livewire:footer>
     <livewire:scripts />
+    
+    <script>
+        // Check for payment status in URL parameters
+        document.addEventListener('DOMContentLoaded', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const statusCode = urlParams.get('status_code');
+            
+            // If status_code is 2, redirect to success page
+            if (statusCode === '2') {
+                window.location.href = '{{ route("payment.success") }}';
+            }
+        });
+    </script>
 </body>
 </html>

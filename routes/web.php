@@ -173,6 +173,16 @@ Route::middleware('auth')->group(function () {
 });
 
 /**
+ * Payment Callback Routes
+ */
+Route::prefix('payment')->group(function () {
+    Route::get('/complete', [CheckoutController::class, 'paymentComplete'])->name('payment.complete');
+    Route::get('/failed', [CheckoutController::class, 'paymentFailed'])->name('payment.failed');
+    Route::get('/error', [CheckoutController::class, 'paymentError'])->name('payment.error');
+    Route::get('/status', [CheckoutController::class, 'paymentStatus'])->name('payment.status');
+});
+
+/**
  * Authentication Routes
  */
 require __DIR__.'/auth.php';
