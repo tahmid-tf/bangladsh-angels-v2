@@ -280,24 +280,12 @@ class CheckoutController extends Controller
         }
     }
 
+    /**
+     * Legacy method - maintained for backward compatibility
+     * Redirects to the new paymentFailed method
+     */
     public function fail(Request $request){
-        // Log failed payment details
-        $mer_txnid = $request->mer_txnid ?? null;
-        $user_id = $request->opt_b ?? null;
-        
-        \Illuminate\Support\Facades\Log::warning("Payment failed: mer_txnid=$mer_txnid, user_id=$user_id");
-        
-        return redirect()->route('upgrade.page')->with('error', 'Payment failed. Please try again or contact support if you believe this is an error.');
-    }
-
-    public function cancel(Request $request){
-        // Log canceled payment details
-        $mer_txnid = $request->mer_txnid ?? null;
-        $user_id = $request->opt_b ?? null;
-        
-        \Illuminate\Support\Facades\Log::info("Payment canceled: mer_txnid=$mer_txnid, user_id=$user_id");
-        
-        return redirect()->route('upgrade.page')->with('info', 'Payment was cancelled.');
+        return $this->paymentFailed($request);
     }
 
     /**
