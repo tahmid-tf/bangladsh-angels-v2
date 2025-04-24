@@ -3,6 +3,9 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
+// Set gateway mode: 'sandbox' or 'live'
+$gatewayMode = 'sandbox'; // Change to 'live' for production
+
 // Database configuration
 $db_config = [
     'host' => 'localhost',
@@ -12,13 +15,24 @@ $db_config = [
     'charset' => 'utf8mb4',
 ];
 
-// Payment gateway configuration
+// Payment gateway configuration based on mode
 $pg_config = [
-    'live_url' => 'https://secure.aamarpay.com/api/v1/trxcheck/request.php',
-    'merchant_id' => 'bdangels',
-    'store_id' => 'bdangels',
-    'signature_key' => '84f4fd2f6c4b7c702c9dcbb65a4f6e26'
+    'sandbox' => [
+        'url' => 'https://sandbox.aamarpay.com/api/v1/trxcheck/request.php',
+        'merchant_id' => 'aamarpaytest',
+        'store_id' => 'aamarpaytest',
+        'signature_key' => 'dbb74894e82415a2f7ff0ec3a97e4183'
+    ],
+    'live' => [
+        'url' => 'https://secure.aamarpay.com/api/v1/trxcheck/request.php',
+        'merchant_id' => 'bdangels',
+        'store_id' => 'bdangels',
+        'signature_key' => '84f4fd2f6c4b7c702c9dcbb65a4f6e26'
+    ]
 ];
+
+// Get the active configuration based on the gateway mode
+$active_config = $pg_config[$gatewayMode];
 
 // Create a database connection using PDO
 try {
@@ -47,8 +61,11 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     $user_id = $_POST['opt_b'] ?? null;
     $currency = $_POST['currency'] ?? 'BDT';
 
-    // Verify transaction with the payment gateway (now using live server)
-    $url = $pg_config['live_url'] . "?request_id=$mer_txnid&store_id={$pg_config['store_id']}&signature_key={$pg_config['signature_key']}&type=json";
+    // Log the incoming payment data
+    error_log("Payment callback received: mer_txnid=$mer_txnid, user_id=$user_id, plan=$subscription_plan, mode=$gatewayMode");
+
+    // Verify transaction with the payment gateway using the active configuration
+    $url = $active_config['url'] . "?request_id=$mer_txnid&store_id={$active_config['store_id']}&signature_key={$active_config['signature_key']}&type=json";
     $curl = curl_init();
     curl_setopt_array($curl, array(
         CURLOPT_URL => $url,
@@ -63,6 +80,10 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     $response = curl_exec($curl);
     curl_close($curl);
     $data = json_decode($response);
+    
+    // Log the API response
+    error_log("AamarPay API response: " . print_r($data, true));
+    
     $pg_txnid = $data->pg_txnid ?? null;
     $amount = $data->amount ?? null;
     $status_code = $data->status_code ?? null;
@@ -117,26 +138,27 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                        "&plan=" . urlencode($subscription_plan) . 
                        "&amount=" . urlencode($amount) . 
                        "&currency=" . urlencode($currency) . 
-                       "&txn=" . urlencode($pg_txnid));
+                       "&txn=" . urlencode($pg_txnid) . 
+                       "&mode=" . urlencode($gatewayMode));
                 exit;
             } else {
                 error_log("User not found for payment: user_id=$user_id");
-                header("Location: https://bdangels.co/payment/error?error=user_not_found&user_id=" . urlencode($user_id));
+                header("Location: https://bdangels.co/payment/error?error=user_not_found&user_id=" . urlencode($user_id) . "&mode=" . urlencode($gatewayMode));
                 exit;
             }
         } catch (Exception $e) {
             error_log("Error processing payment: " . $e->getMessage());
-            header("Location: https://bdangels.co/payment/error?error=processing_error");
+            header("Location: https://bdangels.co/payment/error?error=processing_error&mode=" . urlencode($gatewayMode));
             exit;
         }
     } elseif ($status_code == 7) { // Payment failed
         error_log("Payment failed: mer_txnid=$mer_txnid, pg_txnid=$pg_txnid");
-        header("Location: https://bdangels.co/payment/failed?mer_txnid=" . urlencode($mer_txnid));
+        header("Location: https://bdangels.co/payment/failed?mer_txnid=" . urlencode($mer_txnid) . "&mode=" . urlencode($gatewayMode));
         exit;
     } else {
         // Log any other error responses
         error_log("Payment error with status_code=$status_code: mer_txnid=$mer_txnid, pg_txnid=$pg_txnid");
-        header("Location: https://bdangels.co/payment/error?status_code=" . urlencode($status_code) . "&mer_txnid=" . urlencode($mer_txnid));
+        header("Location: https://bdangels.co/payment/error?status_code=" . urlencode($status_code) . "&mer_txnid=" . urlencode($mer_txnid) . "&mode=" . urlencode($gatewayMode));
         exit;
     }
 }

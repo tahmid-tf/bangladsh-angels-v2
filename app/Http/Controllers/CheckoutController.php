@@ -81,23 +81,38 @@ class CheckoutController extends Controller
         }
 
         //AamarPay Integration
+        // Set gateway mode: 'sandbox' or 'live'
+        $gatewayMode = 'sandbox'; // Change to 'live' for production
 
-        $tran_id = "bdangels".rand(1111111,9999999);//unique transection id for every transection 
+        // Payment gateway configuration based on mode
+        $pg_config = [
+            'sandbox' => [
+                'url' => 'https://sandbox.aamarpay.com/jsonpost.php',
+                'merchant_id' => 'aamarpaytest',
+                'store_id' => 'aamarpaytest',
+                'signature_key' => 'dbb74894e82415a2f7ff0ec3a97e4183'
+            ],
+            'live' => [
+                'url' => 'https://secure.aamarpay.com/jsonpost.php',
+                'merchant_id' => 'bdangels',
+                'store_id' => 'bdangels',
+                'signature_key' => '84f4fd2f6c4b7c702c9dcbb65a4f6e26'
+            ]
+        ];
 
-        $currency= "USD"; //aamarPay support Two type of currency USD & BDT  
+        // Get the active configuration based on the gateway mode
+        $active_config = $pg_config[$gatewayMode];
 
-        $amount = $validated['price'];   //10 taka is the minimum amount for show card option in aamarPay payment gateway
-        
-        //Live Store Id & Signature Key
-        $store_id = "bdangels"; 
-        $signature_key = "84f4fd2f6c4b7c702c9dcbb65a4f6e26"; 
-        $url = "https://secure.aamarpay.com/jsonpost.php"; 
+        $tran_id = ($gatewayMode == 'live' ? "bdangels" : "test") . rand(1111111,9999999); // unique transaction id
 
+        $currency = "USD"; // aamarPay support Two type of currency USD & BDT  
+
+        $amount = $validated['price'];
             
         $curl = curl_init();
         
         curl_setopt_array($curl, array(
-        CURLOPT_URL => $url,
+        CURLOPT_URL => $active_config['url'],
         CURLOPT_RETURNTRANSFER => true,
         CURLOPT_ENCODING => '',
         CURLOPT_MAXREDIRS => 10,
@@ -106,14 +121,14 @@ class CheckoutController extends Controller
         CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
         CURLOPT_CUSTOMREQUEST => 'POST',
         CURLOPT_POSTFIELDS =>'{
-            "store_id": "'.$store_id.'",
+            "store_id": "'.$active_config['store_id'].'",
             "tran_id": "'.$tran_id.'",
             "success_url": "https://secure.bdangels.co/callback.php",
             "fail_url": "https://secure.bdangels.co/callback.php",
             "cancel_url": "https://secure.bdangels.co/callback.php",
             "amount": "'.$amount.'",
             "currency": "'.$currency.'",
-            "signature_key": "'.$signature_key.'",
+            "signature_key": "'.$active_config['signature_key'].'",
             "desc": "Merchant Registration Payment",
             "cus_name": "'. $validated['name'] .'",
             "cus_email": "'. $validated['email'] .'",
@@ -126,6 +141,7 @@ class CheckoutController extends Controller
             "cus_phone": "'. $validated['phone'] .'",
             "opt_a": "'. $validated['plan'] .'",
             "opt_b": "'. $user->id .'",
+            "opt_c": "'. $gatewayMode .'",
             "type": "json"
         }',
         CURLOPT_HTTPHEADER => array(
@@ -136,6 +152,8 @@ class CheckoutController extends Controller
         $response = curl_exec($curl);
         
         curl_close($curl);
+        
+        \Illuminate\Support\Facades\Log::info("AamarPay response ($gatewayMode mode): " . $response);
         
         $responseObj = json_decode($response);
 
@@ -148,8 +166,8 @@ class CheckoutController extends Controller
             return redirect()->away($paymentUrl);
 
         }else{
-            dd($response);
-            // echo $response;
+            \Illuminate\Support\Facades\Log::error("AamarPay error ($gatewayMode mode): " . $response);
+            return redirect()->route('upgrade.page')->with('error', 'Payment gateway error. Please try again or contact support.');
         }
 
 
