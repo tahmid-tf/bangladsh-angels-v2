@@ -19,6 +19,13 @@ class AdminController extends Controller
         if(auth()->user()->isAdmin()){
             $users = User::all(); // Retrieve all users
             $deals = Deal::all(); // Retrieve all deals
+            $payments = Payment::all(); // Retrieve all payments
+            $subscriptions = Subscription::all(); // Retrieve all subscriptions
+            
+            // Summary data for cards
+            $totalRevenue = Payment::where('status', 'completed')->sum('amount');
+            $activeMembers = User::where('account_status', '!=', 'free')->count();
+            $completedPayments = Payment::where('status', 'completed')->count();
             
             //Member Sign up Analytics
             $memberCounts = User::selectRaw('DATE(created_at) as date, COUNT(*) as count')
@@ -47,17 +54,57 @@ class AdminController extends Controller
             // Prepare data for the chart
             $dealDates = $dealCounts->pluck('date'); // Array of dates
             $dCounts = $dealCounts->pluck('count'); // Array of counts
+            
+            // Payment Analytics - Monthly Revenue
+            $paymentsByMonth = Payment::where('status', 'completed')
+                ->selectRaw('MONTH(payment_date) as month, YEAR(payment_date) as year, SUM(amount) as total')
+                ->groupBy('year', 'month')
+                ->orderBy('year', 'asc')
+                ->orderBy('month', 'asc')
+                ->get();
+            
+            $revenueLabels = $paymentsByMonth->map(function($item) {
+                return date('M Y', mktime(0, 0, 0, $item->month, 1, $item->year));
+            });
+            $revenueData = $paymentsByMonth->pluck('total');
+            
+            // Subscription plan distribution
+            $planCounts = Subscription::selectRaw('plan, COUNT(*) as count')
+                ->groupBy('plan')
+                ->get();
+            
+            $planLabels = $planCounts->pluck('plan');
+            $planData = $planCounts->pluck('count');
+            
+            // Payment method distribution
+            $methodCounts = Payment::where('status', 'completed')
+                ->selectRaw('payment_method, COUNT(*) as count')
+                ->groupBy('payment_method')
+                ->get();
+            
+            $methodLabels = $methodCounts->pluck('payment_method');
+            $methodData = $methodCounts->pluck('count');
+            
             return view('admin.index', compact(
                 'users',
                 'deals',
+                'payments',
+                'subscriptions',
+                'totalRevenue',
+                'activeMembers',
+                'completedPayments',
                 'dates',
                 'counts',
-                'subscriptionCounts',
                 'subscriptionDates',
                 'subsCounts',
-                'dealCounts',
                 'dealDates',
-                'dCounts'
+                'dCounts',
+                'revenueLabels',
+                'revenueData',
+                'planLabels',
+                'planData',
+                'methodLabels',
+                'methodData'
             ));
         } else {
             return redirect()->route('home');
