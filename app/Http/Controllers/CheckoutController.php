@@ -117,7 +117,7 @@ class CheckoutController extends Controller
 
             // AamarPay Integration
             // Set gateway mode: 'sandbox' or 'live'
-            $gatewayMode = 'sandbox'; // Change to 'live' for production
+            $gatewayMode = 'live'; // Change to 'live' for production
             
             // Check if we should skip payment gateway in development/testing
             $skipPaymentGateway = false;
