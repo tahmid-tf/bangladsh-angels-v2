@@ -317,16 +317,6 @@
                         @endguest
                         <!-- Photo Upload -->
                         
-                        <h2 class="text-lg font-semibold text-gray-800 my-4">Payment Method</h2>
-                        <div class="space-y-4">
-                            <!-- Send Payment Details -->
-                            <label class="flex items-center space-x-4">
-                                <input type="radio" name="payment" value="email" class="text-green-600 focus:ring focus:ring-green-200" checked>
-                                <span class="flex items-center">
-                                    Send Payment details to my email
-                                </span>
-                            </label>
-                        </div>
                     </div>
                 </div>
             </div>

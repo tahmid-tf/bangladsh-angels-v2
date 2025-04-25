@@ -50,7 +50,6 @@ class CheckoutController extends Controller
             'profile_photo' => 'nullable',
             'plan' => 'required|string',
             'price' => 'required|numeric|min:0',
-            'payment' => 'nullable|string', // Default is "email"
         ]);
 
         try {
