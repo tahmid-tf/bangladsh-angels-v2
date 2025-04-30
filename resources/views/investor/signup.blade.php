@@ -38,65 +38,63 @@
             <!-- Full Name -->
             <div class="flex">
                 <div class="flex flex-col w-1/2">
-                    <label class="block text-gray-700 font-semibold mb-2" for="first_name">First Name</label>
-                    <input type="text" id="first_name" placeholder="John" value="{{old('first_name')}}" name="first_name" class="w-full p-3 rounded-lg border-gray-300 shadow-sm focus:border-green-500 focus:ring focus:ring-green-200" value="{{ old('full_name') }}" required>
+                    <label class="block text-gray-700 font-semibold mb-2" for="first_name">First Name <span class="text-red-500">*</span></label>
+                    <input type="text" id="first_name" placeholder="John" value="{{old('first_name')}}" name="first_name" class="w-full p-3 rounded-lg border-gray-300 shadow-sm focus:border-green-500 focus:ring focus:ring-green-200" required>
                 </div>
                 <div class="flex flex-col w-1/2 ml-3">
-                    <label class="block text-gray-700 font-semibold mb-2" for="last_name">Last Name</label>
-                    <input type="text" id="last_name" placeholder="Doe" value="{{old('last_name')}}" name="last_name" class="w-full  p-3 rounded-lg border-gray-300 shadow-sm focus:border-green-500 focus:ring focus:ring-green-200" value="{{ old('full_name') }}" required>
+                    <label class="block text-gray-700 font-semibold mb-2" for="last_name">Last Name <span class="text-red-500">*</span></label>
+                    <input type="text" id="last_name" placeholder="Doe" value="{{old('last_name')}}" name="last_name" class="w-full p-3 rounded-lg border-gray-300 shadow-sm focus:border-green-500 focus:ring focus:ring-green-200" required>
                 </div>
             </div>
 
             <!-- Email -->
             <div>
-                <label class="block text-gray-700 font-semibold mb-2" for="email">Email *</label>
+                <label class="block text-gray-700 font-semibold mb-2" for="email">Email <span class="text-red-500">*</span></label>
                 <input type="email" id="email" name="email" placeholder="Email" class="w-full p-3 rounded-lg border-gray-300 shadow-sm focus:border-green-500 focus:ring focus:ring-green-200" value="{{ old('email') }}" required>
             </div>
+            
             <div>    
-                <label class="block text-gray-700 mt-3 font-semibold my-2" for="address">Billing Address *</label>
+                <label class="block text-gray-700 font-semibold mb-2" for="address">Billing Address <span class="text-red-500">*</span></label>
                 <input 
                     type="text" 
                     id="address"
                     name="address" 
                     placeholder="Address" 
                     value="{{ old('address') }}" 
-                    class="w-full border rounded-md px-4 py-2 text-gray-700 focus:ring focus:ring-green-200"
+                    class="w-full p-3 rounded-lg border-gray-300 shadow-sm focus:border-green-500 focus:ring focus:ring-green-200"
+                    required
                 >
             </div>
+
             <!-- Password -->
             <div>
-                <label class="block text-gray-700 font-semibold mb-2" for="password">Password *</label>
+                <label class="block text-gray-700 font-semibold mb-2" for="password">Password <span class="text-red-500">*</span></label>
                 <input type="password" id="password" name="password" placeholder="Enter a password for logging into the platform" class="w-full p-3 rounded-lg border-gray-300 shadow-sm focus:border-green-500 focus:ring focus:ring-green-200" required>
+                <p class="text-sm text-gray-600 mt-1">Password must contain at least 8 characters, including uppercase, lowercase, number, and special character.</p>
             </div>
 
             <!-- Re-enter Password -->
             <div>
-                <label class="block text-gray-700 font-semibold mb-2" for="re_password">Re-enter password *</label>
+                <label class="block text-gray-700 font-semibold mb-2" for="re_password">Confirm Password <span class="text-red-500">*</span></label>
                 <input type="password" id="re_password" name="password_confirmation" placeholder="Re-enter password" class="w-full p-3 rounded-lg border-gray-300 shadow-sm focus:border-green-500 focus:ring focus:ring-green-200" required>
             </div>
 
             <!-- Company Name -->
             <div>
-                <label class="block text-gray-700 font-semibold mb-2" for="company_name">Company Name *</label>
+                <label class="block text-gray-700 font-semibold mb-2" for="company_name">Company Name <span class="text-red-500">*</span></label>
                 <input type="text" id="company_name" name="company_name" placeholder="Company Name" class="w-full p-3 rounded-lg border-gray-300 shadow-sm focus:border-green-500 focus:ring focus:ring-green-200" value="{{ old('company_name') }}" required>
             </div>
 
             <!-- Designation -->
             <div>
-                <label class="block text-gray-700 font-semibold mb-2" for="designation">Designation *</label>
+                <label class="block text-gray-700 font-semibold mb-2" for="designation">Designation <span class="text-red-500">*</span></label>
                 <input type="text" id="designation" name="designation" placeholder="Designation in the company" class="w-full p-3 rounded-lg border-gray-300 shadow-sm focus:border-green-500 focus:ring focus:ring-green-200" value="{{ old('designation') }}" required>
             </div>
 
-            {{-- <!-- Website Link -->
-            <div>
-                <label class="block text-gray-700 font-semibold mb-2" for="website">Where can I find more info about your company? *</label>
-                <input type="text" id="website" name="website" placeholder="What is the link to your website?" class="w-full p-3 rounded-lg border-gray-300 shadow-sm focus:border-green-500 focus:ring focus:ring-green-200" value="{{ old('website') }}" required>
-            </div> --}}
-
             <!-- Primary Country -->
             <div>
-                <label class="block text-gray-700 font-semibold mb-2" for="primary_country">Country *</label>
-                <select id="country" name="primary_country" value="{{old('primary_country')}}" class="w-full p-3 rounded-lg border-gray-300 shadow-sm focus:border-green-500 focus:ring focus:ring-green-200">
+                <label class="block text-gray-700 font-semibold mb-2" for="primary_country">Country <span class="text-red-500">*</span></label>
+                <select id="country" name="primary_country" value="{{old('primary_country')}}" class="w-full p-3 rounded-lg border-gray-300 shadow-sm focus:border-green-500 focus:ring focus:ring-green-200" required>
                     <option value="">Select Primary Country</option>
                     <option value="Afghanistan">Afghanistan</option>
                     <option value="Åland Islands">Åland Islands</option>
@@ -347,100 +345,99 @@
 
             <!-- Phone Number -->
             <div>
-                <label class="block text-gray-700 font-semibold mb-2" for="phone">Phone Number *</label>
-                <span class="flex">
-                    <select name="country_code" class="w-1/4 p-3 rounded-lg border-gray-300 shadow-sm focus:border-green-500 focus:ring focus:ring-green-200" id="">
+                <label class="block text-gray-700 font-semibold mb-2" for="phone">Phone Number <span class="text-red-500">*</span></label>
+                <div class="flex space-x-2">
+                    <select name="country_code" class="w-1/4 p-3 rounded-lg border-gray-300 shadow-sm focus:border-green-500 focus:ring focus:ring-green-200">
                         <option data-countryCode="BD" value="880">🇧🇩 (+880)</option>
-                  <option data-countryCode="GB" value="44" selected>🇬🇧 (+44)</option>
-                  <option data-countryCode="US" value="1">🇺🇸 (+1)</option>
-                    <optgroup label="Other countries">
-                      <option data-countryCode="DZ" value="213">🇩🇿 (+213)</option>
-                      <option data-countryCode="AD" value="376">🇦🇩 (+376)</option>
-                      <option data-countryCode="AO" value="244">🇦🇴 (+244)</option>
-                      <option data-countryCode="AI" value="1264">🇦🇮 (+1264)</option>
-                      <option data-countryCode="AG" value="1268">🇦🇬 (+1268)</option>
-                      <option data-countryCode="AR" value="54">🇦🇷 (+54)</option>
-                      <option data-countryCode="AM" value="374">🇦🇲 (+374)</option>
-                      <option data-countryCode="AW" value="297">🇦🇼 (+297)</option>
-                      <option data-countryCode="AU" value="61">🇦🇺 (+61)</option>
-                      <option data-countryCode="AT" value="43">🇦🇹 (+43)</option>
-                      <option data-countryCode="AZ" value="994">🇦🇿 (+994)</option>
-                      <option data-countryCode="BS" value="1242">🇧🇸 (+1242)</option>
-                      <option data-countryCode="BH" value="973">🇧🇭 (+973)</option>
-                      <option data-countryCode="BB" value="1246">🇧🇧 (+1246)</option>
-                      <option data-countryCode="BY" value="375">🇧🇾 (+375)</option>
-                      <option data-countryCode="BE" value="32">🇧🇪 (+32)</option>
-                      <option data-countryCode="BZ" value="501">🇧🇿 (+501)</option>
-                      <option data-countryCode="BJ" value="229">🇧🇯 (+229)</option>
-                      <option data-countryCode="BM" value="1441">🇧🇲 (+1441)</option>
-                      <option data-countryCode="BT" value="975">🇧🇹 (+975)</option>
-                      <option data-countryCode="BO" value="591">🇧🇴 (+591)</option>
-                      <option data-countryCode="BA" value="387">🇧🇦 (+387)</option>
-                      <option data-countryCode="BW" value="267">🇧🇼 (+267)</option>
-                      <option data-countryCode="BR" value="55">🇧🇷 (+55)</option>
-                      <option data-countryCode="BN" value="673">🇧🇳 (+673)</option>
-                      <option data-countryCode="BG" value="359">🇧🇬 (+359)</option>
-                      <option data-countryCode="BF" value="226">🇧🇫 (+226)</option>
-                      <option data-countryCode="BI" value="257">🇧🇮 (+257)</option>
-                      <option data-countryCode="KH" value="855">🇰🇭 (+855)</option>
-                      <option data-countryCode="CM" value="237">🇨🇲 (+237)</option>
-                      <option data-countryCode="CA" value="1">🇨🇦 (+1)</option>
-                      <option data-countryCode="CL" value="56">🇨🇱 (+56)</option>
-                      <option data-countryCode="CN" value="86">🇨🇳 (+86)</option>
-                      <option data-countryCode="CO" value="57">🇨🇴 (+57)</option>
-                      <option data-countryCode="CR" value="506">🇨🇷 (+506)</option>
-                      <option data-countryCode="HR" value="385">🇭🇷 (+385)</option>
-                      <option data-countryCode="CU" value="53">🇨🇺 (+53)</option>
-                      <option data-countryCode="CY" value="357">🇨🇾 (+357)</option>
-                      <option data-countryCode="CZ" value="420">🇨🇿 (+420)</option>
-                      <option data-countryCode="DK" value="45">🇩🇰 (+45)</option>
-                      <option data-countryCode="DO" value="1809">🇩🇴 (+1809)</option>
-                      <option data-countryCode="EG" value="20">🇪🇬 (+20)</option>
-                      <option data-countryCode="SV" value="503">🇸🇻 (+503)</option>
-                      <option data-countryCode="ET" value="251">🇪🇹 (+251)</option>
-                      <option data-countryCode="FI" value="358">🇫🇮 (+358)</option>
-                      <option data-countryCode="FR" value="33">🇫🇷 (+33)</option>
-                      <option data-countryCode="DE" value="49">🇩🇪 (+49)</option>
-                      <option data-countryCode="GH" value="233">🇬🇭 (+233)</option>
-                      <option data-countryCode="GR" value="30">🇬🇷 (+30)</option>
-                      <option data-countryCode="HK" value="852">🇭🇰 (+852)</option>
-                      <option data-countryCode="HU" value="36">🇭🇺 (+36)</option>
-                      <option data-countryCode="IS" value="354">🇮🇸 (+354)</option>
-                      <option data-countryCode="IN" value="91">🇮🇳 (+91)</option>
-                      <option data-countryCode="ID" value="62">🇮🇩 (+62)</option>
-                      <option data-countryCode="IE" value="353">🇮🇪 (+353)</option>
-                      <option data-countryCode="IL" value="972">🇮🇱 (+972)</option>
-                      <option data-countryCode="IT" value="39">🇮🇹 (+39)</option>
-                      <option data-countryCode="JP" value="81">🇯🇵 (+81)</option>
-                      <option data-countryCode="MY" value="60">🇲🇾 (+60)</option>
-                      <option data-countryCode="MX" value="52">🇲🇽 (+52)</option>
-                      <option data-countryCode="NL" value="31">🇳🇱 (+31)</option>
-                      <option data-countryCode="NZ" value="64">🇳🇿 (+64)</option>
-                      <option data-countryCode="PK" value="92">🇵🇰 (+92)</option>
-                      <option data-countryCode="PH" value="63">🇵🇭 (+63)</option>
-                      <option data-countryCode="PL" value="48">🇵🇱 (+48)</option>
-                      <option data-countryCode="PT" value="351">🇵🇹 (+351)</option>
-                      <option data-countryCode="RU" value="7">🇷🇺 (+7)</option>
-                      <option data-countryCode="SA" value="966">🇸🇦 (+966)</option>
-                      <option data-countryCode="ZA" value="27">🇿🇦 (+27)</option>
-                      <option data-countryCode="ES" value="34">🇪🇸 (+34)</option>
-                      <option data-countryCode="SE" value="46">🇸🇪 (+46)</option>
-                      <option data-countryCode="CH" value="41">🇨🇭 (+41)</option>
-                      <option data-countryCode="TH" value="66">🇹🇭 (+66)</option>
-                      <option data-countryCode="TR" value="90">🇹🇷 (+90)</option>
-                      <option data-countryCode="AE" value="971">🇦🇪 (+971)</option>
-                      <option data-countryCode="GB" value="44">🇬🇧 (+44)</option>
-                      <option data-countryCode="US" value="1">🇺🇸 (+1)</option>
-                  </optgroup>
+                        <option data-countryCode="GB" value="44" selected>🇬🇧 (+44)</option>
+                        <option data-countryCode="US" value="1">🇺🇸 (+1)</option>
+                        <optgroup label="Other countries">
+                            <option data-countryCode="DZ" value="213">🇩🇿 (+213)</option>
+                            <option data-countryCode="AD" value="376">🇦🇩 (+376)</option>
+                            <option data-countryCode="AO" value="244">🇦🇴 (+244)</option>
+                            <option data-countryCode="AI" value="1264">🇦🇮 (+1264)</option>
+                            <option data-countryCode="AG" value="1268">🇦🇬 (+1268)</option>
+                            <option data-countryCode="AR" value="54">🇦🇷 (+54)</option>
+                            <option data-countryCode="AM" value="374">🇦🇲 (+374)</option>
+                            <option data-countryCode="AW" value="297">🇦🇼 (+297)</option>
+                            <option data-countryCode="AU" value="61">🇦🇺 (+61)</option>
+                            <option data-countryCode="AT" value="43">🇦🇹 (+43)</option>
+                            <option data-countryCode="AZ" value="994">🇦🇿 (+994)</option>
+                            <option data-countryCode="BS" value="1242">🇧🇸 (+1242)</option>
+                            <option data-countryCode="BH" value="973">🇧🇭 (+973)</option>
+                            <option data-countryCode="BB" value="1246">🇧🇧 (+1246)</option>
+                            <option data-countryCode="BY" value="375">🇧🇾 (+375)</option>
+                            <option data-countryCode="BE" value="32">🇧🇪 (+32)</option>
+                            <option data-countryCode="BZ" value="501">🇧🇿 (+501)</option>
+                            <option data-countryCode="BJ" value="229">🇧🇯 (+229)</option>
+                            <option data-countryCode="BM" value="1441">🇧🇲 (+1441)</option>
+                            <option data-countryCode="BT" value="975">🇧🇹 (+975)</option>
+                            <option data-countryCode="BO" value="591">🇧🇴 (+591)</option>
+                            <option data-countryCode="BA" value="387">🇧🇦 (+387)</option>
+                            <option data-countryCode="BW" value="267">🇧🇼 (+267)</option>
+                            <option data-countryCode="BR" value="55">🇧🇷 (+55)</option>
+                            <option data-countryCode="BN" value="673">🇧🇳 (+673)</option>
+                            <option data-countryCode="BG" value="359">🇧🇬 (+359)</option>
+                            <option data-countryCode="BF" value="226">🇧🇫 (+226)</option>
+                            <option data-countryCode="BI" value="257">🇧🇮 (+257)</option>
+                            <option data-countryCode="KH" value="855">🇰🇭 (+855)</option>
+                            <option data-countryCode="CM" value="237">🇨🇲 (+237)</option>
+                            <option data-countryCode="CA" value="1">🇨🇦 (+1)</option>
+                            <option data-countryCode="CL" value="56">🇨🇱 (+56)</option>
+                            <option data-countryCode="CN" value="86">🇨🇳 (+86)</option>
+                            <option data-countryCode="CO" value="57">🇨🇴 (+57)</option>
+                            <option data-countryCode="CR" value="506">🇨🇷 (+506)</option>
+                            <option data-countryCode="HR" value="385">🇭🇷 (+385)</option>
+                            <option data-countryCode="CU" value="53">🇨🇺 (+53)</option>
+                            <option data-countryCode="CY" value="357">🇨🇾 (+357)</option>
+                            <option data-countryCode="CZ" value="420">🇨🇿 (+420)</option>
+                            <option data-countryCode="DK" value="45">🇩🇰 (+45)</option>
+                            <option data-countryCode="DO" value="1809">🇩🇴 (+1809)</option>
+                            <option data-countryCode="EG" value="20">🇪🇬 (+20)</option>
+                            <option data-countryCode="SV" value="503">🇸🇻 (+503)</option>
+                            <option data-countryCode="ET" value="251">🇪🇹 (+251)</option>
+                            <option data-countryCode="FI" value="358">🇫🇮 (+358)</option>
+                            <option data-countryCode="FR" value="33">🇫🇷 (+33)</option>
+                            <option data-countryCode="DE" value="49">🇩🇪 (+49)</option>
+                            <option data-countryCode="GH" value="233">🇬🇭 (+233)</option>
+                            <option data-countryCode="GR" value="30">🇬🇷 (+30)</option>
+                            <option data-countryCode="HK" value="852">🇭🇰 (+852)</option>
+                            <option data-countryCode="HU" value="36">🇭🇺 (+36)</option>
+                            <option data-countryCode="IS" value="354">🇮🇸 (+354)</option>
+                            <option data-countryCode="IN" value="91">🇮🇳 (+91)</option>
+                            <option data-countryCode="ID" value="62">🇮🇩 (+62)</option>
+                            <option data-countryCode="IE" value="353">🇮🇪 (+353)</option>
+                            <option data-countryCode="IL" value="972">🇮🇱 (+972)</option>
+                            <option data-countryCode="IT" value="39">🇮🇹 (+39)</option>
+                            <option data-countryCode="JP" value="81">🇯🇵 (+81)</option>
+                            <option data-countryCode="MY" value="60">🇲🇾 (+60)</option>
+                            <option data-countryCode="MX" value="52">🇲🇽 (+52)</option>
+                            <option data-countryCode="NL" value="31">🇳🇱 (+31)</option>
+                            <option data-countryCode="NZ" value="64">🇳🇿 (+64)</option>
+                            <option data-countryCode="PK" value="92">🇵🇰 (+92)</option>
+                            <option data-countryCode="PH" value="63">🇵🇭 (+63)</option>
+                            <option data-countryCode="PL" value="48">🇵🇱 (+48)</option>
+                            <option data-countryCode="PT" value="351">🇵🇹 (+351)</option>
+                            <option data-countryCode="RU" value="7">🇷🇺 (+7)</option>
+                            <option data-countryCode="SA" value="966">🇸🇦 (+966)</option>
+                            <option data-countryCode="ZA" value="27">🇿🇦 (+27)</option>
+                            <option data-countryCode="ES" value="34">🇪🇸 (+34)</option>
+                            <option data-countryCode="SE" value="46">🇸🇪 (+46)</option>
+                            <option data-countryCode="CH" value="41">🇨🇭 (+41)</option>
+                            <option data-countryCode="TH" value="66">🇹🇭 (+66)</option>
+                            <option data-countryCode="TR" value="90">🇹🇷 (+90)</option>
+                            <option data-countryCode="AE" value="971">🇦🇪 (+971)</option>
+                            <option data-countryCode="GB" value="44">🇬🇧 (+44)</option>
+                            <option data-countryCode="US" value="1">🇺🇸 (+1)</option>
+                        </optgroup>
                     </select>
                     <input type="text" id="phone" name="phone" placeholder="Phone Number / WhatsApp" class="w-full p-3 rounded-lg border-gray-300 shadow-sm focus:border-green-500 focus:ring focus:ring-green-200" value="{{ old('phone') }}" required>
-                </span>
-                
+                </div>
             </div>
 
             <!-- Gender -->
             <div>
-                <label class="block text-gray-700 font-semibold mb-2" for="gender">Gender *</label>
+                <label class="block text-gray-700 font-semibold mb-2" for="gender">Gender <span class="text-red-500">*</span></label>
                 <select id="gender" name="gender" class="w-full p-3 rounded-lg border-gray-300 shadow-sm focus:border-green-500 focus:ring focus:ring-green-200" required>
                     <option value="">Select Gender</option>
                     <option value="male" {{ old('gender') == 'male' ? 'selected' : '' }}>Male</option>
@@ -449,16 +446,22 @@
                 </select>
             </div>
 
-
             <!-- LinkedIn -->
             <div>
-                <label class="block text-gray-700 font-semibold mb-2" for="linkedin">LinkedIn *</label>
-                <input type="text" id="linkedin" name="linkedin" placeholder="Please add the link to your LinkedIn profile" class="w-full p-3 rounded-lg border-gray-300 shadow-sm focus:border-green-500 focus:ring focus:ring-green-200" value="{{ old('linkedin') }}" required>
+                <label class="block text-gray-700 font-semibold mb-2" for="linkedin">LinkedIn <span class="text-red-500">*</span></label>
+                <div class="relative">
+                    <span class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-gray-500">
+                        <svg class="w-5 h-5" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+                            <path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9V416z"/>
+                        </svg>
+                    </span>
+                    <input type="text" id="linkedin" name="linkedin" placeholder="Please add the link to your LinkedIn profile" class="w-full p-3 pl-10 rounded-lg border-gray-300 shadow-sm focus:border-green-500 focus:ring focus:ring-green-200" value="{{ old('linkedin') }}" required>
+                </div>
             </div>
 
             <!-- Investment Expertise -->
             <div>
-                <label class="block text-gray-700 font-semibold mb-2" for="investment_expertise">Level of Investment Expertise *</label>
+                <label class="block text-gray-700 font-semibold mb-2" for="investment_expertise">Level of Investment Expertise <span class="text-red-500">*</span></label>
                 <select id="investment_expertise" name="investment_expertise" class="w-full p-3 rounded-lg border-gray-300 shadow-sm focus:border-green-500 focus:ring focus:ring-green-200" required>
                     <option value="">Select level of investment expertise</option>
                     <option value="beginner" {{ old('investment_expertise') == 'beginner' ? 'selected' : '' }}>Beginner</option>
@@ -466,25 +469,28 @@
                     <option value="expert" {{ old('investment_expertise') == 'expert' ? 'selected' : '' }}>Expert</option>
                 </select>
             </div>
-
-            <!-- Photo Upload -->
-            <div>
-                <label class="block text-gray-700 font-semibold mb-2" for="photo">Upload Your Photo</label>
-                <input type="file" id="photo" name="profile_photo" accept="image/*" class="w-full rounded-lg border-gray-300 shadow-sm focus:border-green-500 focus:ring focus:ring-green-200">
-            </div>
         </div>
 
         <!-- Agreement and Newsletter -->
         <div class="mt-6">
             <label class="flex items-center space-x-2">
                 <input type="checkbox" class="rounded border-gray-300 text-green-500 focus:ring-green-400" name="terms" required>
-                <span class="text-gray-700">I agree to the <a href="#" class="text-green-500 underline">terms and conditions</a> and <a href="#" class="text-green-500 underline">privacy policy</a>.</span>
+                <span class="text-gray-700">I agree to the <a href="{{ asset('MoU.pdf') }}" class="text-green-500 underline" target="_blank">terms and conditions</a> and privacy policy.</span>
             </label>
+        </div>
+
+        <!-- Free Account Info -->
+        <div class="mt-6 p-4 bg-green-50 rounded-lg border border-green-100">
+            <h3 class="font-semibold text-green-700">Free Tier Account</h3>
+            <p class="text-gray-600 mt-1">You're creating a free investor account. To access premium features and investment opportunities, you can upgrade your account later.</p>
         </div>
 
         <!-- Submit Button -->
         <div class="mt-8 text-right">
-            <button type="submit" class="bg-green-500 text-white px-6 py-2 rounded-lg hover:bg-green-600 transition">
+            <button type="submit" class="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg transition flex items-center justify-center font-medium">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-8.707l-3-3a1 1 0 00-1.414 0l-3 3a1 1 0 001.414 1.414L9 9.414V13a1 1 0 102 0V9.414l1.293 1.293a1 1 0 001.414-1.414z" clip-rule="evenodd" />
+                </svg>
                 Sign Up
             </button>
         </div>

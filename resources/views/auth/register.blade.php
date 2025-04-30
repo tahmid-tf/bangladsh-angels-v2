@@ -28,6 +28,7 @@
                         required autocomplete="new-password" />
 
         <x-input-error :messages="$errors->get('password')" class="mt-2" />
+        <p class="text-sm text-gray-600 mt-1">Password must contain at least 8 characters, including uppercase, lowercase, number, and special character.</p>
     </div>
 
     <!-- Confirm Password -->

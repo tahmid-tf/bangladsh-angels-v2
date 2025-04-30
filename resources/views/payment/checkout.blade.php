@@ -195,6 +195,7 @@
                 <div class="mt-4">
                     <label class="block text-gray-700 font-semibold mb-1 text-sm" for="password">Password <span class="text-red-500">*</span></label>
                     <input type="password" id="password" name="password" placeholder="Create a secure password" class="w-full p-3 rounded-lg border-gray-300 shadow-sm focus:border-green-500 focus:ring focus:ring-green-200 transition" required>
+                    <p class="text-sm text-gray-500 mt-1">Password must contain at least 8 characters, including uppercase, lowercase, number, and special character.</p>
                 </div>
     
                 <!-- Re-enter Password -->
@@ -339,9 +340,6 @@
                                 <input type="text" id="linkedin" name="linkedin" placeholder="LinkedIn profile URL" class="w-full p-3 pl-10 rounded-lg border-gray-300 shadow-sm focus:border-green-500 focus:ring focus:ring-green-200 transition" value="{{auth()->user() && auth()->user()->linkedin ? old('linkedin',auth()->user()->linkedin) : ''}}" required>
                             </div>
                         </div>
-                        
-                        @guest
-                        @endguest
                     </div>
                 </div>
             </div>

@@ -65,8 +65,8 @@
                             name="password"
                             class="mt-1 p-3 border-box w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm"
                         />
-                    <x-input-error :messages="$errors->get('password')" class="mt-2" />
-
+                        <x-input-error :messages="$errors->get('password')" class="mt-2" />
+                        <p class="text-sm text-gray-500 mt-1">Password requires uppercase, lowercase, number, and special character.</p>
                     </div>
                     @if (Route::has('password.request'))
                         <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('password.request') }}">
@@ -96,4 +96,3 @@
     </div>
 </section>
 </html>
-    
