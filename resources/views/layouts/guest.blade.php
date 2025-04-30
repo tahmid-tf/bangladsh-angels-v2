@@ -44,6 +44,24 @@
             opacity: 0;
             pointer-events: none;
         }
+        
+        .loading-icon {
+            height: 4rem;
+            width: auto;
+            object-fit: contain;
+        }
+        
+        @media (min-width: 768px) {
+            .loading-icon {
+                height: 6rem;
+            }
+        }
+        
+        @media (min-width: 1024px) {
+            .loading-icon {
+                height: 8rem;
+            }
+        }
     </style>
 
     <script>
@@ -62,7 +80,7 @@
     
     <!-- Loading Screen -->
     <div id="loading-screen">
-        <img src="{{ asset('icon.webp') }}" alt="Bangladesh Angels Logo" class="h-16 md:h-24 lg:h-32" width="128" height="128">
+        <img src="{{ asset('icon.webp') }}" alt="Bangladesh Angels Logo" class="loading-icon">
     </div>
 
     <livewire:navigation-bar></livewire:navigation-bar>
