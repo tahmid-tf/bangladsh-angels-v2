@@ -207,12 +207,12 @@
         <div class="mb-12">
             <h3 class="text-xl font-bold text-[#00877a] mb-6 text-center">Founding Partners</h3>
             <div class="flex flex-wrap justify-center gap-8">
-                <div class="flex justify-center items-center p-5 border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-all bg-white">
+                <a href="https://www.government.nl/ministries/ministry-of-foreign-affairs" target="_blank" class="flex justify-center items-center p-5 border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-all bg-white">
                     <img src="{{asset('foreignaffairsnetherland.webp')}}" alt="Foreign Affairs Logo" class="h-16 md:h-20 w-auto object-contain">
-                </div>
-                <div class="flex justify-center items-center p-5 border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-all bg-white">
+                </a>
+                <a href="https://aavishkaarcapital.in/" target="_blank" class="flex justify-center items-center p-5 border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-all bg-white">
                     <img src="{{asset('capital logo.webp')}}" alt="Capital Logo" class="h-16 md:h-20 w-auto object-contain">
-                </div>
+                </a>
             </div>
         </div>
         
@@ -220,16 +220,21 @@
         <div>
             <h3 class="text-xl font-bold text-[#00877a] mb-6 text-center">Industry Partners</h3>
             <div class="flex flex-wrap justify-center gap-8">
-                <div class="flex justify-center items-center p-5 border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-all bg-white">
+                <a href="https://bida.gov.bd/" target="_blank" class="flex justify-center items-center p-5 border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-all bg-white">
                     <img src="{{asset('bidalogo.webp')}}" alt="BIDA Logo" class="h-16 md:h-20 w-auto object-contain">
-                </div>
-                <div class="flex justify-center items-center p-5 border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-all bg-white">
+                </a>
+                <a target="_blank" href="https://venture.com.bd/" class="flex justify-center items-center p-5 border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-all bg-white">
                     <img src="{{asset('bangladesh venture capital.webp')}}" alt="BCV Logo" class="h-16 md:h-20 w-auto object-contain">
+                </a>
+                <div class="flex justify-center">
+                    <a target="_blank" href="https://sajidafoundation.org/" class="flex justify-center items-center p-5 border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-all bg-white max-w-xs">
+                        <img src="{{asset('sajidafoundation.webp')}}" alt="Sajida Foundation Logo" class="h-16 md:h-20 w-auto object-contain">
+                    </a>
                 </div>
                 <div class="flex justify-center">
-                    <div class="flex justify-center items-center p-5 border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-all bg-white max-w-xs">
-                        <img src="{{asset('sajidafoundation.webp')}}" alt="Sajida Foundation Logo" class="h-16 md:h-20 w-auto object-contain">
-                    </div>
+                    <a target="_blank" href="https://lightcastlepartners.com/" class="flex justify-center items-center p-5 border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-all bg-white max-w-xs">
+                        <img src="{{asset('lcp.svg')}}" alt="LightCastle Partners Logo" class="h-16 md:h-20 w-auto object-contain">
+                    </a>
                 </div>
             </div>
         </div>
