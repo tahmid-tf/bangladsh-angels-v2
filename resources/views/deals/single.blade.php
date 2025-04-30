@@ -45,15 +45,15 @@
                 </div>
                 @endif
             </div>
-            <a href="{{ (auth()->user() && !auth()->user()->isFree()) ? $deal->pitch_deck_url : route('plans')}}" class="my-6 px-6 py-2 bg-gray-200 text-gray-700 font-semibold rounded-lg shadow hover:bg-gray-300">
+            <a href="{{ (auth()->check() && auth()->user() && !auth()->user()->isFree()) ? $deal->pitch_deck_url : route('plans')}}" class="my-6 px-6 py-2 bg-gray-200 text-gray-700 font-semibold rounded-lg shadow hover:bg-gray-300">
                 View
             </a>
             @if ($deal->substack_link)
-            <a href="{{ (auth()->user() && !auth()->user()->isFree()) ? $deal->substack_link : route('plans')}}" class="my-6 m-3 px-6 py-2 bg-gray-200 text-gray-700 font-semibold rounded-lg shadow hover:bg-gray-300">
+            <a href="{{ (auth()->check() && auth()->user() && !auth()->user()->isFree()) ? $deal->substack_link : route('plans')}}" class="my-6 m-3 px-6 py-2 bg-gray-200 text-gray-700 font-semibold rounded-lg shadow hover:bg-gray-300">
                 View on Substack
             </a>
             @endif
-            @if ($deal->type!=="review" && $deal->groupchat_invite_link)
+            @if ($deal->type!=="review" && $deal->groupchat_invite_link && auth()->check())
             <br><br>
             <form action="{{route('deal.invest',$deal->id)}}" method="POST" class="w-1/4">
                 @csrf
@@ -69,7 +69,7 @@
                 Join WhatsApp Group
             </a> --}}
             @endif
-            @if ($deal->type!=="portfolio")
+            @if ($deal->type!=="portfolio" && auth()->check())
             <div class="w-1/2">
                 <livewire:deal-action-button :deal="$deal"></livewire:deal-action-button>
             </div>
@@ -120,7 +120,7 @@
 @if (count($otherDeals)>0)
     <!-- More Live Deals Section -->
     <section class="container mx-auto px-6 py-12">
-        @if (auth()->user()->isFree())
+        @if (auth()->check() && auth()->user() && auth()->user()->isFree())
             <h2 class="text-3xl font-bold mb-8">More Portfolios</h2>
         @else
             <h2 class="text-3xl font-bold mb-8">More Live Deals</h2>
