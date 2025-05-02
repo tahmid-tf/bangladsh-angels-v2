@@ -12,8 +12,26 @@ class MembersTable extends Component
 
     public $search = ''; // Search term
     public $filter = 'all'; // Filter: all, active, inactive, pending
+    public $allCount;
+    public $activeCount;
+    public $inactiveCount;
+    public $pendingCount;
 
     protected $queryString = ['search', 'filter']; // Preserve search and filter in the URL
+
+    public function mount()
+    {
+        // Initialize counts
+        $this->updateCounts();
+    }
+
+    public function updateCounts()
+    {
+        $this->allCount = User::where('id', '!=', auth()->id())->where('is_approved', true)->count();
+        $this->activeCount = User::where('id', '!=', auth()->id())->where('account_status', '!=', 'free')->where('is_approved', true)->count();
+        $this->inactiveCount = User::where('id', '!=', auth()->id())->where('account_status', 'free')->where('is_approved', true)->count();
+        $this->pendingCount = User::where('id', '!=', auth()->id())->where('is_approved', false)->count();
+    }
 
     public function updatingSearch()
     {
@@ -44,6 +62,9 @@ class MembersTable extends Component
                 'approved_by' => auth()->id(),
                 'approved_at' => now()
             ]);
+            
+            // Update counts after approving a user
+            $this->updateCounts();
         }
     }
 
