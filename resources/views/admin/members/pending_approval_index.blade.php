@@ -1,10 +1,10 @@
 @extends('layouts.admin')
-@section('page_title','Members | Dashboard')
+@section('page_title','Pending Approval Members | Dashboard')
 @section('page_content')
 
 <!-- Header Section -->
 <div class="flex flex-col md:flex-row justify-between items-start md:items-center p-4 bg-white shadow">
-    <h1 class="text-lg md:text-xl font-bold mb-2 md:mb-0">Members ({{count($allUsers)}})</h1>
+    <h1 class="text-lg md:text-xl font-bold mb-2 md:mb-0">Pending Approval Members ({{count($allUsers)}})</h1>
     <a href="{{route('member.add')}}" class="bg-green-600 text-white px-4 py-2 rounded-lg shadow hover:bg-green-700 whitespace-nowrap">
         + Add New Member
     </a>
@@ -17,8 +17,8 @@
         <div class="flex flex-wrap gap-2">
             <a href="{{route('admin.members')}}" class="px-4 py-2 text-gray-500 hover:text-green-700">All</a>
             <a href="{{route('admin.active.members')}}" class="px-4 py-2 text-gray-500 hover:text-green-700">Active</a>
-            <a href="{{route('admin.inactive.members')}}" class="px-4 py-2 bg-green-100 text-green-700 font-semibold rounded-lg">Inactive</a>
-            <a href="{{route('admin.pending.members')}}" class="px-4 py-2 text-gray-500 hover:text-green-700">Pending Approval</a>
+            <a href="{{route('admin.inactive.members')}}" class="px-4 py-2 text-gray-500 hover:text-green-700">Inactive</a>
+            <a href="{{route('admin.pending.members')}}" class="px-4 py-2 bg-green-100 text-green-700 font-semibold rounded-lg">Pending Approval</a>
         </div>
 
         <!-- Role Filter and Search -->
@@ -52,13 +52,12 @@
                     <th class="hidden md:table-cell px-6 py-4 font-medium text-gray-600">Designation</th>
                     <th class="hidden lg:table-cell px-6 py-4 font-medium text-gray-600">Organization</th>
                     <th class="hidden md:table-cell px-6 py-4 font-medium text-gray-600">Phone</th>
-                    <th class="pl-2 pr-4 md:px-6 py-4 font-medium text-gray-600">Status</th>
+                    <th class="pl-2 pr-4 md:px-6 py-4 font-medium text-gray-600">Registered</th>
                     <th class="px-4 md:px-6 py-4 font-medium text-gray-600">Actions</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach ($users as $user)
-                @if ($user->id !== auth()->user()->id)
                 <tr class="border-t hover:bg-gray-50">
                     <!-- Combined Mobile Column -->
                     <td class="pl-4 pr-2 md:px-6 py-4">
@@ -71,7 +70,7 @@
                                     {{ $user->email }}
                                 </p>
                                 <p class="text-xs text-gray-500 mt-1">
-                                    Joined: {{ $user->joining_date }}
+                                    Location: {{ $user->primary_country }}
                                 </p>
                             </div>
                         </div>
@@ -82,16 +81,23 @@
                     <td class="hidden lg:table-cell px-6 py-4">{{ $user->company_name ?? '-' }}</td>
                     <td class="hidden md:table-cell px-6 py-4 whitespace-nowrap">{{ $user->phone ?? '-' }}</td>
 
-                    <!-- Status Column -->
+                    <!-- Registration Column -->
                     <td class="pl-2 pr-4 md:px-6 py-4">
                         <div class="flex flex-col gap-1">
-                            <span class="px-2 py-1 rounded-full text-xs text-center md:text-sm 
-                                      {{ $user->account_status !== 'free' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800' }}">
-                                {{ ucfirst($user->account_status) }}
+                            <span class="text-xs text-gray-500">
+                                {{ $user->created_at->format('M d, Y') }}
                             </span>
-                            <span class="text-xs text-gray-500 md:hidden">
-                                Renewed: {{ $user->renewedAt() }}
+                            <span class="text-xs text-gray-500">
+                                {{ $user->created_at->diffForHumans() }}
                             </span>
+                            @if($user->approved_at)
+                            <span class="text-xs text-green-600 mt-1 inline-flex items-center">
+                                <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                                </svg>
+                                Approved {{ $user->approved_at->diffForHumans() }}
+                            </span>
+                            @endif
                         </div>
                     </td>
 
@@ -104,23 +110,17 @@
                                     <path fill-rule="evenodd" d="M94.62,2c-1.46-1.36-3.14-2.09-5.02-1.99c-1.88,0-3.56,0.73-4.92,2.2L73.59,13.72l31.07,30.03l11.19-11.72c1.36-1.36,1.88-3.14,1.88-5.02s-0.73-3.66-2.09-4.92L94.62,2L94.62,2L94.62,2z M41.44,109.58c-4.08,1.36-8.26,2.62-12.35,3.98c-4.08,1.36-8.16,2.72-12.35,4.08c-9.73,3.14-15.07,4.92-16.22,5.23c-1.15,0.31-0.42-4.18,1.99-13.6l7.74-29.61l0.64-0.66l30.56,30.56L41.44,109.58L41.44,109.58L41.44,109.58z M22.2,67.25l42.99-44.82l31.07,29.92L52.75,97.8L22.2,67.25L22.2,67.25z"/>
                                 </svg>
                             </a>
-                            <form method="POST" action="{{ route('update.account.status', $user->id) }}">
+                            @if(!$user->is_approved)
+                            <form method="POST" action="{{ route('member.approve', $user->id) }}">
                                 @csrf
-                                @method('PATCH')
-                                <input type="hidden" name="account_status" value="{{ $user->account_status }}">
-                                <label class="relative inline-flex items-center cursor-pointer">
-                                    <input type="checkbox" class="sr-only peer" 
-                                           onchange="this.form.submit()"
-                                           {{ $user->account_status !== 'free' ? 'checked' : '' }}>
-                                    <div class="w-11 h-6 bg-gray-200 rounded-full peer peer-checked:bg-green-600 transition-colors duration-300">
-                                        <div class="absolute left-[2px] top-[2px] bg-white border border-gray-300 w-5 h-5 rounded-full shadow-sm transform transition-transform duration-300 peer-checked:translate-x-5"></div>
-                                    </div>
-                                </label>
+                                <button type="submit" class="bg-green-600 hover:bg-green-700 text-white py-1 px-3 rounded text-xs">
+                                    Approve
+                                </button>
                             </form>
+                            @endif
                         </div>
                     </td>
                 </tr>
-                @endif
                 @endforeach
             </tbody>
         </table>
@@ -141,15 +141,5 @@
         border-radius: 4px;
     }
 </style>
-
-<script>
-    document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
-        checkbox.addEventListener('change', function() {
-            const form = this.closest('form');
-            const statusInput = form.querySelector('input[name="account_status"]');
-            statusInput.value = this.checked ? 'active' : 'free';
-        });
-    });
-</script>
 
 @endsection

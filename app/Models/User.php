@@ -53,6 +53,8 @@ class User extends Authenticatable implements HasMedia
         'country',
         'role',
         'is_approved',
+        'approved_by',
+        'approved_at',
         'website_link',
         'secondary_countries',
         'password',
@@ -217,5 +219,13 @@ class User extends Authenticatable implements HasMedia
     public function investments()
     {
         return $this->hasMany(Investment::class, 'user_id');
+    }
+    
+    /**
+     * Get the admin user who approved this user.
+     */
+    public function approvedBy()
+    {
+        return $this->belongsTo(User::class, 'approved_by');
     }
 }

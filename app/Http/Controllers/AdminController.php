@@ -114,9 +114,9 @@ class AdminController extends Controller
     public function viewMembers()
     {
         if (auth()->user()->isAdmin()) {
-            // Retrieve users with pagination
-            $allUsers = User::with('media')->get(); // All Users
-            $users = User::with('media')->paginate(50); // 50 users per page
+            // Retrieve users with pagination, only approved users
+            $allUsers = User::with('media')->where('is_approved', true)->get(); // All approved Users
+            $users = User::with('media')->where('is_approved', true)->paginate(50); // 50 users per page
             return view('admin.members.index', compact('users','allUsers'));
         } else {
             return redirect()->route('home');
@@ -128,8 +128,8 @@ class AdminController extends Controller
     {
         if(auth()->user()->isAdmin()){
             // Retrieve users with pagination
-            $allUsers = User::with('media')->where('account_status','!=','free')->get(); // All Users
-            $users = User::with('media')->where('account_status','!=','free')->paginate(50); // 50 users per page
+            $allUsers = User::with('media')->where('account_status','!=','free')->where('is_approved', true)->get(); // All approved active Users
+            $users = User::with('media')->where('account_status','!=','free')->where('is_approved', true)->paginate(50); // 50 users per page
             return view('admin.members.active_index', compact('users','allUsers'));
         } else {
             return redirect()->route('home');
@@ -139,9 +139,35 @@ class AdminController extends Controller
     public function viewInactiveMembers()
     {
         if(auth()->user()->isAdmin()){
-            $allUsers = User::with('media')->where('account_status','free')->get(); // Retrieve all users
-            $users = User::with('media')->where('account_status','free')->paginate(50); // Retrieve all users
+            $allUsers = User::with('media')->where('account_status','free')->where('is_approved', true)->get(); // Retrieve all users
+            $users = User::with('media')->where('account_status','free')->where('is_approved', true)->paginate(50); // Retrieve all users
             return view('admin.members.inactive_index', compact('users','allUsers'));
+        } else {
+            return redirect()->route('home');
+        }
+    }
+    
+    public function viewPendingApprovalMembers()
+    {
+        if(auth()->user()->isAdmin()){
+            $allUsers = User::with('media')->where('is_approved', false)->get(); // Retrieve all pending approval users
+            $users = User::with('media')->where('is_approved', false)->paginate(50);
+            return view('admin.members.pending_approval_index', compact('users','allUsers'));
+        } else {
+            return redirect()->route('home');
+        }
+    }
+    
+    public function approveUser(User $user)
+    {
+        if(auth()->user()->isAdmin()){
+            $user->update([
+                'is_approved' => true,
+                'approved_by' => auth()->id(),
+                'approved_at' => now()
+            ]);
+            
+            return redirect()->route('admin.pending.members')->with('success', 'User has been approved successfully.');
         } else {
             return redirect()->route('home');
         }

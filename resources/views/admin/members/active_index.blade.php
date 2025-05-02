@@ -18,6 +18,7 @@
             <a href="{{route('admin.members')}}" class="px-4 py-2 text-gray-500 hover:text-green-700">All</a>
             <a href="{{route('admin.active.members')}}" class="px-4 py-2 bg-green-100 text-green-700 font-semibold rounded-lg">Active</a>
             <a href="{{route('admin.inactive.members')}}" class="px-4 py-2 text-gray-500 hover:text-green-700">Inactive</a>
+            <a href="{{route('admin.pending.members')}}" class="px-4 py-2 text-gray-500 hover:text-green-700">Pending Approval</a>
         </div>
 
         <!-- Role Filter and Search -->
