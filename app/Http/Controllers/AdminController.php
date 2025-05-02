@@ -545,7 +545,7 @@ class AdminController extends Controller
     public function removeMember(User $user)
     {
         // Check if the authenticated user is an admin
-        if (auth()->user()->role !== 'admin') {
+        if (!auth()->user()->isAdmin()) {
             return redirect()->route('admin.members')->with('error', 'You do not have permission to perform this action.');
         }
 

@@ -130,6 +130,13 @@
                                         Approve
                                     </button>
                                     @endif
+                                    @if($user->id != auth()->id())
+                                    <a href="{{ route('member.remove', $user->id) }}" 
+                                       onclick="return confirm('Are you sure you want to delete this member? This action cannot be undone.')"
+                                       class="text-red-600 hover:text-red-800 p-1 ml-2">
+                                        Delete
+                                    </a>
+                                    @endif
                                 </div>
                             </td>
                         </tr>
