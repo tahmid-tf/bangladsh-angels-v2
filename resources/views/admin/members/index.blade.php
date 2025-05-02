@@ -10,11 +10,22 @@
     </a>
 </div>
 
-<div class="flex flex-wrap gap-2">
-    <a href="{{route('admin.members')}}" class="px-4 py-2 bg-green-100 text-green-700 font-semibold rounded-lg">All</a>
-    <a href="{{route('admin.active.members')}}" class="px-4 py-2 text-gray-500 hover:text-green-700">Active</a>
-    <a href="{{route('admin.inactive.members')}}" class="px-4 py-2 text-gray-500 hover:text-green-700">Inactive</a>
-    <a href="{{route('admin.pending.members')}}" class="px-4 py-2 text-gray-500 hover:text-green-700">Pending Approval</a>
+<!-- Filters and Search -->
+<div class="p-4 md:p-6 bg-white shadow mt-4">
+    <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+        <!-- Tabs -->
+        <div class="flex flex-wrap gap-2">
+            <a href="{{route('admin.members')}}" class="px-4 py-2 bg-green-100 text-green-700 font-semibold rounded-lg">All</a>
+            <a href="{{route('admin.active.members')}}" class="px-4 py-2 text-gray-500 hover:text-green-700">Active</a>
+            <a href="{{route('admin.inactive.members')}}" class="px-4 py-2 text-gray-500 hover:text-green-700">Inactive</a>
+            <a href="{{route('admin.pending.members')}}" class="px-4 py-2 text-gray-500 hover:text-green-700">Pending Approval</a>
+        </div>
+
+        <!-- Role Filter and Search -->
+        <div class="flex flex-col md:flex-row gap-2 w-full md:w-auto">
+            <input type="text" placeholder="Search..." class="border-gray-300 rounded-lg shadow-sm px-4 py-2">
+        </div>
+    </div>
 </div>
 
 @if (session('success'))
@@ -32,6 +43,5 @@
 @endif
 
 <livewire:members-table />
-
 
 @endsection
