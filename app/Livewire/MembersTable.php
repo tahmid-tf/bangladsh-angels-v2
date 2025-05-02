@@ -97,7 +97,14 @@ class MembersTable extends Component
             });
         }
 
-        $users = $query->orderBy('name', 'asc')->paginate(10);
+        // Apply different sorting based on filter
+        if ($this->filter === 'pending') {
+            // Sort pending approval users by latest first
+            $users = $query->orderBy('created_at', 'desc')->paginate(10);
+        } else {
+            // Default sorting for other tabs
+            $users = $query->orderBy('name', 'asc')->paginate(10);
+        }
 
         return view('livewire.members-table', compact('users'));
     }
