@@ -76,7 +76,7 @@
     </script>
 </head>
 
-<body class="flex flex-col justify-center items-center w-full font-sans text-gray-900 mt-[150px] antialiased">
+<body class="flex flex-col justify-center items-center w-full font-sans text-gray-900 mt-4 md:mt-8 lg:mt-[150px] antialiased">
     
     <!-- Loading Screen -->
     <div id="loading-screen">

@@ -67,6 +67,7 @@ class CheckoutController extends Controller
                     'investment_expertise' => $validated['investment_expertise'],
                     'linkedin' => $validated['linkedin'],
                     'password' => Auth::check() ? auth()->user()->password : Hash::make($request->password),
+                    'is_approved' => false, // Explicitly set is_approved to false
                 ]
             );
 
