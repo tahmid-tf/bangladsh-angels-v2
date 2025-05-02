@@ -11,12 +11,18 @@ class MembersTable extends Component
     use WithPagination;
 
     public $search = ''; // Search term
+    public $filter = 'all'; // Filter: all, active, inactive, pending
 
-    protected $queryString = ['search']; // Preserve search in the URL
+    protected $queryString = ['search', 'filter']; // Preserve search and filter in the URL
 
     public function updatingSearch()
     {
         $this->resetPage(); // Reset pagination on new search
+    }
+
+    public function updatingFilter()
+    {
+        $this->resetPage(); // Reset pagination on filter change
     }
 
     public function searchUsers()
@@ -24,16 +30,53 @@ class MembersTable extends Component
         $this->render(); // Manually refresh the component when search is triggered
     }
 
+    public function setFilter($filter)
+    {
+        $this->filter = $filter;
+    }
+
+    public function approveUser($userId)
+    {
+        $user = User::find($userId);
+        if ($user) {
+            $user->update([
+                'is_approved' => true,
+                'approved_by' => auth()->id(),
+                'approved_at' => now()
+            ]);
+        }
+    }
+
     public function render()
     {
-        $users = User::where('id', '!=', auth()->id())
-            ->where(function ($query) {
+        $query = User::where('id', '!=', auth()->id());
+
+        // Apply filter
+        switch ($this->filter) {
+            case 'active':
+                $query->where('account_status', '!=', 'free')->where('is_approved', true);
+                break;
+            case 'inactive':
+                $query->where('account_status', 'free')->where('is_approved', true);
+                break;
+            case 'pending':
+                $query->where('is_approved', false);
+                break;
+            default: // 'all'
+                $query->where('is_approved', true);
+                break;
+        }
+
+        // Apply search
+        if (!empty($this->search)) {
+            $query->where(function ($query) {
                 $query->where('name', 'like', "%{$this->search}%")
-                      ->orWhere('designation', 'like', "%{$this->search}%")
-                      ->orWhere('company_name', 'like', "%{$this->search}%");
-            })
-            ->orderBy('name', 'asc')
-            ->paginate(10);
+                    ->orWhere('designation', 'like', "%{$this->search}%")
+                    ->orWhere('company_name', 'like', "%{$this->search}%");
+            });
+        }
+
+        $users = $query->orderBy('name', 'asc')->paginate(10);
 
         return view('livewire.members-table', compact('users'));
     }
