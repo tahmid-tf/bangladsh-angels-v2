@@ -25,6 +25,9 @@ Route::get('/portfolio',[PrimaryController::class,'viewPortfolio'])->name('portf
 Route::get('/approval/pending', function() {
     return view('approval.pending');
 })->name('approval.pending');
+Route::get('/approval/success', function() {
+    return view('approval.success');
+})->name('approval.success');
 
 Route::prefix('upgrade')->group(function () {
     Route::get('/', [PrimaryController::class, 'upgradePage'])->name('upgrade.page');

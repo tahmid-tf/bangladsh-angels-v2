@@ -82,8 +82,7 @@
         const industryFilter = document.getElementById('industryFilter');
         const investorCards = document.querySelectorAll('.grid > div');
         
-        // Simple search function (frontend only)
-        // For production, consider implementing server-side filtering
+        // Search & filter function
         if (searchInput) {
             searchInput.addEventListener('input', filterInvestors);
         }
@@ -96,8 +95,45 @@
             const searchTerm = searchInput.value.toLowerCase();
             const industry = industryFilter.value.toLowerCase();
             
-            // Implement actual filtering logic based on your data model
-            // This is just a placeholder
+            // Loop through all investor cards
+            investorCards.forEach(card => {
+                const name = card.querySelector('h3')?.textContent.toLowerCase() || '';
+                const position = card.querySelector('p')?.textContent.toLowerCase() || '';
+                const matchesSearch = searchTerm === '' || 
+                    name.includes(searchTerm) || 
+                    position.includes(searchTerm);
+                
+                // If no industry is selected or the industry matches
+                // Note: In a real implementation, you might want to add a data attribute to the cards
+                // with the actual industry category rather than relying on text content
+                const matchesIndustry = industry === '' || position.includes(industry);
+                
+                // Show or hide based on both filters
+                if (matchesSearch && matchesIndustry) {
+                    card.style.display = '';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+            
+            // Check if any cards are visible
+            const visibleCards = document.querySelectorAll('.grid > div[style=""]');
+            const noResultsMessage = document.querySelector('.col-span-full');
+            
+            // If no results are found and there's no "no results" message yet, create one
+            if (visibleCards.length === 0 && !noResultsMessage) {
+                const noResults = document.createElement('div');
+                noResults.className = 'col-span-full text-center py-10';
+                noResults.innerHTML = `
+                    <div class="text-gray-500 text-lg">No investors found</div>
+                    <p class="mt-2">Try adjusting your search criteria</p>
+                `;
+                document.querySelector('.grid').appendChild(noResults);
+            } 
+            // Hide the "no results" message if there are visible cards
+            else if (visibleCards.length > 0 && noResultsMessage) {
+                noResultsMessage.style.display = 'none';
+            }
         }
     });
 </script>
