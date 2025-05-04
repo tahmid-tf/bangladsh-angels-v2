@@ -46,7 +46,7 @@
             <form method="POST" action="{{ route('checkout') }}">
                 @csrf
                 <input type="hidden" name="plan_name" value="Core">
-                <input type="hidden" name="plan_price" value="0.0090">
+                <input type="hidden" name="plan_price" value="0.090">
                 <button type="submit" class="mt-6 bg-green-600 text-white py-2 px-6 rounded-full hover:bg-green-700 transition">
                     Choose Core
                 </button>
