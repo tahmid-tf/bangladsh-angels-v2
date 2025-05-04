@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use App\Models\User;
 use App\Models\Deal;
 use App\Models\Subscription;
@@ -167,6 +168,14 @@ class AdminController extends Controller
                 'approved_by' => auth()->id(),
                 'approved_at' => now()
             ]);
+            
+            // Send approval notification email to the user
+            try {
+                Mail::to($user->email)->send(new \App\Mail\AccountApproved($user));
+            } catch (\Exception $e) {
+                // Log error but don't stop the approval process
+                \Log::error('Failed to send account approval email: ' . $e->getMessage());
+            }
             
             return redirect()->route('admin.pending.members')->with('success', 'User has been approved successfully.');
         } else {
