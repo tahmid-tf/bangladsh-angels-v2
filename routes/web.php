@@ -19,33 +19,8 @@ use App\Models\Payment;
  * Public Routes
  */
 Route::get('/', PrimaryController::class)->name('home');
-
-// New investor route
-Route::get('/investors', function () {
-    if (!Auth::check()) {
-        return redirect()->route('upgrade.page');
-    }
-    if (auth()->user()->account_status == "free") {
-        return redirect()->route('upgrade.page');
-    }
-    return app(PrimaryController::class)->viewInvestors();
-})->middleware(['verified', \App\Http\Middleware\ApprovedUserMiddleware::class])->name('investors');
-
-// New resources route
-Route::get('/resources', function () {
-    if (!Auth::check()) {
-        return redirect()->route('upgrade.page');
-    }
-    if (auth()->user()->account_status == "free") {
-        return redirect()->route('upgrade.page');
-    }
-    return app(PrimaryController::class)->viewResources();
-})->middleware(['verified', \App\Http\Middleware\ApprovedUserMiddleware::class])->name('resources');
-
-// Legacy routes (keeping for backward compatibility)
-Route::get('/ban-investors',[PrimaryController::class,'viewInvestors'])->middleware(['auth', 'verified', \App\Http\Middleware\ApprovedUserMiddleware::class])->name('ban.investors');
-Route::get('/ban-resources',[PrimaryController::class,'viewResources'])->middleware(['auth', 'verified', \App\Http\Middleware\ApprovedUserMiddleware::class])->name('ban.resources');
-
+Route::get('/ban-investors',[PrimaryController::class,'viewInvestors'])->middleware(['auth', 'verified', \App\Http\Middleware\ApprovedUserMiddleware::class])->name('investors');
+Route::get('/ban-resources',[PrimaryController::class,'viewResources'])->middleware(['auth', 'verified', \App\Http\Middleware\ApprovedUserMiddleware::class])->name('resources');
 Route::get('/portfolio',[PrimaryController::class,'viewPortfolio'])->name('portfolio');
 Route::get('/approval/pending', function() {
     return view('approval.pending');
