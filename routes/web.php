@@ -19,8 +19,24 @@ use App\Models\Payment;
  * Public Routes
  */
 Route::get('/', PrimaryController::class)->name('home');
-Route::get('/ban-investors',[PrimaryController::class,'viewInvestors'])->middleware(['auth', 'verified', \App\Http\Middleware\ApprovedUserMiddleware::class])->name('investors');
-Route::get('/ban-resources',[PrimaryController::class,'viewResources'])->middleware(['auth', 'verified', \App\Http\Middleware\ApprovedUserMiddleware::class])->name('resources');
+Route::get('/investors', function () {
+    if (!Auth::check()) {
+        return redirect()->route('upgrade.page');
+    }
+    if (auth()->user()->account_status == "free") {
+        return redirect()->route('upgrade.page');
+    }
+    return app(PrimaryController::class)->viewInvestors();
+})->middleware(['verified', \App\Http\Middleware\ApprovedUserMiddleware::class])->name('investors');
+Route::get('/resources', function () {
+    if (!Auth::check()) {
+        return redirect()->route('upgrade.page');
+    }
+    if (auth()->user()->account_status == "free") {
+        return redirect()->route('upgrade.page');
+    }
+    return app(PrimaryController::class)->viewResources();
+})->middleware(['verified', \App\Http\Middleware\ApprovedUserMiddleware::class])->name('resources');
 Route::get('/portfolio',[PrimaryController::class,'viewPortfolio'])->name('portfolio');
 Route::get('/approval/pending', function() {
     return view('approval.pending');
@@ -40,32 +56,44 @@ Route::prefix('upgrade')->group(function () {
 });
 
 Route::get('/deals', function () {
-    if (!Auth::check() || auth()->user()->account_status == "free") {
+    if (!Auth::check()) {
+        return redirect()->route('upgrade.page');
+    }
+    if (auth()->user()->account_status == "free") {
         return redirect()->route('upgrade.page');
     }
     return app(PrimaryController::class)->viewDeals();
-})->middleware(['auth', 'verified', \App\Http\Middleware\ApprovedUserMiddleware::class])->name('deals');
+})->middleware(['verified', \App\Http\Middleware\ApprovedUserMiddleware::class])->name('deals');
 
 Route::get('/deals/invest', function () {
-    if (!Auth::check() || auth()->user()->account_status == "free") {
+    if (!Auth::check()) {
+        return redirect()->route('upgrade.page');
+    }
+    if (auth()->user()->account_status == "free") {
         return redirect()->route('upgrade.page');
     }
     return app(PrimaryController::class)->viewDeals_invest();
-})->middleware(['auth', 'verified', \App\Http\Middleware\ApprovedUserMiddleware::class])->name('deals.invest');
+})->middleware(['verified', \App\Http\Middleware\ApprovedUserMiddleware::class])->name('deals.invest');
 
 Route::get('/deals/commit', function () {
-    if (!Auth::check() || auth()->user()->account_status == "free") {
+    if (!Auth::check()) {
+        return redirect()->route('upgrade.page');
+    }
+    if (auth()->user()->account_status == "free") {
         return redirect()->route('upgrade.page');
     }
     return app(PrimaryController::class)->viewDeals_commit();
-})->middleware(['auth', 'verified', \App\Http\Middleware\ApprovedUserMiddleware::class])->name('deals.commit');
+})->middleware(['verified', \App\Http\Middleware\ApprovedUserMiddleware::class])->name('deals.commit');
 
 Route::get('/deals/review', function () {
-    if (!Auth::check() || auth()->user()->account_status == "free") {
+    if (!Auth::check()) {
+        return redirect()->route('upgrade.page');
+    }
+    if (auth()->user()->account_status == "free") {
         return redirect()->route('upgrade.page');
     }
     return app(PrimaryController::class)->viewDeals_review();
-})->middleware(['auth', 'verified', \App\Http\Middleware\ApprovedUserMiddleware::class])->name('deals.review');
+})->middleware(['verified', \App\Http\Middleware\ApprovedUserMiddleware::class])->name('deals.review');
 
 Route::get('/faq', [PrimaryController::class, 'viewFAQ'])->name('faq');
 Route::get('/our-team', [PrimaryController::class, 'viewTeam'])->name('team');
