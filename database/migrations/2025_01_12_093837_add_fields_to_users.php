@@ -12,9 +12,13 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->enum('gender',['male','female','other']);
-            $table->string('linkedin')->nullable();
-            $table->string('strategic_investment_analyst')->nullable();
+            // linkedin: 2024_12_24_055046_add_role_and_fields_to_users_table
+            if (! Schema::hasColumn('users', 'gender')) {
+                $table->enum('gender', ['male', 'female', 'other']);
+            }
+            if (! Schema::hasColumn('users', 'strategic_investment_analyst')) {
+                $table->string('strategic_investment_analyst')->nullable();
+            }
         });
     }
 
@@ -24,9 +28,13 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('gender');
-            $table->dropColumn('linkedin');
-            $table->dropColumn('strategic_investment_analyst');
+            $cols = array_values(array_filter(
+                ['gender', 'strategic_investment_analyst'],
+                fn (string $c) => Schema::hasColumn('users', $c)
+            ));
+            if ($cols !== []) {
+                $table->dropColumn($cols);
+            }
         });
     }
 };

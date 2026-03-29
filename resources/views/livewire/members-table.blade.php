@@ -68,7 +68,12 @@
                                 <div class="flex items-center gap-2 md:gap-4">
                                     <img src="{{ $user->getProfilePhotoUrl() }}" alt="Profile" class="w-8 h-8 md:w-10 md:h-10 rounded-full">
                                     <div class="min-w-[120px]">
-                                        <p class="font-medium">{{ $user->name }}</p>
+                                        <p class="font-medium inline-flex items-center gap-2 flex-wrap">
+                                            {{ $user->name }}
+                                            @if($user->id === auth()->id())
+                                                <span class="text-xs font-normal px-2 py-0.5 rounded-full bg-gray-200 text-gray-700">You</span>
+                                            @endif
+                                        </p>
                                         <p class="text-xs text-gray-500">{{ $user->email }}</p>
                                         <p class="text-xs text-gray-500 mt-1">
                                             @if($filter === 'pending')

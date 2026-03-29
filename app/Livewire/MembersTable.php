@@ -27,10 +27,10 @@ class MembersTable extends Component
 
     public function updateCounts()
     {
-        $this->allCount = User::where('id', '!=', auth()->id())->where('is_approved', true)->count();
-        $this->activeCount = User::where('id', '!=', auth()->id())->where('account_status', '!=', 'free')->where('is_approved', true)->count();
-        $this->inactiveCount = User::where('id', '!=', auth()->id())->where('account_status', 'free')->where('is_approved', true)->count();
-        $this->pendingCount = User::where('id', '!=', auth()->id())->where('is_approved', false)->count();
+        $this->allCount = User::where('is_approved', true)->count();
+        $this->activeCount = User::where('account_status', '!=', 'free')->where('is_approved', true)->count();
+        $this->inactiveCount = User::where('account_status', 'free')->where('is_approved', true)->count();
+        $this->pendingCount = User::where('is_approved', false)->count();
     }
 
     public function updatingSearch()
@@ -70,7 +70,7 @@ class MembersTable extends Component
 
     public function render()
     {
-        $query = User::where('id', '!=', auth()->id());
+        $query = User::query();
 
         // Apply filter
         switch ($this->filter) {
@@ -90,10 +90,12 @@ class MembersTable extends Component
 
         // Apply search
         if (!empty($this->search)) {
-            $query->where(function ($query) {
-                $query->where('name', 'like', "%{$this->search}%")
-                    ->orWhere('designation', 'like', "%{$this->search}%")
-                    ->orWhere('company_name', 'like', "%{$this->search}%");
+            $term = "%{$this->search}%";
+            $query->where(function ($query) use ($term) {
+                $query->where('name', 'like', $term)
+                    ->orWhere('email', 'like', $term)
+                    ->orWhere('designation', 'like', $term)
+                    ->orWhere('company_name', 'like', $term);
             });
         }
 

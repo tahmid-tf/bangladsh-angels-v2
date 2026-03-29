@@ -19,7 +19,7 @@ return new class extends Migration
             $table->text('level')->nullable();
             $table->string('renewed')->nullable();
             $table->string('last_renewed_at')->nullable();
-            $table->string('gender')->nullable();
+            // gender already added in 2025_01_12_093837_add_fields_to_users (enum)
             $table->string('account_owner')->nullable();
             $table->string('primary_contact')->nullable();
             
@@ -47,7 +47,6 @@ return new class extends Migration
                 'used_by',
                 'renewed',
                 'level',
-                'gender',
                 'was_referred',
                 'last_renewed_at',
                 'primary_contact',
