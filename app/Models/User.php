@@ -53,6 +53,7 @@ class User extends Authenticatable implements HasMedia
         'country',
         'role',
         'is_approved',
+        'featured',
         'approved_by',
         'approved_at',
         'website_link',
@@ -89,6 +90,7 @@ class User extends Authenticatable implements HasMedia
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'featured' => 'boolean',
         ];
     }
 

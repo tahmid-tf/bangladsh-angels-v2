@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 use App\Models\Deal;
 use App\Models\User;
@@ -115,19 +114,16 @@ class PrimaryController extends Controller
         return view('investor.signup');
     }
 
-    // View Investors Page 
+    // View Investors Page (public; curated featured members)
     public function viewInvestors()
     {
-        if (!Auth::check()) {
-            return redirect()->route('upgrade.page');
-        }
+        $investors = User::query()
+            ->where('featured', true)
+            ->where('is_approved', true)
+            ->orderBy('name')
+            ->get();
 
-        if (auth()->user()->isFree()) {
-            return redirect()->route('upgrade.page');
-        }
-
-        $investors = User::where('public_profile','true')->get();
-        return view('investors',compact('investors'));
+        return view('investors', compact('investors'));
     }
 
     // View Resources Page 

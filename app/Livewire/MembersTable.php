@@ -5,23 +5,27 @@ namespace App\Livewire;
 use Livewire\Component;
 use Livewire\WithPagination;
 use App\Models\User;
+use Illuminate\Support\Collection;
 
 class MembersTable extends Component
 {
     use WithPagination;
 
-    public $search = ''; // Search term
-    public $filter = 'all'; // Filter: all, active, inactive, pending
+    public $search = '';
+    public $filter = 'all';
     public $allCount;
     public $activeCount;
     public $inactiveCount;
     public $pendingCount;
+    public $featuredCount;
 
-    protected $queryString = ['search', 'filter']; // Preserve search and filter in the URL
+    /** Search approved members to add to featured (Featured tab only). */
+    public $featuredPickerSearch = '';
+
+    protected $queryString = ['search', 'filter'];
 
     public function mount()
     {
-        // Initialize counts
         $this->updateCounts();
     }
 
@@ -31,21 +35,22 @@ class MembersTable extends Component
         $this->activeCount = User::where('account_status', '!=', 'free')->where('is_approved', true)->count();
         $this->inactiveCount = User::where('account_status', 'free')->where('is_approved', true)->count();
         $this->pendingCount = User::where('is_approved', false)->count();
+        $this->featuredCount = User::where('featured', true)->where('is_approved', true)->count();
     }
 
     public function updatingSearch()
     {
-        $this->resetPage(); // Reset pagination on new search
+        $this->resetPage();
     }
 
     public function updatingFilter()
     {
-        $this->resetPage(); // Reset pagination on filter change
+        $this->resetPage();
     }
 
     public function searchUsers()
     {
-        $this->render(); // Manually refresh the component when search is triggered
+        $this->render();
     }
 
     public function setFilter($filter)
@@ -60,11 +65,38 @@ class MembersTable extends Component
             $user->update([
                 'is_approved' => true,
                 'approved_by' => auth()->id(),
-                'approved_at' => now()
+                'approved_at' => now(),
             ]);
-            
-            // Update counts after approving a user
+
             $this->updateCounts();
+        }
+    }
+
+    public function addToFeatured(int $userId): void
+    {
+        if (! auth()->user()?->isAdmin()) {
+            return;
+        }
+
+        $user = User::where('id', $userId)->where('is_approved', true)->where('featured', false)->first();
+        if ($user) {
+            $user->update(['featured' => true]);
+            $this->updateCounts();
+            session()->flash('success', "{$user->name} is now featured on the public investors page.");
+        }
+    }
+
+    public function removeFromFeatured(int $userId): void
+    {
+        if (! auth()->user()?->isAdmin()) {
+            return;
+        }
+
+        $user = User::where('id', $userId)->where('featured', true)->first();
+        if ($user) {
+            $user->update(['featured' => false]);
+            $this->updateCounts();
+            session()->flash('success', "{$user->name} has been removed from featured.");
         }
     }
 
@@ -72,7 +104,6 @@ class MembersTable extends Component
     {
         $query = User::query();
 
-        // Apply filter
         switch ($this->filter) {
             case 'active':
                 $query->where('account_status', '!=', 'free')->where('is_approved', true);
@@ -83,13 +114,15 @@ class MembersTable extends Component
             case 'pending':
                 $query->where('is_approved', false);
                 break;
-            default: // 'all'
+            case 'featured':
+                $query->where('featured', true)->where('is_approved', true);
+                break;
+            default:
                 $query->where('is_approved', true);
                 break;
         }
 
-        // Apply search
-        if (!empty($this->search)) {
+        if (! empty($this->search)) {
             $term = "%{$this->search}%";
             $query->where(function ($query) use ($term) {
                 $query->where('name', 'like', $term)
@@ -99,15 +132,44 @@ class MembersTable extends Component
             });
         }
 
-        // Apply different sorting based on filter
         if ($this->filter === 'pending') {
-            // Sort pending approval users by latest first
             $users = $query->orderBy('created_at', 'desc')->paginate(10);
         } else {
-            // Default sorting for other tabs
             $users = $query->orderBy('name', 'asc')->paginate(10);
         }
 
-        return view('livewire.members-table', compact('users'));
+        $featurePickerResults = $this->featuredPickerResults();
+
+        return view('livewire.members-table', compact('users', 'featurePickerResults'));
+    }
+
+    /**
+     * @return Collection<int, User>
+     */
+    protected function featuredPickerResults(): Collection
+    {
+        if ($this->filter !== 'featured') {
+            return collect();
+        }
+
+        $q = trim($this->featuredPickerSearch);
+        if ($q === '') {
+            return collect();
+        }
+
+        $term = '%'.$q.'%';
+
+        return User::query()
+            ->where('is_approved', true)
+            ->where('featured', false)
+            ->where(function ($query) use ($term) {
+                $query->where('name', 'like', $term)
+                    ->orWhere('email', 'like', $term)
+                    ->orWhere('designation', 'like', $term)
+                    ->orWhere('company_name', 'like', $term);
+            })
+            ->orderBy('name')
+            ->limit(25)
+            ->get();
     }
 }

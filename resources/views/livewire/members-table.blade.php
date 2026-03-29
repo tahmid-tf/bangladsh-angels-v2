@@ -1,4 +1,8 @@
 <div>
+    @session('success')
+        <div class="mx-4 md:mx-6 mt-4 p-3 rounded-lg bg-green-100 border border-green-200 text-green-800 text-sm">{{ $value }}</div>
+    @endsession
+
     <!-- Filters and Search -->
     <div class="p-4 md:p-6 bg-white shadow mt-4">
         <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
@@ -14,6 +18,9 @@
                 </a>
                 <a wire:click="setFilter('pending')" class="px-4 py-2 cursor-pointer {{ $filter === 'pending' ? 'bg-green-100 text-green-700 font-semibold rounded-lg' : 'text-gray-500 hover:text-green-700' }}">
                     Pending Approval <span class="ml-1 px-2 py-0.5 rounded-full text-xs {{ $filter === 'pending' ? 'bg-green-200 text-green-800' : 'bg-gray-200 text-gray-700' }}">{{ $pendingCount }}</span>
+                </a>
+                <a wire:click="setFilter('featured')" class="px-4 py-2 cursor-pointer {{ $filter === 'featured' ? 'bg-green-100 text-green-700 font-semibold rounded-lg' : 'text-gray-500 hover:text-green-700' }}">
+                    Featured Members <span class="ml-1 px-2 py-0.5 rounded-full text-xs {{ $filter === 'featured' ? 'bg-green-200 text-green-800' : 'bg-gray-200 text-gray-700' }}">{{ $featuredCount }}</span>
                 </a>
             </div>
 
@@ -38,6 +45,39 @@
             </div>
             
         </div>
+
+        @if($filter === 'featured')
+            <div class="mt-6 pt-6 border-t border-gray-200">
+                <h3 class="text-sm font-semibold text-gray-800 mb-1">Add members to featured</h3>
+                <p class="text-xs text-gray-600 mb-3">Search approved members who are not yet shown on the public <span class="font-medium">/ban-investors</span> page.</p>
+                <div class="flex flex-col sm:flex-row gap-2 max-w-2xl">
+                    <input type="text"
+                        wire:model.live.debounce.400ms="featuredPickerSearch"
+                        placeholder="Name, email, designation, or company…"
+                        class="flex-1 border-gray-300 rounded-lg shadow-sm px-4 py-2 focus:ring-green-500 focus:border-green-500 text-sm">
+                </div>
+                @if(strlen(trim($featuredPickerSearch)) > 0)
+                    <ul class="mt-4 space-y-2 max-w-2xl">
+                        @forelse($featurePickerResults as $pick)
+                            <li class="flex flex-wrap items-center justify-between gap-2 py-2 px-3 bg-gray-50 rounded-lg border border-gray-100 text-sm">
+                                <div>
+                                    <span class="font-medium text-gray-800">{{ $pick->name }}</span>
+                                    <span class="text-gray-500 text-xs block sm:inline sm:ml-2">{{ $pick->email }}</span>
+                                </div>
+                                <button type="button"
+                                    wire:click="addToFeatured({{ $pick->id }})"
+                                    wire:loading.attr="disabled"
+                                    class="shrink-0 px-3 py-1.5 bg-green-600 text-white text-xs font-semibold rounded-lg hover:bg-green-700">
+                                    Add to featured
+                                </button>
+                            </li>
+                        @empty
+                            <li class="text-sm text-gray-500 py-2">No matching members, or they are already featured.</li>
+                        @endforelse
+                    </ul>
+                @endif
+            </div>
+        @endif
     </div>
 
     <!-- Members Table -->
@@ -123,10 +163,18 @@
                                 @endif
                             </td>
                             <td class="px-4 md:px-6 py-4 whitespace-nowrap">
-                                <div class="flex items-center gap-2">
+                                <div class="flex flex-wrap items-center gap-2">
                                     <a href="{{ route('member.edit', $user->id) }}" class="text-gray-600 hover:text-green-700 p-1">
                                         Edit
                                     </a>
+                                    @if($filter === 'featured')
+                                        <button type="button"
+                                            wire:click="removeFromFeatured({{ $user->id }})"
+                                            wire:loading.attr="disabled"
+                                            class="text-amber-700 hover:text-amber-900 py-1 px-1 text-sm">
+                                            Remove from featured
+                                        </button>
+                                    @endif
                                     @if($filter === 'pending' && !$user->is_approved)
                                     <button 
                                         wire:click="approveUser({{ $user->id }})"
@@ -138,7 +186,7 @@
                                     @if($user->id != auth()->id())
                                     <a href="{{ route('member.remove', $user->id) }}" 
                                        onclick="return confirm('Are you sure you want to delete this member? This action cannot be undone.')"
-                                       class="text-red-600 hover:text-red-800 p-1 ml-2">
+                                       class="text-red-600 hover:text-red-800 p-1">
                                         Delete
                                     </a>
                                     @endif
