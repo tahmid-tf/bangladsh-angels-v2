@@ -49,13 +49,10 @@ class PrimaryController extends Controller
     // View Deals Page
     public function viewDeals()
     {
-        //Get All Deals except Portfolio and Draft
+        // Show only active non-portfolio deals on /deals
         $deals = Deal::with('media')
-        ->where(function ($query) {
-            $query->where('type', '!=', 'portfolio')
-                  ->where('status', '!=', 'closed')
-                  ->where('status', '!=', 'draft');
-        })
+        ->where('type', '!=', 'portfolio')
+        ->where('status', 'active')
         ->get();
         return view('deals.index', compact('deals'));
     }
