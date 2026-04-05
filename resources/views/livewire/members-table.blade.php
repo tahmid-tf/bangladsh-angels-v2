@@ -2,6 +2,9 @@
     @session('success')
         <div class="mx-4 md:mx-6 mt-4 p-3 rounded-lg bg-green-100 border border-green-200 text-green-800 text-sm">{{ $value }}</div>
     @endsession
+    @session('error')
+        <div class="mx-4 md:mx-6 mt-4 p-3 rounded-lg bg-red-50 border border-red-200 text-red-800 text-sm">{{ $value }}</div>
+    @endsession
 
     <!-- Filters and Search -->
     <div class="p-4 md:p-6 bg-white shadow mt-4">
@@ -49,7 +52,7 @@
         @if($filter === 'featured')
             <div class="mt-6 pt-6 border-t border-gray-200">
                 <h3 class="text-sm font-semibold text-gray-800 mb-1">Add members to featured</h3>
-                <p class="text-xs text-gray-600 mb-3">Search approved members who are not yet shown on the public <span class="font-medium">/ban-investors</span> page.</p>
+                <p class="text-xs text-gray-600 mb-3">Search approved members who are not yet shown on the public <span class="font-medium">/ban-investors</span> page. For each featured member you can add an optional testimonial and choose whether to show it publicly.</p>
                 <div class="flex flex-col sm:flex-row gap-2 max-w-2xl">
                     <input type="text"
                         wire:model.live.debounce.400ms="featuredPickerSearch"
@@ -193,6 +196,13 @@
                                 </div>
                             </td>
                         </tr>
+                        @if($filter === 'featured')
+                            <tr class="border-t bg-gray-50/80">
+                                <td colspan="7" class="px-4 md:px-6 py-4">
+                                    <livewire:featured-testimonial-editor :user-id="$user->id" :wire:key="'featured-testimonial-'.$user->id" />
+                                </td>
+                            </tr>
+                        @endif
                     @empty
                         <tr>
                             <td colspan="7" class="text-center py-4">No members found.</td>

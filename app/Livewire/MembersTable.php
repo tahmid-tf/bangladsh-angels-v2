@@ -94,7 +94,11 @@ class MembersTable extends Component
 
         $user = User::where('id', $userId)->where('featured', true)->first();
         if ($user) {
-            $user->update(['featured' => false]);
+            $user->update([
+                'featured' => false,
+                'featured_testimonial' => null,
+                'featured_testimonial_public' => false,
+            ]);
             $this->updateCounts();
             session()->flash('success', "{$user->name} has been removed from featured.");
         }

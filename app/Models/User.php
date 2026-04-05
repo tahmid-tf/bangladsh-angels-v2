@@ -54,6 +54,8 @@ class User extends Authenticatable implements HasMedia
         'role',
         'is_approved',
         'featured',
+        'featured_testimonial',
+        'featured_testimonial_public',
         'approved_by',
         'approved_at',
         'website_link',
@@ -91,6 +93,7 @@ class User extends Authenticatable implements HasMedia
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
             'featured' => 'boolean',
+            'featured_testimonial_public' => 'boolean',
         ];
     }
 
@@ -121,6 +124,11 @@ class User extends Authenticatable implements HasMedia
     public function isAdmin()
     {
         return $this->role === 'admin' || $this->role ==="superadmin";
+    }
+
+    public function hasPublicFeaturedTestimonial(): bool
+    {
+        return $this->featured_testimonial_public && filled($this->featured_testimonial);
     }
 
     /**
