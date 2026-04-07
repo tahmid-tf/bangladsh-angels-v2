@@ -2,21 +2,27 @@
 
 namespace App\Livewire;
 
-use Livewire\Component;
-use Livewire\WithPagination;
 use App\Models\User;
 use Illuminate\Support\Collection;
+use Livewire\Component;
+use Livewire\WithPagination;
 
 class MembersTable extends Component
 {
     use WithPagination;
 
     public $search = '';
+
     public $filter = 'all';
+
     public $allCount;
+
     public $activeCount;
+
     public $inactiveCount;
+
     public $pendingCount;
+
     public $featuredCount;
 
     /** Search approved members to add to featured (Featured tab only). */
@@ -70,6 +76,25 @@ class MembersTable extends Component
 
             $this->updateCounts();
         }
+    }
+
+    public function verifyEmail(int $userId): void
+    {
+        if (! auth()->user()?->isAdmin()) {
+            return;
+        }
+
+        $user = User::find($userId);
+        if (! $user || $user->hasVerifiedEmail()) {
+            return;
+        }
+
+        $user->update([
+            'email_verified_at' => now(),
+            'email_verified_by' => auth()->id(),
+        ]);
+
+        session()->flash('success', "Email verified for {$user->email}.");
     }
 
     public function addToFeatured(int $userId): void
@@ -135,6 +160,8 @@ class MembersTable extends Component
                     ->orWhere('company_name', 'like', $term);
             });
         }
+
+        $query->with('emailVerifiedByAdmin');
 
         if ($this->filter === 'pending') {
             $users = $query->orderBy('created_at', 'desc')->paginate(10);

@@ -34,6 +34,7 @@ class ProfileController extends Controller
         // If email is updated, reset email verification
         if ($user->isDirty('email')) {
             $user->email_verified_at = null;
+            $user->email_verified_by = null;
         }
 
         // Handle profile picture upload
@@ -51,7 +52,6 @@ class ProfileController extends Controller
 
         return Redirect::route('profile.edit')->with('status', 'profile-updated');
     }
-
 
     /**
      * Delete the user's account.

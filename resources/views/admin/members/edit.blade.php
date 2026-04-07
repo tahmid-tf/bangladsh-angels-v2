@@ -43,6 +43,13 @@
     </div>
     @endif
 
+    @if (session('success'))
+    <div class="mb-4 p-4 rounded-lg bg-green-50 border border-green-200 text-green-800 text-sm">{{ session('success') }}</div>
+    @endif
+    @if (session('info'))
+    <div class="mb-4 p-4 rounded-lg bg-blue-50 border border-blue-200 text-blue-800 text-sm">{{ session('info') }}</div>
+    @endif
+
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <!-- Left: Profile Photo -->
         <div class="space-y-6">
@@ -84,6 +91,23 @@
                     <input type="email" id="email" name="email" 
                            class="w-full rounded-lg border border-gray-300 px-4 py-2 focus:ring-2 focus:ring-green-500 focus:border-green-500"
                            value="{{ old('email', $user->email) }}" required>
+                    <div class="mt-2 rounded-lg border border-gray-200 bg-gray-50 px-3 py-2 text-xs text-gray-700 space-y-1">
+                        @if ($user->hasVerifiedEmail())
+                            <p class="font-medium text-green-800">Email verified</p>
+                            <p class="text-gray-600">{{ $user->email_verified_at?->format('M j, Y g:i A') }}</p>
+                            @if ($user->email_verified_by && $user->emailVerifiedByAdmin)
+                                <p>Verified by admin: {{ $user->emailVerifiedByAdmin->name }}</p>
+                            @else
+                                <p class="text-gray-500">Verified via email link (self-service)</p>
+                            @endif
+                        @else
+                            <p class="font-medium text-amber-800">Email not verified</p>
+                            <form method="POST" action="{{ route('member.verify-email', $user->id) }}" class="inline" onsubmit="return confirm('Mark this email as verified?');">
+                                @csrf
+                                <button type="submit" class="mt-1 text-xs bg-teal-600 hover:bg-teal-700 text-white py-1.5 px-3 rounded-lg">Verify email manually</button>
+                            </form>
+                        @endif
+                    </div>
                 </div>
 
                 <div>

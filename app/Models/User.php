@@ -3,22 +3,29 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Carbon;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
-use App\Models\Investment;
-use App\Models\Subscription;
-use App\Models\Commit;
-
-use Illuminate\Support\Carbon;
-
 
 class User extends Authenticatable implements HasMedia
 {
-    /** @use HasFactory<\Database\Factories\UserFactory> */
-    use InteractsWithMedia, HasFactory, Notifiable;
+    /** @use HasFactory<UserFactory> */
+    use HasFactory, InteractsWithMedia, Notifiable;
+
+    /**
+     * Self-service verification (email link) clears manual verifier attribution.
+     */
+    public function markEmailAsVerified(): bool
+    {
+        return $this->forceFill([
+            'email_verified_at' => $this->freshTimestamp(),
+            'email_verified_by' => null,
+        ])->save();
+    }
 
     /**
      * The attributes that are mass assignable.
@@ -69,8 +76,9 @@ class User extends Authenticatable implements HasMedia
         'address',
         'used_by',
         'level',
+        'email_verified_at',
+        'email_verified_by',
     ];
-    
 
     /**
      * The attributes that should be hidden for serialization.
@@ -104,13 +112,14 @@ class User extends Authenticatable implements HasMedia
 
     public function getLastRenewedAtAttribute($value)
     {
-        if (!empty($value)) {
+        if (! empty($value)) {
             try {
                 // Trim and ensure consistent format
                 return Carbon::createFromFormat('d/m/y', trim($value));
             } catch (\Exception $e) {
                 // Log the issue or handle invalid formats
-                \Log::error('Failed to parse last_renewed_at: ' . $value);
+                \Log::error('Failed to parse last_renewed_at: '.$value);
+
                 return null;
             }
         }
@@ -123,7 +132,7 @@ class User extends Authenticatable implements HasMedia
      */
     public function isAdmin()
     {
-        return $this->role === 'admin' || $this->role ==="superadmin";
+        return $this->role === 'admin' || $this->role === 'superadmin';
     }
 
     public function hasPublicFeaturedTestimonial(): bool
@@ -146,37 +155,39 @@ class User extends Authenticatable implements HasMedia
     {
         return $this->account_status === 'free';
     }
+
     /**
      * Check user account status.
      */
-     public function status()
-     {
-        if ($this->account_status == "free"){
+    public function status()
+    {
+        if ($this->account_status == 'free') {
             return 'Free Tier';
-        } elseif ($this->account_status == "core"){
+        } elseif ($this->account_status == 'core') {
             return 'Core Tier';
-        } elseif ($this->account_status == "advanced"){
+        } elseif ($this->account_status == 'advanced') {
             return 'Advanced Tier';
-        } elseif ($this->account_status == "institutional"){
+        } elseif ($this->account_status == 'institutional') {
             return 'Institutional Tier';
-        } elseif ($this->account_status == "disabled"){
+        } elseif ($this->account_status == 'disabled') {
             return 'Disabled';
         }
-     }
+    }
+
     /**
      * Check user payment status.
      */
-     public function paymentStatus()
-     {
-        if($this->payment_status=="free"){
+    public function paymentStatus()
+    {
+        if ($this->payment_status == 'free') {
             return 'Non-Payable';
-        } elseif($this->payment_status=="due"){
+        } elseif ($this->payment_status == 'due') {
             return 'Due';
-        } elseif($this->payment_status=="paid"){
+        } elseif ($this->payment_status == 'paid') {
             return 'Paid';
         }
 
-     }
+    }
 
     public function getProfilePhotoUrl(): string
     {
@@ -204,8 +215,8 @@ class User extends Authenticatable implements HasMedia
     public function renewedAt(): string
     {
         // Ensure the "updated_at" field exists
-        if (!$this->updated_at) {
-            return "Not renewed";
+        if (! $this->updated_at) {
+            return 'Not renewed';
         }
 
         // Get the year of the last update
@@ -230,12 +241,20 @@ class User extends Authenticatable implements HasMedia
     {
         return $this->hasMany(Investment::class, 'user_id');
     }
-    
+
     /**
      * Get the admin user who approved this user.
      */
     public function approvedBy()
     {
         return $this->belongsTo(User::class, 'approved_by');
+    }
+
+    /**
+     * Admin who manually verified this member's email (null if verified via email link or legacy).
+     */
+    public function emailVerifiedByAdmin()
+    {
+        return $this->belongsTo(User::class, 'email_verified_by');
     }
 }

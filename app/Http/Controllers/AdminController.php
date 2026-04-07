@@ -186,6 +186,22 @@ class AdminController extends Controller
         }
     }
 
+    public function verifyMemberEmail(User $user)
+    {
+        abort_unless(auth()->user()?->isAdmin(), 403);
+
+        if ($user->hasVerifiedEmail()) {
+            return redirect()->back()->with('info', 'This member\'s email is already verified.');
+        }
+
+        $user->update([
+            'email_verified_at' => now(),
+            'email_verified_by' => auth()->id(),
+        ]);
+
+        return redirect()->back()->with('success', 'Email marked verified for '.$user->email.'.');
+    }
+
     public function addMember()
     {
 
@@ -552,6 +568,7 @@ class AdminController extends Controller
 
     public function editMember(User $user)
     {
+        $user->load('emailVerifiedByAdmin');
 
         return view('admin.members.edit', compact('user'));
     }
@@ -697,6 +714,6 @@ class AdminController extends Controller
     {
         $otherDeals = $deal->getOtherDeals(5); // Fetch 5 other deals
 
-        return view('deals.single',compact('deal','otherDeals'));
+        return view('deals.single', compact('deal', 'otherDeals'));
     }
 }

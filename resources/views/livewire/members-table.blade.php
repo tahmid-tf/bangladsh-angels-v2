@@ -93,6 +93,7 @@
                         <th class="hidden md:table-cell px-6 py-4 font-medium text-gray-600">Designation</th>
                         <th class="hidden lg:table-cell px-6 py-4 font-medium text-gray-600">Organization</th>
                         <th class="hidden md:table-cell px-6 py-4 font-medium text-gray-600">Phone</th>
+                        <th class="hidden lg:table-cell px-6 py-4 font-medium text-gray-600 whitespace-nowrap">Email verified</th>
                         <th class="hidden md:table-cell px-6 py-4 font-medium text-gray-600">
                             @if($filter === 'pending')
                                 Registered
@@ -131,6 +132,32 @@
                             <td class="hidden md:table-cell px-6 py-4">{{ $user->designation ?? '-' }}</td>
                             <td class="hidden lg:table-cell px-6 py-4">{{ $user->company_name ?? '-' }}</td>
                             <td class="hidden md:table-cell px-6 py-4 whitespace-nowrap">{{ $user->phone ?? '-' }}</td>
+                            <td class="hidden lg:table-cell px-6 py-4 text-xs text-gray-600 max-w-[14rem]">
+                                @if($user->hasVerifiedEmail())
+                                    <span class="inline-flex items-center text-green-700 font-medium">
+                                        <svg class="w-3.5 h-3.5 mr-1 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+                                        Yes
+                                    </span>
+                                    <div class="mt-1 text-gray-500 leading-snug">
+                                        {{ $user->email_verified_at->format('M j, Y g:i A') }}
+                                        @if($user->email_verified_by && $user->emailVerifiedByAdmin)
+                                            <span class="block">by {{ $user->emailVerifiedByAdmin->name }}</span>
+                                        @else
+                                            <span class="block text-gray-400">Self-service link</span>
+                                        @endif
+                                    </div>
+                                @else
+                                    <span class="text-amber-800 font-medium">Unverified</span>
+                                    <div class="mt-2">
+                                        <button type="button"
+                                            wire:click="verifyEmail({{ $user->id }})"
+                                            wire:loading.attr="disabled"
+                                            class="text-xs bg-teal-600 hover:bg-teal-700 text-white py-1 px-2 rounded">
+                                            Verify
+                                        </button>
+                                    </div>
+                                @endif
+                            </td>
                             <td class="hidden md:table-cell px-6 py-4 whitespace-nowrap">
                                 @if($filter === 'pending')
                                     <div class="flex flex-col gap-1">
@@ -198,14 +225,14 @@
                         </tr>
                         @if($filter === 'featured')
                             <tr class="border-t bg-gray-50/80">
-                                <td colspan="7" class="px-4 md:px-6 py-4">
+                                <td colspan="8" class="px-4 md:px-6 py-4">
                                     <livewire:featured-testimonial-editor :user-id="$user->id" :wire:key="'featured-testimonial-'.$user->id" />
                                 </td>
                             </tr>
                         @endif
                     @empty
                         <tr>
-                            <td colspan="7" class="text-center py-4">No members found.</td>
+                            <td colspan="8" class="text-center py-4">No members found.</td>
                         </tr>
                     @endforelse
                 </tbody>
