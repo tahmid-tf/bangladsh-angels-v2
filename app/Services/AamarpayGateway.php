@@ -118,8 +118,6 @@ class AamarpayGateway
             return 'invalid or empty JSON';
         }
 
-        $candidates = [];
-
         if (is_object($decoded)) {
             $decoded = json_decode(json_encode($decoded), true);
         }
@@ -128,7 +126,15 @@ class AamarpayGateway
             return 'unexpected response type';
         }
 
-        foreach (['detailedError', 'error', 'message', 'failedreason', 'failed_reason', 'status', 'status_code'] as $key) {
+        $priorityKeys = [
+            'detailedError', 'error', 'message', 'reason', 'msg',
+            'failedreason', 'failed_reason', 'error_message',
+            'description', 'details', 'pg_error_code_details',
+            'track', 'track_id', 'result', 'status_code', 'status',
+        ];
+
+        $candidates = [];
+        foreach ($priorityKeys as $key) {
             if (! array_key_exists($key, $decoded)) {
                 continue;
             }
@@ -136,11 +142,19 @@ class AamarpayGateway
             if ($val === null || $val === '') {
                 continue;
             }
+            if ($key === 'result' && (string) $val === 'false') {
+                $candidates[] = 'result: false';
+
+                continue;
+            }
+            if ($key === 'result' && (string) $val === 'true') {
+                continue;
+            }
             $candidates[] = $key.': '.(is_scalar($val) ? (string) $val : json_encode($val));
         }
 
         if (isset($decoded['data']) && is_array($decoded['data'])) {
-            foreach (['detailedError', 'error', 'message'] as $key) {
+            foreach (['detailedError', 'error', 'message', 'reason', 'msg'] as $key) {
                 if (! array_key_exists($key, $decoded['data'])) {
                     continue;
                 }
@@ -152,7 +166,54 @@ class AamarpayGateway
             }
         }
 
-        return $candidates !== [] ? implode(' | ', $candidates) : 'no known error fields in JSON';
+        // If AamarPay only returns generic keys, surface any other scalar fields (often holds the real reason).
+        if (count($candidates) <= 1) {
+            $skip = array_flip(array_merge($priorityKeys, ['payment_url']));
+            foreach ($decoded as $key => $val) {
+                if (isset($skip[$key])) {
+                    continue;
+                }
+                if (! is_scalar($val) || $val === '') {
+                    continue;
+                }
+                $s = (string) $val;
+                if (strlen($s) > 160) {
+                    $s = substr($s, 0, 157).'…';
+                }
+                $candidates[] = $key.': '.$s;
+                if (count($candidates) >= 6) {
+                    break;
+                }
+            }
+        }
+
+        return $candidates !== [] ? implode(' | ', array_unique($candidates)) : 'no known error fields in JSON';
+    }
+
+    /**
+     * Hints for developers when jsonpost returns HTTP 200 but no payment_url (live mode).
+     */
+    public function liveJsonpostTroubleshootingFootnote(string $gatewayHint): string
+    {
+        $hint = strtolower($gatewayHint);
+
+        if (str_contains($hint, 'signature') || str_contains($hint, 'invalid')) {
+            return 'Confirm AAMARPAY_LIVE_SIGNATURE_KEY and AAMARPAY_LIVE_STORE_ID match the live AamarPay dashboard exactly (no extra spaces).';
+        }
+
+        if (str_contains($hint, 'currency')) {
+            return 'Confirm the merchant account is enabled for the currency in AAMARPAY_CURRENCY (e.g. USD vs BDT).';
+        }
+
+        if (str_contains($hint, 'url') || str_contains($hint, 'callback')) {
+            return 'Confirm success/fail/cancel callbacks use a public HTTPS URL that AamarPay can reach.';
+        }
+
+        if (preg_match('/^status:\s*error$/i', trim($gatewayHint)) || $gatewayHint === 'no known error fields in JSON') {
+            return 'AamarPay returned a generic error. Check storage/logs for body_preview (full redacted JSON). Common live issues: store/signature not activated for production, AAMARPAY_CURRENCY not enabled on the merchant (try BDT if USD fails), or callback URL not public HTTPS.';
+        }
+
+        return 'See storage/logs (body_preview) for the full redacted response. Verify live credentials, jsonpost.php URL, APP_URL/HTTPS, and AAMARPAY_CURRENCY.';
     }
 
     /**

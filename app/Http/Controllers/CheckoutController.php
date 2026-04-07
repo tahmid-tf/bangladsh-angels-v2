@@ -184,7 +184,7 @@ class CheckoutController extends Controller
             $tranPrefix = $gatewayMode === 'live' ? 'bdangels' : 'test';
             $tran_id = $tranPrefix.rand(1111111, 9999999);
 
-            $currency = config('aamarpay.currency', 'USD');
+            $currency = strtoupper((string) config('aamarpay.currency', 'USD'));
             $amount = $validated['price'];
 
             $callbackUrl = route('payment.aamarpay.callback', [], true);
@@ -249,15 +249,27 @@ class CheckoutController extends Controller
 
             $responseObj = json_decode($response ?: '');
 
-            $hasPaymentUrl = is_object($responseObj)
-                && isset($responseObj->payment_url)
-                && $responseObj->payment_url !== ''
-                && $responseObj->payment_url !== null;
+            $paymentUrl = null;
+            if (is_object($responseObj) && isset($responseObj->payment_url)) {
+                $paymentUrl = $responseObj->payment_url;
+            }
+            $resultOk = is_object($responseObj)
+                && isset($responseObj->result)
+                && (string) $responseObj->result === 'true';
 
-            if ($hasPaymentUrl) {
+            $hasPaymentUrl = $paymentUrl !== null && $paymentUrl !== '';
+
+            if ($hasPaymentUrl && ($resultOk || ! isset($responseObj->result))) {
                 session(['checkout.tran_id' => $tran_id]);
 
-                return redirect()->away($responseObj->payment_url);
+                return redirect()->away($paymentUrl);
+            }
+
+            if ($hasPaymentUrl && isset($responseObj->result) && ! $resultOk) {
+                Log::warning('AamarPay returned payment_url but result is not true', [
+                    'mode' => $gatewayMode,
+                    'result' => $responseObj->result ?? null,
+                ]);
             }
 
             $gatewayHint = $this->aamarpay->parseJsonpostErrorHint($responseObj);
@@ -271,6 +283,8 @@ class CheckoutController extends Controller
                 'gateway_hint' => $gatewayHint,
                 'body_preview' => $bodyPreview,
                 'tran_id' => $tran_id,
+                'currency' => $currency,
+                'callback_host' => parse_url($callbackUrl, PHP_URL_HOST) ?: null,
             ]);
 
             if ($httpCode < 200 || $httpCode >= 300) {
@@ -286,7 +300,8 @@ class CheckoutController extends Controller
 
             $userMessage = 'Payment gateway error. Please try again or contact support.';
             if (config('app.debug')) {
-                $userMessage .= ' Technical: '.$gatewayHint.' (HTTP '.$httpCode.'). Check storage/logs and that AAMARPAY_LIVE_JSONPOST_URL points to jsonpost.php (not trxcheck).';
+                $userMessage .= ' Technical: '.$gatewayHint.' (HTTP '.$httpCode.').';
+                $userMessage .= ' '.$this->aamarpay->liveJsonpostTroubleshootingFootnote($gatewayHint);
             }
 
             return redirect()->route('checkout')->with('error', $userMessage);
