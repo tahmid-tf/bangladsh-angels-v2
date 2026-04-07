@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-
 use App\Models\Deal;
-use App\Models\User;
 use App\Models\Resource;
+use App\Models\SubscriptionTier;
+use App\Models\User;
+use Illuminate\Http\Request;
 
 class PrimaryController extends Controller
 {
@@ -16,28 +16,33 @@ class PrimaryController extends Controller
         // if(!auth()->user() || !auth()->user()->isAdmin() ){
         //     return view('soon');
         // }
-        
-        $portfolioDeals = Deal::where('type','portfolio')->take(3)->get();
+
+        $portfolioDeals = Deal::where('type', 'portfolio')->take(3)->get();
         $deals = Deal::take(3)->get();
-        return view('welcome',compact('portfolioDeals','deals'));
+
+        return view('welcome', compact('portfolioDeals', 'deals'));
     }
 
     // Upgrade Page
-    public function upgradePage(){
+    public function upgradePage()
+    {
         return view('upgrade');
     }
 
     // Portfolio Page
     public function viewPortfolio()
     {
-        $deals = Deal::with('media')->where('type','portfolio')->get();
-        return view('portfolio',compact('deals'));
+        $deals = Deal::with('media')->where('type', 'portfolio')->get();
+
+        return view('portfolio', compact('deals'));
     }
 
     // Subscription Plans Page
     public function viewPlans()
     {
-        return view('plans');
+        $tiers = SubscriptionTier::query()->active()->ordered()->get();
+
+        return view('plans', compact('tiers'));
     }
 
     // Checkout Page
@@ -51,9 +56,10 @@ class PrimaryController extends Controller
     {
         // Show only active non-portfolio deals on /deals
         $deals = Deal::with('media')
-        ->where('type', '!=', 'portfolio')
-        ->where('status', 'active')
-        ->get();
+            ->where('type', '!=', 'portfolio')
+            ->where('status', 'active')
+            ->get();
+
         return view('deals.index', compact('deals'));
     }
 
@@ -61,11 +67,12 @@ class PrimaryController extends Controller
     public function viewDeals_invest()
     {
         $deals = Deal::with('media')->where(function ($query) {
-            $query->where('type','invest')
-                  ->where('status', '!=', 'closed')
-                  ->where('status', '!=', 'draft');
+            $query->where('type', 'invest')
+                ->where('status', '!=', 'closed')
+                ->where('status', '!=', 'draft');
         })
-        ->get();
+            ->get();
+
         return view('deals.invest', compact('deals'));
     }
 
@@ -73,12 +80,13 @@ class PrimaryController extends Controller
     public function viewDeals_commit()
     {
         $deals = Deal::with('media')
-        ->where(function ($query) {
-            $query->where('type','commit')
-                  ->where('status', '!=', 'closed')
-                  ->where('status', '!=', 'draft');
-        })
-        ->get();
+            ->where(function ($query) {
+                $query->where('type', 'commit')
+                    ->where('status', '!=', 'closed')
+                    ->where('status', '!=', 'draft');
+            })
+            ->get();
+
         return view('deals.commit', compact('deals'));
     }
 
@@ -86,26 +94,29 @@ class PrimaryController extends Controller
     public function viewDeals_review()
     {
         $deals = Deal::with('media')
-        ->where(function ($query) {
-            $query->where('type','review')
-                  ->where('status', '!=', 'closed')
-                  ->where('status', '!=', 'draft');
-        })
-        ->get();
+            ->where(function ($query) {
+                $query->where('type', 'review')
+                    ->where('status', '!=', 'closed')
+                    ->where('status', '!=', 'draft');
+            })
+            ->get();
+
         return view('deals.review', compact('deals'));
     }
 
-    // View FAQ Page 
-    public function viewFAQ(){
+    // View FAQ Page
+    public function viewFAQ()
+    {
         return view('faq');
     }
 
-    // View Team Page 
-    public function viewTeam(){
+    // View Team Page
+    public function viewTeam()
+    {
         return view('team');
     }
 
-    // View Sign up Page 
+    // View Sign up Page
     public function viewInvestorSignup()
     {
         return view('investor.signup');
@@ -123,7 +134,7 @@ class PrimaryController extends Controller
         return view('investors', compact('investors'));
     }
 
-    // View Resources Page 
+    // View Resources Page
     public function viewResources()
     {
         $events = Resource::where('type', 'event')->latest()->get();

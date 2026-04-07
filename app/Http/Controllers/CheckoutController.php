@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Mail\CheckoutConfirmation;
 use App\Models\Payment;
 use App\Models\Subscription;
+use App\Models\SubscriptionTier;
 use App\Models\User;
 use App\Services\AamarpayGateway;
 use Illuminate\Http\Request;
@@ -13,7 +14,6 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\URL;
 
 class CheckoutController extends Controller
 {
@@ -24,18 +24,32 @@ class CheckoutController extends Controller
     public function checkout(Request $request)
     {
         if ($request->isMethod('post')) {
+            $validated = $request->validate([
+                'plan' => ['required', 'string', 'max:64'],
+                'plan_price' => ['required', 'numeric', 'min:0'],
+            ]);
+
+            $tier = SubscriptionTier::query()
+                ->active()
+                ->where('slug', $validated['plan'])
+                ->first();
+
+            if (! $tier) {
+                return redirect()->route('plans')->with('error', 'That plan is no longer available.');
+            }
+
+            if (abs((float) $tier->price_yearly - (float) $validated['plan_price']) > 0.009) {
+                return redirect()->route('plans')->with('error', 'Plan pricing was updated. Please choose your plan again.');
+            }
+
             $request->session()->put('checkout.plan', [
-                'name' => $request->input('plan_name'),
-                'price' => $request->input('plan_price'),
+                'slug' => $tier->slug,
+                'name' => $tier->name,
+                'price' => (float) $tier->price_yearly,
             ]);
         }
 
-        $selectedPlan = $request->session()->get('checkout.plan', [
-            'name' => 'Default',
-            'price' => 0,
-        ]);
-
-        return view('payment.checkout', compact('selectedPlan'));
+        return view('payment.checkout');
     }
 
     public function processCheckout(Request $request)
@@ -54,9 +68,22 @@ class CheckoutController extends Controller
             'linkedin' => 'required|url|max:255',
             'password' => Auth::check() ? '' : 'required|confirmed|min:8',
             'profile_photo' => 'nullable',
-            'plan' => 'required|string',
+            'plan' => 'required|string|max:64',
             'price' => 'required|numeric|min:0',
         ]);
+
+        $tier = SubscriptionTier::query()
+            ->active()
+            ->where('slug', $validated['plan'])
+            ->first();
+
+        if (! $tier) {
+            return redirect()->route('plans')->with('error', 'That plan is no longer available.');
+        }
+
+        if (abs((float) $tier->price_yearly - (float) $validated['price']) > 0.009) {
+            return redirect()->route('plans')->with('error', 'Plan pricing was updated. Please choose your plan again.');
+        }
 
         try {
             $user = User::firstOrCreate(
@@ -111,8 +138,11 @@ class CheckoutController extends Controller
             session([
                 'checkout.user_id' => $user->id,
                 'checkout.subscription_id' => $subscription->id,
-                'checkout.plan' => $validated['plan'],
-                'checkout.price' => $validated['price'],
+                'checkout.plan' => [
+                    'slug' => $tier->slug,
+                    'name' => $tier->name,
+                    'price' => (float) $validated['price'],
+                ],
             ]);
 
             if (app()->environment('local') && filter_var(env('SKIP_PAYMENT_GATEWAY', false), FILTER_VALIDATE_BOOLEAN)) {
@@ -401,8 +431,11 @@ class CheckoutController extends Controller
             'end_date' => now()->addYear(),
         ]);
 
+        $tier = SubscriptionTier::query()->where('slug', $validated['plan'])->first();
+        $planLabel = $tier?->name ?? $validated['plan'];
+
         try {
-            Mail::to($user->email)->send(new CheckoutConfirmation($user, $validated['plan'], $validated['price']));
+            Mail::to($user->email)->send(new CheckoutConfirmation($user, $planLabel, $validated['price']));
         } catch (\Exception $e) {
             Log::error('Error sending checkout email: '.$e->getMessage());
         }

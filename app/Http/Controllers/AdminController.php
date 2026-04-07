@@ -2,34 +2,34 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Mail;
-use App\Models\User;
+use App\Mail\AccountApproved;
 use App\Models\Deal;
-use App\Models\Subscription;
 use App\Models\Payment;
-
+use App\Models\Subscription;
+use App\Models\User;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 
 class AdminController extends Controller
 {
     public function __invoke()
     {
-        if(auth()->user()->isAdmin()){
+        if (auth()->user()->isAdmin()) {
             $users = User::all(); // Retrieve all users
             $deals = Deal::all(); // Retrieve all deals
             $payments = Payment::all(); // Retrieve all payments
             $subscriptions = Subscription::all(); // Retrieve all subscriptions
-            
+
             // Summary data for cards
             $totalRevenue = Payment::where('status', 'completed')->sum('amount');
             $activeMembers = User::where('account_status', '!=', 'free')->count();
             $completedPayments = Payment::where('status', 'completed')->count();
-            
-            //Member Sign up Analytics
+
+            // Member Sign up Analytics
             $memberCounts = User::selectRaw('DATE(created_at) as date, COUNT(*) as count')
                 ->groupBy('date')
                 ->orderBy('date', 'asc')
@@ -39,7 +39,7 @@ class AdminController extends Controller
             $dates = $memberCounts->pluck('date'); // Array of dates
             $counts = $memberCounts->pluck('count'); // Array of counts
 
-            //Subscription Analytics
+            // Subscription Analytics
             $subscriptionCounts = Subscription::selectRaw('DATE(created_at) as date, COUNT(*) as count')
                 ->groupBy('date')
                 ->orderBy('date', 'asc')
@@ -48,7 +48,7 @@ class AdminController extends Controller
             $subscriptionDates = $subscriptionCounts->pluck('date'); // Array of dates
             $subsCounts = $subscriptionCounts->pluck('count'); // Array of counts
 
-            //Deal Analytics
+            // Deal Analytics
             $dealCounts = Deal::selectRaw('DATE(created_at) as date, COUNT(*) as count')
                 ->groupBy('date')
                 ->orderBy('date', 'asc')
@@ -56,7 +56,7 @@ class AdminController extends Controller
             // Prepare data for the chart
             $dealDates = $dealCounts->pluck('date'); // Array of dates
             $dCounts = $dealCounts->pluck('count'); // Array of counts
-            
+
             // Payment Analytics - Monthly Revenue
             $paymentsByMonth = Payment::where('status', 'completed')
                 ->selectRaw('MONTH(payment_date) as month, YEAR(payment_date) as year, SUM(amount) as total')
@@ -64,29 +64,29 @@ class AdminController extends Controller
                 ->orderBy('year', 'asc')
                 ->orderBy('month', 'asc')
                 ->get();
-            
-            $revenueLabels = $paymentsByMonth->map(function($item) {
+
+            $revenueLabels = $paymentsByMonth->map(function ($item) {
                 return date('M Y', mktime(0, 0, 0, $item->month, 1, $item->year));
             });
             $revenueData = $paymentsByMonth->pluck('total');
-            
+
             // Subscription plan distribution
             $planCounts = Subscription::selectRaw('plan, COUNT(*) as count')
                 ->groupBy('plan')
                 ->get();
-            
+
             $planLabels = $planCounts->pluck('plan');
             $planData = $planCounts->pluck('count');
-            
+
             // Payment method distribution
             $methodCounts = Payment::where('status', 'completed')
                 ->selectRaw('payment_method, COUNT(*) as count')
                 ->groupBy('payment_method')
                 ->get();
-            
+
             $methodLabels = $methodCounts->pluck('payment_method');
             $methodData = $methodCounts->pluck('count');
-            
+
             return view('admin.index', compact(
                 'users',
                 'deals',
@@ -119,20 +119,21 @@ class AdminController extends Controller
             // Retrieve users with pagination, only approved users
             $allUsers = User::with('media')->where('is_approved', true)->get(); // All approved Users
             $users = User::with('media')->where('is_approved', true)->paginate(50); // 50 users per page
-            return view('admin.members.index', compact('users','allUsers'));
+
+            return view('admin.members.index', compact('users', 'allUsers'));
         } else {
             return redirect()->route('home');
         }
     }
 
-
     public function viewActiveMembers()
     {
-        if(auth()->user()->isAdmin()){
+        if (auth()->user()->isAdmin()) {
             // Retrieve users with pagination
-            $allUsers = User::with('media')->where('account_status','!=','free')->where('is_approved', true)->get(); // All approved active Users
-            $users = User::with('media')->where('account_status','!=','free')->where('is_approved', true)->paginate(50); // 50 users per page
-            return view('admin.members.active_index', compact('users','allUsers'));
+            $allUsers = User::with('media')->where('account_status', '!=', 'free')->where('is_approved', true)->get(); // All approved active Users
+            $users = User::with('media')->where('account_status', '!=', 'free')->where('is_approved', true)->paginate(50); // 50 users per page
+
+            return view('admin.members.active_index', compact('users', 'allUsers'));
         } else {
             return redirect()->route('home');
         }
@@ -140,43 +141,45 @@ class AdminController extends Controller
 
     public function viewInactiveMembers()
     {
-        if(auth()->user()->isAdmin()){
-            $allUsers = User::with('media')->where('account_status','free')->where('is_approved', true)->get(); // Retrieve all users
-            $users = User::with('media')->where('account_status','free')->where('is_approved', true)->paginate(50); // Retrieve all users
-            return view('admin.members.inactive_index', compact('users','allUsers'));
+        if (auth()->user()->isAdmin()) {
+            $allUsers = User::with('media')->where('account_status', 'free')->where('is_approved', true)->get(); // Retrieve all users
+            $users = User::with('media')->where('account_status', 'free')->where('is_approved', true)->paginate(50); // Retrieve all users
+
+            return view('admin.members.inactive_index', compact('users', 'allUsers'));
         } else {
             return redirect()->route('home');
         }
     }
-    
+
     public function viewPendingApprovalMembers()
     {
-        if(auth()->user()->isAdmin()){
+        if (auth()->user()->isAdmin()) {
             $allUsers = User::with('media')->where('is_approved', false)->get(); // Retrieve all pending approval users
             $users = User::with('media')->where('is_approved', false)->paginate(50);
-            return view('admin.members.pending_approval_index', compact('users','allUsers'));
+
+            return view('admin.members.pending_approval_index', compact('users', 'allUsers'));
         } else {
             return redirect()->route('home');
         }
     }
-    
+
     public function approveUser(User $user)
     {
-        if(auth()->user()->isAdmin()){
+        if (auth()->user()->isAdmin()) {
             $user->update([
                 'is_approved' => true,
                 'approved_by' => auth()->id(),
-                'approved_at' => now()
+                'approved_at' => now(),
             ]);
-            
+
             // Send approval notification email to the user
             try {
-                Mail::to($user->email)->send(new \App\Mail\AccountApproved($user));
+                Mail::to($user->email)->send(new AccountApproved($user));
             } catch (\Exception $e) {
                 // Log error but don't stop the approval process
-                \Log::error('Failed to send account approval email: ' . $e->getMessage());
+                \Log::error('Failed to send account approval email: '.$e->getMessage());
             }
-            
+
             return redirect()->route('admin.pending.members')->with('success', 'User has been approved successfully.');
         } else {
             return redirect()->route('home');
@@ -186,7 +189,7 @@ class AdminController extends Controller
     public function addMember()
     {
 
-        if(auth()->user()->isAdmin()){
+        if (auth()->user()->isAdmin()) {
             return view('admin.members.create');
         } else {
             return redirect()->route('home');
@@ -196,7 +199,7 @@ class AdminController extends Controller
     public function createMember(Request $request, User $user, $approval)
     {
         $approval = true;
-        if(auth()->user()->isAdmin()){
+        if (auth()->user()->isAdmin()) {
             $validator = Validator::make($request->all(), [
                 'full_name' => 'required|string|max:255',
                 'address' => 'required|string|max:255',
@@ -217,13 +220,12 @@ class AdminController extends Controller
                 'password' => 'required|string|min:8|confirmed', // Ensure password and re_password match
             ]);
 
-
             if ($validator->fails()) {
                 return redirect()->back()->withErrors($validator)->withInput();
             }
 
-            $fullName = $request->first_name . " " . $request->last_name;
-            $phone = $request->country_code .  $request->phone;
+            $fullName = $request->first_name.' '.$request->last_name;
+            $phone = $request->country_code.$request->phone;
 
             // Create the user as an investor
             $user = User::create([
@@ -249,19 +251,16 @@ class AdminController extends Controller
                 $user->addMediaFromRequest('profile_photo')->toMediaCollection('profile_photo');
             }
 
-            
-
             return redirect()->route('admin.members')->with('success', 'Member created successfully.');
         } else {
             return redirect()->route('home');
         }
     }
 
-
     public function memberApply(Request $request)
     {
         $approval = false;
-        
+
         $validator = Validator::make($request->all(), [
             'first_name' => 'required|string|max:255',
             'last_name' => 'required|string|max:255',
@@ -285,15 +284,13 @@ class AdminController extends Controller
             'password' => 'required|string|min:8|confirmed', // Ensure password and re_password match
         ]);
 
-        
-
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
         }
-        
-        $fullName = $request->first_name . " " . $request->last_name;
-        $phone = $request->country_code .  $request->phone;
-         
+
+        $fullName = $request->first_name.' '.$request->last_name;
+        $phone = $request->country_code.$request->phone;
+
         // Create the user as an investor
         $user = User::create([
             'name' => $fullName,
@@ -317,7 +314,7 @@ class AdminController extends Controller
 
         // Handle file upload for the photo using Media Library
         if ($request->hasFile('profile_photo')) {
-           
+
             $user->addMediaFromRequest('profile_photo')->toMediaCollection('profile_photo');
         }
 
@@ -328,7 +325,7 @@ class AdminController extends Controller
             $investmentAmounts = is_array($request->investment_amount) ? $request->investment_amount : [$request->investment_amount];
 
             foreach ($companyNames as $index => $companyName) {
-                if (!empty($companyName) && !empty($investmentAmounts[$index])) {
+                if (! empty($companyName) && ! empty($investmentAmounts[$index])) {
                     $user->portfolio()->create([
                         'company_name' => $companyName,
                         'investment_amount' => $investmentAmounts[$index],
@@ -338,7 +335,7 @@ class AdminController extends Controller
         }
 
         // Log in the user if not already logged in
-        if (!Auth::check()) {
+        if (! Auth::check()) {
             Auth::login($user);
         }
 
@@ -348,8 +345,9 @@ class AdminController extends Controller
 
     public function viewDeals()
     {
-        if(auth()->user()->isAdmin()){
+        if (auth()->user()->isAdmin()) {
             $deals = Deal::with('media')->get(); // Fetch all deals
+
             return view('admin.deals.index', compact('deals'));
         } else {
             return redirect()->route('home');
@@ -358,8 +356,9 @@ class AdminController extends Controller
 
     public function viewDeals_invest()
     {
-        if(auth()->user()->isAdmin()){
-            $deals = Deal::with('media')->where('type','invest')->get(); // Fetch all deals
+        if (auth()->user()->isAdmin()) {
+            $deals = Deal::with('media')->where('type', 'invest')->get(); // Fetch all deals
+
             return view('admin.deals.invest_index', compact('deals'));
         } else {
             return redirect()->route('home');
@@ -368,8 +367,9 @@ class AdminController extends Controller
 
     public function viewDeals_commit()
     {
-        if(auth()->user()->isAdmin()){
-            $deals = Deal::with('media')->where('type','commit')->get(); // Fetch all deals
+        if (auth()->user()->isAdmin()) {
+            $deals = Deal::with('media')->where('type', 'commit')->get(); // Fetch all deals
+
             return view('admin.deals.commit_index', compact('deals'));
         } else {
             return redirect()->route('home');
@@ -378,8 +378,9 @@ class AdminController extends Controller
 
     public function viewDeals_review()
     {
-        if(auth()->user()->isAdmin()){
-            $deals = Deal::with('media')->where('type','review')->get(); // Fetch all deals
+        if (auth()->user()->isAdmin()) {
+            $deals = Deal::with('media')->where('type', 'review')->get(); // Fetch all deals
+
             return view('admin.deals.review_index', compact('deals'));
         } else {
             return redirect()->route('home');
@@ -388,18 +389,18 @@ class AdminController extends Controller
 
     public function viewDeals_portfolio()
     {
-        if(auth()->user()->isAdmin()){
-            $deals = Deal::with('media')->where('type','portfolio')->get(); // Fetch all deals
+        if (auth()->user()->isAdmin()) {
+            $deals = Deal::with('media')->where('type', 'portfolio')->get(); // Fetch all deals
+
             return view('admin.deals.portfolio_index', compact('deals'));
         } else {
             return redirect()->route('home');
         }
     }
-    
 
     public function addDeal()
     {
-        if(auth()->user()->isAdmin()){
+        if (auth()->user()->isAdmin()) {
             return view('admin.deals.create');
         } else {
             return redirect()->route('home');
@@ -408,7 +409,7 @@ class AdminController extends Controller
 
     public function storeDeal(Request $request)
     {
-        if(auth()->user()->isAdmin()){   
+        if (auth()->user()->isAdmin()) {
             // Validate incoming request
             $validatedData = $request->validate([
                 'title' => 'required|string|max:255',
@@ -442,7 +443,7 @@ class AdminController extends Controller
                 'key_metrics.*.name' => 'nullable|string|max:255',
                 'key_metrics.*.value' => 'nullable|string|max:255',
             ]);
-           
+
             // Inside your store method
             $slug = Str::slug($validatedData['title'], '-');
 
@@ -461,7 +462,7 @@ class AdminController extends Controller
                 'commit_link' => $validatedData['commit_link'] ?? null,
                 'groupchat_invite_link' => $validatedData['groupchat_invite_link'] ?? null,
                 'growth_rate' => $validatedData['growth_rate'] ?? null,
-                'revenue_model' => $validatedData['revenue_model'] ?? null, 
+                'revenue_model' => $validatedData['revenue_model'] ?? null,
                 'future_plans' => $validatedData['future_plans'] ?? null,
                 'partnerships' => $validatedData['partnerships'] ?? null,
                 'video_url' => $validatedData['video_url'] ?? null,
@@ -494,7 +495,7 @@ class AdminController extends Controller
     public function destroyDeal(Deal $deal)
     {
         // Check if the authenticated user is an admin
-        if (!auth()->user()->isAdmin()) {
+        if (! auth()->user()->isAdmin()) {
             return redirect()->route('deal.index')->with('error', 'You are not authorized to perform this action.');
         }
 
@@ -515,10 +516,10 @@ class AdminController extends Controller
 
     public function editDeal(Deal $deal)
     {
-        return view('admin.deals.edit',compact('deal'));
+        return view('admin.deals.edit', compact('deal'));
     }
 
-    public function updateDeal(Request $request,Deal $deal)
+    public function updateDeal(Request $request, Deal $deal)
     {
         $validatedData = $request->validate([
             'title' => 'required|string|max:255',
@@ -537,28 +538,28 @@ class AdminController extends Controller
         ]);
 
         $deal->update($validatedData);
-    
+
         if ($request->hasFile('logo')) {
             $deal->updateLogo($request->file('logo'));
         }
-    
+
         if ($request->hasFile('company_cover')) {
             $deal->updateCover($request->file('company_cover'));
         }
-    
+
         return redirect()->route('admin.deals')->with('success', 'Deal updated successfully!');
     }
 
     public function editMember(User $user)
     {
-        
-        return view('admin.members.edit',compact('user'));
+
+        return view('admin.members.edit', compact('user'));
     }
 
     public function removeMember(User $user)
     {
         // Check if the authenticated user is an admin
-        if (!auth()->user()->isAdmin()) {
+        if (! auth()->user()->isAdmin()) {
             return redirect()->route('admin.members')->with('error', 'You do not have permission to perform this action.');
         }
 
@@ -569,7 +570,7 @@ class AdminController extends Controller
 
         try {
             // Check if the user exists
-            if (!$user) {
+            if (! $user) {
                 return redirect()->route('admin.members')->with('error', 'User not found.');
             }
 
@@ -584,7 +585,7 @@ class AdminController extends Controller
             return redirect()->route('admin.members')->with('success', 'Member successfully removed.');
         } catch (\Exception $e) {
             // Log the error for debugging
-            \Log::error('Error deleting user: ' . $e->getMessage());
+            \Log::error('Error deleting user: '.$e->getMessage());
 
             return redirect()->route('admin.members')->with('error', 'An error occurred while trying to delete the member. Please try again.');
         }
@@ -592,10 +593,17 @@ class AdminController extends Controller
 
     public function updateMember(Request $request, User $user)
     {
+        if (trim((string) $request->input('password', '')) === '') {
+            $request->merge([
+                'password' => null,
+                'password_confirmation' => null,
+            ]);
+        }
+
         // Validate the request data
         $validator = Validator::make($request->all(), [
             'full_name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email,' . $user->id, // Ignore the current user's email
+            'email' => 'required|email|unique:users,email,'.$user->id, // Ignore the current user's email
             'phone' => 'required|string|max:20',
             'public_profile' => 'nullable',
             'role' => 'nullable|string',
@@ -617,6 +625,7 @@ class AdminController extends Controller
             'profile_photo' => 'nullable|image|max:3072', // Max size: 3MB
             'notes' => 'nullable|string|max:5000',
             'status' => 'nullable|string|max:255',
+            'password' => ['nullable', 'string', 'min:8', 'confirmed'],
         ]);
 
         if ($validator->fails()) {
@@ -647,7 +656,7 @@ class AdminController extends Controller
             'notes' => $request->notes,
         ]);
 
-        if($request->role){
+        if ($request->role) {
             $user->update([
                 'role' => $request->role,
             ]);
@@ -659,10 +668,15 @@ class AdminController extends Controller
             $user->addMediaFromRequest('profile_photo')->toMediaCollection('profile_photo'); // Add new photo
         }
 
+        if ($request->filled('password')) {
+            $user->update([
+                'password' => Hash::make($request->password),
+            ]);
+        }
+
         // Redirect with a success message
         return redirect()->route('admin.members')->with('success', 'Member updated successfully.');
     }
-
 
     public function updateAccountStatus(Request $request, User $user)
     {
@@ -671,10 +685,10 @@ class AdminController extends Controller
         $validatedData = $request->validate([
             'account_status' => 'required|in:free,Core,Advanced,Institutional',
         ]);
-    
+
         $user->account_status = $validatedData['account_status'];
         $user->save();
-    
+
         // return response()->with('success','Account status updated successfully!',200);
         return redirect()->route('admin.members')->with('success', 'Account Status updated successfully.');
     }
@@ -682,8 +696,7 @@ class AdminController extends Controller
     public function showDeal(Deal $deal)
     {
         $otherDeals = $deal->getOtherDeals(5); // Fetch 5 other deals
+
         return view('deals.single',compact('deal','otherDeals'));
     }
-
-
 }

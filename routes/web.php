@@ -1,31 +1,31 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\PrimaryController;
 use App\Http\Controllers\AdminController;
-use App\Http\Controllers\InvestmentController;
-use App\Http\Controllers\ResourceController;
-use App\Http\Controllers\MailController;
-use App\Http\Controllers\SubscriptionController;
 use App\Http\Controllers\CheckoutController;
-use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Auth;
-
-use App\Models\User;
+use App\Http\Controllers\InvestmentController;
+use App\Http\Controllers\MailController;
+use App\Http\Controllers\PrimaryController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ResourceController;
+use App\Http\Controllers\SubscriptionController;
+use App\Http\Middleware\ApprovedUserMiddleware;
 use App\Models\Deal;
 use App\Models\Payment;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
 
 /**
  * Public Routes
  */
 Route::get('/', PrimaryController::class)->name('home');
 Route::get('/ban-investors', [PrimaryController::class, 'viewInvestors'])->name('investors');
-Route::get('/ban-resources',[PrimaryController::class,'viewResources'])->middleware(['auth', 'verified', \App\Http\Middleware\ApprovedUserMiddleware::class])->name('resources');
-Route::get('/portfolio',[PrimaryController::class,'viewPortfolio'])->name('portfolio');
-Route::get('/approval/pending', function() {
+Route::get('/ban-resources', [PrimaryController::class, 'viewResources'])->middleware(['auth', 'verified', ApprovedUserMiddleware::class])->name('resources');
+Route::get('/portfolio', [PrimaryController::class, 'viewPortfolio'])->name('portfolio');
+Route::get('/approval/pending', function () {
     return view('approval.pending');
 })->name('approval.pending');
-Route::get('/approval/success', function() {
+Route::get('/approval/success', function () {
     return view('approval.success');
 })->name('approval.success');
 
@@ -34,38 +34,42 @@ Route::prefix('upgrade')->group(function () {
     Route::get('/plans', [PrimaryController::class, 'viewPlans'])->name('plans');
     Route::match(['get', 'post'], '/pay', [CheckoutController::class, 'checkout'])->name('checkout');
     Route::post('/checkout', [CheckoutController::class, 'processCheckout'])->name('checkout.process');
-    Route::post('/success',[CheckoutController::class,'success'])->name('checkout.success');
-    Route::post('/fail',[CheckoutController::class,'fail'])->name('checkout.fail');
-    Route::post('/cancel',[CheckoutController::class,'cancel'])->name('checkout.cancel');
+    Route::post('/success', [CheckoutController::class, 'success'])->name('checkout.success');
+    Route::post('/fail', [CheckoutController::class, 'fail'])->name('checkout.fail');
+    Route::post('/cancel', [CheckoutController::class, 'cancel'])->name('checkout.cancel');
 });
 
 Route::get('/deals', function () {
-    if (!Auth::check() || auth()->user()->account_status == "free") {
+    if (! Auth::check() || auth()->user()->account_status == 'free') {
         return redirect()->route('upgrade.page');
     }
+
     return app(PrimaryController::class)->viewDeals();
-})->middleware(['auth', 'verified', \App\Http\Middleware\ApprovedUserMiddleware::class])->name('deals');
+})->middleware(['auth', 'verified', ApprovedUserMiddleware::class])->name('deals');
 
 Route::get('/deals/invest', function () {
-    if (!Auth::check() || auth()->user()->account_status == "free") {
+    if (! Auth::check() || auth()->user()->account_status == 'free') {
         return redirect()->route('upgrade.page');
     }
+
     return app(PrimaryController::class)->viewDeals_invest();
-})->middleware(['auth', 'verified', \App\Http\Middleware\ApprovedUserMiddleware::class])->name('deals.invest');
+})->middleware(['auth', 'verified', ApprovedUserMiddleware::class])->name('deals.invest');
 
 Route::get('/deals/commit', function () {
-    if (!Auth::check() || auth()->user()->account_status == "free") {
+    if (! Auth::check() || auth()->user()->account_status == 'free') {
         return redirect()->route('upgrade.page');
     }
+
     return app(PrimaryController::class)->viewDeals_commit();
-})->middleware(['auth', 'verified', \App\Http\Middleware\ApprovedUserMiddleware::class])->name('deals.commit');
+})->middleware(['auth', 'verified', ApprovedUserMiddleware::class])->name('deals.commit');
 
 Route::get('/deals/review', function () {
-    if (!Auth::check() || auth()->user()->account_status == "free") {
+    if (! Auth::check() || auth()->user()->account_status == 'free') {
         return redirect()->route('upgrade.page');
     }
+
     return app(PrimaryController::class)->viewDeals_review();
-})->middleware(['auth', 'verified', \App\Http\Middleware\ApprovedUserMiddleware::class])->name('deals.review');
+})->middleware(['auth', 'verified', ApprovedUserMiddleware::class])->name('deals.review');
 
 Route::get('/faq', [PrimaryController::class, 'viewFAQ'])->name('faq');
 Route::get('/our-team', [PrimaryController::class, 'viewTeam'])->name('team');
@@ -82,33 +86,31 @@ Route::get('/dashboard', function () {
  * Member Routes
  */
 Route::post('/member/create', [AdminController::class, 'memberApply'])->name('member.apply');
-Route::get('/view/{deal:id}',[AdminController::class,'showDeal'])->name('deal.public.view');
-Route::get('/resources/{resource:id}',[ResourceController::class,'view'])->name('resource.public.view');
+Route::get('/view/{deal:id}', [AdminController::class, 'showDeal'])->name('deal.public.view');
+Route::get('/resources/{resource:id}', [ResourceController::class, 'view'])->name('resource.public.view');
 /**
  * Authenticated Routes
  */
 Route::middleware('auth')->group(function () {
-
 
     /**
      * Admin Dashboard Routes
      */
     Route::prefix('admin')->group(function () {
         Route::get('/dashboard', AdminController::class)->name('admin.dashboard');
-        Route::get('/resources',ResourceController::class)->name('admin.resources');
-        Route::get('/resources/create',[ResourceController::class,'create'])->name('resource.create');
-        Route::post('/resources/create',[ResourceController::class,'store'])->name('resource.store');
+        Route::get('/resources', ResourceController::class)->name('admin.resources');
+        Route::get('/resources/create', [ResourceController::class, 'create'])->name('resource.create');
+        Route::post('/resources/create', [ResourceController::class, 'store'])->name('resource.store');
 
-        Route::get('/resources/{resource:id}/edit',[ResourceController::class,'edit'])->name('resource.edit');
-        Route::put('/resources/{resource:id}/update',[ResourceController::class,'update'])->name('resource.update');
+        Route::get('/resources/{resource:id}/edit', [ResourceController::class, 'edit'])->name('resource.edit');
+        Route::put('/resources/{resource:id}/update', [ResourceController::class, 'update'])->name('resource.update');
 
-        Route::post('/resources/{resource:id}/delete',[ResourceController::class,'destroy'])->name('resource.destory');
+        Route::post('/resources/{resource:id}/delete', [ResourceController::class, 'destroy'])->name('resource.destory');
 
-        
         // Subscription Routes
         Route::prefix('subscriptions')->group(function () {
-            Route::get('/', SubscriptionController::class)->name('admin.subscriptions');
-
+            Route::get('/', [SubscriptionController::class, 'index'])->name('admin.subscriptions');
+            Route::post('/tiers', [SubscriptionController::class, 'updateTiers'])->name('admin.subscription-tiers.update');
         });
 
         // Member Routes
@@ -118,7 +120,7 @@ Route::middleware('auth')->group(function () {
             Route::get('/inactive', [AdminController::class, 'viewInactiveMembers'])->name('admin.inactive.members');
             Route::get('/pending-approval', [AdminController::class, 'viewPendingApprovalMembers'])->name('admin.pending.members');
             Route::post('/{user}/approve', [AdminController::class, 'approveUser'])->name('member.approve');
-            
+
             Route::get('/add', [AdminController::class, 'addMember'])->name('member.add');
             Route::post('/add/{approval}', [AdminController::class, 'createMember'])->name('member.create');
             Route::get('/{user:id}/edit', [AdminController::class, 'editMember'])->name('member.edit');
@@ -128,10 +130,10 @@ Route::middleware('auth')->group(function () {
 
         });
 
-        Route::prefix('mail-list')->group(function(){
+        Route::prefix('mail-list')->group(function () {
             Route::get('/', MailController::class)->name('admin.mail');
             Route::post('/send', [MailController::class, 'send'])->name('mail.send');
-            
+
         });
 
         // Deal Routes
@@ -146,15 +148,14 @@ Route::middleware('auth')->group(function () {
             Route::get('/portfolio', [AdminController::class, 'viewDeals_portfolio'])->name('admin.deals.portfolio');
             Route::post('/{deal:id}/invest', [InvestmentController::class, 'invest'])->name('deal.invest');
 
-            Route::get('/{deal:id}',[AdminController::class,'showDeal'])->name('deal.view');
+            Route::get('/{deal:id}', [AdminController::class, 'showDeal'])->name('deal.view');
             Route::get('/add/new', [AdminController::class, 'addDeal'])->name('deal.add');
             Route::post('/add', [AdminController::class, 'storeDeal'])->name('deal.store');
         });
 
-       
         // Investment Controller
-        Route::prefix('investments')->group(function(){
-            Route::get('/',InvestmentController::class)->name('admin.investments');
+        Route::prefix('investments')->group(function () {
+            Route::get('/', InvestmentController::class)->name('admin.investments');
         });
 
     });

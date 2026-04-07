@@ -10,6 +10,77 @@
     </a>
   </header>
 
+  <!-- Membership tiers & pricing -->
+  <div class="p-6 bg-white shadow mt-4">
+    <h2 class="text-lg font-semibold text-gray-800 mb-1">Membership tiers &amp; pricing</h2>
+    <p class="text-sm text-gray-600 mb-4">Active tiers and prices are shown on the public plans page. Slugs stay fixed for payments and member records.</p>
+
+    @if ($errors->has('tiers'))
+      <div class="mb-4 text-red-600 text-sm">{{ $errors->first('tiers') }}</div>
+    @endif
+
+    <form method="POST" action="{{ route('admin.subscription-tiers.update') }}">
+      @csrf
+      <div class="space-y-6">
+        @foreach ($tiers as $tier)
+          <div class="border border-gray-200 rounded-lg p-4">
+            <div class="flex flex-wrap items-center gap-2 mb-3">
+              <span class="text-xs font-mono bg-gray-100 text-gray-700 px-2 py-1 rounded">slug: {{ $tier->slug }}</span>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Display name</label>
+                <input type="text" name="tiers[{{ $tier->id }}][name]" value="{{ old('tiers.'.$tier->id.'.name', $tier->name) }}"
+                  class="w-full border-gray-300 rounded-lg shadow-sm" required maxlength="100">
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Yearly price (USD)</label>
+                <input type="number" name="tiers[{{ $tier->id }}][price_yearly]" step="0.01" min="0"
+                  value="{{ old('tiers.'.$tier->id.'.price_yearly', $tier->price_yearly) }}"
+                  class="w-full border-gray-300 rounded-lg shadow-sm" required>
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Sort order</label>
+                <input type="number" name="tiers[{{ $tier->id }}][sort_order]" min="0"
+                  value="{{ old('tiers.'.$tier->id.'.sort_order', $tier->sort_order) }}"
+                  class="w-full border-gray-300 rounded-lg shadow-sm" required>
+              </div>
+              <div class="flex flex-col gap-3 justify-end">
+                <label class="inline-flex items-center gap-2 text-sm text-gray-700">
+                  <input type="hidden" name="tiers[{{ $tier->id }}][is_active]" value="0">
+                  <input type="checkbox" name="tiers[{{ $tier->id }}][is_active]" value="1"
+                    {{ old('tiers.'.$tier->id.'.is_active', $tier->is_active ? '1' : '0') === '1' ? 'checked' : '' }}>
+                  Active on plans page
+                </label>
+                <label class="inline-flex items-center gap-2 text-sm text-gray-700">
+                  <input type="hidden" name="tiers[{{ $tier->id }}][is_highlighted]" value="0">
+                  <input type="checkbox" name="tiers[{{ $tier->id }}][is_highlighted]" value="1"
+                    {{ old('tiers.'.$tier->id.'.is_highlighted', $tier->is_highlighted ? '1' : '0') === '1' ? 'checked' : '' }}>
+                  Show &quot;Popular&quot; badge
+                </label>
+              </div>
+            </div>
+            <div class="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Included features (one per line)</label>
+                <textarea name="tiers[{{ $tier->id }}][features_included]" rows="6"
+                  class="w-full border-gray-300 rounded-lg shadow-sm text-sm font-mono">{{ old('tiers.'.$tier->id.'.features_included', $tier->features_included) }}</textarea>
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Excluded features (one per line, shown with ✘)</label>
+                <textarea name="tiers[{{ $tier->id }}][features_excluded]" rows="6"
+                  class="w-full border-gray-300 rounded-lg shadow-sm text-sm font-mono">{{ old('tiers.'.$tier->id.'.features_excluded', $tier->features_excluded) }}</textarea>
+              </div>
+            </div>
+          </div>
+        @endforeach
+      </div>
+      <button type="submit" class="mt-6 bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700 shadow">
+        Save tiers &amp; prices
+      </button>
+    </form>
+  </div>
+
   <!-- Filters and Search -->
   <div class="p-6 bg-white shadow mt-4">
     <div class="flex flex-wrap items-center justify-between">
@@ -23,9 +94,9 @@
       <div class="flex items-center space-x-4">
         <select id="planFilter" onchange="filterTable()" class="border-gray-300 rounded-lg shadow-sm text-gray-600">
           <option value="all">All Plans</option>
-          <option value="core">Core</option>
-          <option value="advanced">Advanced</option>
-          <option value="institutional">Institutional</option>
+          @foreach ($tiers->sortBy('sort_order') as $t)
+            <option value="{{ $t->slug }}">{{ $t->name }}</option>
+          @endforeach
         </select>
         <select id="paymentFilter" onchange="filterTable()" class="border-gray-300 rounded-lg shadow-sm text-gray-600">
           <option value="all">All Statuses</option>

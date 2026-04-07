@@ -104,6 +104,26 @@
                     </select>
                 </div>
             </div>
+
+            <div class="border border-gray-200 rounded-lg p-4 bg-gray-50">
+                <h3 class="text-sm font-semibold text-gray-800 mb-1">Account security</h3>
+                <p class="text-xs text-gray-500 mb-3">Leave both fields blank to keep the member's current password.</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label for="password" class="block text-sm font-medium text-gray-700 mb-1">New password</label>
+                        <input type="password" id="password" name="password" autocomplete="new-password"
+                               class="w-full rounded-lg border border-gray-300 px-4 py-2 focus:ring-2 focus:ring-green-500 focus:border-green-500"
+                               minlength="8">
+                    </div>
+                    <div>
+                        <label for="password_confirmation" class="block text-sm font-medium text-gray-700 mb-1">Confirm new password</label>
+                        <input type="password" id="password_confirmation" name="password_confirmation" autocomplete="new-password"
+                               class="w-full rounded-lg border border-gray-300 px-4 py-2 focus:ring-2 focus:ring-green-500 focus:border-green-500"
+                               minlength="8">
+                    </div>
+                </div>
+            </div>
+
              <!-- Location Info -->
              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>

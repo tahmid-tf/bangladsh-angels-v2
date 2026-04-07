@@ -1,6 +1,16 @@
 @extends('layouts.guest')
 @section('page_title','Checkout | Bangladesh Angels Network')
 @section('page_content')
+@php
+    $cp = session('checkout.plan', []);
+    if (! is_array($cp)) {
+        $cp = ['slug' => is_string($cp) ? $cp : '', 'name' => 'Default Plan', 'price' => 0];
+    }
+    $cp += ['slug' => '', 'name' => 'Default Plan', 'price' => 0];
+    $planSlug = (string) ($cp['slug'] ?? '');
+    $planName = (string) ($cp['name'] ?? 'Default Plan');
+    $planPrice = $cp['price'] ?? 0;
+@endphp
 
 <!-- Page Container -->
 <div class="container mx-auto px-4 py-8 md:py-12 max-w-7xl">
@@ -35,8 +45,8 @@
     <form action="{{ route('checkout.process') }}" method="POST" class="animate-fade-in">
         @csrf
         <!-- Hidden Inputs for Plan and Price -->
-        <input type="hidden" name="plan" value="{{ session('checkout.plan.name', 'Default Plan') }}">
-        <input type="hidden" name="price" value="{{ session('checkout.plan.price', '0') }}">
+        <input type="hidden" name="plan" value="{{ $planSlug }}">
+        <input type="hidden" name="price" value="{{ $planPrice }}">
 
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 md:gap-8">
             <!-- Selected Plan Section -->
@@ -49,8 +59,8 @@
                 </h2>
                 <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center space-y-3 sm:space-y-0">
                     <div>
-                        <p class="text-xl font-bold text-gray-800">{{ session('checkout.plan.name', 'Default Plan') }}</p>
-                        <p class="text-green-600 font-semibold">${{ session('checkout.plan.price', '0') }} /yr</p>
+                        <p class="text-xl font-bold text-gray-800">{{ $planName }}</p>
+                        <p class="text-green-600 font-semibold">${{ number_format((float) $planPrice, 2) }} /yr</p>
                     </div>
                     <a href="{{ route('plans') }}" class="text-green-600 hover:text-green-800 transition flex items-center text-sm font-medium hover:underline">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -357,15 +367,15 @@
                         <li class="flex justify-between text-gray-700">
                             <span>Subscription</span>
                             <span class="bg-green-100 text-green-600 text-sm font-semibold px-2 py-1 rounded-full">
-                                {{ session('checkout.plan.name', 'Default Plan') }}
+                                {{ $planName }}
                             </span>
                         </li>
                         <li class="text-gray-800 text-3xl font-bold text-center pt-2 pb-1">
-                            ${{ session('checkout.plan.price', '0') }} <span class="text-lg font-normal text-gray-500">/yr</span>
+                            ${{ number_format((float) $planPrice, 2) }} <span class="text-lg font-normal text-gray-500">/yr</span>
                         </li>
                         <li class="flex justify-between text-gray-700 border-t pt-3">
                             <span>Total Billed Today</span>
-                            <span class="font-semibold">${{ session('checkout.plan.price', '0') }}</span>
+                            <span class="font-semibold">${{ number_format((float) $planPrice, 2) }}</span>
                         </li>
                     </ul>
                 </div>
