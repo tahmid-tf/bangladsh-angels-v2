@@ -409,9 +409,9 @@
       const urlParams = new URLSearchParams(window.location.search);
       const statusCode = urlParams.get('status_code');
       
-      // If status_code is 2, redirect to success page
+      // Legacy: some gateways once landed on home with ?status_code=2. Receipts now use signed /payment/complete URLs.
       if (statusCode === '2') {
-        window.location.href = '{{ route("payment.complete") }}';
+        window.location.replace('{{ auth()->check() ? route("dashboard") : route("login") }}');
       }
 
       // BAN stats — count up when section enters view

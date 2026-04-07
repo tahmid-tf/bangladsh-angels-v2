@@ -181,9 +181,11 @@ Route::middleware('auth')->group(function () {
 });
 
 /**
- * Payment Callback Routes
+ * Payment callback routes (AamarPay POST/GET must bypass CSRF — see bootstrap/app.php)
  */
 Route::prefix('payment')->group(function () {
+    Route::match(['get', 'post'], '/aamarpay/callback', [CheckoutController::class, 'aamarpayCallback'])
+        ->name('payment.aamarpay.callback');
     Route::get('/complete', [CheckoutController::class, 'paymentComplete'])->name('payment.complete');
     Route::get('/failed', [CheckoutController::class, 'paymentFailed'])->name('payment.failed');
     Route::get('/error', [CheckoutController::class, 'paymentError'])->name('payment.error');
