@@ -170,6 +170,17 @@ class CheckoutController extends Controller
                 return redirect()->route('checkout')->with('error', 'Payment gateway is not configured. Please contact support.');
             }
 
+            if (str_contains(strtolower($cfg['jsonpost_url']), 'trxcheck')) {
+                Log::error('AamarPay misconfiguration: JSONPOST URL must be jsonpost.php, not trxcheck', [
+                    'jsonpost_url' => $cfg['jsonpost_url'],
+                ]);
+
+                return redirect()->route('checkout')->with(
+                    'error',
+                    'Payment gateway configuration error. The init URL must be jsonpost.php (see AAMARPAY_*_JSONPOST_URL in server env).'
+                );
+            }
+
             $tranPrefix = $gatewayMode === 'live' ? 'bdangels' : 'test';
             $tran_id = $tranPrefix.rand(1111111, 9999999);
 
@@ -238,19 +249,47 @@ class CheckoutController extends Controller
 
             $responseObj = json_decode($response ?: '');
 
-            if (isset($responseObj->payment_url) && ! empty($responseObj->payment_url)) {
+            $hasPaymentUrl = is_object($responseObj)
+                && isset($responseObj->payment_url)
+                && $responseObj->payment_url !== ''
+                && $responseObj->payment_url !== null;
+
+            if ($hasPaymentUrl) {
                 session(['checkout.tran_id' => $tran_id]);
 
                 return redirect()->away($responseObj->payment_url);
             }
 
-            Log::error('AamarPay init error: '.($response ?: '(empty)'));
+            $gatewayHint = $this->aamarpay->parseJsonpostErrorHint($responseObj);
+            $bodyPreview = $this->aamarpay->logJsonpostBodyPreview($response);
+
+            Log::error('AamarPay jsonpost did not return payment_url', [
+                'mode' => $gatewayMode,
+                'http_code' => $httpCode,
+                'jsonpost_url' => $cfg['jsonpost_url'],
+                'trxcheck_base' => $cfg['trxcheck_base'],
+                'gateway_hint' => $gatewayHint,
+                'body_preview' => $bodyPreview,
+                'tran_id' => $tran_id,
+            ]);
+
+            if ($httpCode < 200 || $httpCode >= 300) {
+                Log::warning('AamarPay jsonpost returned non-2xx HTTP status', [
+                    'mode' => $gatewayMode,
+                    'http_code' => $httpCode,
+                ]);
+            }
 
             if ($gatewayMode === 'sandbox') {
                 return $this->activateSandboxWithoutGatewayFallback($user, $subscription, $validated);
             }
 
-            return redirect()->route('checkout')->with('error', 'Payment gateway error. Please try again or contact support.');
+            $userMessage = 'Payment gateway error. Please try again or contact support.';
+            if (config('app.debug')) {
+                $userMessage .= ' Technical: '.$gatewayHint.' (HTTP '.$httpCode.'). Check storage/logs and that AAMARPAY_LIVE_JSONPOST_URL points to jsonpost.php (not trxcheck).';
+            }
+
+            return redirect()->route('checkout')->with('error', $userMessage);
         } catch (\Exception $e) {
             Log::error('Exception in checkout process: '.$e->getMessage()."\n".$e->getTraceAsString());
 

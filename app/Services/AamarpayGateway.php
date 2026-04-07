@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
 
 class AamarpayGateway
 {
@@ -86,5 +87,81 @@ class AamarpayGateway
         $data = json_decode($response ?: '');
 
         return is_object($data) ? $data : null;
+    }
+
+    /**
+     * Redact secrets before writing gateway bodies to logs.
+     */
+    public function redactForLog(?string $body): string
+    {
+        if ($body === null || $body === '') {
+            return '(empty)';
+        }
+
+        $out = preg_replace(
+            '/"(signature_key|signature|store_id|opt_d)"\s*:\s*"[^"]*"/i',
+            '"$1":"[redacted]"',
+            $body
+        );
+
+        return is_string($out) ? $out : $body;
+    }
+
+    /**
+     * Best-effort parse of jsonpost.php error fields (AamarPay response shapes vary).
+     *
+     * @param  mixed  $decoded  json_decode result (object or array)
+     */
+    public function parseJsonpostErrorHint(mixed $decoded): string
+    {
+        if ($decoded === null) {
+            return 'invalid or empty JSON';
+        }
+
+        $candidates = [];
+
+        if (is_object($decoded)) {
+            $decoded = json_decode(json_encode($decoded), true);
+        }
+
+        if (! is_array($decoded)) {
+            return 'unexpected response type';
+        }
+
+        foreach (['detailedError', 'error', 'message', 'failedreason', 'failed_reason', 'status', 'status_code'] as $key) {
+            if (! array_key_exists($key, $decoded)) {
+                continue;
+            }
+            $val = $decoded[$key];
+            if ($val === null || $val === '') {
+                continue;
+            }
+            $candidates[] = $key.': '.(is_scalar($val) ? (string) $val : json_encode($val));
+        }
+
+        if (isset($decoded['data']) && is_array($decoded['data'])) {
+            foreach (['detailedError', 'error', 'message'] as $key) {
+                if (! array_key_exists($key, $decoded['data'])) {
+                    continue;
+                }
+                $val = $decoded['data'][$key];
+                if ($val === null || $val === '') {
+                    continue;
+                }
+                $candidates[] = 'data.'.$key.': '.(is_scalar($val) ? (string) $val : json_encode($val));
+            }
+        }
+
+        return $candidates !== [] ? implode(' | ', $candidates) : 'no known error fields in JSON';
+    }
+
+    /**
+     * Log-friendly preview of jsonpost response (length-capped, redacted).
+     */
+    public function logJsonpostBodyPreview(?string $rawBody, int $maxChars = 4000): string
+    {
+        $redacted = $this->redactForLog($rawBody);
+
+        return Str::limit($redacted, $maxChars, '…(truncated)');
     }
 }
