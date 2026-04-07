@@ -11,7 +11,13 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
-        //
+        // Payment gateways POST back without CSRF tokens; must match actual request paths (incl. subdirs).
+        $middleware->validateCsrfTokens(except: [
+            'upgrade/success',
+            'upgrade/fail',
+            'payment/aamarpay/callback',
+            '*payment/aamarpay/callback',
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //
