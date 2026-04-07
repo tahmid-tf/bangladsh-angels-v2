@@ -302,6 +302,8 @@ class CheckoutController extends Controller
             if (config('app.debug')) {
                 $userMessage .= ' Technical: '.$gatewayHint.' (HTTP '.$httpCode.').';
                 $userMessage .= ' '.$this->aamarpay->liveJsonpostTroubleshootingFootnote($gatewayHint);
+            } elseif (str_contains(strtolower($gatewayHint), 'store id blocked')) {
+                $userMessage = 'Online payment is unavailable: the payment provider has blocked this merchant account. Please contact support.';
             }
 
             return redirect()->route('checkout')->with('error', $userMessage);

@@ -127,7 +127,7 @@ class AamarpayGateway
         }
 
         $priorityKeys = [
-            'detailedError', 'error', 'message', 'reason', 'msg',
+            'errors', 'detailedError', 'error', 'message', 'reason', 'msg',
             'failedreason', 'failed_reason', 'error_message',
             'description', 'details', 'pg_error_code_details',
             'track', 'track_id', 'result', 'status_code', 'status',
@@ -148,6 +148,19 @@ class AamarpayGateway
                 continue;
             }
             if ($key === 'result' && (string) $val === 'true') {
+                continue;
+            }
+            if ($key === 'errors') {
+                if (is_array($val)) {
+                    $parts = [];
+                    foreach ($val as $item) {
+                        $parts[] = is_scalar($item) ? (string) $item : json_encode($item);
+                    }
+                    $candidates[] = 'errors: '.implode('; ', $parts);
+                } else {
+                    $candidates[] = 'errors: '.(is_scalar($val) ? (string) $val : json_encode($val));
+                }
+
                 continue;
             }
             $candidates[] = $key.': '.(is_scalar($val) ? (string) $val : json_encode($val));
@@ -196,6 +209,10 @@ class AamarpayGateway
     public function liveJsonpostTroubleshootingFootnote(string $gatewayHint): string
     {
         $hint = strtolower($gatewayHint);
+
+        if (str_contains($hint, 'store id blocked') || str_contains($hint, 'store blocked') || (str_contains($hint, 'blocked') && str_contains($hint, 'store'))) {
+            return 'AamarPay has blocked this live store ID (merchant account restriction). This is not a Laravel bug—open a ticket with AamarPay merchant/integration support to unblock or issue new live credentials. Until then, payments cannot be initiated.';
+        }
 
         if (str_contains($hint, 'signature') || str_contains($hint, 'invalid')) {
             return 'Confirm AAMARPAY_LIVE_SIGNATURE_KEY and AAMARPAY_LIVE_STORE_ID match the live AamarPay dashboard exactly (no extra spaces).';
