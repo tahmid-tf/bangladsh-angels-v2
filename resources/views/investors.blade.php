@@ -2,7 +2,7 @@
 @section('page_title','Our Investors | Bangladesh Angel Investors Limited')
 @section('page_content')
 <div class="w-full max-w-6xl mx-auto px-4 sm:px-6">
-    {{-- Hero: aligned with investor signup / register guest styling --}}
+    {{-- 1. Become an Investor CTA --}}
     <section class="bg-[#0a5554] rounded-3xl py-10 sm:py-12 text-white shadow-lg mb-8 sm:mb-10">
         <div class="container mx-auto px-6 lg:flex lg:items-center lg:justify-between lg:gap-12">
             <div class="lg:w-1/2">
@@ -30,42 +30,27 @@
     </section>
 </div>
 
-<section class="container mx-auto px-4 sm:px-6 py-4 sm:py-8">
-    <p class="text-center text-gray-600 mb-8 sm:mb-10 max-w-3xl mx-auto">
-        Meet a selection of members featured by Bangladesh Angels Network. Use the search below to filter by name or role.
+{{-- 2. Our Membership Plans (pricing) --}}
+<section class="w-full max-w-6xl mx-auto px-4 sm:px-6 py-10 sm:py-12 border-t border-gray-100" aria-label="Our membership plans">
+    @include('partials.subscription-plans', [
+        'tiers' => $tiers,
+        'tierSectionTitle' => 'Our Membership Plans',
+        'tierSectionSubtitle' => 'Choose the tier that fits how you invest with Bangladesh Angels Network.',
+    ])
+</section>
+
+{{-- 3. Investor highlight --}}
+<section class="container mx-auto px-4 sm:px-6 py-10 sm:py-12 border-t border-gray-100" aria-labelledby="investor-highlight-heading">
+    <h2 id="investor-highlight-heading" class="text-2xl sm:text-3xl font-bold text-center text-[#0f3d34] mb-3">Investor highlight</h2>
+    <p class="text-center text-gray-600 mb-10 sm:mb-12 max-w-3xl mx-auto">
+        Meet a selection of members featured by Bangladesh Angels Network.
     </p>
 
-    <!-- Search & Filter Section -->
-    <div class="mb-8 max-w-2xl mx-auto">
-        <div class="flex flex-col sm:flex-row gap-4 bg-white p-4 rounded-lg shadow border border-gray-100">
-            <div class="flex-1">
-                <input type="text" id="investorSearch" placeholder="Search investors..."
-                    class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500">
-            </div>
-            <div class="flex-none">
-                <select id="industryFilter" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500">
-                    <option value="">All Industries</option>
-                    <option value="tech">Technology</option>
-                    <option value="finance">Finance</option>
-                    <option value="healthcare">Healthcare</option>
-                </select>
-            </div>
-        </div>
-    </div>
-
-    <!-- Cards -->
     <div id="investor-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-
         @forelse ($investors as $investor)
-            @php
-                $searchBlob = \Illuminate\Support\Str::lower(
-                    $investor->name.' '.($investor->designation ?? '').' '.($investor->company_name ?? '')
-                );
-            @endphp
             @if ($investor->hasPublicFeaturedTestimonial())
                 <article
-                    class="investor-grid-card flex flex-col bg-gradient-to-br from-[#e8f7f1] to-white rounded-2xl shadow-md hover:shadow-lg transition-shadow duration-300 overflow-hidden border border-[#36b37e]/25"
-                    data-investor-search="{{ e($searchBlob) }}"
+                    class="flex flex-col bg-gradient-to-br from-[#e8f7f1] to-white rounded-2xl shadow-md hover:shadow-lg transition-shadow duration-300 overflow-hidden border border-[#36b37e]/25"
                 >
                     <div class="px-1 pt-5 sm:pt-6 flex justify-center">
                         <span class="text-5xl sm:text-6xl font-serif text-[#36b37e]/35 leading-none select-none" aria-hidden="true">&ldquo;</span>
@@ -103,8 +88,7 @@
                 </article>
             @else
                 <div
-                    class="investor-grid-card bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300 overflow-hidden border border-green-100/80"
-                    data-investor-search="{{ e($searchBlob) }}"
+                    class="bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300 overflow-hidden border border-green-100/80"
                 >
                     <div class="p-5 sm:p-6">
                         <div class="flex flex-col sm:flex-row sm:items-center gap-4 mb-4">
@@ -137,7 +121,7 @@
                 </div>
             @endif
         @empty
-            <div class="investor-grid-card col-span-full text-center py-12 px-4 bg-gray-50 rounded-lg border border-dashed border-gray-200">
+            <div class="col-span-full text-center py-12 px-4 bg-gray-50 rounded-lg border border-dashed border-gray-200">
                 <p class="text-gray-600 text-lg font-medium">Featured investors will appear here soon.</p>
                 <p class="mt-2 text-gray-500 text-sm max-w-md mx-auto">We showcase selected members on this page. Interested in joining the network?</p>
                 <a href="{{ route('investor.signup') }}" class="inline-flex mt-6 px-5 py-2.5 bg-green-600 text-white font-semibold rounded-lg hover:bg-green-700 transition">
@@ -146,52 +130,5 @@
             </div>
         @endforelse
     </div>
-
-    @if(isset($investors) && method_exists($investors, 'links'))
-        <div class="mt-8">
-            {{ $investors->links() }}
-        </div>
-    @endif
 </section>
-
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const searchInput = document.getElementById('investorSearch');
-        const industryFilter = document.getElementById('industryFilter');
-        const grid = document.getElementById('investor-grid');
-        if (!grid) return;
-
-        function getCards() {
-            return grid.querySelectorAll('.investor-grid-card');
-        }
-
-        if (searchInput) {
-            searchInput.addEventListener('input', filterInvestors);
-        }
-
-        if (industryFilter) {
-            industryFilter.addEventListener('change', filterInvestors);
-        }
-
-        function filterInvestors() {
-            const searchTerm = (searchInput && searchInput.value.toLowerCase()) || '';
-            const industry = (industryFilter && industryFilter.value.toLowerCase()) || '';
-            const investorCards = getCards();
-
-            investorCards.forEach(card => {
-                const blob = (card.getAttribute('data-investor-search') || '').toLowerCase();
-                const name = card.querySelector('h3')?.textContent.toLowerCase() || '';
-                const position = card.querySelector('p.text-gray-600')?.textContent.toLowerCase() || '';
-                const haystack = blob || (name + ' ' + position);
-                const matchesSearch = searchTerm === '' ||
-                    haystack.includes(searchTerm) ||
-                    name.includes(searchTerm) ||
-                    position.includes(searchTerm);
-                const matchesIndustry = industry === '' || haystack.includes(industry) || position.includes(industry);
-
-                card.style.display = (matchesSearch && matchesIndustry) ? '' : 'none';
-            });
-        }
-    });
-</script>
 @endsection

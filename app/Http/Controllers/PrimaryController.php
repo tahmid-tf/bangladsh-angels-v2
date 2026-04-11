@@ -134,7 +134,9 @@ class PrimaryController extends Controller
             ->orderBy('name')
             ->get();
 
-        return view('investors', compact('investors'));
+        $tiers = SubscriptionTier::query()->active()->ordered()->get();
+
+        return view('investors', compact('investors', 'tiers'));
     }
 
     // View Resources Page
