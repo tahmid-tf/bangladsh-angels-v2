@@ -29,7 +29,7 @@ Route::redirect('/our-team', '/team', 301);
 Route::redirect('/ban-investors', '/our-investors', 301);
 Route::redirect('/investors', '/our-investors', 301);
 Route::get('/our-investors', [PrimaryController::class, 'viewInvestors'])->name('investors');
-Route::get('/ban-resources', [PrimaryController::class, 'viewResources'])->middleware(['auth', 'verified', ApprovedUserMiddleware::class])->name('resources');
+Route::get('/ban-resources', [PrimaryController::class, 'viewResources'])->name('resources');
 Route::get('/team', [PrimaryController::class, 'viewTeam'])->name('team');
 Route::get('/startups', [PrimaryController::class, 'viewStartups'])->name('startups');
 Route::post('/startups/pitch', [FounderPitchController::class, 'store'])
@@ -158,8 +158,11 @@ Route::middleware('auth')->group(function () {
             ->name('admin.founder-pitches.deck');
 
         Route::get('/resource-hub-cards', [ResourceHubCardController::class, 'index'])->name('admin.resource-hub');
+        Route::get('/resource-hub-cards/create', [ResourceHubCardController::class, 'create'])->name('admin.resource-hub.create');
+        Route::post('/resource-hub-cards', [ResourceHubCardController::class, 'store'])->name('admin.resource-hub.store');
         Route::get('/resource-hub-cards/{resourceHubCard}/edit', [ResourceHubCardController::class, 'edit'])->name('admin.resource-hub.edit');
         Route::put('/resource-hub-cards/{resourceHubCard}', [ResourceHubCardController::class, 'update'])->name('admin.resource-hub.update');
+        Route::delete('/resource-hub-cards/{resourceHubCard}', [ResourceHubCardController::class, 'destroy'])->name('admin.resource-hub.destroy');
 
         Route::get('/team-members', [TeamMemberController::class, 'index'])->name('admin.team-members');
         Route::get('/team-members/create', [TeamMemberController::class, 'create'])->name('admin.team-members.create');

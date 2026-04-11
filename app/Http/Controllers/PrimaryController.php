@@ -153,6 +153,19 @@ class PrimaryController extends Controller
     // View Resources Page (hub cards; content managed in admin)
     public function viewResources()
     {
+        if (! auth()->check()) {
+            return redirect()->route('upgrade.page');
+        }
+
+        $user = auth()->user();
+        if (! $user->hasVerifiedEmail()) {
+            return redirect()->route('verification.notice');
+        }
+
+        if (! $user->is_approved) {
+            return redirect()->route('approval.pending');
+        }
+
         $hubCards = ResourceHubCard::query()->ordered()->get();
 
         return view('resources', compact('hubCards'));

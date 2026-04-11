@@ -2,12 +2,17 @@
 @section('page_title', 'Resources page cards | Dashboard')
 @section('page_content')
 <div class="container w-full p-6">
-    <div class="flex flex-col md:flex-row justify-between items-start md:items-center p-4 bg-white shadow mb-6">
+    <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 p-4 bg-white shadow mb-6">
         <div>
             <h1 class="text-lg md:text-xl font-bold">Resources page (BAN /ban-resources)</h1>
-            <p class="text-sm text-gray-600 mt-1">Edit each card’s title, one-liner, CTA button text, logo, and link.</p>
+            <p class="text-sm text-gray-600 mt-1">Add, remove, or edit cards (title, one-liner, CTA, logo, link).</p>
         </div>
-        <a href="{{ route('resources') }}" target="_blank" rel="noopener noreferrer" class="mt-3 md:mt-0 text-sm font-semibold text-[#0a5554] hover:underline">View public page →</a>
+        <div class="flex flex-wrap items-center gap-3">
+            <a href="{{ route('admin.resource-hub.create') }}" class="inline-flex items-center justify-center rounded-lg bg-green-600 px-4 py-2 text-sm font-semibold text-white hover:bg-green-700 transition">
+                Add card
+            </a>
+            <a href="{{ route('resources') }}" target="_blank" rel="noopener noreferrer" class="text-sm font-semibold text-[#0a5554] hover:underline">View public page →</a>
+        </div>
     </div>
 
     @if (session('success'))
@@ -26,17 +31,29 @@
                 </tr>
             </thead>
             <tbody class="divide-y divide-gray-100">
-                @foreach ($cards as $card)
+                @forelse ($cards as $card)
                     <tr class="hover:bg-gray-50/80">
                         <td class="px-4 py-3 text-gray-600">{{ $card->sort_order }}</td>
                         <td class="px-4 py-3 font-medium text-gray-900">{{ $card->title }}</td>
                         <td class="px-4 py-3 text-gray-600 max-w-[10rem] truncate" title="{{ $card->cta_label }}">{{ $card->cta_label ?: '—' }}</td>
                         <td class="px-4 py-3 text-gray-600 max-w-md truncate" title="{{ $card->link }}">{{ $card->link }}</td>
-                        <td class="px-4 py-3">
+                        <td class="px-4 py-3 whitespace-nowrap">
                             <a href="{{ route('admin.resource-hub.edit', $card) }}" class="text-[#0a5554] font-semibold hover:underline">Edit</a>
+                            <span class="mx-2 text-gray-300">|</span>
+                            <form method="post" action="{{ route('admin.resource-hub.destroy', $card) }}" class="inline" onsubmit="return confirm('Remove this card from the public resources page?');">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="text-red-600 font-semibold hover:underline">Remove</button>
+                            </form>
                         </td>
                     </tr>
-                @endforeach
+                @empty
+                    <tr>
+                        <td colspan="5" class="px-4 py-10 text-center text-gray-600">
+                            No cards yet. <a href="{{ route('admin.resource-hub.create') }}" class="font-semibold text-[#0a5554] hover:underline">Add your first card</a>.
+                        </td>
+                    </tr>
+                @endforelse
             </tbody>
         </table>
     </div>
