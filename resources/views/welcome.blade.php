@@ -132,7 +132,7 @@
             <p class="my-6 text-[1em] md:text-[1.1em]">
                 Bangladesh's first and largest angel investment platform, BAN connects early-stage startups with investors who bring capital, expertise, and a global network. We back founders solving real challenges, turning ambition into action.
             </p>
-            <a href="{{ route('deals') }}"
+            <a href="{{ route('startups') }}"
                class="hero-cta-pill inline-flex flex-wrap items-baseline justify-center md:justify-start p-3 px-5 sm:px-6 rounded-full bg-[#eefff1] font-bold text-[#36b37e] text-[0.9rem] sm:text-base leading-snug"
                aria-label="I'm looking to fundraise or invest">
                 <span class="whitespace-nowrap">I'm looking to</span>
@@ -192,42 +192,6 @@
     </div>
   </section>
 
-  <section class="w-full px-4 py-12 md:py-16 bg-gradient-to-b from-green-50/80 to-white border-b border-green-100/80" aria-labelledby="meet-investors-heading">
-    <div class="mx-auto max-w-4xl text-center">
-      <h2 id="meet-investors-heading" class="text-xl md:text-2xl font-bold text-[#0f3d34] mb-5 md:mb-6 leading-snug">
-        Meet the Investors
-      </h2>
-      <p class="text-[0.95em] md:text-[1.1em] text-gray-700 leading-relaxed">
-        Join a global network of over 450 executives and operators<br class="hidden md:block"> who have built and expanded companies in all parts of the world.
-      </p>
-    </div>
-    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-6 md:gap-8 mt-10 md:mt-12 max-w-6xl mx-auto w-full px-2">
-      <div class="flex flex-col items-center">
-        <img src="{{ asset('investors/1.png') }}" class="rounded-xl h-auto max-h-[200px] w-auto shadow-sm border border-green-100/60" alt="Investor 1" loading="lazy" width="150" height="150">
-        <img src="{{ asset('investors/2.png') }}" class="rounded-xl h-auto max-h-[200px] w-auto shadow-sm border border-green-100/60 mt-4" alt="Investor 2" loading="lazy" width="150" height="150">
-      </div>
-      <div class="flex flex-col items-center mt-0 md:mt-16">
-        <img src="{{ asset('investors/3.png') }}" class="rounded-xl h-auto max-h-[200px] w-auto shadow-sm border border-green-100/60" alt="Investor 3" loading="lazy" width="150" height="150">
-        <img src="{{ asset('investors/4.png') }}" class="rounded-xl h-auto max-h-[200px] w-auto shadow-sm border border-green-100/60 mt-4" alt="Investor 4" loading="lazy" width="150" height="150">
-      </div>
-      <div class="flex flex-col items-center">
-        <img src="{{ asset('investors/5.png') }}" class="rounded-xl h-auto max-h-[200px] w-auto shadow-sm border border-green-100/60" alt="Investor 5" loading="lazy" width="150" height="150">
-        <img src="{{ asset('investors/6.png') }}" class="rounded-xl h-auto max-h-[200px] w-auto shadow-sm border border-green-100/60 mt-4" alt="Investor 6" loading="lazy" width="150" height="150">
-      </div>
-      <div class="flex flex-col items-center mt-0 md:mt-16">
-        <img src="{{ asset('investors/7.png') }}" class="rounded-xl h-auto max-h-[200px] w-auto shadow-sm border border-green-100/60" alt="Investor 7" loading="lazy" width="150" height="150">
-        <img src="{{ asset('investors/8.png') }}" class="rounded-xl h-auto max-h-[200px] w-auto shadow-sm border border-green-100/60 mt-4" alt="Investor 8" loading="lazy" width="150" height="150">
-      </div>
-      <div class="flex flex-col items-center">
-        <img src="{{ asset('investors/9.png') }}" class="rounded-xl h-auto max-h-[200px] w-auto shadow-sm border border-green-100/60" alt="Investor 9" loading="lazy" width="150" height="150">
-        <img src="{{ asset('investors/10.png') }}" class="md:block hidden rounded-xl h-auto max-h-[200px] w-auto shadow-sm border border-green-100/60 mt-4" alt="Investor 10" loading="lazy" width="150" height="150">
-      </div>
-      <div class="flex flex-col items-center">
-        <img src="{{ asset('investors/10.png') }}" class="md:hidden rounded-xl h-auto max-h-[200px] w-auto shadow-sm border border-green-100/60 mt-4" alt="Investor 10" loading="lazy" width="150" height="150">
-      </div>
-    </div>
-  </section>
-
   <section id="what-we-do" class="w-full px-4 py-12 md:py-16 bg-gradient-to-b from-white to-green-50/60 border-b border-green-100/80" aria-labelledby="what-we-do-heading">
     <div class="mx-auto max-w-6xl">
       <h2 id="what-we-do-heading" class="text-center text-xl md:text-2xl font-bold text-[#0f3d34] mb-10 md:mb-12 leading-snug">
@@ -253,27 +217,6 @@
     </div>
   </section>
 
-  {{-- Portfolio Companies --}}
-  <section id="portfolio-companies" class="w-full px-4 py-12 md:py-16 bg-gradient-to-b from-green-50/60 to-white border-b border-green-100/80" aria-labelledby="portfolio-heading">
-    <div class="mx-auto max-w-6xl">
-      <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-10 md:mb-12 text-center md:text-left">
-        <div class="max-w-2xl mx-auto md:mx-0">
-          <h2 id="portfolio-heading" class="text-xl md:text-2xl font-bold text-[#0f3d34] leading-snug">Portfolio Companies</h2>
-          <p class="mt-3 text-[0.95em] md:text-[1.1em] text-gray-700 leading-relaxed">Take a look at our portfolio companies</p>
-        </div>
-        <div class="shrink-0 flex justify-center md:justify-end">
-          <a href="{{ route('portfolio') }}" class="inline-flex px-6 py-3 rounded-full bg-[#36b37e] font-bold text-white hover:opacity-90 transition-opacity">View All Portfolios</a>
-        </div>
-      </div>
-      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 md:gap-6 w-full">
-        @foreach ($portfolioDeals as $deal)
-          <livewire:portfolio-company :deal="$deal"></livewire:portfolio-company>
-        @endforeach
-      </div>
-    </div>
-  </section>
-  
-  
   {{-- Pitch your Startup --}}
   <section id="pitch-startup" class="w-full px-4 py-12 md:py-16 bg-gradient-to-b from-white to-green-50/60 border-b border-green-100/80" aria-labelledby="pitch-heading">
     <div class="mx-auto max-w-6xl flex flex-col-reverse md:flex-row md:items-center gap-10 md:gap-14 justify-between">
@@ -290,25 +233,7 @@
       </div>
     </div>
   </section>
-  
-    @auth
-      {{-- Deal Listings --}}
-      <section id="deal-listings" class="w-full px-4 py-12 md:py-16 bg-gradient-to-b from-green-50/80 to-white border-b border-green-100/80" aria-labelledby="deals-heading">
-        <div class="mx-auto max-w-6xl flex flex-col items-center text-center">
-          <h2 id="deals-heading" class="text-xl md:text-2xl font-bold text-[#0f3d34] leading-snug">Deal Listings</h2>
-          <p class="mt-3 max-w-2xl text-[0.95em] md:text-[1.1em] text-gray-700 leading-relaxed">Live details to review and invest today.</p>
-          <div class="w-full mt-10 md:mt-12 rounded-2xl border border-green-100/70 bg-white/90 p-4 md:p-8 shadow-sm">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 w-full">
-              @foreach ($deals as $deal)
-                <livewire:deal-card :deal="$deal"></livewire:deal-card>
-              @endforeach
-            </div>
-          </div>
-          <a href="{{ route('deals') }}" class="mt-8 md:mt-10 inline-flex px-6 py-3 rounded-full bg-[#36b37e] font-bold text-white hover:opacity-90 transition-opacity">Explore All Deals</a>
-        </div>
-      </section>
-    @endauth
-    
+
   <section id="ban-resources" class="w-full px-4 py-12 md:py-16 bg-gradient-to-b from-white to-green-50/60 border-b border-green-100/80" aria-labelledby="resources-heading">
     <div class="mx-auto max-w-6xl text-center">
       <h2 id="resources-heading" class="text-xl md:text-2xl font-bold text-[#0f3d34] leading-snug">BAN Resources</h2>

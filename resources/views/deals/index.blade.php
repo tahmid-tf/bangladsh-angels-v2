@@ -21,8 +21,11 @@
         </button>
     </div>
 @endif
-    <div class="flex w-full justify-between">
-        <h1 class="text-3xl font-bold mb-6">Active Deals</h1>
+    <div class="flex w-full justify-between flex-col gap-2">
+        <h1 class="text-3xl font-bold">Active Deals</h1>
+        <p class="text-sm text-gray-600 mb-4">
+            The public <a href="{{ route('startups') }}" class="font-semibold text-[#18736a] hover:underline">Startups</a> page also lists our portfolio, founder pitch form, and BAN services.
+        </p>
     </div>
 </div>
 
@@ -33,18 +36,9 @@
     @forelse ($deals as $deal)
     <livewire:deal-card :deal="$deal"></livewire:deal-card>
     @empty
-    No Deals in this section
+        <div class="col-span-full rounded-xl border border-gray-200 bg-gray-50 px-6 py-10 text-center text-gray-600" role="status">
+            No active deals in this list right now.
+        </div>
     @endforelse
-    @php
-        $i = 9;
-    @endphp
-   @while ($i > 0)
-   
-   @php
-       $i--; // Decrement the counter
-   @endphp
-@endwhile
-    
-    
 </div>
 @endsection

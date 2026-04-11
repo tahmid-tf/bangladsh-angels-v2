@@ -17,10 +17,7 @@ class PrimaryController extends Controller
         //     return view('soon');
         // }
 
-        $portfolioDeals = Deal::where('type', 'portfolio')->take(3)->get();
-        $deals = Deal::take(3)->get();
-
-        return view('welcome', compact('portfolioDeals', 'deals'));
+        return view('welcome');
     }
 
     // Upgrade Page
@@ -29,12 +26,18 @@ class PrimaryController extends Controller
         return view('upgrade');
     }
 
-    // Portfolio Page
-    public function viewPortfolio()
+    // Startups hub: portfolio (public) + active deals (paywalled in the view) + pitch + services
+    public function viewStartups()
     {
-        $deals = Deal::with('media')->where('type', 'portfolio')->get();
+        $portfolioDeals = Deal::with('media')->where('type', 'portfolio')->get();
+        $activeDeals = Deal::with('media')
+            ->where('type', '!=', 'portfolio')
+            ->where('status', 'active')
+            ->get();
 
-        return view('portfolio', compact('deals'));
+        $canViewActiveDeals = auth()->check() && auth()->user()->canViewPaywalledDeals();
+
+        return view('startups', compact('portfolioDeals', 'activeDeals', 'canViewActiveDeals'));
     }
 
     // Subscription Plans Page

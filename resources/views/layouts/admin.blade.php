@@ -114,6 +114,12 @@
                 </svg>
                 <span>Deals</span>
             </a>
+            <a href="{{ route('admin.founder-pitches') }}" class="py-3 px-6 hover:bg-green-600 transition-colors flex items-center space-x-2 {{ request()->routeIs('admin.founder-pitches*') ? 'bg-green-600' : '' }}">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                    <path d="M9 4.804A7.968 7.968 0 005.5 4c-1.255 0-2.443.29-3.5.804v10A7.969 7.969 0 015.5 14c1.669 0 3.218.51 4.5 1.385A7.962 7.962 0 0114.5 14c1.255 0 2.443.29 3.5.804v-10A7.968 7.968 0 0014.5 4c-1.255 0-2.443.29-3.5.804V12a1 1 0 11-2 0V4.804z" />
+                </svg>
+                <span>Founder pitches</span>
+            </a>
             <a href="{{ route('admin.subscriptions') }}" class="py-3 px-6 hover:bg-green-600 transition-colors flex items-center space-x-2 {{ request()->routeIs('admin.subscriptions*') ? 'bg-green-600' : '' }}">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                     <path d="M4 4a2 2 0 00-2 2v1h16V6a2 2 0 00-2-2H4a2 2 0 00-2 2V4z" />

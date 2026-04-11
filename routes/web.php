@@ -1,7 +1,9 @@
 <?php
 
+use App\Http\Controllers\Admin\FounderPitchSubmissionController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CheckoutController;
+use App\Http\Controllers\FounderPitchController;
 use App\Http\Controllers\InvestmentController;
 use App\Http\Controllers\MailController;
 use App\Http\Controllers\PrimaryController;
@@ -21,7 +23,14 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', PrimaryController::class)->name('home');
 Route::get('/ban-investors', [PrimaryController::class, 'viewInvestors'])->name('investors');
 Route::get('/ban-resources', [PrimaryController::class, 'viewResources'])->middleware(['auth', 'verified', ApprovedUserMiddleware::class])->name('resources');
-Route::get('/portfolio', [PrimaryController::class, 'viewPortfolio'])->name('portfolio');
+Route::get('/startups', [PrimaryController::class, 'viewStartups'])->name('startups');
+Route::post('/startups/pitch', [FounderPitchController::class, 'store'])
+    ->middleware('throttle:10,1')
+    ->name('startups.pitch');
+
+Route::get('/portfolio', function () {
+    return redirect()->to(route('startups').'#portfolio-companies');
+})->name('portfolio');
 Route::get('/approval/pending', function () {
     return view('approval.pending');
 })->name('approval.pending');
@@ -136,6 +145,10 @@ Route::middleware('auth')->group(function () {
             Route::post('/send', [MailController::class, 'send'])->name('mail.send');
 
         });
+
+        Route::get('/founder-pitches', [FounderPitchSubmissionController::class, 'index'])->name('admin.founder-pitches');
+        Route::get('/founder-pitches/{founderPitchSubmission}/deck', [FounderPitchSubmissionController::class, 'downloadDeck'])
+            ->name('admin.founder-pitches.deck');
 
         // Deal Routes
         Route::prefix('deals')->group(function () {

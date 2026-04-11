@@ -14,9 +14,8 @@
         <!-- Navigation Menu (Center for Desktop) -->
         <div class="hidden md:flex flex-1 justify-center">
             <ul class="flex flex-row font-bold text-gray-700">
-                <li class="m-3"><a href="{{ route('deals') }}">Deals</a></li>
+                <li class="m-3"><a href="{{ route('startups') }}">Startups</a></li>
                 <li class="m-3"><a href="{{route('investors')}}">Investors</a></li>
-                <li class="m-3"><a href="{{route('portfolio')}}">Portfolio</a></li>
                 <li class="m-3"><a href="{{route('resources')}}">Resources</a></li>
                 <li class="m-3"><a href="{{ route('team') }}">Our Team</a></li>
             </ul>
@@ -82,9 +81,8 @@
                 @guest
                 <li class="px-4 py-2 border-b"><a href="{{ route('login') }}">Login/Sign Up</a></li>
                 @endguest
-                <li class="px-4 py-2 border-b"><a href="{{ route('deals') }}">Deals</a></li>
+                <li class="px-4 py-2 border-b"><a href="{{ route('startups') }}">Startups</a></li>
                 <li class="px-4 py-2 border-b"><a href="{{ route('investors')}}">Investors</a></li>
-                <li class="px-4 py-2 border-b"><a href="{{ route('portfolio') }}">Portfolio</a></li>
                 <li class="px-4 py-2 border-b"><a href="{{ route('resources') }}">Resources</a></li>
                 <li class="px-4 py-2"><a href="{{ route('team') }}">Our Team</a></li>
                 @auth

@@ -157,6 +157,20 @@ class User extends Authenticatable implements HasMedia
     }
 
     /**
+     * Whether the member may view paywalled deal listings (e.g. Active Deals on /startups).
+     */
+    public function canViewPaywalledDeals(): bool
+    {
+        if ($this->account_status === 'disabled' || $this->role === 'disabled') {
+            return false;
+        }
+
+        return $this->hasVerifiedEmail()
+            && $this->is_approved
+            && ! $this->isFree();
+    }
+
+    /**
      * Check user account status.
      */
     public function status()
