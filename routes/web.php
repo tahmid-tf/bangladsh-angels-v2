@@ -21,8 +21,13 @@ use Illuminate\Support\Facades\Route;
  * Public Routes
  */
 Route::get('/', PrimaryController::class)->name('home');
-Route::get('/ban-investors', [PrimaryController::class, 'viewInvestors'])->name('investors');
-Route::get('/ban-resources', [PrimaryController::class, 'viewResources'])->middleware(['auth', 'verified', ApprovedUserMiddleware::class])->name('resources');
+
+Route::redirect('/ban-investors', '/investors', 301);
+Route::redirect('/ban-resources', '/resources', 301);
+Route::redirect('/our-team', '/team', 301);
+
+Route::get('/investors', [PrimaryController::class, 'viewInvestors'])->name('investors');
+Route::get('/team', [PrimaryController::class, 'viewTeam'])->name('team');
 Route::get('/startups', [PrimaryController::class, 'viewStartups'])->name('startups');
 Route::post('/startups/pitch', [FounderPitchController::class, 'store'])
     ->middleware('throttle:10,1')
@@ -81,7 +86,6 @@ Route::get('/deals/review', function () {
 })->middleware(['auth', 'verified', ApprovedUserMiddleware::class])->name('deals.review');
 
 Route::get('/faq', [PrimaryController::class, 'viewFAQ'])->name('faq');
-Route::get('/our-team', [PrimaryController::class, 'viewTeam'])->name('team');
 Route::get('/investor/signup', [PrimaryController::class, 'viewInvestorSignup'])->name('investor.signup');
 
 /**
@@ -96,6 +100,7 @@ Route::get('/dashboard', function () {
  */
 Route::post('/member/create', [AdminController::class, 'memberApply'])->name('member.apply');
 Route::get('/view/{deal:id}', [AdminController::class, 'showDeal'])->name('deal.public.view');
+Route::get('/resources', [PrimaryController::class, 'viewResources'])->name('resources');
 Route::get('/resources/{resource:id}', [ResourceController::class, 'view'])->name('resource.public.view');
 /**
  * Authenticated Routes

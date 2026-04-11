@@ -2,7 +2,7 @@
     @if ($feedback !== '')
         <p class="text-xs font-medium mb-2 {{ $feedbackIsError ? 'text-amber-800' : 'text-green-700' }}">{{ $feedback }}</p>
     @endif
-    <p class="text-xs font-semibold text-gray-800 mb-1">Testimonial for <span class="font-medium text-[#0f3d34]">/ban-investors</span></p>
+    <p class="text-xs font-semibold text-gray-800 mb-1">Testimonial for <span class="font-medium text-[#0f3d34]">/investors</span></p>
     <p class="text-xs text-gray-600 mb-3">Optional quote from this member about BAN. Only appears publicly if you enable the checkbox below.</p>
     <textarea
         wire:model.defer="body"

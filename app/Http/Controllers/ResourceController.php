@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Resource;
+use Illuminate\Http\Request;
 
 class ResourceController extends Controller
 {
@@ -23,29 +23,29 @@ class ResourceController extends Controller
     {
         // Validate input, including 'type' which must be 'event' or 'webinar'
         $validated = $request->validate([
-            'title'                 => 'required|string|max:255',
-            'type'                  => 'required|in:event,webinar',
-            'location'              => 'nullable|string|max:255',
-            'date'                  => 'nullable|date',
-            'start_time'            => 'nullable|date_format:H:i',
-            'end_time'              => 'nullable|date_format:H:i',
-            'registration_fee'      => 'nullable|numeric',
-            'description'           => 'required|string',
-            'registration_details'  => 'nullable|string',
+            'title' => 'required|string|max:255',
+            'type' => 'required|in:event,webinar',
+            'location' => 'nullable|string|max:255',
+            'date' => 'nullable|date',
+            'start_time' => 'nullable|date_format:H:i',
+            'end_time' => 'nullable|date_format:H:i',
+            'registration_fee' => 'nullable|numeric',
+            'description' => 'required|string',
+            'registration_details' => 'nullable|string',
 
             // Arrays for benefits, highlights, audience
-            'benefits'              => 'nullable|array',
-            'event_highlights'      => 'nullable|array',
-            'target_audience'       => 'nullable|array',
+            'benefits' => 'nullable|array',
+            'event_highlights' => 'nullable|array',
+            'target_audience' => 'nullable|array',
 
             // Each speaker is an array with optional image
-            'speakers'              => 'nullable|array',
-            'speakers.*.name'       => 'nullable|string|max:255',
-            'speakers.*.designation'=> 'nullable|string|max:255',
-            'speakers.*.image'      => 'nullable|image|max:2048',
+            'speakers' => 'nullable|array',
+            'speakers.*.name' => 'nullable|string|max:255',
+            'speakers.*.designation' => 'nullable|string|max:255',
+            'speakers.*.image' => 'nullable|image|max:2048',
 
             // Banner image
-            'banner_image'          => 'nullable|image|max:2048',
+            'banner_image' => 'nullable|image|max:2048',
         ]);
 
         // Remove images from the validated data, so we don't store them as JSON
@@ -59,10 +59,10 @@ class ResourceController extends Controller
         // Create the resource record
         $resourceData = $validated;
         // This ensures we store JSON arrays as arrays, not nested arrays with images
-        $resourceData['benefits']         = $request->input('benefits', []);
+        $resourceData['benefits'] = $request->input('benefits', []);
         $resourceData['event_highlights'] = $request->input('event_highlights', []);
-        $resourceData['target_audience']  = $request->input('target_audience', []);
-        $resourceData['speakers']         = $request->input('speakers', []);
+        $resourceData['target_audience'] = $request->input('target_audience', []);
+        $resourceData['speakers'] = $request->input('speakers', []);
 
         $resource = Resource::create($resourceData);
 
@@ -89,50 +89,50 @@ class ResourceController extends Controller
 
     public function view(Resource $resource)
     {
-        return view('resources.single',compact('resource'));
+        return view('resources.single', compact('resource'));
     }
 
     public function edit(Resource $resource)
     {
-        return view('admin.resource.edit',compact('resource'));
+        return view('admin.resource.edit', compact('resource'));
     }
 
     public function update(Request $request, Resource $resource)
     {
         // Validate input, including 'type' which must be 'event' or 'webinar'
         $validated = $request->validate([
-            'title'                 => 'required|string|max:255',
-            'type'                  => 'required|in:event,webinar',
-            'location'              => 'nullable|string|max:255',
-            'date'                  => 'nullable|date',
-            'start_time'            => 'nullable|date_format:H:i',
-            'end_time'              => 'nullable|date_format:H:i',
-            'registration_fee'      => 'nullable|numeric',
-            'description'           => 'required|string',
-            'registration_details'  => 'nullable|string',
+            'title' => 'required|string|max:255',
+            'type' => 'required|in:event,webinar',
+            'location' => 'nullable|string|max:255',
+            'date' => 'nullable|date',
+            'start_time' => 'nullable|date_format:H:i',
+            'end_time' => 'nullable|date_format:H:i',
+            'registration_fee' => 'nullable|numeric',
+            'description' => 'required|string',
+            'registration_details' => 'nullable|string',
 
             // Arrays for benefits, highlights, audience
-            'benefits'              => 'nullable|array',
-            'event_highlights'      => 'nullable|array',
-            'target_audience'       => 'nullable|array',
+            'benefits' => 'nullable|array',
+            'event_highlights' => 'nullable|array',
+            'target_audience' => 'nullable|array',
 
             // Each speaker is an array with optional image
-            'speakers'              => 'nullable|array',
-            'speakers.*.name'       => 'nullable|string|max:255',
-            'speakers.*.designation'=> 'nullable|string|max:255',
-            'speakers.*.image'      => 'nullable|image|max:2048',
+            'speakers' => 'nullable|array',
+            'speakers.*.name' => 'nullable|string|max:255',
+            'speakers.*.designation' => 'nullable|string|max:255',
+            'speakers.*.image' => 'nullable|image|max:2048',
 
             // Banner image
-            'banner_image'          => 'nullable|image|max:2048',
+            'banner_image' => 'nullable|image|max:2048',
         ]);
 
         // Convert JSON fields to arrays if needed
         // We'll store them as arrays in the DB, so cast them in the model as well.
         $resourceData = $validated;
-        $resourceData['benefits']         = $request->input('benefits', []);
+        $resourceData['benefits'] = $request->input('benefits', []);
         $resourceData['event_highlights'] = $request->input('event_highlights', []);
-        $resourceData['target_audience']  = $request->input('target_audience', []);
-        $resourceData['speakers']         = $request->input('speakers', []);
+        $resourceData['target_audience'] = $request->input('target_audience', []);
+        $resourceData['speakers'] = $request->input('speakers', []);
 
         // Extract banner_image from validated data so we don't store it as JSON
         $bannerImage = $request->file('banner_image');
@@ -177,7 +177,7 @@ class ResourceController extends Controller
         }
 
         return redirect()
-            ->route('resource.edit',$resource->id)
+            ->route('resource.edit', $resource->id)
             ->with('success', 'Resource updated successfully!');
     }
 
@@ -189,7 +189,7 @@ class ResourceController extends Controller
 
         // Redirect back to the resources index with a success message
         return redirect()
-            ->route('resources.index')
+            ->route('admin.resources')
             ->with('success', 'Resource deleted successfully!');
     }
 }

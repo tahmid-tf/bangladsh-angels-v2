@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Deal;
-use App\Models\Resource;
 use App\Models\SubscriptionTier;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -139,13 +138,10 @@ class PrimaryController extends Controller
         return view('investors', compact('investors', 'tiers'));
     }
 
-    // View Resources Page
+    // View Resources Page (public hub: Angel Academy, BWIN, DeckVue)
     public function viewResources()
     {
-        $events = Resource::where('type', 'event')->latest()->get();
-        $webinars = Resource::where('type', 'webinar')->latest()->get();
-
-        return view('resources', compact('events', 'webinars'));
+        return view('resources');
     }
 
     public function checkout(Request $request)
