@@ -234,7 +234,7 @@
     </div>
   </section>
 
-  <section id="home-resources" class="w-full px-4 py-12 md:py-16 bg-gradient-to-b from-white to-green-50/60 border-b border-green-100/80" aria-labelledby="resources-heading">
+  <section id="ban-resources" class="w-full px-4 py-12 md:py-16 bg-gradient-to-b from-white to-green-50/60 border-b border-green-100/80" aria-labelledby="resources-heading">
     <div class="mx-auto max-w-6xl text-center">
       <h2 id="resources-heading" class="text-xl md:text-2xl font-bold text-[#0f3d34] leading-snug">BAN Resources</h2>
       <p class="mt-3 mx-auto max-w-3xl text-[0.95em] md:text-[1.1em] text-gray-700 leading-relaxed">

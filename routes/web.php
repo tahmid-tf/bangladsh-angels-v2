@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\Admin\FounderPitchSubmissionController;
+use App\Http\Controllers\Admin\ResourceHubCardController;
+use App\Http\Controllers\Admin\TeamMemberController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\FounderPitchController;
@@ -22,11 +24,10 @@ use Illuminate\Support\Facades\Route;
  */
 Route::get('/', PrimaryController::class)->name('home');
 
-Route::redirect('/ban-investors', '/investors', 301);
-Route::redirect('/ban-resources', '/resources', 301);
 Route::redirect('/our-team', '/team', 301);
 
-Route::get('/investors', [PrimaryController::class, 'viewInvestors'])->name('investors');
+Route::get('/ban-investors', [PrimaryController::class, 'viewInvestors'])->name('investors');
+Route::get('/ban-resources', [PrimaryController::class, 'viewResources'])->middleware(['auth', 'verified', ApprovedUserMiddleware::class])->name('resources');
 Route::get('/team', [PrimaryController::class, 'viewTeam'])->name('team');
 Route::get('/startups', [PrimaryController::class, 'viewStartups'])->name('startups');
 Route::post('/startups/pitch', [FounderPitchController::class, 'store'])
@@ -100,7 +101,6 @@ Route::get('/dashboard', function () {
  */
 Route::post('/member/create', [AdminController::class, 'memberApply'])->name('member.apply');
 Route::get('/view/{deal:id}', [AdminController::class, 'showDeal'])->name('deal.public.view');
-Route::get('/resources', [PrimaryController::class, 'viewResources'])->name('resources');
 Route::get('/resources/{resource:id}', [ResourceController::class, 'view'])->name('resource.public.view');
 /**
  * Authenticated Routes
@@ -154,6 +154,17 @@ Route::middleware('auth')->group(function () {
         Route::get('/founder-pitches', [FounderPitchSubmissionController::class, 'index'])->name('admin.founder-pitches');
         Route::get('/founder-pitches/{founderPitchSubmission}/deck', [FounderPitchSubmissionController::class, 'downloadDeck'])
             ->name('admin.founder-pitches.deck');
+
+        Route::get('/resource-hub-cards', [ResourceHubCardController::class, 'index'])->name('admin.resource-hub');
+        Route::get('/resource-hub-cards/{resourceHubCard}/edit', [ResourceHubCardController::class, 'edit'])->name('admin.resource-hub.edit');
+        Route::put('/resource-hub-cards/{resourceHubCard}', [ResourceHubCardController::class, 'update'])->name('admin.resource-hub.update');
+
+        Route::get('/team-members', [TeamMemberController::class, 'index'])->name('admin.team-members');
+        Route::get('/team-members/create', [TeamMemberController::class, 'create'])->name('admin.team-members.create');
+        Route::post('/team-members', [TeamMemberController::class, 'store'])->name('admin.team-members.store');
+        Route::get('/team-members/{teamMember}/edit', [TeamMemberController::class, 'edit'])->name('admin.team-members.edit');
+        Route::put('/team-members/{teamMember}', [TeamMemberController::class, 'update'])->name('admin.team-members.update');
+        Route::delete('/team-members/{teamMember}', [TeamMemberController::class, 'destroy'])->name('admin.team-members.destroy');
 
         // Deal Routes
         Route::prefix('deals')->group(function () {

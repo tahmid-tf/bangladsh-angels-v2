@@ -1,5 +1,5 @@
 @extends('layouts.guest')
-@section('page_title','About Us')
+@section('page_title', 'Our Team | Bangladesh Angels Network Limited')
 @section('page_content')
 <!-- Section: Header -->
 <section class="container mx-auto mt-16 px-6 lg:flex lg:space-x-12">
@@ -28,88 +28,35 @@
 
 <!-- Section: Team and Management -->
 <section class="container mx-auto mt-20 px-6">
-    <h2 class="text-center text-4xl font-extrabold mb-10">Team and Management</h2>
+    <h2 class="text-center text-3xl md:text-4xl font-extrabold text-[#0f3d34] mb-4">Team &amp; Management</h2>
+    <p class="text-center text-gray-600 max-w-2xl mx-auto mb-12 leading-relaxed">
+        The people running day-to-day programs, partnerships, and operations at Bangladesh Angels Network.
+    </p>
 
-    <!-- CEO Section (Centered) -->
-    <div class="flex justify-center mb-10">
-        <div class="bg-white flex flex-col items-center rounded-xl shadow-lg p-6 w-full sm:w-[40vw] md:w-[20vw] text-center hover:shadow-2xl transition">
-            <img src="{{asset('our team/ivy.png')}}" alt="Ivy Huq Russell" class="w-28 h-28 mx-auto rounded-full mb-4">
-            <h3 class="text-lg font-bold">Ivy Huq Russell</h3>
-            <p class="text-sm text-gray-500">CEO</p>
-            <a href="https://www.linkedin.com/in/ivy-huq-russell-417487/" class="mt-3 text-blue-600 font-bold text-2xl cursor-pointer block">in</a>
-        </div>
-    </div>
-
-    <!-- Other Team Members (Grid Layout) -->
-    <div class="flex flex-wrap justify-center items-center gap-6">
-        <!-- Team Card -->
-        <div class="bg-white flex flex-col items-center rounded-xl shadow-lg p-6 w-full sm:w-[40vw] md:w-[20vw] text-center hover:shadow-2xl transition">
-            <img src="{{asset('our team/mustavi.png')}}" alt="Mustavi Khan" class="w-28 h-28 mx-auto rounded-full mb-4">
-            <h3 class="text-lg font-bold">Mustavi Khan</h3>
-            <p class="text-sm text-gray-500">Investment Analyst</p>
-            <a href="https://www.linkedin.com/in/mustavikhan05/" class="mt-3 text-blue-600 font-bold text-2xl cursor-pointer block">in</a>
-        </div>
-
-        <div class="bg-white flex flex-col items-center rounded-xl shadow-lg p-6 w-full sm:w-[40vw] md:w-[20vw] text-center hover:shadow-2xl transition">
-            <img src="{{asset('our team/mohaimenul.png')}}" alt="Mohaimenul Islam" class="w-28 h-28 mx-auto rounded-full mb-4">
-            <h3 class="text-lg font-bold">Mohaimenul Islam</h3>
-            <p class="text-sm text-gray-500">Investment Analyst</p>
-            <a href="https://www.linkedin.com/in/mohaimenul8/" class="mt-3 text-blue-600 font-bold text-2xl cursor-pointer block">in</a>
-        </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10 max-w-5xl mx-auto">
+        @forelse ($management as $member)
+            <x-team-member-card :member="$member" />
+        @empty
+            <p class="col-span-full text-center text-gray-600 py-8">No team members are listed yet.</p>
+        @endforelse
     </div>
 </section>
 
 
 
 <!-- Section: Governing Board -->
-<section class="container mx-auto mt-20 px-6">
-    <h2 class="text-center text-4xl font-extrabold mb-6">Governing Board</h2>
+<section class="container mx-auto mt-20 px-6 mb-16">
+    <h2 class="text-center text-3xl md:text-4xl font-extrabold text-[#0f3d34] mb-4">Governing Board</h2>
+    <p class="text-center text-gray-600 max-w-2xl mx-auto mb-12 leading-relaxed">
+        Advisors and leaders who help steer the network’s governance and long-term direction.
+    </p>
 
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-8">
-        <div class="bg-white rounded-xl shadow-lg p-6 text-center hover:shadow-2xl transition">
-            <h3 class="text-lg font-bold">Sajid Rahman</h3>
-            <p class="text-sm text-gray-500">Chief Executive</p>
-            <p class="text-sm text-gray-500">Telenor Health AS</p>
-            <img src="{{asset('our team/sajid.png')}}" alt="Sajid Rehman" class="mt-3 w-28 h-28 mx-auto rounded-full mb-4">
-           
-            <br><a href="https://www.linkedin.com/in/rahmansajid/" class="mt-3 text-blue-600 font-bold text-2xl cursor-pointer">in</a>
-        </div>
-
-        <div class="bg-white rounded-xl shadow-lg p-6 text-center hover:shadow-2xl transition">
-            <h3 class="text-lg font-bold">Samad Miraly</h3>
-            <p class="text-sm text-gray-500">Co Founder</p>
-            <p class="text-sm text-gray-500">Startup Dhaka</p>
-            <img src="{{asset('our team/samad.png')}}" alt="samad miraly" class="mt-3 w-28 h-28 mx-auto rounded-full mb-4">
-   
-            <a href="https://www.linkedin.com/in/miraly/" class="mt-3 text-blue-600 font-bold text-2xl cursor-pointer">in</a>
-        </div>
-
-        <div class="bg-white rounded-xl shadow-lg p-6 text-center hover:shadow-2xl transition">
-            <h3 class="text-lg font-bold">Minhaz Anwar</h3>
-            <p class="text-sm text-gray-500">Chief Storyteller</p>
-            <p class="text-sm text-gray-500">Better Stories</p>
-            <img src="{{asset('our team/minhaz.png')}}" alt="Minhaz Anwar" class="mt-3 w-28 h-28 mx-auto rounded-full mb-4">
-            
-            <br><a href="https://www.linkedin.com/in/minhazanwar/" class="mt-3 text-blue-600 font-bold text-2xl cursor-pointer">in</a>
-        </div>
-
-        <div class="bg-white rounded-xl shadow-lg p-6 text-center hover:shadow-2xl transition">
-            <h3 class="text-lg font-bold">Tina Jabeen</h3>
-            <p class="text-sm text-gray-500">Investment Advisor</p>
-            <p class="text-sm text-gray-500">Startup Bangladesh</p>
-            <img src="{{asset('our team/tina.png')}}" alt="Tina Jabeen" class="mt-3 w-28 h-28 mx-auto rounded-full mb-4">
-            
-            <br><a href="https://www.linkedin.com/in/tinajabeen/" class="mt-3 text-blue-600 font-bold text-2xl cursor-pointer">in</a>
-        </div>
-        <div class="bg-white rounded-xl shadow-lg p-6 text-center hover:shadow-2xl transition">
-            <h3 class="text-lg font-bold">Sanchayan Chakraborty</h3>
-            <p class="text-sm text-gray-500">Partner</p>
-            <p class="text-sm text-gray-500">Aavishkaar Capital</p>
-            <img src="{{asset('our team/sanchayan.png')}}" alt="Sanchayan Chakraborty" class="mt-3 w-28 h-28 mx-auto rounded-full mb-4">
-            
-            <br><a href="https://www.linkedin.com/in/sanchayan-chakraborty-5353105/" class="mt-3 text-blue-600 font-bold text-2xl cursor-pointer">in</a>
-        </div>
-        <!-- Repeat other governing board cards -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10 max-w-5xl mx-auto">
+        @forelse ($governingBoard as $member)
+            <x-team-member-card :member="$member" />
+        @empty
+            <p class="col-span-full text-center text-gray-600 py-8">No governing board members are listed yet.</p>
+        @endforelse
     </div>
 </section>
 

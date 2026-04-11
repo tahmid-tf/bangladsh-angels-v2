@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Deal;
+use App\Models\ResourceHubCard;
 use App\Models\SubscriptionTier;
+use App\Models\TeamMember;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -115,7 +117,17 @@ class PrimaryController extends Controller
     // View Team Page
     public function viewTeam()
     {
-        return view('team');
+        $management = TeamMember::query()
+            ->forSection(TeamMember::SECTION_MANAGEMENT)
+            ->ordered()
+            ->get();
+
+        $governingBoard = TeamMember::query()
+            ->forSection(TeamMember::SECTION_GOVERNING_BOARD)
+            ->ordered()
+            ->get();
+
+        return view('team', compact('management', 'governingBoard'));
     }
 
     // View Sign up Page
@@ -138,10 +150,12 @@ class PrimaryController extends Controller
         return view('investors', compact('investors', 'tiers'));
     }
 
-    // View Resources Page (public hub: Angel Academy, BWIN, DeckVue)
+    // View Resources Page (hub cards; content managed in admin)
     public function viewResources()
     {
-        return view('resources');
+        $hubCards = ResourceHubCard::query()->ordered()->get();
+
+        return view('resources', compact('hubCards'));
     }
 
     public function checkout(Request $request)

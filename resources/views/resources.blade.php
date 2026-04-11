@@ -3,40 +3,15 @@
 @section('page_content')
 @php
     $brochureUrl = asset('MoU.pdf');
-    $resourceCards = [
-        [
-            'title' => 'Angel Academy',
-            'one_liner' => 'Structured investor education for people who want to back early-stage companies with confidence.',
-            'shadow' => 'bg-[#36b37e]/20',
-            'surface' => 'from-white via-[#f7fdf9] to-[#eefaf4]',
-            'border' => 'border-green-100/90',
-            'cta' => 'Book a call with us to know more',
-            'cta_url' => 'mailto:hello@bdangels.co?subject=Angel%20Academy%20%E2%80%94%20call%20request',
-            'cta_external' => false,
-            'footnote' => null,
-        ],
-        [
-            'title' => 'BWIN',
-            'one_liner' => 'Bangladesh Women Investors Network — our sister chapter growing women investors and gender-lens deal flow.',
-            'shadow' => 'bg-[#18736a]/18',
-            'surface' => 'from-white via-[#f3faf8] to-[#e6f4f0]',
-            'border' => 'border-[#18736a]/20',
-            'cta' => 'Fill up this form to join us',
-            'cta_url' => 'mailto:hello@bdangels.co?subject=BWIN%20%E2%80%94%20join%20form%20request',
-            'cta_external' => false,
-            'footnote' => 'We will email you the Google Form link.',
-        ],
-        [
-            'title' => 'DeckVue',
-            'one_liner' => 'AI-assisted deck feedback so founders can sharpen their story before investors see it.',
-            'shadow' => 'bg-[#0f3d34]/15',
-            'surface' => 'from-white via-[#f4faf7] to-[#e8f5ef]',
-            'border' => 'border-[#0f3d34]/15',
-            'cta' => 'Click here to know more',
-            'cta_url' => 'https://deckvue.ai',
-            'cta_external' => true,
-            'footnote' => 'Opens deckvue.ai in a new tab.',
-        ],
+    $shadowClasses = [
+        'bg-[#36b37e]/22',
+        'bg-[#18736a]/18',
+        'bg-[#0f3d34]/14',
+    ];
+    $surfaceClasses = [
+        'from-white via-[#f7fdf9] to-[#eefaf4] border-green-100/90',
+        'from-white via-[#f3faf8] to-[#e6f4f0] border-[#18736a]/25',
+        'from-white via-[#f4faf7] to-[#e8f5ef] border-[#0f3d34]/18',
     ];
 @endphp
 
@@ -49,30 +24,35 @@
     </header>
 
     <div class="flex flex-col gap-12 md:gap-16">
-        @foreach ($resourceCards as $card)
+        @forelse ($hubCards as $card)
+            @php
+                $i = $loop->index % 3;
+                $isExternal = str_starts_with(strtolower(trim($card->link)), 'http');
+            @endphp
             <div class="relative">
-                <div class="absolute inset-0 translate-x-2 translate-y-2 rounded-3xl {{ $card['shadow'] }}" aria-hidden="true"></div>
-                <article class="relative overflow-hidden rounded-3xl border {{ $card['border'] }} bg-gradient-to-br {{ $card['surface'] }} shadow-md">
+                <div class="absolute inset-0 translate-x-2 translate-y-2 rounded-3xl {{ $shadowClasses[$i] }}" aria-hidden="true"></div>
+                <article class="relative overflow-hidden rounded-3xl border bg-gradient-to-br {{ $surfaceClasses[$i] }} shadow-md">
                     <div class="flex flex-col lg:flex-row lg:items-center gap-8 lg:gap-10 p-8 md:p-10">
                         <div class="lg:flex-1 text-center lg:text-left min-w-0">
-                            <h2 class="text-2xl md:text-3xl font-bold text-[#0f3d34]">{{ $card['title'] }}</h2>
-                            <p class="mt-2 text-sm md:text-base text-gray-600 leading-relaxed">{{ $card['one_liner'] }}</p>
+                            <h2 class="text-2xl md:text-3xl font-bold text-[#0f3d34]">{{ $card->title }}</h2>
+                            <p class="mt-2 text-sm md:text-base text-gray-600 leading-relaxed">{{ $card->one_liner }}</p>
                         </div>
                         <div class="flex justify-center shrink-0">
-                            <div class="h-28 w-28 md:h-32 md:w-32 rounded-full bg-white/95 border-2 border-[#36b37e]/25 shadow-inner flex items-center justify-center text-xs font-medium text-gray-400 tracking-wide" aria-hidden="true">
-                                Logo
+                            <div class="h-28 w-28 md:h-32 md:w-32 shrink-0 overflow-hidden rounded-full border-2 border-white shadow-md ring-2 ring-[#36b37e]/20 bg-gray-50">
+                                @if ($card->logoUrl())
+                                    <img src="{{ $card->logoUrl() }}" alt="" class="h-full w-full object-cover object-center">
+                                @else
+                                    <div class="flex h-full w-full items-center justify-center text-xs font-medium text-gray-400 tracking-wide" aria-hidden="true">Logo</div>
+                                @endif
                             </div>
                         </div>
-                        <div class="flex flex-col items-center lg:items-end gap-2 shrink-0 w-full lg:w-auto">
-                            <a href="{{ $card['cta_url'] }}"
-                               @if (! empty($card['cta_external'])) target="_blank" rel="noopener noreferrer" @endif
+                        <div class="flex flex-col items-center lg:items-end shrink-0 w-full lg:w-auto">
+                            <a href="{{ $card->link }}"
+                               @if ($isExternal) target="_blank" rel="noopener noreferrer" @endif
                                class="inline-flex items-center justify-center gap-2 rounded-full bg-[#0f3d34] px-6 py-3 text-sm md:text-base font-semibold text-white shadow-sm hover:bg-[#156755] transition-colors w-full sm:w-auto">
-                                <span>{{ $card['cta'] }}</span>
-                                <span aria-hidden="true">→</span>
+                                <span>{{ $card->cta_label ?: 'Learn more' }}</span>
+                                <span aria-hidden="true">?</span>
                             </a>
-                            @if (! empty($card['footnote']))
-                                <p class="text-xs text-[#18736a] text-center lg:text-right max-w-xs">{{ $card['footnote'] }}</p>
-                            @endif
                         </div>
                     </div>
                 </article>
@@ -82,7 +62,9 @@
                     </a>
                 </p>
             </div>
-        @endforeach
+        @empty
+            <p class="text-center text-gray-600 py-12">No resource cards are configured yet.</p>
+        @endforelse
     </div>
 </section>
 @endsection

@@ -52,7 +52,7 @@
         @if($filter === 'featured')
             <div class="mt-6 pt-6 border-t border-gray-200">
                 <h3 class="text-sm font-semibold text-gray-800 mb-1">Add members to featured</h3>
-                <p class="text-xs text-gray-600 mb-3">Search approved members who are not yet shown on the public <span class="font-medium">/investors</span> page. For each featured member you can add an optional testimonial and choose whether to show it publicly.</p>
+                <p class="text-xs text-gray-600 mb-3">Search approved members who are not yet shown on the public <span class="font-medium">/ban-investors</span> page. For each featured member you can add an optional testimonial and choose whether to show it publicly.</p>
                 <div class="flex flex-col sm:flex-row gap-2 max-w-2xl">
                     <input type="text"
                         wire:model.live.debounce.400ms="featuredPickerSearch"
