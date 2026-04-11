@@ -10,17 +10,11 @@
                 <p class="text-base sm:text-lg leading-relaxed text-white/90">
                     Join a global network of executives and operators who have built and expanded companies all over the world.
                 </p>
-                <div class="mt-8 flex flex-col sm:flex-row sm:items-center gap-4">
+                <div class="mt-8">
                     <a href="{{ route('investor.signup') }}"
                        class="inline-flex items-center justify-center px-6 py-3 rounded-lg font-semibold text-sm sm:text-base bg-white text-[#0a5554] shadow-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-[#0a5554] transition">
                         Become an Investor
                     </a>
-                    @guest
-                        <a href="{{ route('register') }}"
-                           class="inline-flex items-center justify-center text-sm sm:text-base text-white/90 underline underline-offset-4 hover:text-white transition">
-                            Or register for an account
-                        </a>
-                    @endguest
                 </div>
             </div>
             <div class="lg:w-1/2 mt-8 lg:mt-0">
