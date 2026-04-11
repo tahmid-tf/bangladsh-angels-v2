@@ -26,7 +26,9 @@ Route::get('/', PrimaryController::class)->name('home');
 
 Route::redirect('/our-team', '/team', 301);
 
-Route::get('/ban-investors', [PrimaryController::class, 'viewInvestors'])->name('investors');
+Route::redirect('/ban-investors', '/our-investors', 301);
+Route::redirect('/investors', '/our-investors', 301);
+Route::get('/our-investors', [PrimaryController::class, 'viewInvestors'])->name('investors');
 Route::get('/ban-resources', [PrimaryController::class, 'viewResources'])->middleware(['auth', 'verified', ApprovedUserMiddleware::class])->name('resources');
 Route::get('/team', [PrimaryController::class, 'viewTeam'])->name('team');
 Route::get('/startups', [PrimaryController::class, 'viewStartups'])->name('startups');
