@@ -68,6 +68,12 @@
                     <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                         Location
                     </th>
+                    <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        Home
+                    </th>
+                    <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        CTA
+                    </th>
                     <th class="px-6 py-3 bg-gray-50"></th>
                 </tr>
             </thead>
@@ -99,6 +105,16 @@
                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
                             {{ $resource->location ?: '—' }}
                         </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
+                            @if ($resource->show_on_landing)
+                                <span class="inline-flex rounded-full bg-emerald-100 px-2 py-0.5 text-xs font-semibold text-emerald-800">Yes</span>
+                            @else
+                                —
+                            @endif
+                        </td>
+                        <td class="px-6 py-4 text-sm text-gray-600 max-w-[10rem] truncate" title="{{ $resource->cta_link }}">
+                            {{ $resource->cta_link ? 'Yes' : '—' }}
+                        </td>
                         <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                             <a href="{{ route('resource.edit', $resource->id) }}"
                                class="text-blue-600 hover:text-blue-900">
@@ -109,7 +125,7 @@
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="6" class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">
+                        <td colspan="8" class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">
                             No resources found.
                         </td>
                     </tr>

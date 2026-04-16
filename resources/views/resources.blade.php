@@ -23,6 +23,22 @@
         </p>
     </header>
 
+    <section class="mb-14 md:mb-16" aria-labelledby="member-events-heading">
+        <h2 id="member-events-heading" class="mb-6 flex items-center gap-2 text-xl font-bold text-[#0f6a4b] md:text-2xl">
+            <span aria-hidden="true" class="text-[#0f6a4b]/90">✽</span>
+            <span>BAN Events</span>
+        </h2>
+        <div class="flex max-w-4xl flex-col gap-6 md:gap-8">
+            @forelse ($resourceEvents as $event)
+                <x-ban-event-card :resource="$event" />
+            @empty
+                <p class="rounded-xl border border-green-100/80 bg-white px-5 py-6 text-sm text-gray-600 shadow-sm">
+                    No events or webinars are listed yet.
+                </p>
+            @endforelse
+        </div>
+    </section>
+
     <div class="flex flex-col gap-12 md:gap-16">
         @forelse ($hubCards as $card)
             @php

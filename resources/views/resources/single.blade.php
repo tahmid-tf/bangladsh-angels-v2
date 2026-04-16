@@ -26,9 +26,9 @@
     @endif
 
     <!-- Hero Section -->
-    <div class="container mx-auto px-6 lg:flex lg:items-center text-white">
+    <div class="container mx-auto flex flex-col gap-8 px-6 text-white lg:flex-row lg:items-start lg:gap-10">
         <!-- Left Content -->
-        <div class="lg:w-full">
+        <div class="min-w-0 flex-1">
             <!-- Resource Title -->
             <h1 class="text-4xl font-extrabold mb-4">
                 {{ $resource->title }}
@@ -38,6 +38,20 @@
             <p class="text-lg mb-6">
                 {{ $resource->description }}
             </p>
+
+            @if (filled($resource->cta_link))
+                @php
+                    $cta = trim((string) $resource->cta_link);
+                    $ctaExternal = preg_match('#^https?://#i', $cta);
+                @endphp
+                <p class="mb-6">
+                    <a href="{{ $cta }}"
+                       @if ($ctaExternal) target="_blank" rel="noopener noreferrer" @endif
+                       class="inline-flex items-center justify-center rounded-full bg-white px-6 py-3 text-base font-semibold text-[#0a5554] shadow-md transition hover:bg-emerald-50">
+                        Register / RSVP
+                    </a>
+                </p>
+            @endif
 
             <!-- Date, Time, Location, Fee -->
             <div class="flex items-center flex-wrap gap-8 mb-6">
@@ -86,18 +100,16 @@
             @endif
         </div>
 
-        <!-- Right Content: Banner Image -->
-        <div class="lg:w-1/2 mt-6 lg:mt-0 lg:ml-8">
-            @php
-                // If using Spatie Media Library:
-                // $bannerUrl = $resource->getFirstMediaUrl('banner') ?: asset('placeholder_banner.png');
-                // If using a stored column or a default placeholder:
-                $bannerUrl = $resource->getFirstMediaUrl('banner') ?? asset('placeholder_banner.png');
-            @endphp
+        <!-- Right Content: Banner / cover image (Spatie returns '' when missing; ?? does not catch that) -->
+        <div class="w-full shrink-0 lg:max-w-md lg:self-start xl:max-w-lg">
             <img
-                src="{{ $bannerUrl }}"
-                alt="Resource Banner"
-                class="w-full h-auto rounded-lg shadow-md"
+                src="{{ $resource->cardBannerUrl() }}"
+                alt=""
+                class="w-full rounded-lg bg-black/20 object-contain object-center shadow-md ring-1 ring-white/10 sm:min-h-[200px]"
+                width="800"
+                height="450"
+                loading="eager"
+                decoding="async"
             >
         </div>
     </div>

@@ -284,40 +284,33 @@
   </section>
 
   <section id="ban-resources" class="w-full px-4 py-12 md:py-16 bg-gradient-to-b from-white to-green-50/60 border-b border-green-100/80" aria-labelledby="resources-heading">
-    <div class="mx-auto max-w-6xl text-center">
-      <h2 id="resources-heading" class="text-xl md:text-2xl font-bold text-[#0f3d34] leading-snug">BAN Resources</h2>
-      <p class="mt-3 mx-auto max-w-3xl text-[0.95em] md:text-[1.1em] text-gray-700 leading-relaxed">
+    <div class="mx-auto max-w-6xl">
+      <h2 id="resources-heading" class="text-center text-xl md:text-2xl font-bold text-[#0f3d34] leading-snug">BAN Resources</h2>
+      <p class="mt-3 mx-auto max-w-3xl text-center text-[0.95em] md:text-[1.1em] text-gray-700 leading-relaxed">
         Bangladesh Angels hosts events for start-ups and angel investors.<br class="hidden md:block">
         Join any of our events to connect with people today!
       </p>
-      <div class="mt-10 md:mt-12 mx-auto max-w-4xl rounded-2xl overflow-hidden border border-green-100/70 shadow-sm">
-        <div class="flex flex-col sm:flex-row overflow-hidden text-white text-left bg-gradient-to-br to-[#022e2e] from-[#156755]">
-          <div class="h-48 sm:h-auto sm:w-1/2 lg:w-2/5 bg-gray-200 shrink-0">
-            <img src="{{ asset('resourcesCover.webp') }}" loading="lazy" alt="BAN event" class="h-full w-full object-cover min-h-[12rem] sm:min-h-0" width="400" height="300">
-          </div>
-          <div class="flex flex-col justify-between p-4 sm:w-1/2 lg:w-3/5 sm:p-8 items-start">
-            <h3 class="mb-4 text-lg md:text-xl lg:text-2xl font-bold text-left leading-snug">Networking Event<br>hosted by ShopUp</h3>
-            <div class="flex items-center my-2">
-              <div class="bg-white rounded-full p-3 shrink-0">
-                <img src="{{ asset('dateicon.webp') }}" alt="" class="h-5 w-5" draggable="false" width="20" height="20">
-              </div>
-              <p class="text-left ml-3 text-sm md:text-base text-white/95">
-                16 - 22 December, 2023<br>
-                08:00 AM to 06:00 PM
-              </p>
-            </div>
-            <div class="flex items-center my-2">
-              <div class="bg-white rounded-full p-3 shrink-0">
-                <img src="{{ asset('locationicon.webp') }}" alt="" class="h-5 w-5" draggable="false" width="20" height="20">
-              </div>
-              <p class="text-left ml-3 text-sm md:text-base text-white/95">
-                64–65, Kazi Nazrul Islam Avenue,<br>Dhaka-1215
-              </p>
-            </div>
-          </div>
-        </div>
+
+      <h3 id="ban-events-heading" class="mt-10 md:mt-12 text-center text-lg md:text-2xl font-bold text-[#0f6a4b] leading-snug">
+        <span class="inline-flex items-center justify-center gap-2 md:gap-3">
+          <span aria-hidden="true" class="text-xl md:text-2xl leading-none text-[#0f6a4b]/90">✽</span>
+          <span>BAN Events</span>
+        </span>
+      </h3>
+
+      <div class="mx-auto mt-8 flex max-w-4xl flex-col gap-6 md:mt-10 md:gap-8">
+        @forelse ($landingResourceEvents as $event)
+          <x-ban-event-card :resource="$event" />
+        @empty
+          <p class="rounded-xl border border-green-100/80 bg-white/70 px-5 py-6 text-center text-sm text-gray-600 shadow-sm">
+            Featured events will appear here when an admin marks resources as <strong class="font-semibold text-[#0f3d34]">Show on home</strong> in Dashboard → Resources.
+          </p>
+        @endforelse
       </div>
-      <a href="{{ route('resources') }}" class="inline-flex mt-8 md:mt-10 px-6 py-3 rounded-full bg-[#eefff1] font-bold text-[#36b37e] border border-green-100/80 shadow-sm hover:bg-[#dff7e8] transition-colors">Discover BAN Resources</a>
+
+      <div class="mt-8 flex justify-center md:mt-10">
+        <a href="{{ route('resources') }}" class="inline-flex px-6 py-3 rounded-full bg-[#eefff1] font-bold text-[#36b37e] border border-green-100/80 shadow-sm hover:bg-[#dff7e8] transition-colors">Discover BAN Resources</a>
+      </div>
     </div>
   </section>
   

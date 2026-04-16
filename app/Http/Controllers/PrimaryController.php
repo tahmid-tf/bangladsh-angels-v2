@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Deal;
+use App\Models\Resource;
 use App\Models\ResourceHubCard;
 use App\Models\SubscriptionTier;
 use App\Models\TeamMember;
@@ -24,7 +25,17 @@ class PrimaryController extends Controller
             ->ordered()
             ->get();
 
-        return view('welcome', compact('whatWeDoCards'));
+        $landingResourceEvents = Resource::query()
+            ->with('media')
+            ->where('type', 'event')
+            ->where('show_on_landing', true)
+            ->orderByRaw('CASE WHEN date IS NULL THEN 1 ELSE 0 END')
+            ->orderByDesc('date')
+            ->orderByDesc('id')
+            ->limit(6)
+            ->get();
+
+        return view('welcome', compact('whatWeDoCards', 'landingResourceEvents'));
     }
 
     // Upgrade Page
@@ -174,7 +185,15 @@ class PrimaryController extends Controller
 
         $hubCards = ResourceHubCard::query()->ordered()->get();
 
-        return view('resources', compact('hubCards'));
+        $resourceEvents = Resource::query()
+            ->with('media')
+            ->whereIn('type', ['event', 'webinar'])
+            ->orderByRaw('CASE WHEN date IS NULL THEN 1 ELSE 0 END')
+            ->orderByDesc('date')
+            ->orderByDesc('id')
+            ->get();
+
+        return view('resources', compact('hubCards', 'resourceEvents'));
     }
 
     public function checkout(Request $request)

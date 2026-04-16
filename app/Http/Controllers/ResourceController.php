@@ -32,6 +32,8 @@ class ResourceController extends Controller
             'registration_fee' => 'nullable|numeric',
             'description' => 'required|string',
             'registration_details' => 'nullable|string',
+            'cta_link' => ['nullable', 'string', 'max:2048'],
+            'show_on_landing' => ['sometimes', 'boolean'],
 
             // Arrays for benefits, highlights, audience
             'benefits' => 'nullable|array',
@@ -63,6 +65,8 @@ class ResourceController extends Controller
         $resourceData['event_highlights'] = $request->input('event_highlights', []);
         $resourceData['target_audience'] = $request->input('target_audience', []);
         $resourceData['speakers'] = $request->input('speakers', []);
+        $resourceData['cta_link'] = filled($validated['cta_link'] ?? null) ? trim((string) $validated['cta_link']) : null;
+        $resourceData['show_on_landing'] = $request->boolean('show_on_landing');
 
         $resource = Resource::create($resourceData);
 
@@ -89,6 +93,8 @@ class ResourceController extends Controller
 
     public function view(Resource $resource)
     {
+        $resource->loadMissing('media');
+
         return view('resources.single', compact('resource'));
     }
 
@@ -110,6 +116,8 @@ class ResourceController extends Controller
             'registration_fee' => 'nullable|numeric',
             'description' => 'required|string',
             'registration_details' => 'nullable|string',
+            'cta_link' => ['nullable', 'string', 'max:2048'],
+            'show_on_landing' => ['sometimes', 'boolean'],
 
             // Arrays for benefits, highlights, audience
             'benefits' => 'nullable|array',
@@ -133,6 +141,8 @@ class ResourceController extends Controller
         $resourceData['event_highlights'] = $request->input('event_highlights', []);
         $resourceData['target_audience'] = $request->input('target_audience', []);
         $resourceData['speakers'] = $request->input('speakers', []);
+        $resourceData['cta_link'] = filled($validated['cta_link'] ?? null) ? trim((string) $validated['cta_link']) : null;
+        $resourceData['show_on_landing'] = $request->boolean('show_on_landing');
 
         // Extract banner_image from validated data so we don't store it as JSON
         $bannerImage = $request->file('banner_image');

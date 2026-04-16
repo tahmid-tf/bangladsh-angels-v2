@@ -200,6 +200,34 @@
             @enderror
         </div>
 
+        <div class="rounded-lg border border-emerald-100 bg-emerald-50/50 p-5 space-y-5">
+            <h2 class="text-lg font-bold text-[#0f3d34]">Public listing</h2>
+            <div>
+                <label for="cta_link" class="block text-gray-700 font-semibold mb-2">RSVP / CTA link</label>
+                <input
+                    type="text"
+                    id="cta_link"
+                    name="cta_link"
+                    inputmode="url"
+                    autocomplete="url"
+                    placeholder="https://forms.gle/… or your RSVP URL"
+                    class="input-field"
+                    value="{{ old('cta_link') }}"
+                >
+                <p class="mt-1 text-xs text-gray-600">Optional. When set, a <strong>Register / RSVP</strong> button appears on the event card on the homepage and the member Resources page.</p>
+                @error('cta_link')
+                    <span class="text-red-500 text-sm">{{ $message }}</span>
+                @enderror
+            </div>
+            <div>
+                <input type="hidden" name="show_on_landing" value="0">
+                <label class="flex cursor-pointer items-start gap-3">
+                    <input type="checkbox" name="show_on_landing" value="1" class="mt-1 rounded border-gray-300 text-green-600 focus:ring-green-600" {{ old('show_on_landing') ? 'checked' : '' }}>
+                    <span class="text-sm text-gray-700"><strong class="text-gray-900">Show on homepage</strong> under “BAN Events” (only for type <em>Event</em>; up to six, ordered by date).</span>
+                </label>
+            </div>
+        </div>
+
         <!-- Registration Details -->
         <div>
             <label for="registration_details" class="block text-gray-700 font-semibold mb-2">Registration Details</label>
