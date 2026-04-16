@@ -1,0 +1,24 @@
+<svg width="1200" height="700" viewBox="0 0 1200 700" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="600" y1="0" x2="600" y2="700" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#D3EAF5"/>
+      <stop offset="1" stop-color="#B8DDF0"/>
+    </linearGradient>
+    <linearGradient id="hill" x1="600" y1="420" x2="600" y2="650" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#8BC34A"/>
+      <stop offset="1" stop-color="#5F9B2A"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="700" fill="url(#bg)"/>
+  <circle cx="250" cy="180" r="42" fill="white" fill-opacity="0.7"/>
+  <circle cx="300" cy="180" r="58" fill="white" fill-opacity="0.85"/>
+  <circle cx="360" cy="180" r="45" fill="white" fill-opacity="0.75"/>
+  <circle cx="780" cy="160" r="38" fill="white" fill-opacity="0.7"/>
+  <circle cx="830" cy="160" r="54" fill="white" fill-opacity="0.85"/>
+  <circle cx="888" cy="160" r="40" fill="white" fill-opacity="0.75"/>
+  <path d="M0 520C80 470 180 470 260 520C340 570 440 570 520 520C600 470 700 470 780 520C860 570 960 570 1040 520C1090 489 1140 480 1200 492V700H0V520Z" fill="#A4D66B"/>
+  <path d="M0 560C80 510 180 510 260 560C340 610 440 610 520 560C600 510 700 510 780 560C860 610 960 610 1040 560C1090 529 1140 520 1200 532V700H0V560Z" fill="url(#hill)"/>
+  <text x="600" y="358" text-anchor="middle" fill="#2A7C56" font-family="Arial, sans-serif" font-size="52" font-weight="700">
+    Cover Image Placeholder
+  </text>
+</svg>

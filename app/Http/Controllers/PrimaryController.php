@@ -7,6 +7,7 @@ use App\Models\ResourceHubCard;
 use App\Models\SubscriptionTier;
 use App\Models\TeamMember;
 use App\Models\User;
+use App\Models\WhatWeDoCard;
 use Illuminate\Http\Request;
 
 class PrimaryController extends Controller
@@ -18,7 +19,12 @@ class PrimaryController extends Controller
         //     return view('soon');
         // }
 
-        return view('welcome');
+        $whatWeDoCards = WhatWeDoCard::query()
+            ->with('media')
+            ->ordered()
+            ->get();
+
+        return view('welcome', compact('whatWeDoCards'));
     }
 
     // Upgrade Page

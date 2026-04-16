@@ -110,6 +110,49 @@
         .ban-stats-grid .ban-stat-value {
             font-variant-numeric: tabular-nums;
         }
+
+        .what-we-do-card {
+            background: radial-gradient(circle at 50% 60%, #0f8b63 0%, #076847 55%, #045538 100%);
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25), 0 8px 24px rgba(4, 85, 56, 0.22);
+        }
+
+        .what-we-do-badge {
+            background: linear-gradient(180deg, rgba(236, 242, 239, 0.95) 0%, rgba(200, 218, 208, 0.92) 100%);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            border: 1px solid rgba(255, 255, 255, 0.45);
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.65), 0 2px 10px rgba(0, 0, 0, 0.08);
+            clip-path: polygon(9% 0%, 100% 0%, 91% 100%, 0% 100%);
+            color: #053728;
+        }
+
+        /* Copy sits on the card — no white “sticker” panel */
+        .what-we-do-card-body {
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.14);
+            flex: 1 1 auto;
+            min-height: 0;
+        }
+
+        .what-we-do-card-body p {
+            margin: 0;
+            padding: 0 0.15rem;
+            text-align: left;
+            font-size: 0.9375rem;
+            line-height: 1.68;
+            color: rgba(248, 253, 250, 0.94);
+            letter-spacing: 0.012em;
+            font-weight: 400;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.22);
+        }
+
+        @media (min-width: 768px) {
+            .what-we-do-card-body p {
+                font-size: 0.96rem;
+                line-height: 1.7;
+            }
+        }
     </style>
 </head>
 
@@ -194,26 +237,32 @@
 
   <section id="what-we-do" class="w-full px-4 py-12 md:py-16 bg-gradient-to-b from-white to-green-50/60 border-b border-green-100/80" aria-labelledby="what-we-do-heading">
     <div class="mx-auto max-w-6xl">
-      <h2 id="what-we-do-heading" class="text-center text-xl md:text-2xl font-bold text-[#0f3d34] mb-10 md:mb-12 leading-snug">
-        What We Do
+      <h2 id="what-we-do-heading" class="text-center text-2xl md:text-4xl font-bold text-[#0f6a4b] mb-10 md:mb-12 leading-snug">
+        <span class="inline-flex items-center gap-2 md:gap-3">
+          <span aria-hidden="true" class="text-3xl md:text-4xl leading-none">✽</span>
+          <span>What We Do</span>
+        </span>
       </h2>
 
-      <article class="rounded-2xl border border-green-100/70 bg-white/80 p-6 md:p-10 shadow-sm" aria-labelledby="bwin-heading">
-        <h3 id="bwin-heading" class="text-lg sm:text-xl md:text-2xl font-bold text-[#36b37e] text-center md:text-left leading-snug mb-4 md:mb-5">
-          Bangladesh Women Investors Network (BWIN)
-        </h3>
-        <p class="text-[0.95em] md:text-[1.1em] text-gray-700 leading-relaxed text-center md:text-left max-w-3xl md:max-w-none mx-auto md:mx-0 mb-8 md:mb-10">
-          Bangladesh Women Investors Network (BWIN) is Bangladesh's first women-led angel investing network, operating as a sister chapter of BAN. With a gender-lens approach, BWIN supports pre-seed to seed-stage startups while actively growing a diverse pipeline of women investors and entrepreneurs.
-        </p>
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 md:gap-8 items-start max-w-5xl mx-auto">
-          <figure class="m-0 w-full">
-            <img src="{{ asset('bwin.png') }}" alt="Bangladesh Women Investors Network (BWIN)" class="w-full rounded-xl border border-green-100/60 shadow-sm h-auto object-contain max-h-72 sm:max-h-80 md:max-h-96" width="600" height="400" loading="lazy" decoding="async">
-          </figure>
-          <figure class="m-0 w-full">
-            <img src="{{ asset('bwin2.png') }}" alt="Bangladesh Women Investors Network (BWIN)" class="w-full rounded-xl border border-green-100/60 shadow-sm h-auto object-contain max-h-72 sm:max-h-80 md:max-h-96" width="600" height="400" loading="lazy" decoding="async">
-          </figure>
-        </div>
-      </article>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10">
+        @forelse ($whatWeDoCards as $card)
+          <article class="what-we-do-card rounded-3xl p-5 md:p-6 flex flex-col h-full">
+            <h3 class="what-we-do-badge mx-auto text-center font-bold text-lg md:text-xl px-8 py-2.5 mb-5 w-fit min-w-[170px]">
+              {{ $card->title }}
+            </h3>
+
+            <figure class="m-0 rounded-lg overflow-hidden border border-white/20 bg-black/10 shrink-0 ring-1 ring-black/5">
+              <img src="{{ $card->coverImageUrl() }}" alt="{{ $card->title }} — cover image" class="w-full h-[150px] sm:h-[164px] object-contain object-center bg-[#0a5c45]" width="480" height="260" loading="lazy" decoding="async">
+            </figure>
+
+            <div class="what-we-do-card-body">
+              <p>{{ $card->description }}</p>
+            </div>
+          </article>
+        @empty
+          <p class="col-span-full text-center text-gray-600 text-sm">What We Do content is not configured yet.</p>
+        @endforelse
+      </div>
     </div>
   </section>
 

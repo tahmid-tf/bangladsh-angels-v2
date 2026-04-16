@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\FounderPitchSubmissionController;
 use App\Http\Controllers\Admin\ResourceHubCardController;
 use App\Http\Controllers\Admin\TeamMemberController;
+use App\Http\Controllers\Admin\WhatWeDoCardController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\FounderPitchController;
@@ -163,6 +164,10 @@ Route::middleware('auth')->group(function () {
         Route::get('/resource-hub-cards/{resourceHubCard}/edit', [ResourceHubCardController::class, 'edit'])->name('admin.resource-hub.edit');
         Route::put('/resource-hub-cards/{resourceHubCard}', [ResourceHubCardController::class, 'update'])->name('admin.resource-hub.update');
         Route::delete('/resource-hub-cards/{resourceHubCard}', [ResourceHubCardController::class, 'destroy'])->name('admin.resource-hub.destroy');
+
+        Route::get('/what-we-do-cards', [WhatWeDoCardController::class, 'index'])->name('admin.what-we-do-cards');
+        Route::get('/what-we-do-cards/{whatWeDoCard}/edit', [WhatWeDoCardController::class, 'edit'])->name('admin.what-we-do-cards.edit');
+        Route::put('/what-we-do-cards/{whatWeDoCard}', [WhatWeDoCardController::class, 'update'])->name('admin.what-we-do-cards.update');
 
         Route::get('/team-members', [TeamMemberController::class, 'index'])->name('admin.team-members');
         Route::get('/team-members/create', [TeamMemberController::class, 'create'])->name('admin.team-members.create');
