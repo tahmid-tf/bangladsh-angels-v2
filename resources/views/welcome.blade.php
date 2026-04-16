@@ -303,7 +303,7 @@
           <x-ban-event-card :resource="$event" />
         @empty
           <p class="rounded-xl border border-green-100/80 bg-white/70 px-5 py-6 text-center text-sm text-gray-600 shadow-sm">
-            Featured events will appear here when an admin marks resources as <strong class="font-semibold text-[#0f3d34]">Show on home</strong> in Dashboard → Resources.
+            New events will be announced here soon. Please check back shortly.
           </p>
         @endforelse
       </div>
