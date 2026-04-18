@@ -1,5 +1,15 @@
 @extends('layouts.guest')
 @section('page_title', 'Resources | Bangladesh Angels Network Limited')
+
+@push('head_meta')
+    <x-seo-meta
+        title="Resources | Bangladesh Angels Network Limited"
+        description="BAN Resources — events, webinars, programs, and tools for angel investors and founders across the Bangladesh Angels Network."
+        :canonical="route('resources')"
+        :image="asset('icon.webp')"
+    />
+@endpush
+
 @section('page_content')
 @php
     $brochureUrl = asset('MoU.pdf');

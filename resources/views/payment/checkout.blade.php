@@ -1,5 +1,15 @@
 @extends('layouts.guest')
-@section('page_title','Checkout | Bangladesh Angels Network')
+@section('page_title', 'Checkout | Bangladesh Angels Network Limited')
+
+@push('head_meta')
+    <x-seo-meta
+        title="Checkout | Bangladesh Angels Network Limited"
+        description="Complete your Bangladesh Angels Network membership checkout securely."
+        :canonical="route('checkout')"
+        :image="asset('icon.webp')"
+    />
+@endpush
+
 @section('page_content')
 @php
     $cp = session('checkout.plan', []);

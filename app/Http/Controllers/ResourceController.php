@@ -78,7 +78,7 @@ class ResourceController extends Controller
                 ->toMediaCollection('speakers');
         }
 
-        return redirect()->route('resource.public.view', $resource->id);
+        return redirect()->route('resource.public.view', $resource);
 
     }
 

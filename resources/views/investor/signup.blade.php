@@ -1,5 +1,15 @@
 @extends('layouts.guest')
-@section('page_title','Investor Sign Up | Bangladesh Angels Network')
+@section('page_title', 'Investor Sign Up | Bangladesh Angels Network Limited')
+
+@push('head_meta')
+    <x-seo-meta
+        title="Investor Sign Up | Bangladesh Angels Network Limited"
+        description="Apply to become an angel investor with Bangladesh Angels Network — join 450+ executives backing early-stage startups in Bangladesh and beyond."
+        :canonical="route('investor.signup')"
+        :image="asset('investor_cover.webp')"
+    />
+@endpush
+
 @section('page_content')
 <section class="bg-[#0a5554] rounded-3xl py-12 text-white">
     <!-- Hero Section -->

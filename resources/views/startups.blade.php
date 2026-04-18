@@ -1,5 +1,15 @@
 @extends('layouts.guest')
 @section('page_title', 'Startups | Bangladesh Angels Network Limited')
+
+@push('head_meta')
+    <x-seo-meta
+        title="Startups | Bangladesh Angels Network Limited"
+        description="Explore BAN portfolio companies, member-only active deals, founder pitch submissions, tailored services, and how Bangladesh Angels backs early-stage startups."
+        :canonical="route('startups')"
+        :image="asset('icon.webp')"
+    />
+@endpush
+
 @section('page_content')
 @php
     $brochureUrl = asset('MoU.pdf');

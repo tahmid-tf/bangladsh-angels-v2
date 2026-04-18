@@ -1,5 +1,15 @@
 @extends('layouts.guest')
-@section('page_title','Upgrade Plan | Bangladesh Angels Network')
+@section('page_title', 'Upgrade | Bangladesh Angels Network Limited')
+
+@push('head_meta')
+    <x-seo-meta
+        title="Upgrade | Bangladesh Angels Network Limited"
+        description="Upgrade your Bangladesh Angels Network membership to unlock live deals, investor workspaces, and advanced member benefits."
+        :canonical="route('upgrade.page')"
+        :image="asset('unlockdeals.PNG')"
+    />
+@endpush
+
 @section('page_content')
 <!-- Modal Background Overlay -->
 <div id="modal-overlay" class="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm flex items-center justify-center z-50">

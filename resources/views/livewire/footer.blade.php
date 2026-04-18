@@ -12,10 +12,10 @@
         </h1>
         <ul class="flex flex-col mt-2 items-center md:items-start">
           <li class="mb-2">
-            <a href="mailto:hello@bdangels.co" class="hover:underline">Contact Us</a>
+            <a href="mailto:hello@bdangels.co" class="hover:underline" title="Email Bangladesh Angels Network">Contact Us</a>
           </li>
           <li>
-            <a href="{{route('faq')}}" class="hover:underline">FAQ</a>
+            <a href="{{ route('faq') }}" class="hover:underline" title="Frequently asked questions about BAN">FAQ</a>
           </li>
         </ul>
       </div>

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 
@@ -13,6 +14,7 @@ class Resource extends Model implements HasMedia
 
     protected $fillable = [
         'title',
+        'slug',
         'description',
         'type',
         'date',
@@ -40,6 +42,47 @@ class Resource extends Model implements HasMedia
         'registration_fee' => 'decimal:2',
         'show_on_landing' => 'boolean',
     ];
+
+    protected static function booted(): void
+    {
+        static::creating(function (Resource $resource): void {
+            if (filled($resource->slug)) {
+                return;
+            }
+            $resource->slug = static::makeUniqueSlug(static::slugBaseFromTitle($resource->title));
+        });
+    }
+
+    public static function slugBaseFromTitle(string $title): string
+    {
+        $base = Str::slug($title);
+
+        return $base !== '' ? $base : 'resource';
+    }
+
+    /**
+     * Generate a unique slug for this model (append -2, -3, … on collision).
+     * Purely numeric slugs get a suffix so they do not collide with legacy /resources/{id} redirects.
+     */
+    public static function makeUniqueSlug(string $base, ?int $ignoreId = null): string
+    {
+        $slug = $base;
+        if (ctype_digit($slug)) {
+            $slug = $slug.'-event';
+        }
+
+        $original = $slug;
+        $n = 2;
+        while (static::query()
+            ->where('slug', $slug)
+            ->when($ignoreId !== null, fn ($q) => $q->where('id', '!=', $ignoreId))
+            ->exists()) {
+            $slug = $original.'-'.$n;
+            $n++;
+        }
+
+        return $slug;
+    }
 
     public function registerMediaCollections(): void
     {

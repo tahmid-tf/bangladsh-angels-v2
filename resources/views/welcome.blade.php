@@ -5,6 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="description" content="Bangladesh's first and largest angel investment platform connecting early-stage startups with investors.">
+    <link rel="canonical" href="{{ route('home') }}">
+    <meta name="robots" content="index, follow">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Bangladesh Angels Network Limited">
+    <meta property="og:title" content="Bangladesh Angels Network Limited">
+    <meta property="og:description" content="Bangladesh's first and largest angel investment platform connecting early-stage startups with investors.">
+    <meta property="og:url" content="{{ route('home') }}">
+    <meta property="og:image" content="{{ url(asset('landing.png')) }}">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Bangladesh Angels Network Limited">
+    <meta name="twitter:description" content="Bangladesh's first and largest angel investment platform connecting early-stage startups with investors.">
+    <meta name="twitter:image" content="{{ url(asset('landing.png')) }}">
     <title>Bangladesh Angels Network Limited</title>
     <link rel="icon" type="image/webp" href="{{asset('icon.webp')}}">
     <!-- Preload critical resources -->
@@ -283,15 +295,9 @@
     </div>
   </section>
 
-  <section id="ban-resources" class="w-full px-4 py-12 md:py-16 bg-gradient-to-b from-white to-green-50/60 border-b border-green-100/80" aria-labelledby="resources-heading">
+  <section id="ban-resources" class="w-full px-4 py-12 md:py-16 bg-gradient-to-b from-white to-green-50/60 border-b border-green-100/80" aria-labelledby="ban-events-heading">
     <div class="mx-auto max-w-6xl">
-      <h2 id="resources-heading" class="text-center text-xl md:text-2xl font-bold text-[#0f3d34] leading-snug">BAN Resources</h2>
-      <p class="mt-3 mx-auto max-w-3xl text-center text-[0.95em] md:text-[1.1em] text-gray-700 leading-relaxed">
-        Bangladesh Angels hosts events for start-ups and angel investors.<br class="hidden md:block">
-        Join any of our events to connect with people today!
-      </p>
-
-      <h3 id="ban-events-heading" class="mt-10 md:mt-12 text-center text-lg md:text-2xl font-bold text-[#0f6a4b] leading-snug">
+      <h3 id="ban-events-heading" class="text-center text-lg md:text-2xl font-bold text-[#0f6a4b] leading-snug">
         <span class="inline-flex items-center justify-center gap-2 md:gap-3">
           <span aria-hidden="true" class="text-xl md:text-2xl leading-none text-[#0f6a4b]/90">✽</span>
           <span>BAN Events</span>

@@ -1,5 +1,15 @@
 @extends('layouts.investor')
-@section('page_title','Resource | Bangladesh Angels Network Limited')
+@section('page_title', $resource->title.' | Bangladesh Angels Network Limited')
+
+@push('head_meta')
+    <x-seo-meta
+        :title="$resource->title.' | Bangladesh Angels Network Limited'"
+        :description="(string) $resource->description"
+        :canonical="route('resource.public.view', $resource)"
+        :image="$resource->cardBannerUrl()"
+    />
+@endpush
+
 @section('page_content')
 <section class="bg-[#0a5554] py-12 rounded-3xl border-box w-[95%] mx-auto">
 
@@ -197,7 +207,7 @@
                 <p class="text-gray-600 mb-4 line-clamp-3">
                     {{ Str::limit($otherResource->description, 100) }}
                 </p>
-                <a href="{{ route('resources.show', $otherResource->id) }}"
+                <a href="{{ route('resource.public.view', $otherResource) }}"
                    class="inline-block px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700">
                     View
                 </a>

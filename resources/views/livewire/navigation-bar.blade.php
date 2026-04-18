@@ -2,7 +2,7 @@
     <div class="align-self-center w-full md:w-[70vw] bg-gray-100/30 backdrop-blur-lg z-50 shadow-md flex flex-row justify-between items-center rounded-lg md:rounded-full mt-6 px-4">
         
         <!-- Logo (Left for Desktop) -->
-        <a href="{{ route('home') }}" class="flex justify-start">
+        <a href="{{ route('home') }}" class="flex justify-start" title="Bangladesh Angels Network — home">
             <img 
                 src="{{ asset('logo.webp') }}" 
                 alt="Bangladesh Angels Network Logo"
@@ -14,10 +14,10 @@
         <!-- Navigation Menu (Center for Desktop) -->
         <div class="hidden md:flex flex-1 justify-center">
             <ul class="flex flex-row font-bold text-gray-700">
-                <li class="m-3"><a href="{{ route('startups') }}">Startups</a></li>
-                <li class="m-3"><a href="{{route('investors')}}">Investors</a></li>
-                <li class="m-3"><a href="{{route('resources')}}">Resources</a></li>
-                <li class="m-3"><a href="{{ route('team') }}">Our Team</a></li>
+                <li class="m-3"><a href="{{ route('startups') }}" title="Startups — portfolio, deals, pitch, and founder services">Startups</a></li>
+                <li class="m-3"><a href="{{ route('investors') }}" title="Our angel investors and how to join BAN">Investors</a></li>
+                <li class="m-3"><a href="{{ route('resources') }}" title="Resources — events, webinars, and programs">Resources</a></li>
+                <li class="m-3"><a href="{{ route('team') }}" title="About Bangladesh Angels Network and our team">Our Team</a></li>
             </ul>
         </div>
 
@@ -49,7 +49,7 @@
             @endauth
 
             @guest
-            <a href="{{ route('login') }}" class="inline-flex items-center justify-center px-6 py-3 rounded-full bg-[#00877a] font-bold text-white text-center whitespace-nowrap min-w-max">
+            <a href="{{ route('login') }}" title="Log in or create a Bangladesh Angels Network account" class="inline-flex items-center justify-center px-6 py-3 rounded-full bg-[#00877a] font-bold text-white text-center whitespace-nowrap min-w-max">
                 Login / Sign Up
             </a>
             @endguest
@@ -79,12 +79,12 @@
                 <li class="px-4 py-2 border-b"><a href="{{ route('profile.edit') }}">Profile</a></li>
                 @endauth
                 @guest
-                <li class="px-4 py-2 border-b"><a href="{{ route('login') }}">Login/Sign Up</a></li>
+                <li class="px-4 py-2 border-b"><a href="{{ route('login') }}" title="Log in or sign up">Login/Sign Up</a></li>
                 @endguest
-                <li class="px-4 py-2 border-b"><a href="{{ route('startups') }}">Startups</a></li>
-                <li class="px-4 py-2 border-b"><a href="{{ route('investors')}}">Investors</a></li>
-                <li class="px-4 py-2 border-b"><a href="{{ route('resources') }}">Resources</a></li>
-                <li class="px-4 py-2"><a href="{{ route('team') }}">Our Team</a></li>
+                <li class="px-4 py-2 border-b"><a href="{{ route('startups') }}" title="Startups — portfolio, deals, pitch, and founder services">Startups</a></li>
+                <li class="px-4 py-2 border-b"><a href="{{ route('investors') }}" title="Our angel investors and how to join BAN">Investors</a></li>
+                <li class="px-4 py-2 border-b"><a href="{{ route('resources') }}" title="Resources — events, webinars, and programs">Resources</a></li>
+                <li class="px-4 py-2"><a href="{{ route('team') }}" title="About Bangladesh Angels Network and our team">Our Team</a></li>
                 @auth
                 <hr>
                 <li class="flex w-full px-4 py-2 border-b">

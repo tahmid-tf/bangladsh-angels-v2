@@ -1,5 +1,15 @@
 @extends('layouts.guest')
-@section('page_title','Our Investors | Bangladesh Angel Investors Limited')
+@section('page_title', 'Our Investors | Bangladesh Angels Network Limited')
+
+@push('head_meta')
+    <x-seo-meta
+        title="Our Investors | Bangladesh Angels Network Limited"
+        description="Join Bangladesh Angels’ global network of angel investors — executives and operators backing early-stage startups with capital and expertise."
+        :canonical="route('investors')"
+        :image="asset('investor_cover.webp')"
+    />
+@endpush
+
 @section('page_content')
 <div class="w-full max-w-6xl mx-auto px-4 sm:px-6">
     {{-- 1. Become an Investor CTA --}}

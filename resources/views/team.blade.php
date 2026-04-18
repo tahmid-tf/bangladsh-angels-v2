@@ -1,5 +1,15 @@
 @extends('layouts.guest')
 @section('page_title', 'Our Team | Bangladesh Angels Network Limited')
+
+@push('head_meta')
+    <x-seo-meta
+        title="Our Team | Bangladesh Angels Network Limited"
+        description="Meet Bangladesh Angels Network (BAN) — Bangladesh’s first and largest angel investing platform connecting founders with investors, mentorship, and capital."
+        :canonical="route('team')"
+        :image="asset('DI4A6345.jpg')"
+    />
+@endpush
+
 @section('page_content')
 <!-- Section: Header -->
 <section class="container mx-auto mt-16 px-6 lg:flex lg:space-x-12">

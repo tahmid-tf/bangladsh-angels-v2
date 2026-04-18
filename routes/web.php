@@ -17,6 +17,7 @@ use App\Http\Controllers\SubscriptionController;
 use App\Http\Middleware\ApprovedUserMiddleware;
 use App\Models\Deal;
 use App\Models\Payment;
+use App\Models\Resource;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -105,7 +106,22 @@ Route::get('/dashboard', function () {
  */
 Route::post('/member/create', [AdminController::class, 'memberApply'])->name('member.apply');
 Route::get('/view/{deal:id}', [AdminController::class, 'showDeal'])->name('deal.public.view');
-Route::get('/resources/{resource:id}', [ResourceController::class, 'view'])->name('resource.public.view');
+
+// Legacy numeric URLs (/resources/1) → canonical slug URL (301)
+Route::get('/resources/{legacyId}', function (string $legacyId) {
+    $resource = Resource::query()->findOrFail((int) $legacyId);
+    if (! filled($resource->slug)) {
+        $resource->slug = Resource::makeUniqueSlug(
+            Resource::slugBaseFromTitle((string) $resource->title),
+            $resource->id
+        );
+        $resource->saveQuietly();
+    }
+
+    return redirect()->route('resource.public.view', $resource, 301);
+})->whereNumber('legacyId')->name('resource.public.view.legacy');
+
+Route::get('/resources/{resource:slug}', [ResourceController::class, 'view'])->name('resource.public.view');
 /**
  * Authenticated Routes
  */

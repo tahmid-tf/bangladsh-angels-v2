@@ -1,5 +1,15 @@
 @extends('layouts.guest')
-@section('page_title','FAQ | Bangladesh Angels Network')
+@section('page_title', 'FAQ | Bangladesh Angels Network Limited')
+
+@push('head_meta')
+    <x-seo-meta
+        title="FAQ | Bangladesh Angels Network Limited"
+        description="Frequently asked questions about investing with Bangladesh Angels Network, membership, deals, startups, and how BAN works."
+        :canonical="route('faq')"
+        :image="asset('icon.webp')"
+    />
+@endpush
+
 @section('page_content')
 <!-- Hero Section -->
 <section class="relative bg-green-700 w-full text-white py-20">

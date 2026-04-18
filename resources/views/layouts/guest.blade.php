@@ -6,6 +6,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>@yield('page_title')</title>
+    @stack('head_meta')
     <link rel="icon" type="image/webp" href="{{ asset('icon.webp') }}">
     <link rel="preload" as="style" href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap">
     
