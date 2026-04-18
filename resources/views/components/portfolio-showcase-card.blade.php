@@ -1,4 +1,7 @@
-@props(['deal'])
+@props([
+    'deal',
+    'hideAmountSeeking' => false,
+])
 
 @php
     $href = auth()->check()
@@ -27,10 +30,12 @@
             <p class="font-medium text-white/80">Investment Stage:</p>
             <p class="mt-0.5">{{ $stage }}</p>
         </div>
-        <div>
-            <p class="font-medium text-white/80">Amount Seeking</p>
-            <p class="mt-0.5">{{ $amount }}</p>
-        </div>
+        @if (! $hideAmountSeeking)
+            <div>
+                <p class="font-medium text-white/80">Amount Seeking</p>
+                <p class="mt-0.5">{{ $amount }}</p>
+            </div>
+        @endif
     </div>
 
     <a href="{{ $href }}"

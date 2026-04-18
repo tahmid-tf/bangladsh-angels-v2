@@ -38,9 +38,9 @@
                     There are no active deals listed right now. Check back soon.
                 </div>
             @else
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
                     @foreach ($activeDeals as $deal)
-                        <livewire:deal-card :deal="$deal"></livewire:deal-card>
+                        <x-portfolio-showcase-card :deal="$deal" />
                     @endforeach
                 </div>
             @endif
@@ -203,7 +203,7 @@
         @else
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
                 @foreach ($portfolioDeals as $deal)
-                    <x-portfolio-showcase-card :deal="$deal" />
+                    <x-portfolio-showcase-card :deal="$deal" :hide-amount-seeking="true" />
                 @endforeach
             </div>
         @endif
