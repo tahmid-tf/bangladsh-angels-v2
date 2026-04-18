@@ -1,72 +1,51 @@
-<div class="flex flex-col justify-between bg-white rounded-lg shadow-md overflow-hidden">
-    <div class="relative w-full aspect-[16/9]">
-        @auth
-            <a href="{{ route('deal.view', $deal->id) }}">
-                <img src="{{ $deal->getCoverUrl() }}" alt="Deal Image" class="absolute inset-0 w-full h-full object-cover rounded-t-lg">
-            </a>
-        @endauth
-        @guest
-            <a href="{{ route('deal.public.view', $deal->id) }}">
-                <img src="{{ $deal->getCoverUrl() }}" alt="Deal Image" class="absolute inset-0 w-full h-full object-cover rounded-t-lg">
-            </a>
-        @endguest
-    </div>
+@php
+    $href = auth()->check()
+        ? (($deal->type !== 'review') ? route('deal.view', $deal->id) : $deal->groupchat_invite_link)
+        : route('deal.public.view', $deal->id);
+    $rawDesc = $deal->description ?? '';
+    $oneLiner = $rawDesc !== '' ? \Illuminate\Support\Str::limit(strip_tags($rawDesc), 140, '…') : '—';
+    $stage = $deal->investment_stage ? $deal->investment_stage : '—';
+    $amount = $deal->amount_seeking ? '$ '.$deal->amountSeeking() : '—';
+    $hideAmountSeeking = $deal->type === 'portfolio';
 
-    <div class="flex flex-col p-4">
-        <div class="flex items-center mt-6 justify-between">
-            @guest
-                <a href="{{route('deal.public.view',$deal->id)}}" class="text-lg font-bold">{{ $deal->title }}</a>
-            @endguest
-            @auth
-                <a href="{{route('deal.view',$deal->id)}}" class="text-lg font-bold">{{ $deal->title }}</a>
-            @endauth
-            <span class="bg-gray-200 text-xs px-2 py-1 rounded-full">{{ ucfirst($deal->sector) }}</span>
+    if (auth()->check()) {
+        $ctaLabel = match ($deal->type) {
+            'review' => 'Join WhatsApp Group',
+            'portfolio' => 'View Portfolio',
+            default => ucfirst((string) $deal->type),
+        };
+    } else {
+        $ctaLabel = $deal->type !== 'review' ? ucfirst((string) $deal->type) : 'Join WhatsApp Group';
+    }
+@endphp
+
+<article class="flex h-full flex-col rounded-[1.75rem] bg-gradient-to-b from-[#108A5E] to-[#0B3022] p-6 md:p-7 text-white shadow-lg ring-1 ring-black/5">
+    <div class="flex justify-center">
+        <div class="h-20 w-20 md:h-24 md:w-24 shrink-0 overflow-hidden rounded-full border-2 border-white/90 bg-white shadow-md">
+            <img src="{{ $deal->getLogoUrl() }}" alt="" class="h-full w-full object-cover object-center">
         </div>
-        
-        <p class="text-gray-500 text-sm mt-2">
-            {{ $deal->getExcerpt() }}
-        </p>
     </div>
-    
-    <div class="flex flex-col border-box p-4 w-full">
+    <h3 class="mt-5 text-center text-lg md:text-xl font-bold tracking-tight">{{ $deal->title }}</h3>
 
-        <div class="flex justify-between items-center mt-4 text-sm">
-            @if ($deal->investment_stage)
-                <div class="text-center">
-                    <p class="text-gray-400">Investment Stage</p>
-                    <p class="font-semibold">{{ $deal->investment_stage }}</p>
-                </div>    
-            @endif
-            
-            @if ($deal->amount_seeking)
-                <div class="text-center">
-                    <p class="text-gray-400">Amount Seeking</p>
-                    <p class="font-semibold text-green-600">$ {{ $deal->amountSeeking() }}</p>
-                </div>
-            @endif
+    <div class="mt-6 flex flex-1 flex-col space-y-3 text-sm leading-relaxed text-white/95">
+        <div>
+            <p class="font-medium text-white/80">One-Liner:</p>
+            <p class="mt-0.5">{{ $oneLiner }}</p>
         </div>
-
-        @auth
-            <a href="{{ ($deal->type!=="review") ? route('deal.view',$deal->id) : $deal->groupchat_invite_link }}" 
-               class="px-6 w-full text-center cursor-pointer mt-6 py-3 bg-[#18736a] text-white font-semibold rounded-lg hover:bg-[#20978c] transition">
-                @php
-                    if ($deal->type=="review") {
-                        echo "Join WhatsApp Group";
-                    } else if($deal->type == "portfolio") {
-                        echo "View Portfolio";
-                    } else { 
-                        echo ucfirst($deal->type);
-                    }
-                @endphp
-            </a>
-        @endauth
-        @guest
-            <a href="{{ route('deal.public.view',$deal->id) }}" 
-               class="px-6 w-full text-center cursor-pointer mt-6 py-3 bg-green-600 text-white font-semibold rounded-lg hover:bg-green-700 transition">
-                {{
-                    ($deal->type!=="review") ? ucfirst($deal->type) : "Join WhatsApp Group"
-                }}
-            </a>
-        @endguest
+        <div>
+            <p class="font-medium text-white/80">Investment Stage:</p>
+            <p class="mt-0.5">{{ $stage }}</p>
+        </div>
+        @if (! $hideAmountSeeking)
+            <div>
+                <p class="font-medium text-white/80">Amount Seeking</p>
+                <p class="mt-0.5">{{ $amount }}</p>
+            </div>
+        @endif
     </div>
-</div>
+
+    <a href="{{ $href }}"
+       class="mt-8 inline-flex w-full items-center justify-center rounded-full border border-white/35 bg-white/15 px-5 py-3 text-center font-mono text-sm font-medium tracking-wide text-white shadow-sm backdrop-blur-sm transition hover:bg-white/25 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/80">
+        {{ $ctaLabel }}
+    </a>
+</article>
