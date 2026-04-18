@@ -114,6 +114,12 @@
                 </svg>
                 <span>Resources page</span>
             </a>
+            <a href="{{ route('admin.startup-services') }}" class="py-3 px-6 hover:bg-green-600 transition-colors flex items-center space-x-2 {{ request()->routeIs('admin.startup-services*') ? 'bg-green-600' : '' }}">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zm0 4h14v6a1 1 0 01-1 1H4a1 1 0 01-1-1V8zm3 2a1 1 0 100 2h6a1 1 0 100-2H6z" clip-rule="evenodd" />
+                </svg>
+                <span>Startups services</span>
+            </a>
             <a href="{{ route('admin.what-we-do-cards') }}" class="py-3 px-6 hover:bg-green-600 transition-colors flex items-center space-x-2 {{ request()->routeIs('admin.what-we-do-cards*') ? 'bg-green-600' : '' }}">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                     <path d="M7 3a1 1 0 000 2h6a1 1 0 100-2H7zM4 7a1 1 0 011-1h10a1 1 0 110 2H5a1 1 0 01-1-1zM2 11a2 2 0 012-2h12a2 2 0 012 2v4a2 2 0 01-2 2H4a2 2 0 01-2-2v-4zm8 0H8v2h2v-2zm0 3H8v2h2v-2z" />

@@ -1,33 +1,27 @@
 @extends('layouts.guest')
 @section('page_title', 'Startups | Bangladesh Angels Network Limited')
 @section('page_content')
+@php
+    $brochureUrl = asset('MoU.pdf');
+    $shadowClasses = [
+        'bg-[#36b37e]/22',
+        'bg-[#18736a]/18',
+        'bg-[#0f3d34]/14',
+    ];
+    $surfaceClasses = [
+        'from-white via-[#f7fdf9] to-[#eefaf4] border-green-100/90',
+        'from-white via-[#f3faf8] to-[#e6f4f0] border-[#18736a]/25',
+        'from-white via-[#f4faf7] to-[#e8f5ef] border-[#0f3d34]/18',
+    ];
+@endphp
 <div class="w-full max-w-6xl mx-auto px-4 sm:px-6 py-10 md:py-14">
 
     <header class="mb-10 md:mb-12 text-center md:text-left">
         <h1 class="text-3xl md:text-4xl font-bold text-[#0f3d34]">Startups</h1>
         <p class="mt-3 text-gray-600 text-[0.95em] md:text-lg max-w-3xl mx-auto md:mx-0 leading-relaxed">
-            Explore our portfolio, discover member-only active deals, pitch your company, and learn how BAN supports founders.
+            Discover member-only active deals, send your pitch, explore BAN services for founders, and browse companies we have backed.
         </p>
     </header>
-
-    {{-- Portfolio (public) --}}
-    <section id="portfolio-companies" class="scroll-mt-32 mb-16 md:mb-20 pb-16 border-b border-green-100/80" aria-labelledby="portfolio-heading">
-        <h2 id="portfolio-heading" class="text-xl md:text-2xl font-bold text-[#0f3d34] mb-2">Portfolio companies</h2>
-        <p class="text-gray-600 mb-8 max-w-2xl">Companies BAN has backed.</p>
-
-        @if ($portfolioDeals->isEmpty())
-            <div class="mx-auto max-w-lg rounded-2xl border border-green-100/80 bg-white/90 px-8 py-10 text-center shadow-sm" role="status">
-                <p class="text-lg font-semibold text-[#0f3d34]">No portfolio companies yet</p>
-                <p class="mt-3 text-gray-600 leading-relaxed text-sm">We have not published portfolio listings here yet. Please check back later.</p>
-            </div>
-        @else
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                @foreach ($portfolioDeals as $deal)
-                    <livewire:deal-card :deal="$deal"></livewire:deal-card>
-                @endforeach
-            </div>
-        @endif
-    </section>
 
     {{-- Active deals (paywalled) --}}
     <section id="active-deals" class="scroll-mt-32 mb-16 md:mb-20 pb-16 border-b border-green-100/80" aria-labelledby="active-deals-heading">
@@ -51,34 +45,29 @@
                 </div>
             @endif
         @else
-            <div class="relative overflow-hidden rounded-2xl border border-green-100/80 bg-gradient-to-br from-green-50/90 to-white p-8 md:p-12 shadow-sm">
-                <div class="absolute inset-0 pointer-events-none bg-white/40 backdrop-blur-[2px]" aria-hidden="true"></div>
-                <div class="relative max-w-xl mx-auto text-center">
-                    <p class="inline-flex items-center gap-2 rounded-full bg-[#0f3d34]/10 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-[#0f3d34]">Members only</p>
-                    <h3 class="mt-4 text-lg md:text-xl font-bold text-[#0f3d34]">Unlock active deals</h3>
-                    <p class="mt-3 text-gray-600 leading-relaxed text-sm md:text-base">
-                        Active deal listings are available to approved members with a paid subscription, consistent with the rest of the platform.
-                    </p>
-                    <div class="mt-8 flex flex-col sm:flex-row gap-3 justify-center">
-                        @guest
-                            <a href="{{ route('login') }}" class="inline-flex justify-center px-6 py-3 rounded-full bg-[#36b37e] font-bold text-white hover:opacity-90 transition-opacity">Log in</a>
-                            <a href="{{ route('plans') }}" class="inline-flex justify-center px-6 py-3 rounded-full bg-[#eefff1] font-bold text-[#36b37e] border border-green-200 hover:bg-[#dff7e8] transition-colors">View plans</a>
-                        @else
-                            @if (! auth()->user()->hasVerifiedEmail())
-                                <p class="text-sm text-gray-600 sm:col-span-2">Please verify your email address to continue with membership and deal access.</p>
-                                <a href="{{ route('verification.notice') }}" class="inline-flex justify-center px-6 py-3 rounded-full bg-[#36b37e] font-bold text-white hover:opacity-90 transition-opacity">Email verification</a>
-                            @elseif (! auth()->user()->is_approved)
-                                <p class="text-sm text-gray-600 sm:col-span-2">Your profile is pending approval. We will notify you when you can access member areas.</p>
-                                <a href="{{ route('approval.pending') }}" class="inline-flex justify-center px-6 py-3 rounded-full bg-[#36b37e] font-bold text-white hover:opacity-90 transition-opacity">Approval status</a>
-                            @elseif (auth()->user()->isFree())
-                                <a href="{{ route('plans') }}" class="inline-flex justify-center px-6 py-3 rounded-full bg-[#36b37e] font-bold text-white hover:opacity-90 transition-opacity">Upgrade to unlock</a>
-                                <a href="{{ route('upgrade.page') }}" class="inline-flex justify-center px-6 py-3 rounded-full bg-[#eefff1] font-bold text-[#36b37e] border border-green-200 hover:bg-[#dff7e8] transition-colors">Why upgrade?</a>
-                            @else
-                                <p class="text-sm text-gray-600">Your account does not currently have access to this section.</p>
-                            @endif
-                        @endguest
-                    </div>
+            <div class="relative overflow-hidden rounded-3xl border border-green-100/80 bg-gradient-to-br from-emerald-50/90 to-white min-h-[260px] sm:min-h-[280px]">
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-6 p-6 md:p-8 blur-md opacity-[0.55] pointer-events-none select-none" aria-hidden="true">
+                    @for ($i = 0; $i < 3; $i++)
+                        <div class="rounded-xl bg-white shadow-md overflow-hidden border border-gray-100">
+                            <div class="aspect-[16/9] bg-gradient-to-br from-emerald-200/90 to-emerald-700/50"></div>
+                            <div class="p-4 space-y-3">
+                                <div class="h-5 w-3/4 max-w-[12rem] rounded-md bg-gray-200"></div>
+                                <div class="h-3 w-full rounded bg-gray-100"></div>
+                                <div class="h-3 w-11/12 rounded bg-gray-100"></div>
+                                <div class="flex gap-3 pt-2">
+                                    <div class="h-9 flex-1 rounded-lg bg-emerald-100/80"></div>
+                                    <div class="h-9 w-20 rounded-lg bg-gray-100"></div>
+                                </div>
+                            </div>
+                        </div>
+                    @endfor
                 </div>
+                <a href="{{ route('plans') }}"
+                   class="absolute inset-0 z-10 flex flex-col items-center justify-center gap-2 bg-white/25 backdrop-blur-[3px] px-5 text-center transition hover:bg-white/35 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#0f3d34]">
+                    <span class="text-lg md:text-2xl font-bold text-[#0f3d34]">Click to unlock active deals</span>
+                    <span class="text-sm md:text-base text-[#0f3d34]/85 max-w-md leading-relaxed">Membership packages unlock full deal details and the investor workspace.</span>
+                    <span class="mt-3 inline-flex items-center rounded-full bg-[#0f3d34] px-6 py-2.5 text-sm font-semibold text-white shadow-md">View membership packages</span>
+                </a>
             </div>
         @endif
     </section>
@@ -128,35 +117,96 @@
         </form>
     </section>
 
-    {{-- Our services --}}
-    <section id="our-services" class="scroll-mt-32" aria-labelledby="services-heading">
+    {{-- Our services (admin-managed, resources-style cards) --}}
+    <section id="our-services" class="scroll-mt-32 mb-16 md:mb-20 pb-16 border-b border-green-100/80" aria-labelledby="services-heading">
         <h2 id="services-heading" class="text-xl md:text-2xl font-bold text-[#0f3d34] mb-2">Our services</h2>
         <p class="text-gray-600 mb-8 max-w-2xl">BAN offers structured support for founders through dedicated service lines. Packages and scope can be tailored after an initial conversation.</p>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
-            <article class="rounded-2xl border border-green-100/80 bg-white/90 p-6 md:p-8 shadow-sm flex flex-col h-full">
-                <h3 class="text-lg font-bold text-[#36b37e]">Founder services</h3>
-                <p class="mt-3 text-gray-600 text-sm leading-relaxed">Hands-on help as you prepare to fundraise and scale: narrative, materials, and investor conversations.</p>
-                <ul class="mt-5 space-y-2 text-sm text-gray-700 list-disc list-inside flex-1">
-                    <li>Fundraising narrative and positioning</li>
-                    <li>Deck review and storytelling for investor meetings</li>
-                    <li>Monthly showcase and pitch preparation</li>
-                    <li>Office hours with operators and angels in the network</li>
-                </ul>
-                <p class="mt-6 text-xs text-gray-500">Delivered as scoped packages; contact BAN for availability and pricing.</p>
-            </article>
-            <article class="rounded-2xl border border-green-100/80 bg-white/90 p-6 md:p-8 shadow-sm flex flex-col h-full">
-                <h3 class="text-lg font-bold text-[#36b37e]">Legal services</h3>
-                <p class="mt-3 text-gray-600 text-sm leading-relaxed">Practical legal support for early-stage structures and transactions, coordinated with qualified counsel where required.</p>
-                <ul class="mt-5 space-y-2 text-sm text-gray-700 list-disc list-inside flex-1">
-                    <li>Company formation and cap table hygiene</li>
-                    <li>Founders agreements and employment basics</li>
-                    <li>Term sheet and SAFE / convertible note review</li>
-                    <li>Regulatory and compliance orientation for your sector</li>
-                </ul>
-                <p class="mt-6 text-xs text-gray-500">Not legal advice as law firm representation; BAN can introduce counsel and structured legal packages.</p>
-            </article>
+        @if ($startupServices->isEmpty())
+            <p class="rounded-xl border border-green-100/80 bg-white px-5 py-6 text-sm text-gray-600 shadow-sm max-w-2xl" role="status">
+                Service listings are not configured yet. Please check back later.
+            </p>
+        @else
+            <div class="flex flex-col gap-10 md:gap-12">
+                @foreach ($startupServices as $svc)
+                    @php
+                        $i = $loop->index % 3;
+                        $isExternal = str_starts_with(strtolower(trim($svc->link)), 'http');
+                    @endphp
+                    <div class="relative">
+                        <div class="absolute inset-0 translate-x-2 translate-y-2 rounded-3xl {{ $shadowClasses[$i] }}" aria-hidden="true"></div>
+                        <article class="relative overflow-hidden rounded-3xl border bg-gradient-to-br {{ $surfaceClasses[$i] }} shadow-md">
+                            <div class="flex flex-col lg:flex-row lg:items-center gap-8 lg:gap-10 p-8 md:p-10">
+                                <div class="lg:flex-1 text-center lg:text-left min-w-0">
+                                    <h3 class="text-2xl md:text-3xl font-bold text-[#0f3d34]">{{ $svc->title }}</h3>
+                                    <p class="mt-2 text-sm md:text-base text-gray-600 leading-relaxed">{{ $svc->intro }}</p>
+                                    @if ($svc->bulletList() !== [])
+                                        <ul class="mt-5 space-y-2 text-sm text-gray-700 list-disc list-inside text-left max-w-xl mx-auto lg:mx-0">
+                                            @foreach ($svc->bulletList() as $bullet)
+                                                <li>{{ $bullet }}</li>
+                                            @endforeach
+                                        </ul>
+                                    @endif
+                                    @if (filled($svc->footer_note))
+                                        <p class="mt-5 text-xs text-gray-500">{{ $svc->footer_note }}</p>
+                                    @endif
+                                </div>
+                                <div class="flex justify-center shrink-0">
+                                    <div class="h-28 w-28 md:h-32 md:w-32 shrink-0 overflow-hidden rounded-full border-2 border-white shadow-md ring-2 ring-[#36b37e]/20 bg-gray-50">
+                                        @if ($svc->logoUrl())
+                                            <img src="{{ $svc->logoUrl() }}" alt="" class="h-full w-full object-cover object-center">
+                                        @else
+                                            <div class="flex h-full w-full items-center justify-center bg-gradient-to-br from-[#36b37e]/15 to-[#0f3d34]/10 text-lg font-bold text-[#0f3d34]/60 tracking-wide" aria-hidden="true">
+                                                {{ \Illuminate\Support\Str::upper(\Illuminate\Support\Str::substr(preg_replace('/\s+/', '', $svc->title), 0, 2)) }}
+                                            </div>
+                                        @endif
+                                    </div>
+                                </div>
+                                <div class="flex flex-col items-center lg:items-end shrink-0 w-full lg:w-auto">
+                                    <a href="{{ $svc->link }}"
+                                       @if ($isExternal) target="_blank" rel="noopener noreferrer" @endif
+                                       class="inline-flex items-center justify-center gap-2 rounded-full bg-[#0f3d34] px-6 py-3 text-sm md:text-base font-semibold text-white shadow-sm hover:bg-[#156755] transition-colors w-full sm:w-auto">
+                                        <span>{{ $svc->cta_label }}</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </article>
+                        @if ($svc->show_brochure_link)
+                            <p class="mt-4 text-center">
+                                <a href="{{ $brochureUrl }}" target="_blank" rel="noopener noreferrer" class="text-sm font-semibold text-[#36b37e] hover:text-[#18736a] underline underline-offset-4">
+                                    Click here to see our brochure
+                                </a>
+                            </p>
+                        @endif
+                    </div>
+                @endforeach
+            </div>
+        @endif
+    </section>
+
+    {{-- Portfolio (public) --}}
+    <section id="portfolio-companies" class="scroll-mt-32 bg-white" aria-labelledby="portfolio-heading">
+        <div class="mb-10 md:mb-12 text-center">
+            <p class="inline-flex items-center justify-center gap-2 text-base md:text-lg font-semibold text-[#0f6a4b] mb-3">
+                <span aria-hidden="true">✽</span>
+                <span>What we do</span>
+            </p>
+            <h2 id="portfolio-heading" class="text-3xl md:text-4xl font-bold text-[#0f3d34] tracking-tight">Our Portfolio</h2>
+            <p class="mt-3 text-gray-600 max-w-2xl mx-auto leading-relaxed">Companies BAN has backed.</p>
         </div>
+
+        @if ($portfolioDeals->isEmpty())
+            <div class="mx-auto max-w-lg rounded-2xl border border-green-100/80 bg-white px-8 py-10 text-center shadow-sm" role="status">
+                <p class="text-lg font-semibold text-[#0f3d34]">No portfolio companies yet</p>
+                <p class="mt-3 text-gray-600 leading-relaxed text-sm">We have not published portfolio listings here yet. Please check back later.</p>
+            </div>
+        @else
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+                @foreach ($portfolioDeals as $deal)
+                    <x-portfolio-showcase-card :deal="$deal" />
+                @endforeach
+            </div>
+        @endif
     </section>
 </div>
 @endsection

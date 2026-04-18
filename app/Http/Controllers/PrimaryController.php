@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Deal;
 use App\Models\Resource;
 use App\Models\ResourceHubCard;
+use App\Models\StartupService;
 use App\Models\SubscriptionTier;
 use App\Models\TeamMember;
 use App\Models\User;
@@ -44,7 +45,7 @@ class PrimaryController extends Controller
         return view('upgrade');
     }
 
-    // Startups hub: portfolio (public) + active deals (paywalled in the view) + pitch + services
+    // Startups hub: active deals (paywalled in the view), pitch, services, portfolio (public)
     public function viewStartups()
     {
         $portfolioDeals = Deal::with('media')->where('type', 'portfolio')->get();
@@ -55,7 +56,9 @@ class PrimaryController extends Controller
 
         $canViewActiveDeals = auth()->check() && auth()->user()->canViewPaywalledDeals();
 
-        return view('startups', compact('portfolioDeals', 'activeDeals', 'canViewActiveDeals'));
+        $startupServices = StartupService::query()->with('media')->ordered()->get();
+
+        return view('startups', compact('portfolioDeals', 'activeDeals', 'canViewActiveDeals', 'startupServices'));
     }
 
     // Subscription Plans Page

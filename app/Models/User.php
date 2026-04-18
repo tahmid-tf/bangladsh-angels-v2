@@ -165,6 +165,10 @@ class User extends Authenticatable implements HasMedia
             return false;
         }
 
+        if ($this->isAdmin()) {
+            return true;
+        }
+
         return $this->hasVerifiedEmail()
             && $this->is_approved
             && ! $this->isFree();

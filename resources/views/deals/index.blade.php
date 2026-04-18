@@ -24,7 +24,7 @@
     <div class="flex w-full justify-between flex-col gap-2">
         <h1 class="text-3xl font-bold">Active Deals</h1>
         <p class="text-sm text-gray-600 mb-4">
-            The public <a href="{{ route('startups') }}" class="font-semibold text-[#18736a] hover:underline">Startups</a> page also lists our portfolio, founder pitch form, and BAN services.
+            The public <a href="{{ route('startups') }}" class="font-semibold text-[#18736a] hover:underline">Startups</a> page also highlights active deals (for members), our pitch form, founder services, and portfolio companies.
         </p>
     </div>
 </div>

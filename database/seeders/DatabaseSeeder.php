@@ -21,5 +21,6 @@ class DatabaseSeeder extends Seeder
         ]);
 
         $this->call(WhatWeDoCardSeeder::class);
+        $this->call(StartupServiceSeeder::class);
     }
 }

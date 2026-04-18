@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\FounderPitchSubmissionController;
 use App\Http\Controllers\Admin\ResourceHubCardController;
+use App\Http\Controllers\Admin\StartupServiceController;
 use App\Http\Controllers\Admin\TeamMemberController;
 use App\Http\Controllers\Admin\WhatWeDoCardController;
 use App\Http\Controllers\AdminController;
@@ -164,6 +165,13 @@ Route::middleware('auth')->group(function () {
         Route::get('/resource-hub-cards/{resourceHubCard}/edit', [ResourceHubCardController::class, 'edit'])->name('admin.resource-hub.edit');
         Route::put('/resource-hub-cards/{resourceHubCard}', [ResourceHubCardController::class, 'update'])->name('admin.resource-hub.update');
         Route::delete('/resource-hub-cards/{resourceHubCard}', [ResourceHubCardController::class, 'destroy'])->name('admin.resource-hub.destroy');
+
+        Route::get('/startup-services', [StartupServiceController::class, 'index'])->name('admin.startup-services');
+        Route::get('/startup-services/create', [StartupServiceController::class, 'create'])->name('admin.startup-services.create');
+        Route::post('/startup-services', [StartupServiceController::class, 'store'])->name('admin.startup-services.store');
+        Route::get('/startup-services/{startupService}/edit', [StartupServiceController::class, 'edit'])->name('admin.startup-services.edit');
+        Route::put('/startup-services/{startupService}', [StartupServiceController::class, 'update'])->name('admin.startup-services.update');
+        Route::delete('/startup-services/{startupService}', [StartupServiceController::class, 'destroy'])->name('admin.startup-services.destroy');
 
         Route::get('/what-we-do-cards', [WhatWeDoCardController::class, 'index'])->name('admin.what-we-do-cards');
         Route::get('/what-we-do-cards/{whatWeDoCard}/edit', [WhatWeDoCardController::class, 'edit'])->name('admin.what-we-do-cards.edit');
