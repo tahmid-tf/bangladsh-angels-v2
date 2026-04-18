@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Resource;
 use Illuminate\Http\Request;
+use Illuminate\Http\UploadedFile;
 
 class ResourceController extends Controller
 {
@@ -50,21 +51,16 @@ class ResourceController extends Controller
             'banner_image' => 'nullable|image|max:2048',
         ]);
 
-        // Remove images from the validated data, so we don't store them as JSON
         $bannerImage = $request->file('banner_image');
-        if (isset($validated['speakers'])) {
-            foreach ($validated['speakers'] as $index => &$speaker) {
-                unset($speaker['image']); // We'll handle image separately
-            }
-        }
+
+        $speakerPayload = $this->buildCleanSpeakersFromRequest($request);
 
         // Create the resource record
         $resourceData = $validated;
-        // This ensures we store JSON arrays as arrays, not nested arrays with images
-        $resourceData['benefits'] = $request->input('benefits', []);
-        $resourceData['event_highlights'] = $request->input('event_highlights', []);
-        $resourceData['target_audience'] = $request->input('target_audience', []);
-        $resourceData['speakers'] = $request->input('speakers', []);
+        $resourceData['benefits'] = $this->filterStringList($request->input('benefits'));
+        $resourceData['event_highlights'] = $this->filterStringList($request->input('event_highlights'));
+        $resourceData['target_audience'] = $this->filterStringList($request->input('target_audience'));
+        $resourceData['speakers'] = $speakerPayload['speakers'];
         $resourceData['cta_link'] = filled($validated['cta_link'] ?? null) ? trim((string) $validated['cta_link']) : null;
         $resourceData['show_on_landing'] = $request->boolean('show_on_landing');
 
@@ -75,16 +71,11 @@ class ResourceController extends Controller
             $resource->addMedia($bannerImage)->toMediaCollection('banner');
         }
 
-        // Handle each speaker image
-        if ($request->has('speakers')) {
-            foreach ($request->speakers as $index => $speakerData) {
-                if (isset($speakerData['image'])) {
-                    $resource
-                        ->addMedia($speakerData['image'])
-                        ->withCustomProperties(['speaker_index' => $index])
-                        ->toMediaCollection('speakers');
-                }
-            }
+        foreach ($speakerPayload['media_files'] as $index => $file) {
+            $resource
+                ->addMedia($file)
+                ->withCustomProperties(['speaker_index' => $index])
+                ->toMediaCollection('speakers');
         }
 
         return redirect()->route('resource.public.view', $resource->id);
@@ -136,23 +127,18 @@ class ResourceController extends Controller
 
         // Convert JSON fields to arrays if needed
         // We'll store them as arrays in the DB, so cast them in the model as well.
+        $speakerPayload = $this->buildCleanSpeakersFromRequest($request);
+
         $resourceData = $validated;
-        $resourceData['benefits'] = $request->input('benefits', []);
-        $resourceData['event_highlights'] = $request->input('event_highlights', []);
-        $resourceData['target_audience'] = $request->input('target_audience', []);
-        $resourceData['speakers'] = $request->input('speakers', []);
+        $resourceData['benefits'] = $this->filterStringList($request->input('benefits'));
+        $resourceData['event_highlights'] = $this->filterStringList($request->input('event_highlights'));
+        $resourceData['target_audience'] = $this->filterStringList($request->input('target_audience'));
+        $resourceData['speakers'] = $speakerPayload['speakers'];
         $resourceData['cta_link'] = filled($validated['cta_link'] ?? null) ? trim((string) $validated['cta_link']) : null;
         $resourceData['show_on_landing'] = $request->boolean('show_on_landing');
 
         // Extract banner_image from validated data so we don't store it as JSON
         $bannerImage = $request->file('banner_image');
-
-        // For each speaker, remove 'image' so it's not stored in the JSON column
-        if (isset($resourceData['speakers'])) {
-            foreach ($resourceData['speakers'] as $index => &$speaker) {
-                unset($speaker['image']); // We'll handle image uploads separately
-            }
-        }
 
         // Update the resource record in the database
         $resource->update($resourceData);
@@ -164,26 +150,11 @@ class ResourceController extends Controller
             $resource->addMedia($bannerImage)->toMediaCollection('banner');
         }
 
-        // Handle speaker images
-        if ($request->has('speakers')) {
-            foreach ($request->speakers as $index => $speakerData) {
-                // If a new image was uploaded for this speaker
-                if (isset($speakerData['image'])) {
-                    // Optionally remove the old image for this index if you want a one-to-one replacement:
-                    // $oldImage = $resource->getMedia('speakers')->first(function($media) use($index) {
-                    //     return $media->getCustomProperty('speaker_index') == $index;
-                    // });
-                    // if ($oldImage) {
-                    //     $oldImage->delete();
-                    // }
-
-                    // Add the new speaker image
-                    $resource
-                        ->addMedia($speakerData['image'])
-                        ->withCustomProperties(['speaker_index' => $index])
-                        ->toMediaCollection('speakers');
-                }
-            }
+        foreach ($speakerPayload['media_files'] as $index => $file) {
+            $resource
+                ->addMedia($file)
+                ->withCustomProperties(['speaker_index' => $index])
+                ->toMediaCollection('speakers');
         }
 
         return redirect()
@@ -201,5 +172,71 @@ class ResourceController extends Controller
         return redirect()
             ->route('admin.resources')
             ->with('success', 'Resource deleted successfully!');
+    }
+
+    /**
+     * @return list<string>
+     */
+    private function filterStringList(mixed $items): array
+    {
+        if (! is_array($items)) {
+            return [];
+        }
+
+        $out = [];
+        foreach ($items as $item) {
+            if (! is_string($item) && ! is_numeric($item)) {
+                continue;
+            }
+            $s = trim((string) $item);
+            if ($s !== '') {
+                $out[] = $s;
+            }
+        }
+
+        return $out;
+    }
+
+    /**
+     * @return array{speakers: list<array{name: string, designation: string}>, media_files: array<int, UploadedFile>}
+     */
+    private function buildCleanSpeakersFromRequest(Request $request): array
+    {
+        $rows = $request->input('speakers', []);
+        if (! is_array($rows)) {
+            return ['speakers' => [], 'media_files' => []];
+        }
+
+        $speakers = [];
+        $mediaFiles = [];
+
+        foreach ($rows as $origIndex => $row) {
+            if (! is_array($row)) {
+                continue;
+            }
+
+            $name = trim((string) ($row['name'] ?? ''));
+            $designation = trim((string) ($row['designation'] ?? ''));
+            $hasFile = $request->hasFile("speakers.$origIndex.image");
+
+            if ($name === '' && $designation === '' && ! $hasFile) {
+                continue;
+            }
+
+            $newIndex = count($speakers);
+            $speakers[] = [
+                'name' => $name,
+                'designation' => $designation,
+            ];
+
+            if ($hasFile) {
+                $mediaFiles[$newIndex] = $request->file("speakers.$origIndex.image");
+            }
+        }
+
+        return [
+            'speakers' => $speakers,
+            'media_files' => $mediaFiles,
+        ];
     }
 }

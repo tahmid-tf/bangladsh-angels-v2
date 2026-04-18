@@ -246,31 +246,26 @@
         <!-- Benefits (Dynamic JSON Array) -->
         <div class="border rounded-lg p-4">
             <h2 class="text-lg font-bold mb-4">Benefits</h2>
-            <p class="text-sm text-gray-500 mb-4">Add bullet points or reasons to attend.</p>
-            <div id="benefits-container" class="space-y-4">
-                @if(is_array(old('benefits')))
-                    @foreach(old('benefits') as $index => $benefit)
-                        <div class="grid grid-cols-1 gap-2">
-                            <input
-                                type="text"
-                                name="benefits[{{ $index }}]"
-                                placeholder="e.g., Exclusive networking opportunities"
-                                class="input-field"
-                                value="{{ $benefit }}"
-                            >
-                        </div>
-                    @endforeach
-                @else
-                    <!-- Default empty field -->
-                    <div class="grid grid-cols-1 gap-2">
+            <p class="text-sm text-gray-500 mb-4">Add bullet points or reasons to attend. Empty rows are not saved.</p>
+            @php
+                $benefitRows = is_array(old('benefits')) ? array_values(old('benefits')) : [];
+                if (count($benefitRows) === 0) {
+                    $benefitRows = [''];
+                }
+            @endphp
+            <div id="benefits-container" class="space-y-4" data-list-type="simple">
+                @foreach ($benefitRows as $index => $benefit)
+                    <div class="dynamic-list-row flex items-start gap-2">
                         <input
                             type="text"
-                            name="benefits[0]"
+                            name="benefits[{{ $index }}]"
                             placeholder="e.g., Exclusive networking opportunities"
-                            class="input-field"
+                            class="input-field min-w-0 flex-1"
+                            value="{{ is_scalar($benefit) ? $benefit : '' }}"
                         >
+                        <button type="button" class="list-remove-btn mt-1 shrink-0 rounded border border-red-200 px-2 py-1 text-sm text-red-600 hover:bg-red-50 @if (count($benefitRows) <= 1) hidden @endif" title="Remove row">Remove</button>
                     </div>
-                @endif
+                @endforeach
             </div>
             <button
                 type="button"
@@ -284,31 +279,26 @@
         <!-- Event Highlights (Dynamic JSON Array) -->
         <div class="border rounded-lg p-4">
             <h2 class="text-lg font-bold mb-4">Event Highlights</h2>
-            <p class="text-sm text-gray-500 mb-4">Keynotes, panel discussions, etc.</p>
-            <div id="highlights-container" class="space-y-4">
-                @if(is_array(old('event_highlights')))
-                    @foreach(old('event_highlights') as $index => $highlight)
-                        <div class="grid grid-cols-1 gap-2">
-                            <input
-                                type="text"
-                                name="event_highlights[{{ $index }}]"
-                                placeholder="e.g., Fireside chat with industry leaders"
-                                class="input-field"
-                                value="{{ $highlight }}"
-                            >
-                        </div>
-                    @endforeach
-                @else
-                    <!-- Default empty field -->
-                    <div class="grid grid-cols-1 gap-2">
+            <p class="text-sm text-gray-500 mb-4">Keynotes, panel discussions, etc. Empty rows are not saved.</p>
+            @php
+                $highlightRows = is_array(old('event_highlights')) ? array_values(old('event_highlights')) : [];
+                if (count($highlightRows) === 0) {
+                    $highlightRows = [''];
+                }
+            @endphp
+            <div id="highlights-container" class="space-y-4" data-list-type="simple">
+                @foreach ($highlightRows as $index => $highlight)
+                    <div class="dynamic-list-row flex items-start gap-2">
                         <input
                             type="text"
-                            name="event_highlights[0]"
+                            name="event_highlights[{{ $index }}]"
                             placeholder="e.g., Fireside chat with industry leaders"
-                            class="input-field"
+                            class="input-field min-w-0 flex-1"
+                            value="{{ is_scalar($highlight) ? $highlight : '' }}"
                         >
+                        <button type="button" class="list-remove-btn mt-1 shrink-0 rounded border border-red-200 px-2 py-1 text-sm text-red-600 hover:bg-red-50 @if (count($highlightRows) <= 1) hidden @endif" title="Remove row">Remove</button>
                     </div>
-                @endif
+                @endforeach
             </div>
             <button
                 type="button"
@@ -322,31 +312,26 @@
         <!-- Target Audience (Dynamic JSON Array) -->
         <div class="border rounded-lg p-4">
             <h2 class="text-lg font-bold mb-4">Target Audience</h2>
-            <p class="text-sm text-gray-500 mb-4">Who should attend?</p>
-            <div id="audience-container" class="space-y-4">
-                @if(is_array(old('target_audience')))
-                    @foreach(old('target_audience') as $index => $audience)
-                        <div class="grid grid-cols-1 gap-2">
-                            <input
-                                type="text"
-                                name="target_audience[{{ $index }}]"
-                                placeholder="e.g., Angel Investors"
-                                class="input-field"
-                                value="{{ $audience }}"
-                            >
-                        </div>
-                    @endforeach
-                @else
-                    <!-- Default empty field -->
-                    <div class="grid grid-cols-1 gap-2">
+            <p class="text-sm text-gray-500 mb-4">Who should attend? Empty rows are not saved.</p>
+            @php
+                $audienceRows = is_array(old('target_audience')) ? array_values(old('target_audience')) : [];
+                if (count($audienceRows) === 0) {
+                    $audienceRows = [''];
+                }
+            @endphp
+            <div id="audience-container" class="space-y-4" data-list-type="simple">
+                @foreach ($audienceRows as $index => $audience)
+                    <div class="dynamic-list-row flex items-start gap-2">
                         <input
                             type="text"
-                            name="target_audience[0]"
+                            name="target_audience[{{ $index }}]"
                             placeholder="e.g., Angel Investors"
-                            class="input-field"
+                            class="input-field min-w-0 flex-1"
+                            value="{{ is_scalar($audience) ? $audience : '' }}"
                         >
+                        <button type="button" class="list-remove-btn mt-1 shrink-0 rounded border border-red-200 px-2 py-1 text-sm text-red-600 hover:bg-red-50 @if (count($audienceRows) <= 1) hidden @endif" title="Remove row">Remove</button>
                     </div>
-                @endif
+                @endforeach
             </div>
             <button
                 type="button"
@@ -360,99 +345,62 @@
         <!-- Speakers (Dynamic JSON Array) -->
         <div class="border rounded-lg p-4">
             <h2 class="text-lg font-bold mb-4">Speakers</h2>
-            <p class="text-sm text-gray-500 mb-4">Add speaker info: name, designation, and photo.</p>
+            <p class="text-sm text-gray-500 mb-4">Add speaker info: name, designation, and photo. Empty speaker blocks are not saved.</p>
+
+            @php
+                $oldSpeakers = old('speakers');
+                if (! is_array($oldSpeakers) || count($oldSpeakers) === 0) {
+                    $oldSpeakers = [['name' => '', 'designation' => '']];
+                }
+                $oldSpeakers = array_values($oldSpeakers);
+            @endphp
 
             <div id="speakers-container" class="space-y-4">
-                @php
-                    $oldSpeakers = old('speakers') ?? [];
-                @endphp
-
-                @if(is_array($oldSpeakers) && count($oldSpeakers) > 0)
-                    @foreach($oldSpeakers as $index => $speakerData)
-                        <div class="border border-gray-200 p-4 rounded space-y-2 speaker-entry">
-                            <div>
-                                <input
-                                    type="text"
-                                    name="speakers[{{ $index }}][name]"
-                                    placeholder="Speaker Name"
-                                    class="input-field"
-                                    value="{{ $speakerData['name'] ?? '' }}"
-                                >
-                            </div>
-                            <div>
-                                <input
-                                    type="text"
-                                    name="speakers[{{ $index }}][designation]"
-                                    placeholder="Speaker Designation"
-                                    class="input-field"
-                                    value="{{ $speakerData['designation'] ?? '' }}"
-                                >
-                            </div>
-                            <!-- Speaker Image Upload -->
-                            <div class="text-center">
-                                <label class="block cursor-pointer">
-                                    <div class="mb-2">
-                                        <img
-                                            id="speaker-preview-{{ $index }}"
-                                            src="{{ asset('placeholder_speaker.png') }}"
-                                            alt="Upload Placeholder"
-                                            class="mx-auto rounded-full h-20 w-20 object-cover"
-                                        >
-                                    </div>
-                                    <input
-                                        type="file"
-                                        name="speakers[{{ $index }}][image]"
-                                        accept="image/*"
-                                        class="hidden speaker-image-input"
-                                        data-preview-target="speaker-preview-{{ $index }}"
-                                    >
-                                    <p class="text-gray-400 text-xs">Upload speaker photo</p>
-                                </label>
-                            </div>
+                @foreach ($oldSpeakers as $index => $speakerData)
+                    <div class="speaker-entry relative space-y-2 rounded border border-gray-200 p-4">
+                        <div class="flex justify-end">
+                            <button type="button" class="speaker-remove-btn rounded border border-red-200 px-2 py-1 text-sm text-red-600 hover:bg-red-50 @if (count($oldSpeakers) <= 1) hidden @endif" title="Remove speaker">Remove</button>
                         </div>
-                    @endforeach
-                @else
-                    <!-- Default single speaker fieldset -->
-                    <div class="border border-gray-200 p-4 rounded space-y-2 speaker-entry">
                         <div>
                             <input
                                 type="text"
-                                name="speakers[0][name]"
+                                name="speakers[{{ $index }}][name]"
                                 placeholder="Speaker Name"
                                 class="input-field"
+                                value="{{ $speakerData['name'] ?? '' }}"
                             >
                         </div>
                         <div>
                             <input
                                 type="text"
-                                name="speakers[0][designation]"
+                                name="speakers[{{ $index }}][designation]"
                                 placeholder="Speaker Designation"
                                 class="input-field"
+                                value="{{ $speakerData['designation'] ?? '' }}"
                             >
                         </div>
-                        <!-- Speaker Image Upload -->
                         <div class="text-center">
                             <label class="block cursor-pointer">
                                 <div class="mb-2">
                                     <img
-                                        id="speaker-preview-0"
+                                        id="speaker-preview-{{ $index }}"
                                         src="{{ asset('placeholder_speaker.png') }}"
                                         alt="Upload Placeholder"
-                                        class="mx-auto rounded-full h-20 w-20 object-cover"
+                                        class="mx-auto h-20 w-20 rounded-full object-cover"
                                     >
                                 </div>
                                 <input
                                     type="file"
-                                    name="speakers[0][image]"
+                                    name="speakers[{{ $index }}][image]"
                                     accept="image/*"
-                                    class="hidden speaker-image-input"
-                                    data-preview-target="speaker-preview-0"
+                                    class="speaker-image-input hidden"
+                                    data-preview-target="speaker-preview-{{ $index }}"
                                 >
-                                <p class="text-gray-400 text-xs">Upload speaker photo</p>
+                                <p class="text-xs text-gray-400">Upload speaker photo</p>
                             </label>
                         </div>
                     </div>
-                @endif
+                @endforeach
             </div>
 
             <!-- Button to add another speaker -->
@@ -485,125 +433,128 @@
 </style>
 
 <script>
-    /*******************************************
-     * DYNAMIC FIELDS: Benefits, Highlights, Audience
-     *******************************************/
-    let benefitCounter = document.querySelectorAll('#benefits-container .grid').length;
+    function refreshSimpleListRemoveButtons(containerId) {
+        const container = document.getElementById(containerId);
+        if (!container) return;
+        const rows = container.querySelectorAll('.dynamic-list-row');
+        rows.forEach((row) => {
+            const btn = row.querySelector('.list-remove-btn');
+            if (btn) btn.classList.toggle('hidden', rows.length <= 1);
+        });
+    }
+
+    function refreshSpeakerRemoveButtons() {
+        const container = document.getElementById('speakers-container');
+        if (!container) return;
+        const entries = container.querySelectorAll('.speaker-entry');
+        entries.forEach((entry) => {
+            const btn = entry.querySelector('.speaker-remove-btn');
+            if (btn) btn.classList.toggle('hidden', entries.length <= 1);
+        });
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+        refreshSimpleListRemoveButtons('benefits-container');
+        refreshSimpleListRemoveButtons('highlights-container');
+        refreshSimpleListRemoveButtons('audience-container');
+        refreshSpeakerRemoveButtons();
+    });
+
+    ['benefits-container', 'highlights-container', 'audience-container'].forEach(function (containerId) {
+        document.getElementById(containerId).addEventListener('click', function (e) {
+            const removeBtn = e.target.closest('.list-remove-btn');
+            if (!removeBtn) return;
+            const row = removeBtn.closest('.dynamic-list-row');
+            const container = document.getElementById(containerId);
+            if (container.querySelectorAll('.dynamic-list-row').length <= 1) return;
+            row.remove();
+            refreshSimpleListRemoveButtons(containerId);
+        });
+    });
+
+    document.getElementById('speakers-container').addEventListener('click', function (e) {
+        const btn = e.target.closest('.speaker-remove-btn');
+        if (!btn) return;
+        const entry = btn.closest('.speaker-entry');
+        const container = document.getElementById('speakers-container');
+        if (container.querySelectorAll('.speaker-entry').length <= 1) return;
+        entry.remove();
+        refreshSpeakerRemoveButtons();
+    });
+
     document.getElementById('add-benefit-btn').addEventListener('click', function () {
         const container = document.getElementById('benefits-container');
-        const newField = `
-            <div class="grid grid-cols-1 gap-2">
-                <input
-                    type="text"
-                    name="benefits[${benefitCounter}]"
-                    placeholder="e.g., Exclusive networking opportunities"
-                    class="input-field"
-                >
-            </div>`;
-        container.insertAdjacentHTML('beforeend', newField);
-        benefitCounter++;
+        const idx = container.querySelectorAll('.dynamic-list-row').length;
+        container.insertAdjacentHTML('beforeend', `
+            <div class="dynamic-list-row flex items-start gap-2">
+                <input type="text" name="benefits[${idx}]" placeholder="e.g., Exclusive networking opportunities" class="input-field min-w-0 flex-1">
+                <button type="button" class="list-remove-btn mt-1 shrink-0 rounded border border-red-200 px-2 py-1 text-sm text-red-600 hover:bg-red-50" title="Remove row">Remove</button>
+            </div>`);
+        refreshSimpleListRemoveButtons('benefits-container');
     });
 
-    let highlightCounter = document.querySelectorAll('#highlights-container .grid').length;
     document.getElementById('add-highlight-btn').addEventListener('click', function () {
         const container = document.getElementById('highlights-container');
-        const newField = `
-            <div class="grid grid-cols-1 gap-2">
-                <input
-                    type="text"
-                    name="event_highlights[${highlightCounter}]"
-                    placeholder="e.g., Fireside chat with industry leaders"
-                    class="input-field"
-                >
-            </div>`;
-        container.insertAdjacentHTML('beforeend', newField);
-        highlightCounter++;
+        const idx = container.querySelectorAll('.dynamic-list-row').length;
+        container.insertAdjacentHTML('beforeend', `
+            <div class="dynamic-list-row flex items-start gap-2">
+                <input type="text" name="event_highlights[${idx}]" placeholder="e.g., Fireside chat with industry leaders" class="input-field min-w-0 flex-1">
+                <button type="button" class="list-remove-btn mt-1 shrink-0 rounded border border-red-200 px-2 py-1 text-sm text-red-600 hover:bg-red-50" title="Remove row">Remove</button>
+            </div>`);
+        refreshSimpleListRemoveButtons('highlights-container');
     });
 
-    let audienceCounter = document.querySelectorAll('#audience-container .grid').length;
     document.getElementById('add-audience-btn').addEventListener('click', function () {
         const container = document.getElementById('audience-container');
-        const newField = `
-            <div class="grid grid-cols-1 gap-2">
-                <input
-                    type="text"
-                    name="target_audience[${audienceCounter}]"
-                    placeholder="e.g., Angel Investors"
-                    class="input-field"
-                >
-            </div>`;
-        container.insertAdjacentHTML('beforeend', newField);
-        audienceCounter++;
+        const idx = container.querySelectorAll('.dynamic-list-row').length;
+        container.insertAdjacentHTML('beforeend', `
+            <div class="dynamic-list-row flex items-start gap-2">
+                <input type="text" name="target_audience[${idx}]" placeholder="e.g., Angel Investors" class="input-field min-w-0 flex-1">
+                <button type="button" class="list-remove-btn mt-1 shrink-0 rounded border border-red-200 px-2 py-1 text-sm text-red-600 hover:bg-red-50" title="Remove row">Remove</button>
+            </div>`);
+        refreshSimpleListRemoveButtons('audience-container');
     });
 
-    /*******************************************
-     * DYNAMIC FIELDS: Speakers
-     *******************************************/
-    let speakerCounter = document.querySelectorAll('.speaker-entry').length;
     document.getElementById('add-speaker-btn').addEventListener('click', function () {
         const container = document.getElementById('speakers-container');
-        const newSpeaker = `
-            <div class="border border-gray-200 p-4 rounded space-y-2 speaker-entry">
-                <div>
-                    <input
-                        type="text"
-                        name="speakers[${speakerCounter}][name]"
-                        placeholder="Speaker Name"
-                        class="input-field"
-                    >
+        const idx = container.querySelectorAll('.speaker-entry').length;
+        container.insertAdjacentHTML('beforeend', `
+            <div class="speaker-entry relative space-y-2 rounded border border-gray-200 p-4">
+                <div class="flex justify-end">
+                    <button type="button" class="speaker-remove-btn rounded border border-red-200 px-2 py-1 text-sm text-red-600 hover:bg-red-50" title="Remove speaker">Remove</button>
                 </div>
                 <div>
-                    <input
-                        type="text"
-                        name="speakers[${speakerCounter}][designation]"
-                        placeholder="Speaker Designation"
-                        class="input-field"
-                    >
+                    <input type="text" name="speakers[${idx}][name]" placeholder="Speaker Name" class="input-field">
                 </div>
-                <!-- Speaker Image Upload -->
+                <div>
+                    <input type="text" name="speakers[${idx}][designation]" placeholder="Speaker Designation" class="input-field">
+                </div>
                 <div class="text-center">
                     <label class="block cursor-pointer">
                         <div class="mb-2">
-                            <img
-                                id="speaker-preview-${speakerCounter}"
-                                src="{{ asset('placeholder_speaker.png') }}"
-                                alt="Upload Placeholder"
-                                class="mx-auto rounded-full h-20 w-20 object-cover"
-                            >
+                            <img id="speaker-preview-${idx}" src="{{ asset('placeholder_speaker.png') }}" alt="" class="mx-auto h-20 w-20 rounded-full object-cover">
                         </div>
-                        <input
-                            type="file"
-                            name="speakers[${speakerCounter}][image]"
-                            accept="image/*"
-                            class="hidden speaker-image-input"
-                            data-preview-target="speaker-preview-${speakerCounter}"
-                        >
-                        <p class="text-gray-400 text-xs">Upload speaker photo</p>
+                        <input type="file" name="speakers[${idx}][image]" accept="image/*" class="speaker-image-input hidden" data-preview-target="speaker-preview-${idx}">
+                        <p class="text-xs text-gray-400">Upload speaker photo</p>
                     </label>
                 </div>
-            </div>
-        `;
-        container.insertAdjacentHTML('beforeend', newSpeaker);
-        speakerCounter++;
+            </div>`);
+        refreshSpeakerRemoveButtons();
     });
 
-    /*******************************************
-     * IMAGE PREVIEW FOR SPEAKERS
-     * (Works for dynamically added inputs too)
-     *******************************************/
-    document.addEventListener('change', function(e) {
+    document.addEventListener('change', function (e) {
         if (e.target.matches('.speaker-image-input')) {
             const input = e.target;
             const previewId = input.getAttribute('data-preview-target');
             const previewImg = document.getElementById(previewId);
             const file = input.files[0];
-            if (file) {
+            if (file && previewImg) {
                 const reader = new FileReader();
                 reader.onload = function (evt) {
                     previewImg.src = evt.target.result;
                 };
                 reader.readAsDataURL(file);
-            } else {
+            } else if (previewImg) {
                 previewImg.src = "{{ asset('placeholder_speaker.png') }}";
             }
         }
