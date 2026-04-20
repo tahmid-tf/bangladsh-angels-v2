@@ -19,6 +19,7 @@ class WhatWeDoCard extends Model implements HasMedia
         'slug',
         'title',
         'description',
+        'cta_link',
         'sort_order',
     ];
 

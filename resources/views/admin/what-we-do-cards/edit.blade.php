@@ -35,6 +35,14 @@
         </div>
 
         <div>
+            <label for="cta_link" class="block text-sm font-semibold text-gray-700 mb-1">CTA link (optional)</label>
+            <input type="text" name="cta_link" id="cta_link" value="{{ old('cta_link', $card->cta_link) }}" maxlength="2048"
+                   placeholder="https://example.com or /startups or #contact"
+                   class="w-full rounded-lg border border-gray-300 px-3 py-2 text-gray-900 focus:border-green-600 focus:ring-1 focus:ring-green-600">
+            <p class="mt-1 text-xs text-gray-500">If provided, a CTA button will appear on the landing What We Do card. Leave empty to hide the button.</p>
+        </div>
+
+        <div>
             <span class="block text-sm font-semibold text-gray-700 mb-2">Cover image</span>
             <p class="text-xs text-gray-500 mb-3">Shown in the card. JPEG, PNG, or WebP, max 5&nbsp;MB. Leave empty to keep the current image.</p>
             <div class="flex items-start gap-4 mb-3">

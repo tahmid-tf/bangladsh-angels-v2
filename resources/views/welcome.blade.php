@@ -269,6 +269,11 @@
 
             <div class="what-we-do-card-body">
               <p>{{ $card->description }}</p>
+              @if (filled($card->cta_link))
+                <a href="{{ $card->cta_link }}" class="mt-5 inline-flex items-center justify-center px-4 py-2 rounded-full bg-[#eefff1] text-[#0f6a4b] font-semibold text-sm border border-green-100/70 hover:bg-[#dff7e8] transition-colors">
+                  Learn More
+                </a>
+              @endif
             </div>
           </article>
         @empty

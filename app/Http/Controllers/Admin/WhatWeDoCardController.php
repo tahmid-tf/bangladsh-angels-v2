@@ -33,12 +33,31 @@ class WhatWeDoCardController extends Controller
         $validated = $request->validate([
             'title' => ['required', 'string', 'max:255'],
             'description' => ['required', 'string', 'max:8000'],
+            'cta_link' => [
+                'nullable',
+                'string',
+                'max:2048',
+                function (string $attribute, mixed $value, \Closure $fail): void {
+                    if (! filled($value)) {
+                        return;
+                    }
+
+                    $isAbsoluteUrl = filter_var($value, FILTER_VALIDATE_URL) !== false;
+                    $isRelativePath = str_starts_with($value, '/');
+                    $isAnchor = str_starts_with($value, '#');
+
+                    if (! $isAbsoluteUrl && ! $isRelativePath && ! $isAnchor) {
+                        $fail('The CTA link must be a valid URL, a relative path starting with "/", or an anchor starting with "#".');
+                    }
+                },
+            ],
             'cover' => ['nullable', 'image', 'max:5120'],
         ]);
 
         $whatWeDoCard->update([
             'title' => $validated['title'],
             'description' => $validated['description'],
+            'cta_link' => filled($validated['cta_link'] ?? null) ? $validated['cta_link'] : null,
         ]);
 
         if ($request->boolean('remove_cover')) {
