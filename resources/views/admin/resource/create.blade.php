@@ -223,7 +223,7 @@
                 <input type="hidden" name="show_on_landing" value="0">
                 <label class="flex cursor-pointer items-start gap-3">
                     <input type="checkbox" name="show_on_landing" value="1" class="mt-1 rounded border-gray-300 text-green-600 focus:ring-green-600" {{ old('show_on_landing', true) ? 'checked' : '' }}>
-                    <span class="text-sm text-gray-700"><strong class="text-gray-900">Featured on homepage</strong> — “BAN Events” (events and webinars, up to six). <strong>Upcoming</strong> or <strong>undated</strong> items appear automatically; check this to keep <strong>past</strong> events visible there too.</span>
+                    <span class="text-sm text-gray-700"><strong class="text-gray-900">Featured on homepage</strong> — “BAN Events” lists the same events and webinars as the member page, newest first (up to six on the homepage). When checked, this item is sorted to the top of that list when possible.</span>
                 </label>
             </div>
         </div>

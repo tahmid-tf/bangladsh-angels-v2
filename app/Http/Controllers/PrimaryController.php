@@ -26,14 +26,10 @@ class PrimaryController extends Controller
             ->ordered()
             ->get();
 
+        // Same pool as /deckvue BAN Events (event + webinar); homepage shows the six most recent, with "featured" first.
         $landingResourceEvents = Resource::query()
             ->with('media')
             ->whereIn('type', ['event', 'webinar'])
-            ->where(function ($query) {
-                $query->where('show_on_landing', true)
-                    ->orWhereNull('date')
-                    ->orWhereDate('date', '>=', now()->toDateString());
-            })
             ->orderByDesc('show_on_landing')
             ->orderByRaw('CASE WHEN date IS NULL THEN 1 ELSE 0 END')
             ->orderByDesc('date')
