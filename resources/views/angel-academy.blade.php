@@ -87,11 +87,56 @@
         transform: translateY(0);
         will-change: auto;
     }
+    .angel-academy .aa-curric-header {
+        background: linear-gradient(120deg, #042f28 0%, #063d36 45%, #0a5c50 100%);
+    }
+    /* Table column + phase bars: same BAN palette as marketing headers, not neutral black */
+    .angel-academy .aa-table-bar {
+        background: linear-gradient(118deg, #052a24 0%, #0a423a 42%, #0c5248 100%);
+        color: #f0fdf7;
+    }
+    .angel-academy .aa-table-bar th {
+        color: #ecfdf4;
+    }
+    .angel-academy .aa-curric-header-shine {
+        position: relative;
+        overflow: hidden;
+    }
+    .angel-academy .aa-curric-header-shine::after {
+        content: "";
+        position: absolute; inset: 0; pointer-events: none;
+        background: linear-gradient(105deg, transparent 40%, rgba(255,255,255,0.06) 50%, transparent 60%);
+        transform: translateX(-60%);
+    }
+    @media (hover: hover) and (pointer: fine) {
+        .angel-academy .aa-curric-header-shine:hover::after { animation: aa-curric-shine 1.1s ease-out forwards; }
+    }
+    @keyframes aa-curric-shine {
+        to { transform: translateX(60%); }
+    }
+    .angel-academy .aa-pill {
+        display: inline-block; border-radius: 9999px; padding: 0.15rem 0.5rem; font-size: 0.7rem; font-weight: 500;
+        background: linear-gradient(180deg, #eef8f4 0%, #e0f2eb 100%);
+        color: #0f3d34; border: 1px solid #c5e6d8;
+        transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+    }
+    .angel-academy .aa-pill:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 14px -4px rgba(15, 61, 52, 0.2);
+        border-color: rgba(54, 179, 126, 0.45);
+    }
+    .angel-academy .aa-snapshot-row,
+    .angel-academy .aa-pillar-row {
+        transition: background-color 0.2s ease, box-shadow 0.2s ease;
+    }
+    .angel-academy .aa-snapshot-row:hover,
+    .angel-academy .aa-pillar-row:hover { box-shadow: inset 3px 0 0 0 #36b37e; }
     @media (prefers-reduced-motion: reduce) {
         .angel-academy .aa-hero-blob,
         .angel-academy .aa-hero-blob--2 { animation: none !important; opacity: 0.2 !important; }
         .angel-academy [data-aa-hero] > * { animation: none !important; opacity: 1 !important; transform: none !important; }
         .angel-academy .aa-reveal { opacity: 1 !important; transform: none !important; transition: none !important; }
+        .angel-academy .aa-curric-header-shine::after { animation: none !important; transform: none !important; }
     }
 </style>
 @endpush
@@ -133,10 +178,12 @@
                     Apply to the network
                 </a>
                 <a
-                    href="{{ route('investors') }}"
+                    href="https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ1oFoHy0m9As4PtSfm4Ee-nVyoZRNNyZ38doHCWpVwDfo5u3qxnesRT_LqD_Fv5nUlbE3EvxyYN"
+                    target="_blank"
+                    rel="noopener noreferrer"
                     class="inline-flex min-h-[48px] w-full min-w-0 items-center justify-center rounded-full border border-white/30 bg-white/5 px-6 text-sm font-semibold text-white backdrop-blur-sm transition duration-300 ease-out hover:-translate-y-0.5 hover:border-white/50 hover:bg-white/10 active:scale-[0.98] sm:w-auto sm:min-w-[12rem] sm:px-8"
                 >
-                    How BAN invests
+                    Book a Meet
                 </a>
             </div>
         </div>
@@ -426,13 +473,105 @@
                 <h2 id="curriculum-heading" class="text-2xl font-bold leading-tight tracking-tight text-[#0f3d34] sm:text-3xl">CURRICULUM (15 SESSIONS)</h2>
             </div>
             <div class="mt-5 max-w-3xl space-y-3 text-sm leading-relaxed text-gray-600 sm:mt-6 sm:text-base">
-                <p>Assignments are marked with <span class="font-semibold text-[#0f3d34]">■</span> in the session where they are due. Sessions 6–8 constitute Phase 2, the programme’s technical core of three dedicated sessions on technical, commercial, and financial/legal due diligence, feeding directly into <strong class="font-semibold text-gray-800">Assignment 3</strong>. The two In-Person sessions anchor programme launch and the IC graduation.</p>
+                <p>Assignments are marked with <span class="font-semibold text-[#0f3d34]">■</span> in the session where they are due. Sessions 6–8 are Phase 2: three deep dives (technical, commercial, financial &amp; legal) that build toward the <strong class="font-semibold text-gray-800">full pod due-diligence report</strong> — with <strong class="font-semibold text-gray-800">Assignment 3</strong> due after <strong class="font-semibold text-gray-800">Session 9</strong>. The two In-Person sessions anchor programme launch and IC graduation.</p>
             </div>
 
-            <div class="mt-8 overflow-x-auto rounded-xl border border-[#c5e6d8]/90 shadow-sm sm:mt-10 sm:rounded-2xl">
+            {{-- Programme snapshot: 5 phases at a glance --}}
+            <div id="programme-snapshot" class="mt-10 scroll-mt-20 sm:mt-12">
+                <h3 class="text-lg font-bold tracking-tight text-[#0f3d34] sm:text-xl">Programme snapshot</h3>
+                <p class="mt-1 text-sm text-gray-600">Five phases across fifteen sessions: content themes, key assignments, and how experiential work maps to the IC.</p>
+                <div class="mt-4 overflow-x-auto rounded-xl border border-[#c5e6d8]/90 shadow-sm sm:rounded-2xl">
+                    <div class="aa-curric-header-shine aa-curric-header flex min-w-[56rem] flex-col gap-2 px-4 py-4 text-white sm:min-w-0 sm:flex-row sm:items-end sm:justify-between sm:px-5 sm:py-5">
+                        <div>
+                            <p class="text-[0.65rem] font-bold uppercase leading-tight tracking-[0.2em] text-emerald-100/90 sm:text-xs">BAN Angel Academy</p>
+                            <p class="mt-1.5 text-lg font-extrabold leading-tight sm:text-xl">Programme snapshot</p>
+                            <p class="mt-1.5 text-xs text-emerald-200/90 sm:text-sm">15 sessions · 3 months · 5 phases · In-person + online</p>
+                        </div>
+                        <p class="shrink-0 text-xs font-bold uppercase tracking-[0.15em] text-[#a7f3d0] sm:text-sm">Curriculum overview</p>
+                    </div>
+                    <table class="w-full min-w-[56rem] table-fixed border-collapse text-left text-sm text-gray-800" role="table" aria-label="BAN Angel Academy five-phase programme snapshot">
+                        <thead>
+                            <tr class="aa-table-bar">
+                                <th scope="col" class="w-[14%] px-2 py-2.5 text-xs font-bold uppercase tracking-wide sm:px-3 sm:py-3 sm:text-[0.7rem]">Phase</th>
+                                <th scope="col" class="w-[12%] px-2 py-2.5 text-xs font-bold uppercase tracking-wide sm:px-3 sm:text-[0.7rem]">Sessions</th>
+                                <th scope="col" class="w-[32%] px-2 py-2.5 text-xs font-bold uppercase tracking-wide sm:px-3 sm:text-[0.7rem]">Content</th>
+                                <th scope="col" class="w-[21%] px-2 py-2.5 text-xs font-bold uppercase tracking-wide sm:px-3 sm:text-[0.7rem]">Experiential</th>
+                                <th scope="col" class="w-[21%] px-2 py-2.5 pr-3 text-xs font-bold uppercase tracking-wide sm:px-3 sm:pr-4 sm:text-[0.7rem]">IC</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-[#e2f0ea]">
+                            <tr class="aa-snapshot-row bg-white">
+                                <th scope="row" class="px-2 py-3 align-top text-xs font-bold uppercase leading-snug text-[#0f3d34] sm:px-3 sm:py-4 sm:text-[0.7rem]">Phase 1 · Foundations <span class="mt-0.5 block font-normal text-[0.65rem] text-gray-500 sm:text-xs">(1 in-person, 4 online)</span></th>
+                                <td class="px-2 py-3 align-top text-gray-700 sm:px-3 sm:py-4">1–5</td>
+                                <td class="px-2 py-3 align-top sm:px-3 sm:py-4">
+                                    <p class="flex flex-wrap gap-1.5">
+                                        <span class="aa-pill">Angel mindset</span><span class="aa-pill">Thesis &amp; sourcing</span><span class="aa-pill">Valuation</span><span class="aa-pill">Venture economics</span><span class="aa-pill">Startup evaluation</span>
+                                    </p>
+                                    <p class="mt-2.5 text-xs leading-relaxed text-gray-600 sm:text-sm"><span class="font-semibold text-[#0f3d34]">■</span> Personal investor profile + investment thesis &amp; deal sourcing</p>
+                                </td>
+                                <td class="px-2 py-3 align-top text-gray-700 sm:px-3 sm:py-4">Investor profile &amp; deal sourcing (pods)</td>
+                                <td class="px-2 py-3 pr-2 align-top text-gray-700 sm:px-3 sm:py-4 sm:pr-4">1:1 analyst session A</td>
+                            </tr>
+                            <tr class="aa-snapshot-row bg-[#f9fdfb]/90">
+                                <th scope="row" class="px-2 py-3 align-top text-xs font-bold uppercase leading-snug text-[#0f3d34] sm:px-3 sm:py-4 sm:text-[0.7rem]">Phase 2 · Due diligence <span class="mt-0.5 block font-normal text-[0.65rem] text-gray-500 sm:text-xs">(3 online)</span></th>
+                                <td class="px-2 py-3 align-top text-gray-700 sm:px-3 sm:py-4">6–8</td>
+                                <td class="px-2 py-3 align-top sm:px-3 sm:py-4">
+                                    <p class="flex flex-wrap gap-1.5">
+                                        <span class="aa-pill">Technical DD</span><span class="aa-pill">Commercial DD</span><span class="aa-pill">Financial &amp; legal DD</span>
+                                    </p>
+                                    <p class="mt-2.5 text-xs leading-relaxed text-gray-600 sm:text-sm"><span class="font-semibold text-[#0f3d34]">■</span> Full due-diligence report (pod)</p>
+                                </td>
+                                <td class="px-2 py-3 align-top text-gray-700 sm:px-3 sm:py-4">Thematic due diligence</td>
+                                <td class="px-2 py-3 pr-2 align-top text-gray-700 sm:px-3 sm:py-4 sm:pr-4">1:1 analyst session B</td>
+                            </tr>
+                            <tr class="aa-snapshot-row bg-white">
+                                <th scope="row" class="px-2 py-3 align-top text-xs font-bold uppercase leading-snug text-[#0f3d34] sm:px-3 sm:py-4 sm:text-[0.7rem]">Phase 3 · Deal execution <span class="mt-0.5 block font-normal text-[0.65rem] text-gray-500 sm:text-xs">(3 online)</span></th>
+                                <td class="px-2 py-3 align-top text-gray-700 sm:px-3 sm:py-4">9–11</td>
+                                <td class="px-2 py-3 align-top sm:px-3 sm:py-4">
+                                    <p class="flex flex-wrap gap-1.5">
+                                        <span class="aa-pill">Term sheets</span><span class="aa-pill">Governance &amp; rights</span><span class="aa-pill">Portfolio construction</span>
+                                    </p>
+                                    <p class="mt-2.5 text-xs leading-relaxed text-gray-600 sm:text-sm"><span class="font-semibold text-[#0f3d34]">■</span> DD report submission &amp; deal-proceed recommendation</p>
+                                </td>
+                                <td class="px-2 py-3 align-top text-gray-700 sm:px-3 sm:py-4">Deal structuring &amp; portfolio</td>
+                                <td class="px-2 py-3 pr-2 align-top text-gray-700 sm:px-3 sm:py-4 sm:pr-4">Portfolio construction</td>
+                            </tr>
+                            <tr class="aa-snapshot-row bg-[#f9fdfb]/90">
+                                <th scope="row" class="px-2 py-3 align-top text-xs font-bold uppercase leading-snug text-[#0f3d34] sm:px-3 sm:py-4 sm:text-[0.7rem]">Phase 4 · Value creation <span class="mt-0.5 block font-normal text-[0.65rem] text-gray-500 sm:text-xs">(3 online)</span></th>
+                                <td class="px-2 py-3 align-top text-gray-700 sm:px-3 sm:py-4">12–14</td>
+                                <td class="px-2 py-3 align-top sm:px-3 sm:py-4">
+                                    <p class="flex flex-wrap gap-1.5">
+                                        <span class="aa-pill">Founder support</span><span class="aa-pill">Exits &amp; returns</span><span class="aa-pill">SE Asia markets</span>
+                                    </p>
+                                    <p class="mt-2.5 text-xs leading-relaxed text-gray-600 sm:text-sm"><span class="font-semibold text-[#0f3d34]">■</span> IC dry-run with faculty (Session 14)</p>
+                                </td>
+                                <td class="px-2 py-3 align-top text-gray-700 sm:px-3 sm:py-4">Value creation &amp; IC prep</td>
+                                <td class="px-2 py-3 pr-2 align-top text-gray-700 sm:px-3 sm:py-4 sm:pr-4">IC dry-run</td>
+                            </tr>
+                            <tr class="aa-snapshot-row bg-white">
+                                <th scope="row" class="px-2 py-3 align-top text-xs font-bold uppercase leading-snug text-[#0f3d34] sm:px-3 sm:py-4 sm:text-[0.7rem]">Phase 5 · IC graduation <span class="mt-0.5 block font-normal text-[0.65rem] text-gray-500 sm:text-xs">(1 in-person)</span></th>
+                                <td class="px-2 py-3 align-top text-gray-700 sm:px-3 sm:py-4">15</td>
+                                <td class="px-2 py-3 align-top sm:px-3 sm:py-4">
+                                    <p class="flex flex-wrap gap-1.5">
+                                        <span class="aa-pill">Live IC pitch</span><span class="aa-pill">Q&amp;A</span><span class="aa-pill">Investment memo</span><span class="aa-pill">Certificate</span>
+                                    </p>
+                                    <p class="mt-2.5 text-xs leading-relaxed text-gray-600 sm:text-sm"><span class="font-semibold text-[#0f3d34]">■</span> IC pitch &amp; investment memo — programme capstone</p>
+                                </td>
+                                <td class="px-2 py-3 align-top text-gray-700 sm:px-3 sm:py-4">Live IC pitch &amp; graduation</td>
+                                <td class="px-2 py-3 pr-2 align-top text-gray-700 sm:px-3 sm:py-4 sm:pr-4">BAN partners &amp; NRB angels</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <h3 class="mt-10 text-base font-bold text-[#0f3d34] sm:mt-12 sm:text-lg">Session list</h3>
+            <p class="mt-1 text-sm text-gray-600">Format and focus by session.</p>
+
+            <div class="mt-5 overflow-x-auto rounded-xl border border-[#c5e6d8]/90 shadow-sm sm:mt-6 sm:rounded-2xl">
                 <table class="w-full min-w-[42rem] border-collapse text-left text-sm text-gray-800" role="table" aria-label="BAN Angel Academy curriculum by session">
                     <thead>
-                        <tr class="bg-[#111] text-white">
+                        <tr class="aa-table-bar">
                             <th scope="col" class="w-10 px-2 py-3 font-bold sm:px-3 sm:py-3.5">#</th>
                             <th scope="col" class="w-8 px-1 py-3 text-center font-bold sm:px-2" title="Assignment due"><span class="sr-only">Assignment</span>■</th>
                             <th scope="col" class="w-[5.5rem] px-2 py-3 font-bold sm:w-28 sm:px-3">Format</th>
@@ -440,119 +579,371 @@
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-200">
-                        <tr class="bg-[#111] text-white">
+                        <tr class="aa-table-bar">
                             <th colspan="4" scope="colgroup" class="px-3 py-2.5 text-xs font-semibold uppercase italic leading-snug tracking-wide sm:px-4 sm:text-sm">Phase 1: Foundations — sourcing, market/team/product evaluation, venture economics &amp; fund mechanics (Sessions 1–5)</th>
                         </tr>
-                        <tr class="bg-white">
+                        <tr class="aa-pillar-row bg-white">
                             <td class="whitespace-nowrap px-2 py-3 align-top font-semibold text-[#0f3d34] sm:px-3">1</td>
                             <td class="px-1 py-3 text-center align-top text-gray-300 sm:px-2">—</td>
                             <td class="whitespace-nowrap px-2 py-3 align-top text-gray-600 sm:px-3">In-Person</td>
                             <td class="px-2 py-3 pr-2 align-top sm:pr-4"><span class="font-bold text-[#0f3d34]">Orientation &amp; the Angel Mindset</span> — Cohort introductions; thematic pod formation; BD startup ecosystem; angel vs. passive investor mindset.</td>
                         </tr>
-                        <tr class="bg-gray-50/90">
+                        <tr class="aa-pillar-row bg-gray-50/90">
                             <td class="whitespace-nowrap px-2 py-3 align-top font-semibold text-[#0f3d34] sm:px-3">2</td>
-                            <td class="px-1 py-3 text-center align-top text-gray-300 sm:px-2">—</td>
+                            <td class="px-1 py-3 text-center align-top font-bold text-[#0f3d34] sm:px-2" title="Assignment 1 due">■</td>
                             <td class="whitespace-nowrap px-2 py-3 align-top text-gray-600 sm:px-3">Online</td>
                             <td class="px-2 py-3 pr-2 align-top sm:pr-4"><span class="font-bold text-[#0f3d34]">Venture Economics &amp; Fund Mechanics</span> — Power law; return math; cap table fundamentals; SAFEs, convertible notes, equity rounds; dilution modelling; different instruments.</td>
                         </tr>
-                        <tr class="bg-white">
+                        <tr class="aa-pillar-row bg-white">
                             <td class="whitespace-nowrap px-2 py-3 align-top font-semibold text-[#0f3d34] sm:px-3">3</td>
-                            <td class="px-1 py-3 text-center align-top font-bold text-[#0f3d34] sm:px-2" title="Assignment due">■</td>
+                            <td class="px-1 py-3 text-center align-top text-gray-300 sm:px-2">—</td>
                             <td class="whitespace-nowrap px-2 py-3 align-top text-gray-600 sm:px-3">Online</td>
                             <td class="px-2 py-3 pr-2 align-top sm:pr-4"><span class="font-bold text-[#0f3d34]">Thesis-Driven Sourcing</span> — Building a personal investment thesis; sector and stage focus; BD accelerators, and deal rooms.</td>
                         </tr>
-                        <tr class="bg-gray-50/90">
+                        <tr class="aa-pillar-row bg-gray-50/90">
                             <td class="whitespace-nowrap px-2 py-3 align-top font-semibold text-[#0f3d34] sm:px-3">4</td>
-                            <td class="px-1 py-3 text-center align-top text-gray-300 sm:px-2">—</td>
+                            <td class="px-1 py-3 text-center align-top font-bold text-[#0f3d34] sm:px-2" title="Assignment 2 due">■</td>
                             <td class="whitespace-nowrap px-2 py-3 align-top text-gray-600 sm:px-3">Online</td>
                             <td class="px-2 py-3 pr-2 align-top sm:pr-4"><span class="font-bold text-[#0f3d34]">Startup Evaluation: Team, Market &amp; Product</span> — Founder assessment frameworks; TAM/SAM/SOM for emerging markets; PMF signals; structured scoring criteria.</td>
                         </tr>
-                        <tr class="bg-white">
+                        <tr class="aa-pillar-row bg-white">
                             <td class="whitespace-nowrap px-2 py-3 align-top font-semibold text-[#0f3d34] sm:px-3">5</td>
-                            <td class="px-1 py-3 text-center align-top font-bold text-[#0f3d34] sm:px-2" title="Assignment due">■</td>
+                            <td class="px-1 py-3 text-center align-top text-gray-300 sm:px-2">—</td>
                             <td class="whitespace-nowrap px-2 py-3 align-top text-gray-600 sm:px-3">Online</td>
                             <td class="px-2 py-3 pr-2 align-top sm:pr-4"><span class="font-bold text-[#0f3d34]">Financial Analysis &amp; Valuation</span> — Pre-revenue valuation methods; comparable transactions; term sheet economics; cap table red flags.</td>
                         </tr>
 
-                        <tr class="bg-[#111] text-white">
+                        <tr class="aa-table-bar">
                             <th colspan="4" scope="colgroup" class="px-3 py-2.5 text-xs font-semibold uppercase italic leading-snug tracking-wide sm:px-4 sm:text-sm">Phase 2: Thematic due diligence — technical, commercial &amp; legal (Sessions 6–8)</th>
                         </tr>
-                        <tr class="bg-white">
+                        <tr class="aa-pillar-row bg-white">
                             <td class="whitespace-nowrap px-2 py-3 align-top font-semibold text-[#0f3d34] sm:px-3">6</td>
                             <td class="px-1 py-3 text-center align-top text-gray-300 sm:px-2">—</td>
                             <td class="whitespace-nowrap px-2 py-3 align-top text-gray-600 sm:px-3">Online</td>
                             <td class="px-2 py-3 pr-2 align-top sm:pr-4"><span class="font-bold text-[#0f3d34]">Technical Due Diligence</span> — Tech stack and architecture review; engineering team quality signals; IP and build-vs-buy risk; AI/ML model risk.</td>
                         </tr>
-                        <tr class="bg-gray-50/90">
+                        <tr class="aa-pillar-row bg-gray-50/90">
                             <td class="whitespace-nowrap px-2 py-3 align-top font-semibold text-[#0f3d34] sm:px-3">7</td>
                             <td class="px-1 py-3 text-center align-top text-gray-300 sm:px-2">—</td>
                             <td class="whitespace-nowrap px-2 py-3 align-top text-gray-600 sm:px-3">Online</td>
                             <td class="px-2 py-3 pr-2 align-top sm:pr-4"><span class="font-bold text-[#0f3d34]">Commercial &amp; Market Due Diligence</span> — Primary research: customer interviews, reference checks, competitor mapping; validating founder assumptions; unit economics stress-testing.</td>
                         </tr>
-                        <tr class="bg-white">
+                        <tr class="aa-pillar-row bg-white">
                             <td class="whitespace-nowrap px-2 py-3 align-top font-semibold text-[#0f3d34] sm:px-3">8</td>
-                            <td class="px-1 py-3 text-center align-top font-bold text-[#0f3d34] sm:px-2" title="Assignment 3 due">■</td>
+                            <td class="px-1 py-3 text-center align-top text-gray-300 sm:px-2">—</td>
                             <td class="whitespace-nowrap px-2 py-3 align-top text-gray-600 sm:px-3">Online</td>
                             <td class="px-2 py-3 pr-2 align-top sm:pr-4"><span class="font-bold text-[#0f3d34]">Financial &amp; Legal Due Diligence</span> — Data room review; revenue quality and cohort analysis; BIDA and Bangladesh Bank regulatory compliance; NRB cross-border deal structuring.</td>
                         </tr>
 
-                        <tr class="bg-[#111] text-white">
+                        <tr class="aa-table-bar">
                             <th colspan="4" scope="colgroup" class="px-3 py-2.5 text-xs font-semibold uppercase italic leading-snug tracking-wide sm:px-4 sm:text-sm">Phase 3: Deal execution (Sessions 9–11)</th>
                         </tr>
-                        <tr class="bg-white">
+                        <tr class="aa-pillar-row bg-white">
                             <td class="whitespace-nowrap px-2 py-3 align-top font-semibold text-[#0f3d34] sm:px-3">9</td>
-                            <td class="px-1 py-3 text-center align-top text-gray-300 sm:px-2">—</td>
+                            <td class="px-1 py-3 text-center align-top font-bold text-[#0f3d34] sm:px-2" title="Assignment 3 due">■</td>
                             <td class="whitespace-nowrap px-2 py-3 align-top text-gray-600 sm:px-3">Online</td>
                             <td class="px-2 py-3 pr-2 align-top sm:pr-4"><span class="font-bold text-[#0f3d34]">Term Sheets, Negotiation &amp; Deal Structuring</span> — Founder-friendly vs. investor-protective terms; pro-rata rights; anti-dilution; lead vs. follow dynamics; syndication mechanics.</td>
                         </tr>
-                        <tr class="bg-gray-50/90">
+                        <tr class="aa-pillar-row bg-gray-50/90">
                             <td class="whitespace-nowrap px-2 py-3 align-top font-semibold text-[#0f3d34] sm:px-3">10</td>
                             <td class="px-1 py-3 text-center align-top text-gray-300 sm:px-2">—</td>
                             <td class="whitespace-nowrap px-2 py-3 align-top text-gray-600 sm:px-3">Online</td>
                             <td class="px-2 py-3 pr-2 align-top sm:pr-4"><span class="font-bold text-[#0f3d34]">Portfolio Construction &amp; Risk Management</span> — Sizing bets; diversification in a small portfolio; follow-on allocation; concentration risk across BD and SE Asia.</td>
                         </tr>
-                        <tr class="bg-white">
+                        <tr class="aa-pillar-row bg-white">
                             <td class="whitespace-nowrap px-2 py-3 align-top font-semibold text-[#0f3d34] sm:px-3">11</td>
                             <td class="px-1 py-3 text-center align-top text-gray-300 sm:px-2">—</td>
                             <td class="whitespace-nowrap px-2 py-3 align-top text-gray-600 sm:px-3">Online</td>
                             <td class="px-2 py-3 pr-2 align-top sm:pr-4"><span class="font-bold text-[#0f3d34]">Corporate Governance &amp; Investor Rights</span> — Board vs. observer rights; information rights; protective provisions; managing the investor-founder relationship post-close.</td>
                         </tr>
 
-                        <tr class="bg-[#111] text-white">
+                        <tr class="aa-table-bar">
                             <th colspan="4" scope="colgroup" class="px-3 py-2.5 text-xs font-semibold uppercase italic leading-snug tracking-wide sm:px-4 sm:text-sm">Phase 4: Value creation &amp; exits (Sessions 12–14)</th>
                         </tr>
-                        <tr class="bg-white">
+                        <tr class="aa-pillar-row bg-white">
                             <td class="whitespace-nowrap px-2 py-3 align-top font-semibold text-[#0f3d34] sm:px-3">12</td>
                             <td class="px-1 py-3 text-center align-top text-gray-300 sm:px-2">—</td>
                             <td class="whitespace-nowrap px-2 py-3 align-top text-gray-600 sm:px-3">Online</td>
                             <td class="px-2 py-3 pr-2 align-top sm:pr-4"><span class="font-bold text-[#0f3d34]">Value Creation &amp; Founder Support</span> — Post-investment engagement; NRB network leverage; strategic introductions; when to intervene vs. step back.</td>
                         </tr>
-                        <tr class="bg-gray-50/90">
+                        <tr class="aa-pillar-row bg-gray-50/90">
                             <td class="whitespace-nowrap px-2 py-3 align-top font-semibold text-[#0f3d34] sm:px-3">13</td>
                             <td class="px-1 py-3 text-center align-top text-gray-300 sm:px-2">—</td>
                             <td class="whitespace-nowrap px-2 py-3 align-top text-gray-600 sm:px-3">Online</td>
                             <td class="px-2 py-3 pr-2 align-top sm:pr-4"><span class="font-bold text-[#0f3d34]">Southeast Asia: Markets &amp; Co-Investment</span> — SE Asia venture landscape; deal access for BD/NRB angels; co-investing alongside established funds like IDLC VC Fund 1; cross-border structures.</td>
                         </tr>
-                        <tr class="bg-white">
+                        <tr class="aa-pillar-row bg-white">
                             <td class="whitespace-nowrap px-2 py-3 align-top font-semibold text-[#0f3d34] sm:px-3">14</td>
-                            <td class="px-1 py-3 text-center align-top font-bold text-[#0f3d34] sm:px-2" title="Assignment due">■</td>
+                            <td class="px-1 py-3 text-center align-top text-gray-300 sm:px-2">—</td>
                             <td class="whitespace-nowrap px-2 py-3 align-top text-gray-600 sm:px-3">Online</td>
                             <td class="px-2 py-3 pr-2 align-top sm:pr-4"><span class="font-bold text-[#0f3d34]">Exits, Returns &amp; Building an Investor Brand</span> — M&amp;A, secondary sales, IPO pathways; DPI optimisation; building a public thesis and investor reputation. IC dry-run with faculty.</td>
                         </tr>
 
-                        <tr class="bg-[#111] text-white">
+                        <tr class="aa-table-bar">
                             <th colspan="4" scope="colgroup" class="px-3 py-2.5 text-xs font-semibold uppercase italic leading-snug tracking-wide sm:px-4 sm:text-sm">Phase 5: IC &amp; graduation (Session 15)</th>
                         </tr>
-                        <tr class="bg-gray-50/90">
+                        <tr class="aa-pillar-row bg-gray-50/90">
                             <td class="whitespace-nowrap px-2 py-3 align-top font-semibold text-[#0f3d34] sm:px-3">15</td>
-                            <td class="px-1 py-3 text-center align-top text-gray-300 sm:px-2">—</td>
+                            <td class="px-1 py-3 text-center align-top font-bold text-[#0f3d34] sm:px-2" title="Assignment 4 due">■</td>
                             <td class="whitespace-nowrap px-2 py-3 align-top text-gray-600 sm:px-3">In-Person</td>
                             <td class="px-2 py-3 pr-2 align-top sm:pr-4"><span class="font-bold text-[#0f3d34]">Investment Committee Pitches &amp; Graduation</span> — Live IC presentations to BAN partners and NRB angel panel; structured Q&amp;A; certificate ceremony; BAN membership onboarding.</td>
                         </tr>
                     </tbody>
                 </table>
             </div>
-            <p class="mt-4 text-xs text-gray-500 sm:mt-5 sm:text-sm">Session topics and order may be refined by cohort. <span class="font-medium text-gray-600">■</span> = assignment submitted after that session (four programme assignments in total, including Assignment 3 covering Phase 2).</p>
+            <p class="mt-4 text-xs text-gray-500 sm:mt-5 sm:text-sm">Session topics and order may be refined by cohort. <span class="font-medium text-gray-600">■</span> = assignment due after that session: Assignment 1 (Session 2), Assignment 2 (Session 4), Assignment 3 (Session 9), Assignment 4 (Session 15).</p>
+
+            {{-- Programme curriculum: content, experiential, and IC pillars by session --}}
+            <div id="programme-curriculum-pillars" class="mt-10 scroll-mt-20 sm:mt-12">
+                <h3 class="text-lg font-bold tracking-tight text-[#0f3d34] sm:text-xl">Programme curriculum</h3>
+                <p class="mt-1 text-sm text-gray-600">Content pillar, experiential track, and investment-committee work aligned across all fifteen sessions.</p>
+                <div class="mt-4 overflow-x-auto rounded-xl border border-[#c5e6d8]/90 shadow-sm sm:rounded-2xl">
+                    <div class="aa-curric-header-shine aa-curric-header flex min-w-[64rem] flex-col gap-1 px-4 py-4 sm:min-w-0 sm:flex-row sm:items-end sm:justify-between sm:px-5 sm:py-4">
+                        <div>
+                            <p class="text-[0.65rem] font-bold uppercase leading-tight tracking-[0.2em] text-emerald-100/90 sm:text-xs">BAN Angel Academy</p>
+                            <p class="mt-1.5 text-lg font-extrabold leading-tight text-white sm:text-xl">Programme curriculum</p>
+                        </div>
+                        <p class="shrink-0 text-xs text-emerald-200/90 sm:text-sm">15 sessions · 3 months · 5 phases</p>
+                    </div>
+                    <table class="w-full min-w-[64rem] table-fixed border-collapse text-left text-sm text-gray-800" role="table" aria-label="BAN Angel Academy curriculum: sessions with experiential and investment committee pillars">
+                        <thead>
+                            <tr class="aa-table-bar">
+                                <th scope="col" class="w-[9%] px-2 py-2.5 text-[0.65rem] font-bold uppercase leading-tight sm:px-2.5 sm:py-3 sm:text-xs">Phase</th>
+                                <th scope="col" class="w-[18%] px-2 py-2.5 text-[0.65rem] font-bold uppercase leading-tight sm:px-2.5 sm:py-3 sm:text-xs">Session</th>
+                                <th scope="col" class="w-[29%] px-2 py-2.5 text-[0.65rem] font-bold uppercase leading-tight sm:px-2.5 sm:py-3 sm:text-xs">Content pillar</th>
+                                <th scope="col" class="w-[22%] px-2 py-2.5 text-[0.65rem] font-bold uppercase leading-tight sm:px-2.5 sm:py-3 sm:text-xs">Experiential</th>
+                                <th scope="col" class="w-[22%] px-2 py-2.5 pr-2.5 text-[0.65rem] font-bold uppercase leading-tight sm:px-2.5 sm:py-3 sm:pr-4 sm:text-xs">Investment committee</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-[#e2f0ea]">
+                            <tr class="aa-table-bar">
+                                <th colspan="5" scope="colgroup" class="px-3 py-2 text-left text-xs font-semibold uppercase italic sm:px-4 sm:text-sm">Phase 1: Foundations (Sessions 1–5)</th>
+                            </tr>
+                            <tr class="aa-pillar-row bg-white">
+                                <th rowspan="5" scope="rowgroup" class="bg-[#f0faf6] px-2 py-2 align-top text-xs font-bold leading-snug text-[#0f3d34] sm:px-2.5 sm:py-3">Phase 1</th>
+                                <td class="px-2 py-2.5 align-top sm:px-2.5 sm:py-3">
+                                    <div class="flex flex-wrap items-center gap-1.5">
+                                        <span class="inline-flex h-6 min-w-[1.5rem] items-center justify-center rounded-full bg-[#0f3d34] text-xs font-bold text-white">1</span>
+                                        <span class="rounded-full bg-[#e8f7f1] px-2 py-0.5 text-[0.65rem] font-semibold uppercase tracking-wide text-[#0f3d34] ring-1 ring-[#c5e6d8]/80 sm:text-xs">In person</span>
+                                    </div>
+                                    <p class="mt-1.5 font-bold leading-snug text-[#0f3d34]">Orientation &amp; the Angel Mindset</p>
+                                    <p class="mt-1 text-xs leading-relaxed text-gray-600 sm:text-sm">BD startup ecosystem · Angel vs. passive investor mindset · Thematic pod formation</p>
+                                </td>
+                                <td class="px-2 py-2.5 align-top sm:px-2.5 sm:py-3">Launch session; cohort and pods. Sets expectations for the arc ahead.</td>
+                                <td rowspan="2" class="bg-[#f7fdfb] px-2 py-2.5 align-top text-xs text-gray-700 sm:px-2.5 sm:py-3 sm:text-sm">
+                                    <span class="font-semibold text-[#0f3d34]">Personal profile &amp; pod formation</span> — Intake interview · Pod assignment by sector &amp; risk appetite
+                                </td>
+                                <td rowspan="5" class="bg-white px-2 py-2.5 align-top text-xs text-gray-700 sm:px-2.5 sm:py-3 sm:text-sm">
+                                    <span class="font-semibold text-[#0f3d34]">1:1 analyst sessions</span> (Sessions 1–5)<br />
+                                    <span class="text-gray-500">Wk 2–4</span> — Session A: personal investment thesis · <span class="text-gray-500">Wk 7–10</span> — Session B: portfolio strategy &amp; construction
+                                </td>
+                            </tr>
+                            <tr class="aa-pillar-row bg-gray-50/80">
+                                <td class="px-2 py-2.5 align-top sm:px-2.5 sm:py-3">
+                                    <div class="flex flex-wrap items-center gap-1.5">
+                                        <span class="inline-flex h-6 min-w-[1.5rem] items-center justify-center rounded-full bg-white text-xs font-bold text-[#0f3d34] ring-1 ring-gray-200">2</span>
+                                        <span class="text-[0.65rem] font-semibold uppercase text-gray-500 sm:text-xs">Online</span>
+                                    </div>
+                                    <p class="mt-1.5 font-bold leading-snug text-[#0f3d34]">Venture Economics &amp; Fund Mechanics</p>
+                                    <p class="mt-2 border-l-2 border-[#36b37e] bg-[#f0faf6] pl-2 text-xs text-gray-800 sm:text-sm"><span class="font-semibold text-[#0f3d34]">■ Assignment 1 due</span> — Personal investor profile (1 page)</p>
+                                </td>
+                                <td class="px-2 py-2.5 align-top sm:px-2.5 sm:py-3">Power law, return math, instruments, dilution, cap table literacy.</td>
+                            </tr>
+                            <tr class="aa-pillar-row bg-white">
+                                <td class="px-2 py-2.5 align-top sm:px-2.5 sm:py-3">
+                                    <div class="flex flex-wrap items-center gap-1.5">
+                                        <span class="inline-flex h-6 min-w-[1.5rem] items-center justify-center rounded-full bg-[#0f3d34] text-xs font-bold text-white">3</span>
+                                        <span class="text-[0.65rem] font-semibold uppercase text-gray-500 sm:text-xs">Online</span>
+                                    </div>
+                                    <p class="mt-1.5 font-bold leading-snug text-[#0f3d34]">Thesis-Driven Sourcing</p>
+                                    <p class="mt-1 text-xs leading-relaxed text-gray-600 sm:text-sm">Personal investment thesis · Sector &amp; stage focus · BD accelerators · Deal rooms</p>
+                                </td>
+                                <td class="px-2 py-2.5 align-top sm:px-2.5 sm:py-3">Build thesis and a repeatable sourcing rhythm.</td>
+                                <td rowspan="3" class="bg-[#f7fdfb] px-2 py-2.5 align-top text-xs text-gray-700 sm:px-2.5 sm:py-3 sm:text-sm">
+                                    <span class="font-semibold text-[#0f3d34]">Thesis formation &amp; deal sourcing</span> — 1-page pod thesis · 3 sourced deal candidates with rationale
+                                </td>
+                            </tr>
+                            <tr class="aa-pillar-row bg-gray-50/80">
+                                <td class="px-2 py-2.5 align-top sm:px-2.5 sm:py-3">
+                                    <div class="flex flex-wrap items-center gap-1.5">
+                                        <span class="inline-flex h-6 min-w-[1.5rem] items-center justify-center rounded-full bg-white text-xs font-bold text-[#0f3d34] ring-1 ring-gray-200">4</span>
+                                        <span class="text-[0.65rem] font-semibold uppercase text-gray-500 sm:text-xs">Online</span>
+                                    </div>
+                                    <p class="mt-1.5 font-bold leading-snug text-[#0f3d34]">Startup Evaluation: Team, Market &amp; Product</p>
+                                    <p class="mt-2 border-l-2 border-[#36b37e] bg-[#f0faf6] pl-2 text-xs text-gray-800 sm:text-sm"><span class="font-semibold text-[#0f3d34]">■ Assignment 2 due</span> — Investment thesis &amp; deal sourcing (pod)</p>
+                                </td>
+                                <td class="px-2 py-2.5 align-top sm:px-2.5 sm:py-3">TAM / SAM / SOM, PMF signals, structured scoring.</td>
+                            </tr>
+                            <tr class="aa-pillar-row bg-white">
+                                <td class="px-2 py-2.5 align-top sm:px-2.5 sm:py-3">
+                                    <div class="flex flex-wrap items-center gap-1.5">
+                                        <span class="inline-flex h-6 min-w-[1.5rem] items-center justify-center rounded-full bg-[#0f3d34] text-xs font-bold text-white">5</span>
+                                        <span class="text-[0.65rem] font-semibold uppercase text-gray-500 sm:text-xs">Online</span>
+                                    </div>
+                                    <p class="mt-1.5 font-bold leading-snug text-[#0f3d34]">Financial Analysis &amp; Valuation</p>
+                                    <p class="mt-1 text-xs leading-relaxed text-gray-600 sm:text-sm">Pre-revenue valuation · Comparables · Term sheet economics</p>
+                                </td>
+                                <td class="px-2 py-2.5 align-top sm:px-2.5 sm:py-3">Valuation, comparables, and term-sheet economics in practice.</td>
+                            </tr>
+
+                            <tr class="aa-table-bar">
+                                <th colspan="5" scope="colgroup" class="px-3 py-2 text-left text-xs font-semibold uppercase italic sm:px-4 sm:text-sm">Phase 2: Due diligence (Sessions 6–8)</th>
+                            </tr>
+                            <tr class="aa-pillar-row bg-white">
+                                <th rowspan="3" scope="rowgroup" class="bg-[#f0faf6] px-2 py-2 align-top text-xs font-bold leading-snug text-[#0f3d34] sm:px-2.5 sm:py-3">Phase 2</th>
+                                <td class="px-2 py-2.5 align-top sm:px-2.5 sm:py-3">
+                                    <div class="flex flex-wrap items-center gap-1.5">
+                                        <span class="inline-flex h-6 min-w-[1.5rem] items-center justify-center rounded-full bg-white text-xs font-bold text-[#0f3d34] ring-1 ring-gray-200">6</span>
+                                        <span class="text-[0.65rem] font-semibold uppercase text-gray-500 sm:text-xs">Online</span>
+                                    </div>
+                                    <p class="mt-1.5 font-bold leading-snug text-[#0f3d34]">Technical Due Diligence</p>
+                                    <p class="mt-1 text-xs leading-relaxed text-gray-600 sm:text-sm">Tech stack &amp; architecture · Engineering quality · IP &amp; build vs. buy · AI/ML risk</p>
+                                </td>
+                                <td class="px-2 py-2.5 align-top sm:px-2.5 sm:py-3">Structure technical risk questions and evidence.</td>
+                                <td rowspan="3" class="bg-[#f7fdfb] px-2 py-2.5 align-top text-xs text-gray-700 sm:px-2.5 sm:py-3 sm:text-sm">
+                                    <span class="font-semibold text-[#0f3d34]">Thematic due diligence</span> — Technical · Commercial · Financial &amp; legal review
+                                </td>
+                                <td rowspan="3" class="bg-white px-2 py-2.5 align-top text-xs text-gray-700 sm:px-2.5 sm:py-3 sm:text-sm">
+                                    <span class="font-semibold text-[#0f3d34]">Pod collaboration</span> — Full DD report · Min. 1 reference call per member · Deal-proceed recommendation
+                                </td>
+                            </tr>
+                            <tr class="aa-pillar-row bg-gray-50/80">
+                                <td class="px-2 py-2.5 align-top sm:px-2.5 sm:py-3">
+                                    <div class="flex flex-wrap items-center gap-1.5">
+                                        <span class="inline-flex h-6 min-w-[1.5rem] items-center justify-center rounded-full bg-[#0f3d34] text-xs font-bold text-white">7</span>
+                                        <span class="text-[0.65rem] font-semibold uppercase text-gray-500 sm:text-xs">Online</span>
+                                    </div>
+                                    <p class="mt-1.5 font-bold leading-snug text-[#0f3d34]">Commercial &amp; Market Due Diligence</p>
+                                    <p class="mt-1 text-xs leading-relaxed text-gray-600 sm:text-sm">Customer interviews · Reference checks · Competitor mapping · Unit economics</p>
+                                </td>
+                                <td class="px-2 py-2.5 align-top sm:px-2.5 sm:py-3">Validate market, customers, and unit economics under stress.</td>
+                            </tr>
+                            <tr class="aa-pillar-row bg-white">
+                                <td class="px-2 py-2.5 align-top sm:px-2.5 sm:py-3">
+                                    <div class="flex flex-wrap items-center gap-1.5">
+                                        <span class="inline-flex h-6 min-w-[1.5rem] items-center justify-center rounded-full bg-white text-xs font-bold text-[#0f3d34] ring-1 ring-gray-200">8</span>
+                                        <span class="text-[0.65rem] font-semibold uppercase text-gray-500 sm:text-xs">Online</span>
+                                    </div>
+                                    <p class="mt-1.5 font-bold leading-snug text-[#0f3d34]">Financial &amp; Legal Due Diligence</p>
+                                    <p class="mt-1 text-xs leading-relaxed text-gray-600 sm:text-sm">Data room · Revenue quality · BIDA &amp; Bangladesh Bank · NRB cross-border</p>
+                                </td>
+                                <td class="px-2 py-2.5 align-top sm:px-2.5 sm:py-3">Legal, financial, and regulatory read for BD and cross-border context.</td>
+                            </tr>
+
+                            <tr class="aa-table-bar">
+                                <th colspan="5" scope="colgroup" class="px-3 py-2 text-left text-xs font-semibold uppercase italic sm:px-4 sm:text-sm">Phase 3: Deal execution (Sessions 9–11)</th>
+                            </tr>
+                            <tr class="aa-pillar-row bg-white">
+                                <th rowspan="3" scope="rowgroup" class="bg-[#f0faf6] px-2 py-2 align-top text-xs font-bold leading-snug text-[#0f3d34] sm:px-2.5 sm:py-3">Phase 3</th>
+                                <td class="px-2 py-2.5 align-top sm:px-2.5 sm:py-3">
+                                    <div class="flex flex-wrap items-center gap-1.5">
+                                        <span class="inline-flex h-6 min-w-[1.5rem] items-center justify-center rounded-full bg-white text-xs font-bold text-[#0f3d34] ring-1 ring-gray-200">9</span>
+                                        <span class="text-[0.65rem] font-semibold uppercase text-gray-500 sm:text-xs">Online</span>
+                                    </div>
+                                    <p class="mt-1.5 font-bold leading-snug text-[#0f3d34]">Term Sheets, Negotiation &amp; Deal Structuring</p>
+                                    <p class="mt-2 border-l-2 border-[#36b37e] bg-[#f0faf6] pl-2 text-xs text-gray-800 sm:text-sm"><span class="font-semibold text-[#0f3d34]">■ Assignment 3 due</span> — Full due-diligence report (pod)</p>
+                                </td>
+                                <td class="px-2 py-2.5 align-top sm:px-2.5 sm:py-3">Founder vs. investor terms, pro-rata, protection, lead vs. follow, syndicates.</td>
+                                <td rowspan="3" class="bg-[#f7fdfb] px-2 py-2.5 align-top text-xs text-gray-700 sm:px-2.5 sm:py-3 sm:text-sm">
+                                    <span class="font-semibold text-[#0f3d34]">Deal execution &amp; portfolio</span> — Term sheets · Governance · Risk management
+                                </td>
+                                <td rowspan="3" class="bg-white px-2 py-2.5 align-top text-xs text-gray-700 sm:px-2.5 sm:py-3 sm:text-sm">
+                                    <span class="font-semibold text-[#0f3d34]">Portfolio construction</span> — Deal structuring · Governance rights · Syndication
+                                </td>
+                            </tr>
+                            <tr class="aa-pillar-row bg-gray-50/80">
+                                <td class="px-2 py-2.5 align-top sm:px-2.5 sm:py-3">
+                                    <div class="flex flex-wrap items-center gap-1.5">
+                                        <span class="inline-flex h-6 min-w-[1.5rem] items-center justify-center rounded-full bg-[#0f3d34] text-xs font-bold text-white">10</span>
+                                        <span class="text-[0.65rem] font-semibold uppercase text-gray-500 sm:text-xs">Online</span>
+                                    </div>
+                                    <p class="mt-1.5 font-bold leading-snug text-[#0f3d34]">Portfolio Construction &amp; Risk Management</p>
+                                    <p class="mt-1 text-xs leading-relaxed text-gray-600 sm:text-sm">Sizing · Diversification · Follow-on · BD &amp; SE Asia concentration</p>
+                                </td>
+                                <td class="px-2 py-2.5 align-top sm:px-2.5 sm:py-3">Build position sizing and portfolio-level risk discipline.</td>
+                            </tr>
+                            <tr class="aa-pillar-row bg-white">
+                                <td class="px-2 py-2.5 align-top sm:px-2.5 sm:py-3">
+                                    <div class="flex flex-wrap items-center gap-1.5">
+                                        <span class="inline-flex h-6 min-w-[1.5rem] items-center justify-center rounded-full bg-white text-xs font-bold text-[#0f3d34] ring-1 ring-gray-200">11</span>
+                                        <span class="text-[0.65rem] font-semibold uppercase text-gray-500 sm:text-xs">Online</span>
+                                    </div>
+                                    <p class="mt-1.5 font-bold leading-snug text-[#0f3d34]">Corporate Governance &amp; Investor Rights</p>
+                                    <p class="mt-1 text-xs leading-relaxed text-gray-600 sm:text-sm">Board vs. observer · Information rights · Protective provisions · Post-close</p>
+                                </td>
+                                <td class="px-2 py-2.5 align-top sm:px-2.5 sm:py-3">Board, information rights, and post-close relationships.</td>
+                            </tr>
+
+                            <tr class="aa-table-bar">
+                                <th colspan="5" scope="colgroup" class="px-3 py-2 text-left text-xs font-semibold uppercase italic sm:px-4 sm:text-sm">Phase 4: Value creation (Sessions 12–14)</th>
+                            </tr>
+                            <tr class="aa-pillar-row bg-white">
+                                <th rowspan="3" scope="rowgroup" class="bg-[#f0faf6] px-2 py-2 align-top text-xs font-bold leading-snug text-[#0f3d34] sm:px-2.5 sm:py-3">Phase 4</th>
+                                <td class="px-2 py-2.5 align-top sm:px-2.5 sm:py-3">
+                                    <div class="flex flex-wrap items-center gap-1.5">
+                                        <span class="inline-flex h-6 min-w-[1.5rem] items-center justify-center rounded-full bg-white text-xs font-bold text-[#0f3d34] ring-1 ring-gray-200">12</span>
+                                        <span class="text-[0.65rem] font-semibold uppercase text-gray-500 sm:text-xs">Online</span>
+                                    </div>
+                                    <p class="mt-1.5 font-bold leading-snug text-[#0f3d34]">Value Creation &amp; Founder Support</p>
+                                    <p class="mt-1 text-xs leading-relaxed text-gray-600 sm:text-sm">Post-investment · NRB network · Strategic intros</p>
+                                </td>
+                                <td class="px-2 py-2.5 align-top sm:px-2.5 sm:py-3">When to help, when to get out of the way.</td>
+                                <td rowspan="3" class="bg-[#f7fdfb] px-2 py-2.5 align-top text-xs text-gray-700 sm:px-2.5 sm:py-3 sm:text-sm">
+                                    <span class="font-semibold text-[#0f3d34]">Value creation &amp; IC prep</span> — NRB network · SE Asia co-investment · IC dry-run (Session 14)
+                                </td>
+                                <td rowspan="3" class="bg-white px-2 py-2.5 align-top text-xs text-gray-700 sm:px-2.5 sm:py-3 sm:text-sm">
+                                    <span class="font-semibold text-[#0f3d34]">IC prep</span> — IC dry-run with faculty in Session 14
+                                </td>
+                            </tr>
+                            <tr class="aa-pillar-row bg-gray-50/80">
+                                <td class="px-2 py-2.5 align-top sm:px-2.5 sm:py-3">
+                                    <div class="flex flex-wrap items-center gap-1.5">
+                                        <span class="inline-flex h-6 min-w-[1.5rem] items-center justify-center rounded-full bg-[#0f3d34] text-xs font-bold text-white">13</span>
+                                        <span class="text-[0.65rem] font-semibold uppercase text-gray-500 sm:text-xs">Online</span>
+                                    </div>
+                                    <p class="mt-1.5 font-bold leading-snug text-[#0f3d34]">Southeast Asia: Markets &amp; Co-Investment</p>
+                                    <p class="mt-1 text-xs leading-relaxed text-gray-600 sm:text-sm">SE Asia landscape · BD/NRB access · Co-investing with funds</p>
+                                </td>
+                                <td class="px-2 py-2.5 align-top sm:px-2.5 sm:py-3">Regional context and co-invest routes.</td>
+                            </tr>
+                            <tr class="aa-pillar-row bg-white">
+                                <td class="px-2 py-2.5 align-top sm:px-2.5 sm:py-3">
+                                    <div class="flex flex-wrap items-center gap-1.5">
+                                        <span class="inline-flex h-6 min-w-[1.5rem] items-center justify-center rounded-full bg-white text-xs font-bold text-[#0f3d34] ring-1 ring-gray-200">14</span>
+                                        <span class="text-[0.65rem] font-semibold uppercase text-gray-500 sm:text-xs">Online</span>
+                                    </div>
+                                    <p class="mt-1.5 font-bold leading-snug text-[#0f3d34]">Exits, Returns &amp; Building an Investor Brand</p>
+                                    <p class="mt-1 text-xs leading-relaxed text-gray-600 sm:text-sm">M&amp;A · Secondaries · IPO options · DPI · IC dry-run with faculty</p>
+                                </td>
+                                <td class="px-2 py-2.5 align-top sm:px-2.5 sm:py-3">Exit paths, returns, and reputation — ties to the live dry-run.</td>
+                            </tr>
+
+                            <tr class="aa-table-bar">
+                                <th colspan="5" scope="colgroup" class="px-3 py-2 text-left text-xs font-semibold uppercase italic sm:px-4 sm:text-sm">Phase 5: IC graduation (Session 15)</th>
+                            </tr>
+                            <tr class="aa-pillar-row bg-gray-50/80">
+                                <th scope="row" class="bg-[#f0faf6] px-2 py-2 align-top text-xs font-bold text-[#0f3d34] sm:px-2.5 sm:py-3">Phase 5</th>
+                                <td class="px-2 py-2.5 align-top sm:px-2.5 sm:py-3">
+                                    <div class="flex flex-wrap items-center gap-1.5">
+                                        <span class="inline-flex h-6 min-w-[1.5rem] items-center justify-center rounded-full bg-[#0f3d34] text-xs font-bold text-white">15</span>
+                                        <span class="rounded-full bg-[#e8f7f1] px-2 py-0.5 text-[0.65rem] font-semibold uppercase tracking-wide text-[#0f3d34] ring-1 ring-[#c5e6d8]/80 sm:text-xs">In person</span>
+                                    </div>
+                                    <p class="mt-1.5 font-bold leading-snug text-[#0f3d34]">Investment Committee Pitches &amp; Graduation</p>
+                                    <p class="mt-2 border-l-2 border-[#36b37e] bg-[#f0faf6] pl-2 text-xs text-gray-800 sm:text-sm"><span class="font-semibold text-[#0f3d34]">■ Assignment 4</span> — IC pitch &amp; investment memo (capstone)</p>
+                                </td>
+                                <td class="px-2 py-2.5 align-top sm:px-2.5 sm:py-3">Public IC-style presentations and cohort graduation.</td>
+                                <td class="bg-[#f7fdfb] px-2 py-2.5 align-top text-xs text-gray-700 sm:px-2.5 sm:py-3 sm:text-sm">
+                                    <span class="font-semibold text-[#0f3d34]">Live IC &amp; graduation</span> — BAN partners · NRB panel · Certificate
+                                </td>
+                                <td class="px-2 py-2.5 pr-2.5 align-top text-xs text-gray-700 sm:px-2.5 sm:py-3 sm:pr-4 sm:text-sm">
+                                    <span class="font-semibold text-[#0f3d34]">BAN partners</span> · <span class="font-semibold text-[#0f3d34]">NRB angel panel</span> · Notable Bangladesh angels
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p class="mt-4 text-center text-xs text-gray-500 sm:text-sm">Bangladesh Angels Network — cohort size 12–15 · Fee <span class="whitespace-nowrap">BDT 40,000</span> <span class="text-gray-400">|</span> <span class="whitespace-nowrap">USD 420</span> · 50% BAN membership discount where applicable</p>
+            </div>
         </div>
     </section>
 </div>
