@@ -131,6 +131,15 @@
     }
     .angel-academy .aa-snapshot-row:hover,
     .angel-academy .aa-pillar-row:hover { box-shadow: inset 3px 0 0 0 #36b37e; }
+    .angel-academy .aa-table-scroll { -webkit-overflow-scrolling: touch; overscroll-behavior-x: contain; }
+    @media (max-width: 639.98px) {
+        .angel-academy { -webkit-text-size-adjust: 100%; }
+        /* Wider tables: cell utilities use text-xs; override for 15px body on small viewports */
+        .angel-academy .aa-table-scroll table.aa-curric-table th,
+        .angel-academy .aa-table-scroll table.aa-curric-table td { font-size: 0.9375rem !important; line-height: 1.55; }
+        .angel-academy .aa-table-scroll tr.aa-table-bar th { font-size: 0.8125rem !important; line-height: 1.45; }
+        .angel-academy .aa-pill { font-size: 0.75rem !important; padding: 0.2rem 0.5rem; }
+    }
     @media (prefers-reduced-motion: reduce) {
         .angel-academy .aa-hero-blob,
         .angel-academy .aa-hero-blob--2 { animation: none !important; opacity: 0.2 !important; }
@@ -156,8 +165,8 @@
         <div class="aa-hero-blob pointer-events-none absolute -right-24 top-0 h-96 w-96 rounded-full bg-[#36b37e]/20 blur-3xl" aria-hidden="true"></div>
         <div class="aa-hero-blob aa-hero-blob--2 pointer-events-none absolute -left-20 bottom-0 h-64 w-64 rounded-full bg-amber-400/10 blur-3xl" aria-hidden="true"></div>
 
-        <div class="relative mx-auto max-w-5xl px-3 py-12 sm:px-6 sm:py-20 md:py-24" data-aa-hero>
-            <p class="mx-auto max-w-md text-center text-[0.65rem] font-semibold uppercase leading-relaxed tracking-[0.2em] text-emerald-200/90 min-[400px]:tracking-[0.3em] sm:max-w-none sm:text-xs sm:tracking-[0.35em]">
+        <div class="relative mx-auto max-w-5xl px-4 py-12 sm:px-6 sm:py-20 md:py-24" data-aa-hero>
+            <p class="mx-auto max-w-md text-center text-xs font-semibold uppercase leading-relaxed tracking-[0.2em] text-emerald-200/90 min-[400px]:tracking-[0.3em] sm:max-w-none sm:text-xs sm:tracking-[0.35em]">
                 <span class="sm:whitespace-nowrap">Programme strategy</span>
                 <span class="mx-1 inline text-emerald-400/80 sm:mx-2">|</span>
                 <br class="min-[400px]:hidden" aria-hidden="true" />
@@ -166,14 +175,14 @@
             <h1 id="academy-hero-heading" class="mt-5 text-center text-[1.65rem] font-extrabold leading-[1.12] tracking-tight text-white min-[400px]:text-3xl sm:mt-6 sm:text-4xl md:text-5xl">
                 <span class="block bg-gradient-to-r from-white via-[#d1fae5] to-white/90 bg-clip-text text-transparent">BAN Angel Academy</span>
             </h1>
-            <p class="mx-auto mt-4 max-w-2xl text-center text-sm leading-relaxed text-emerald-100/90 sm:mt-5 sm:text-base">
+            <p class="mx-auto mt-4 max-w-2xl text-center text-base leading-relaxed text-emerald-100/95 sm:mt-5 sm:text-base">
                 A compact, high-touch programme to build confident, disciplined early-stage investors — blending live instruction, BAN membership benefits, and applied learning alongside our analyst team.
             </p>
 
             <div class="mx-auto mt-8 flex w-full min-w-0 max-w-md flex-col items-stretch justify-center gap-3 sm:mt-10 sm:max-w-none sm:flex-row sm:items-center sm:gap-4">
                 <a
                     href="{{ route('investor.signup') }}"
-                    class="inline-flex min-h-[48px] w-full min-w-0 items-center justify-center rounded-full bg-white px-6 text-sm font-bold text-[#042f28] shadow-lg shadow-emerald-950/40 transition duration-300 ease-out hover:-translate-y-0.5 hover:bg-emerald-50 hover:shadow-xl active:scale-[0.98] sm:w-auto sm:min-w-[12rem] sm:px-8"
+                    class="inline-flex min-h-[48px] w-full min-w-0 items-center justify-center rounded-full bg-white px-6 text-base font-bold text-[#042f28] shadow-lg shadow-emerald-950/40 transition duration-300 ease-out hover:-translate-y-0.5 hover:bg-emerald-50 hover:shadow-xl active:scale-[0.98] sm:w-auto sm:min-w-[12rem] sm:px-8 sm:text-sm"
                 >
                     Apply to the network
                 </a>
@@ -181,7 +190,7 @@
                     href="https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ1oFoHy0m9As4PtSfm4Ee-nVyoZRNNyZ38doHCWpVwDfo5u3qxnesRT_LqD_Fv5nUlbE3EvxyYN"
                     target="_blank"
                     rel="noopener noreferrer"
-                    class="inline-flex min-h-[48px] w-full min-w-0 items-center justify-center rounded-full border border-white/30 bg-white/5 px-6 text-sm font-semibold text-white backdrop-blur-sm transition duration-300 ease-out hover:-translate-y-0.5 hover:border-white/50 hover:bg-white/10 active:scale-[0.98] sm:w-auto sm:min-w-[12rem] sm:px-8"
+                    class="inline-flex min-h-[48px] w-full min-w-0 items-center justify-center rounded-full border border-white/30 bg-white/5 px-6 text-base font-semibold text-white backdrop-blur-sm transition duration-300 ease-out hover:-translate-y-0.5 hover:border-white/50 hover:bg-white/10 active:scale-[0.98] sm:w-auto sm:min-w-[12rem] sm:px-8 sm:text-sm"
                 >
                     Book a Meet
                 </a>
@@ -190,22 +199,22 @@
     </section>
 
     {{-- Programme overview --}}
-    <section class="aa-reveal mx-auto max-w-4xl px-3 py-12 sm:px-5 sm:py-20 md:px-6" data-aa-reveal aria-labelledby="strategic-intent-heading">
+    <section class="aa-reveal mx-auto max-w-4xl px-4 py-12 sm:px-5 sm:py-20 md:px-6" data-aa-reveal aria-labelledby="strategic-intent-heading">
         <div class="border-l-4 border-[#36b37e] pl-4 sm:pl-5 md:pl-6">
-            <h2 id="strategic-intent-heading" class="text-2xl font-bold leading-tight tracking-tight text-[#0f3d34] sm:text-3xl">
+            <h2 id="strategic-intent-heading" class="text-[1.35rem] font-bold leading-snug tracking-tight text-[#0f3d34] min-[400px]:text-2xl sm:text-3xl">
                 Strategic intent
             </h2>
             <p class="mt-2 text-sm font-medium uppercase tracking-wide text-[#18736a] sm:text-base">
                 Features of BAN Angel Academy
             </p>
         </div>
-        <p class="mt-5 max-w-3xl text-[0.9375rem] leading-relaxed text-gray-600 sm:mt-6 sm:text-base">
+        <p class="mt-5 max-w-3xl text-base leading-[1.65] text-gray-700 sm:mt-6 sm:text-base">
             BAN Angel Academy is designed to move participants from <strong class="font-semibold text-gray-800">theory to practice</strong> — the same deal rhythm, language, and diligence habits our network uses in live opportunities. Cohort size stays intentionally limited so you get real access to BAN analysts and your pod.
         </p>
 
         <div class="mt-8 overflow-hidden rounded-xl border border-[#c5e6d8]/80 bg-gradient-to-b from-white to-[#f7fdfb] shadow-[0_8px_40px_-12px_rgba(15,61,52,0.1)] transition-shadow duration-500 ease-out hover:shadow-[0_12px_48px_-8px_rgba(15,61,52,0.14)] sm:mt-10 sm:rounded-2xl">
             <div class="border-b border-[#e2f0ea] bg-[#eef8f4]/60 px-3 py-3 sm:px-5 md:px-6">
-                <h3 class="text-xs font-bold uppercase tracking-wider text-[#0f3d34] min-[400px]:text-sm sm:text-base">Programme at a glance</h3>
+                <h3 class="text-sm font-bold uppercase tracking-wider text-[#0f3d34] sm:text-base">Programme at a glance</h3>
             </div>
 
             <div class="hidden md:block">
@@ -254,48 +263,48 @@
             </div>
 
             <dl class="divide-y divide-[#e2f0ea] md:hidden">
-                <div class="px-3 py-4 sm:px-5">
-                    <dt class="text-xs font-bold uppercase tracking-wide text-[#18736a]">Sessions</dt>
-                    <dd class="mt-2 break-words text-sm leading-relaxed text-gray-700 sm:text-base">
+                <div class="px-4 py-4 sm:px-5">
+                    <dt class="text-sm font-bold uppercase tracking-wide text-[#18736a]">Sessions</dt>
+                    <dd class="mt-2 break-words text-base leading-relaxed text-gray-800">
                         15 sessions × 2 hours — 2 in-person (IUB, Dhaka) + 13 online (Google Meet)
                     </dd>
                 </div>
-                <div class="px-3 py-4 sm:px-5">
-                    <dt class="text-xs font-bold uppercase tracking-wide text-[#18736a]">Duration</dt>
-                    <dd class="mt-2 break-words text-sm leading-relaxed text-gray-700 sm:text-base">3 months</dd>
+                <div class="px-4 py-4 sm:px-5">
+                    <dt class="text-sm font-bold uppercase tracking-wide text-[#18736a]">Duration</dt>
+                    <dd class="mt-2 break-words text-base leading-relaxed text-gray-800">3 months</dd>
                 </div>
-                <div class="px-3 py-4 sm:px-5">
-                    <dt class="text-xs font-bold uppercase tracking-wide text-[#18736a]">Fee</dt>
-                    <dd class="mt-2 break-words text-sm leading-relaxed text-gray-700 sm:text-base">BDT 40,000 | USD 420</dd>
+                <div class="px-4 py-4 sm:px-5">
+                    <dt class="text-sm font-bold uppercase tracking-wide text-[#18736a]">Fee</dt>
+                    <dd class="mt-2 break-words text-base leading-relaxed text-gray-800">BDT 40,000 | USD 420</dd>
                 </div>
-                <div class="px-3 py-4 sm:px-5">
-                    <dt class="text-xs font-bold uppercase tracking-wide text-[#18736a]">BAN membership</dt>
-                    <dd class="mt-2 break-words text-sm leading-relaxed text-gray-700 sm:text-base">USD 199.50 (50% off standard USD 399)</dd>
+                <div class="px-4 py-4 sm:px-5">
+                    <dt class="text-sm font-bold uppercase tracking-wide text-[#18736a]">BAN membership</dt>
+                    <dd class="mt-2 break-words text-base leading-relaxed text-gray-800">USD 199.50 (50% off standard USD 399)</dd>
                 </div>
-                <div class="px-3 py-4 sm:px-5">
-                    <dt class="text-xs font-bold uppercase tracking-wide text-[#18736a]">1:1 with BAN analysts</dt>
-                    <dd class="mt-2 break-words text-sm leading-relaxed text-gray-700 sm:text-base">2 × 45-min private 1:1s per participant with a BAN senior analyst</dd>
+                <div class="px-4 py-4 sm:px-5">
+                    <dt class="text-sm font-bold uppercase tracking-wide text-[#18736a]">1:1 with BAN analysts</dt>
+                    <dd class="mt-2 break-words text-base leading-relaxed text-gray-800">2 × 45-min private 1:1s per participant with a BAN senior analyst</dd>
                 </div>
-                <div class="px-3 py-4 sm:px-5">
-                    <dt class="text-xs font-bold uppercase tracking-wide text-[#18736a]">Assignments</dt>
-                    <dd class="mt-2 break-words text-sm leading-relaxed text-gray-700 sm:text-base">4 assignments (2 individual, 2 group / pod-based)</dd>
+                <div class="px-4 py-4 sm:px-5">
+                    <dt class="text-sm font-bold uppercase tracking-wide text-[#18736a]">Assignments</dt>
+                    <dd class="mt-2 break-words text-base leading-relaxed text-gray-800">4 assignments (2 individual, 2 group / pod-based)</dd>
                 </div>
             </dl>
         </div>
 
-        <p class="mt-8 text-center text-xs text-gray-500 sm:mt-10 sm:text-sm">
+        <p class="mt-8 text-center text-sm leading-relaxed text-gray-600 sm:mt-10 sm:text-sm">
             Fees, dates, and cohort format are subject to update for each intake. The Bangladesh Angels team will confirm final terms at enrollment.
         </p>
     </section>
 
     {{-- Who is this for? --}}
     <section class="w-full" aria-labelledby="who-for-heading">
-        <div class="aa-reveal border-t border-[#c5e6d8]/60 bg-gradient-to-b from-[#f7fdfb] via-white to-[#f0faf7] px-3 py-12 sm:px-5 sm:py-16 md:px-6" data-aa-reveal>
-            <p class="text-center text-[0.65rem] font-bold uppercase leading-relaxed tracking-[0.25em] text-[#18736a] min-[400px]:tracking-[0.3em] sm:text-xs">Angel Academy · BAN</p>
+        <div class="aa-reveal border-t border-[#c5e6d8]/60 bg-gradient-to-b from-[#f7fdfb] via-white to-[#f0faf7] px-4 py-12 sm:px-5 sm:py-16 md:px-6" data-aa-reveal>
+            <p class="text-center text-xs font-bold uppercase leading-relaxed tracking-[0.25em] text-[#18736a] min-[400px]:tracking-[0.3em] sm:text-xs">Angel Academy · BAN</p>
             <h2 id="who-for-heading" class="mx-auto mt-4 max-w-3xl text-center text-[1.35rem] font-bold leading-snug tracking-tight text-[#0f3d34] min-[400px]:text-2xl sm:text-3xl md:text-[2rem]">
                 This programme was built for your journey
             </h2>
-            <p class="mx-auto mt-4 max-w-3xl text-center text-sm leading-relaxed text-gray-600 sm:mt-5 sm:text-base">
+            <p class="mx-auto mt-4 max-w-3xl text-center text-base leading-relaxed text-gray-700 sm:mt-5 sm:text-base">
                 Whether you’re building a startup, writing your first cheque, or simply following Bangladesh’s innovation story, Angel Academy gives you the edge to move with confidence.
             </p>
         </div>
@@ -313,7 +322,7 @@
                         <span class="relative z-10 mt-5 inline-flex w-max max-w-full rounded-full border border-[#36b37e]/50 bg-[#36b37e]/10 px-3 py-1.5 text-[0.6rem] font-bold uppercase leading-tight tracking-wider text-emerald-100 min-[400px]:text-[0.65rem]">Startup founder</span>
                         <span class="relative z-10 mt-4 h-0.5 w-12 rounded-full bg-[#36b37e]"></span>
                         <h3 class="relative z-10 mt-4 text-base font-bold leading-snug text-white sm:text-lg md:text-xl">You’re building something. Now learn how investors think</h3>
-                        <p class="relative z-10 mt-3 text-sm leading-relaxed text-emerald-50/90 sm:text-base">Understand how VCs and angels evaluate deals, structure term sheets, and decide who to back. Build a fundable business from day one.</p>
+                        <p class="relative z-10 mt-3 text-base leading-[1.65] text-emerald-50/95 sm:text-base">Understand how VCs and angels evaluate deals, structure term sheets, and decide who to back. Build a fundable business from day one.</p>
                     </li>
                     <li class="group aa-reveal relative z-0 flex min-h-0 flex-col px-4 py-8 pr-20 transition-colors duration-300 ease-out sm:px-6 sm:py-10 sm:pr-8 md:px-8 md:py-12 xl:min-h-[22rem] xl:hover:bg-white/[0.03]" data-aa-reveal>
                         <span class="pointer-events-none absolute right-2 top-5 select-none text-5xl font-extrabold leading-none text-white/[0.07] min-[400px]:right-3 min-[400px]:text-6xl sm:right-4 sm:top-6 sm:text-7xl" aria-hidden="true">02</span>
@@ -325,7 +334,7 @@
                         <span class="relative z-10 mt-5 inline-flex w-max max-w-full rounded-full border border-[#36b37e]/50 bg-[#36b37e]/10 px-3 py-1.5 text-[0.6rem] font-bold uppercase leading-tight tracking-wider text-emerald-100 min-[400px]:text-[0.65rem]">Aspiring angel</span>
                         <span class="relative z-10 mt-4 h-0.5 w-12 rounded-full bg-[#36b37e]"></span>
                         <h3 class="relative z-10 mt-4 text-base font-bold leading-snug text-white sm:text-lg md:text-xl">Ready to write your first cheque? Start here</h3>
-                        <p class="relative z-10 mt-3 text-sm leading-relaxed text-emerald-50/90 sm:text-base">Learn how to identify high-potential startups, evaluate risk, and build a personal angel portfolio in Bangladesh’s rapidly growing ecosystem.</p>
+                        <p class="relative z-10 mt-3 text-base leading-[1.65] text-emerald-50/95 sm:text-base">Learn how to identify high-potential startups, evaluate risk, and build a personal angel portfolio in Bangladesh’s rapidly growing ecosystem.</p>
                     </li>
                     <li class="group aa-reveal relative z-0 flex min-h-0 flex-col px-4 py-8 pr-20 transition-colors duration-300 ease-out sm:px-6 sm:py-10 sm:pr-8 md:px-8 md:py-12 xl:min-h-[22rem] xl:hover:bg-white/[0.03]" data-aa-reveal>
                         <span class="pointer-events-none absolute right-2 top-5 select-none text-5xl font-extrabold leading-none text-white/[0.07] min-[400px]:right-3 min-[400px]:text-6xl sm:right-4 sm:top-6 sm:text-7xl" aria-hidden="true">03</span>
@@ -338,7 +347,7 @@
                         <span class="relative z-10 mt-5 inline-flex w-max max-w-full rounded-full border border-[#36b37e]/50 bg-[#36b37e]/10 px-3 py-1.5 text-[0.6rem] font-bold uppercase leading-tight tracking-wider text-emerald-100 min-[400px]:text-[0.65rem]">Career switcher</span>
                         <span class="relative z-10 mt-4 h-0.5 w-12 rounded-full bg-[#36b37e]"></span>
                         <h3 class="relative z-10 mt-4 text-base font-bold leading-snug text-white sm:text-lg md:text-xl">Break into VC from wherever you are today</h3>
-                        <p class="relative z-10 mt-3 text-sm leading-relaxed text-emerald-50/90 sm:text-base">Discover how VC firms around the world hire, what analysts and associates actually do, and how to position yourself for roles across venture capital, startup operations, and ecosystem building.</p>
+                        <p class="relative z-10 mt-3 text-base leading-[1.65] text-emerald-50/95 sm:text-base">Discover how VC firms around the world hire, what analysts and associates actually do, and how to position yourself for roles across venture capital, startup operations, and ecosystem building.</p>
                     </li>
                     <li class="group aa-reveal relative z-0 flex min-h-0 flex-col px-4 py-8 pr-20 transition-colors duration-300 ease-out sm:px-6 sm:py-10 sm:pr-8 md:px-8 md:py-12 xl:min-h-[22rem] xl:hover:bg-white/[0.03]" data-aa-reveal>
                         <span class="pointer-events-none absolute right-2 top-5 select-none text-5xl font-extrabold leading-none text-white/[0.07] min-[400px]:right-3 min-[400px]:text-6xl sm:right-4 sm:top-6 sm:text-7xl" aria-hidden="true">04</span>
@@ -350,14 +359,14 @@
                         <span class="relative z-10 mt-5 inline-flex w-max max-w-full rounded-full border border-[#36b37e]/50 bg-[#36b37e]/10 px-3 py-1.5 text-[0.6rem] font-bold uppercase leading-tight tracking-wider text-emerald-100 min-[400px]:text-[0.65rem]">Curious observer</span>
                         <span class="relative z-10 mt-4 h-0.5 w-12 rounded-full bg-[#36b37e]"></span>
                         <h3 class="relative z-10 mt-4 text-base font-bold leading-snug text-white sm:text-lg md:text-xl">Curious about where Bangladesh’s startup wave is headed?</h3>
-                        <p class="relative z-10 mt-3 text-sm leading-relaxed text-emerald-50/90 sm:text-base">Get an insider’s view of the Bangladesh innovation economy: the players, the deals, the trends, and the opportunities shaping the decade ahead.</p>
+                        <p class="relative z-10 mt-3 text-base leading-[1.65] text-emerald-50/95 sm:text-base">Get an insider’s view of the Bangladesh innovation economy: the players, the deals, the trends, and the opportunities shaping the decade ahead.</p>
                     </li>
                 </ul>
             </div>
 
             <div class="aa-reveal border-t border-white/10 bg-[#0a2e28]/80 px-4 py-7 sm:px-6 sm:py-8 md:px-8" data-aa-reveal>
                 <div class="mx-auto flex max-w-5xl flex-col items-stretch justify-between gap-4 sm:flex-row sm:items-center sm:gap-6 md:gap-8">
-                    <p class="text-center text-sm font-medium leading-relaxed text-emerald-50/95 sm:flex-1 sm:text-left sm:text-base">Not sure which path fits you? We’ll help you find it.</p>
+                    <p class="text-center text-base font-medium leading-relaxed text-emerald-50/95 sm:flex-1 sm:text-left sm:text-base">Not sure which path fits you? We’ll help you find it.</p>
                     <a
                         href="{{ route('investor.signup') }}"
                         class="inline-flex min-h-[48px] w-full min-w-0 shrink-0 items-center justify-center gap-2 self-center rounded-full border border-white/40 bg-transparent px-6 py-3.5 text-sm font-semibold text-white transition duration-300 ease-out hover:-translate-y-0.5 hover:border-white/70 hover:bg-white/10 active:scale-[0.98] sm:w-auto sm:min-w-[11rem] sm:self-auto"
@@ -371,11 +380,11 @@
     </section>
 
     {{-- Pre-programme process --}}
-    <section class="w-full border-t border-[#c5e6d8]/50 bg-gradient-to-b from-white via-[#fbfefe] to-[#f0faf7] px-3 py-14 sm:px-5 sm:py-20 md:px-6" aria-labelledby="pre-programme-heading">
+    <section class="w-full border-t border-[#c5e6d8]/50 bg-gradient-to-b from-white via-[#fbfefe] to-[#f0faf7] px-4 py-14 sm:px-5 sm:py-20 md:px-6" aria-labelledby="pre-programme-heading">
         <div class="mx-auto max-w-4xl">
             <div class="aa-reveal border-l-4 border-[#36b37e] pl-4 sm:pl-5 md:pl-6" data-aa-reveal>
-                <h2 id="pre-programme-heading" class="text-2xl font-bold leading-tight tracking-tight text-[#0f3d34] sm:text-3xl">Pre-programme process</h2>
-                <p class="mt-2 max-w-2xl text-sm leading-relaxed text-gray-600 sm:text-base">How we prepare you and your cohort before Session 1 — alignment, pod placement, and tailored analyst time.</p>
+                <h2 id="pre-programme-heading" class="text-[1.35rem] font-bold leading-snug tracking-tight text-[#0f3d34] min-[400px]:text-2xl sm:text-3xl">Pre-programme process</h2>
+                <p class="mt-2 max-w-2xl text-base leading-relaxed text-gray-700 sm:text-base">How we prepare you and your cohort before Session 1 — alignment, pod placement, and tailored analyst time.</p>
             </div>
 
             <ol class="mt-10 list-none space-y-0 p-0 sm:mt-12">
@@ -385,12 +394,12 @@
                         <div class="w-px min-h-10 flex-1 self-stretch bg-gradient-to-b from-[#36b37e] via-[#c5e6d8] to-[#c5e6d8]" aria-hidden="true"></div>
                     </div>
                     <div class="min-w-0 pb-8 sm:pb-10">
-                        <div class="rounded-2xl border border-[#c5e6d8]/80 bg-white/90 p-5 shadow-sm transition duration-300 ease-out hover:border-[#36b37e]/45 hover:shadow-md sm:p-6">
+                        <div class="rounded-2xl border border-[#c5e6d8]/80 bg-white/90 p-6 shadow-sm transition duration-300 ease-out hover:border-[#36b37e]/45 hover:shadow-md sm:p-6">
                             <div class="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between sm:gap-4">
-                                <h3 class="text-lg font-bold text-[#0f3d34] sm:text-xl">Intake interview</h3>
+                                <h3 class="text-xl font-bold text-[#0f3d34] sm:text-xl">Intake interview</h3>
                                 <span class="inline-flex w-max max-w-full shrink-0 rounded-full bg-[#eef8f4] px-3 py-1 text-xs font-semibold text-[#18736a] ring-1 ring-[#c5e6d8]/80">30 min · 1:1 with BAN team</span>
                             </div>
-                            <p class="mt-4 text-sm leading-relaxed text-gray-600 sm:text-base">
+                            <p class="mt-4 text-base leading-relaxed text-gray-700 sm:text-base">
                                 It will be completed <strong class="font-semibold text-gray-800">before Session 1</strong>. It’s not a screening—it’s a <strong class="font-semibold text-gray-800">personalisation</strong> call covering investment appetite, sector interests, motivations, and learning objectives for the Academy. <strong class="font-semibold text-gray-800">Outputs:</strong> thematic pod assignment and identification of participants who need early support.
                             </p>
                         </div>
@@ -403,26 +412,26 @@
                         <div class="w-px min-h-10 flex-1 self-stretch bg-[#c5e6d8]" aria-hidden="true"></div>
                     </div>
                     <div class="min-w-0 pb-8 sm:pb-10">
-                        <div class="rounded-2xl border border-[#c5e6d8]/80 bg-white/90 p-5 shadow-sm transition duration-300 ease-out hover:border-[#36b37e]/45 hover:shadow-md sm:p-6">
-                            <h3 class="text-lg font-bold text-[#0f3d34] sm:text-xl">Thematic pod formation</h3>
-                            <p class="mt-3 text-sm leading-relaxed text-gray-600 sm:text-base">
+                        <div class="rounded-2xl border border-[#c5e6d8]/80 bg-white/90 p-6 shadow-sm transition duration-300 ease-out hover:border-[#36b37e]/45 hover:shadow-md sm:p-6">
+                            <h3 class="text-xl font-bold text-[#0f3d34] sm:text-xl">Thematic pod formation</h3>
+                            <p class="mt-3 text-base leading-relaxed text-gray-700 sm:text-base">
                                 Participants are placed in pods of <strong class="font-semibold text-gray-800">roughly 3–5</strong> based on <strong class="font-semibold text-gray-800">sector focus</strong> and <strong class="font-semibold text-gray-800">risk appetite</strong>. Pods collaborate on group assignments and deliver the final IC pitch together.
                             </p>
-                            <h4 class="mt-6 text-xs font-bold uppercase tracking-wider text-[#18736a] sm:text-sm">Indicative pod tracks (Cohort 1)</h4>
+                            <h4 class="mt-6 text-sm font-bold uppercase tracking-wider text-[#18736a] sm:text-sm">Indicative pod tracks (Cohort 1)</h4>
                             <ul class="mt-3 grid grid-cols-1 gap-2 sm:grid-cols-2 sm:gap-3">
-                                <li class="flex min-w-0 items-center gap-2 rounded-xl border border-[#d8efe4] bg-gradient-to-r from-[#f7fdfb] to-white px-3 py-2.5 text-sm text-[#0f3d34] transition duration-200 ease-out hover:border-[#36b37e]/45 hover:shadow-sm sm:px-4">
+                                <li class="flex min-w-0 items-center gap-2 rounded-xl border border-[#d8efe4] bg-gradient-to-r from-[#f7fdfb] to-white px-3 py-2.5 text-base text-[#0f3d34] transition duration-200 ease-out hover:border-[#36b37e]/45 hover:shadow-sm sm:px-4 sm:text-sm">
                                     <span class="h-1.5 w-1.5 shrink-0 rounded-full bg-[#36b37e]" aria-hidden="true"></span>
                                     Fintech, digital assets &amp; financial inclusion
                                 </li>
-                                <li class="flex min-w-0 items-center gap-2 rounded-xl border border-[#d8efe4] bg-gradient-to-r from-[#f7fdfb] to-white px-3 py-2.5 text-sm text-[#0f3d34] transition duration-200 ease-out hover:border-[#36b37e]/45 hover:shadow-sm sm:px-4">
+                                <li class="flex min-w-0 items-center gap-2 rounded-xl border border-[#d8efe4] bg-gradient-to-r from-[#f7fdfb] to-white px-3 py-2.5 text-base text-[#0f3d34] transition duration-200 ease-out hover:border-[#36b37e]/45 hover:shadow-sm sm:px-4 sm:text-sm">
                                     <span class="h-1.5 w-1.5 shrink-0 rounded-full bg-[#36b37e]" aria-hidden="true"></span>
                                     AI, SaaS &amp; deep tech
                                 </li>
-                                <li class="flex min-w-0 items-center gap-2 rounded-xl border border-[#d8efe4] bg-gradient-to-r from-[#f7fdfb] to-white px-3 py-2.5 text-sm text-[#0f3d34] transition duration-200 ease-out hover:border-[#36b37e]/45 hover:shadow-sm sm:px-4">
+                                <li class="flex min-w-0 items-center gap-2 rounded-xl border border-[#d8efe4] bg-gradient-to-r from-[#f7fdfb] to-white px-3 py-2.5 text-base text-[#0f3d34] transition duration-200 ease-out hover:border-[#36b37e]/45 hover:shadow-sm sm:px-4 sm:text-sm">
                                     <span class="h-1.5 w-1.5 shrink-0 rounded-full bg-[#36b37e]" aria-hidden="true"></span>
                                     HealthTech, AgriTech &amp; climate
                                 </li>
-                                <li class="flex min-w-0 items-center gap-2 rounded-xl border border-[#d8efe4] bg-gradient-to-r from-[#f7fdfb] to-white px-3 py-2.5 text-sm text-[#0f3d34] transition duration-200 ease-out hover:border-[#36b37e]/45 hover:shadow-sm sm:px-4">
+                                <li class="flex min-w-0 items-center gap-2 rounded-xl border border-[#d8efe4] bg-gradient-to-r from-[#f7fdfb] to-white px-3 py-2.5 text-base text-[#0f3d34] transition duration-200 ease-out hover:border-[#36b37e]/45 hover:shadow-sm sm:px-4 sm:text-sm">
                                     <span class="h-1.5 w-1.5 shrink-0 rounded-full bg-[#36b37e]" aria-hidden="true"></span>
                                     Cybersecurity
                                 </li>
@@ -436,9 +445,9 @@
                         <span class="z-[1] mt-0.5 h-3 w-3 rounded-full border-2 border-[#36b37e] bg-white shadow sm:h-3.5 sm:w-3.5" aria-hidden="true"></span>
                     </div>
                     <div class="min-w-0">
-                        <div class="rounded-2xl border border-[#c5e6d8]/80 bg-white/90 p-5 shadow-sm transition duration-300 ease-out hover:border-[#36b37e]/45 hover:shadow-md sm:p-6">
-                            <h3 class="text-lg font-bold text-[#0f3d34] sm:text-xl">One-to-one analyst sessions</h3>
-                            <p class="mt-2 text-sm text-gray-500">Two private checkpoints across the programme.</p>
+                        <div class="rounded-2xl border border-[#c5e6d8]/80 bg-white/90 p-6 shadow-sm transition duration-300 ease-out hover:border-[#36b37e]/45 hover:shadow-md sm:p-6">
+                            <h3 class="text-xl font-bold text-[#0f3d34] sm:text-xl">One-to-one analyst sessions</h3>
+                            <p class="mt-2 text-base text-gray-600">Two private checkpoints across the programme.</p>
                             <div class="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5">
                                 <div class="flex min-w-0 flex-col rounded-xl border border-[#e2f0ea] bg-gradient-to-b from-[#f7fdfb] to-white p-4 transition duration-300 ease-out hover:border-[#36b37e]/35 hover:shadow-md sm:p-5">
                                     <div class="flex flex-wrap items-center gap-2">
@@ -467,29 +476,29 @@
     </section>
 
     {{-- Curriculum (15 sessions) --}}
-    <section class="w-full border-t border-[#c5e6d8]/50 bg-white px-3 py-14 sm:px-5 sm:py-20 md:px-6" aria-labelledby="curriculum-heading">
+    <section class="w-full border-t border-[#c5e6d8]/50 bg-white px-4 py-14 sm:px-5 sm:py-20 md:px-6" aria-labelledby="curriculum-heading">
         <div class="aa-reveal mx-auto max-w-5xl" data-aa-reveal>
             <div class="border-l-4 border-[#36b37e] pl-4 sm:pl-5 md:pl-6">
-                <h2 id="curriculum-heading" class="text-2xl font-bold leading-tight tracking-tight text-[#0f3d34] sm:text-3xl">CURRICULUM (15 SESSIONS)</h2>
+                <h2 id="curriculum-heading" class="text-[1.4rem] font-bold leading-snug tracking-tight text-[#0f3d34] min-[400px]:text-2xl sm:text-3xl">CURRICULUM (15 SESSIONS)</h2>
             </div>
-            <div class="mt-5 max-w-3xl space-y-3 text-sm leading-relaxed text-gray-600 sm:mt-6 sm:text-base">
+            <div class="mt-5 max-w-3xl space-y-3 text-base leading-relaxed text-gray-700 sm:mt-6">
                 <p>Assignments are marked with <span class="font-semibold text-[#0f3d34]">■</span> in the session where they are due. Sessions 6–8 are Phase 2: three deep dives (technical, commercial, financial &amp; legal) that build toward the <strong class="font-semibold text-gray-800">full pod due-diligence report</strong> — with <strong class="font-semibold text-gray-800">Assignment 3</strong> due after <strong class="font-semibold text-gray-800">Session 9</strong>. The two In-Person sessions anchor programme launch and IC graduation.</p>
             </div>
 
             {{-- Programme snapshot: 5 phases at a glance --}}
             <div id="programme-snapshot" class="mt-10 scroll-mt-20 sm:mt-12">
-                <h3 class="text-lg font-bold tracking-tight text-[#0f3d34] sm:text-xl">Programme snapshot</h3>
-                <p class="mt-1 text-sm text-gray-600">Five phases across fifteen sessions: content themes, key assignments, and how experiential work maps to the IC.</p>
-                <div class="mt-4 overflow-x-auto rounded-xl border border-[#c5e6d8]/90 shadow-sm sm:rounded-2xl">
+                <h3 class="text-xl font-bold tracking-tight text-[#0f3d34] sm:text-xl">Programme snapshot</h3>
+                <p class="mt-1 text-base leading-relaxed text-gray-700 sm:text-sm">Five phases across fifteen sessions: content themes, key assignments, and how experiential work maps to the IC.</p>
+                <div class="aa-table-scroll mt-4 overflow-x-auto rounded-xl border border-[#c5e6d8]/90 shadow-sm sm:rounded-2xl">
                     <div class="aa-curric-header-shine aa-curric-header flex min-w-[56rem] flex-col gap-2 px-4 py-4 text-white sm:min-w-0 sm:flex-row sm:items-end sm:justify-between sm:px-5 sm:py-5">
                         <div>
-                            <p class="text-[0.65rem] font-bold uppercase leading-tight tracking-[0.2em] text-emerald-100/90 sm:text-xs">BAN Angel Academy</p>
-                            <p class="mt-1.5 text-lg font-extrabold leading-tight sm:text-xl">Programme snapshot</p>
-                            <p class="mt-1.5 text-xs text-emerald-200/90 sm:text-sm">15 sessions · 3 months · 5 phases · In-person + online</p>
+                            <p class="text-xs font-bold uppercase leading-tight tracking-[0.2em] text-emerald-100/90 sm:text-xs">BAN Angel Academy</p>
+                            <p class="mt-1.5 text-xl font-extrabold leading-tight sm:text-xl">Programme snapshot</p>
+                            <p class="mt-1.5 text-sm text-emerald-200/90 sm:text-sm">15 sessions · 3 months · 5 phases · In-person + online</p>
                         </div>
-                        <p class="shrink-0 text-xs font-bold uppercase tracking-[0.15em] text-[#a7f3d0] sm:text-sm">Curriculum overview</p>
+                        <p class="shrink-0 text-sm font-bold uppercase tracking-[0.12em] text-[#a7f3d0] sm:text-sm">Curriculum overview</p>
                     </div>
-                    <table class="w-full min-w-[56rem] table-fixed border-collapse text-left text-sm text-gray-800" role="table" aria-label="BAN Angel Academy five-phase programme snapshot">
+                    <table class="aa-curric-table w-full min-w-[56rem] table-fixed border-collapse text-left text-sm text-gray-800" role="table" aria-label="BAN Angel Academy five-phase programme snapshot">
                         <thead>
                             <tr class="aa-table-bar">
                                 <th scope="col" class="w-[14%] px-2 py-2.5 text-xs font-bold uppercase tracking-wide sm:px-3 sm:py-3 sm:text-[0.7rem]">Phase</th>
@@ -565,11 +574,11 @@
                 </div>
             </div>
 
-            <h3 class="mt-10 text-base font-bold text-[#0f3d34] sm:mt-12 sm:text-lg">Session list</h3>
-            <p class="mt-1 text-sm text-gray-600">Format and focus by session.</p>
+            <h3 class="mt-10 text-lg font-bold text-[#0f3d34] sm:mt-12 sm:text-lg">Session list</h3>
+            <p class="mt-1 text-base leading-relaxed text-gray-700 sm:text-sm">Format and focus by session.</p>
 
-            <div class="mt-5 overflow-x-auto rounded-xl border border-[#c5e6d8]/90 shadow-sm sm:mt-6 sm:rounded-2xl">
-                <table class="w-full min-w-[42rem] border-collapse text-left text-sm text-gray-800" role="table" aria-label="BAN Angel Academy curriculum by session">
+            <div class="aa-table-scroll mt-5 overflow-x-auto rounded-xl border border-[#c5e6d8]/90 shadow-sm sm:mt-6 sm:rounded-2xl">
+                <table class="aa-curric-table w-full min-w-[42rem] border-collapse text-left text-sm text-gray-800" role="table" aria-label="BAN Angel Academy curriculum by session">
                     <thead>
                         <tr class="aa-table-bar">
                             <th scope="col" class="w-10 px-2 py-3 font-bold sm:px-3 sm:py-3.5">#</th>
@@ -691,21 +700,21 @@
                     </tbody>
                 </table>
             </div>
-            <p class="mt-4 text-xs text-gray-500 sm:mt-5 sm:text-sm">Session topics and order may be refined by cohort. <span class="font-medium text-gray-600">■</span> = assignment due after that session: Assignment 1 (Session 2), Assignment 2 (Session 4), Assignment 3 (Session 9), Assignment 4 (Session 15).</p>
+            <p class="mt-4 text-sm leading-relaxed text-gray-600 sm:mt-5 sm:text-sm">Session topics and order may be refined by cohort. <span class="font-medium text-gray-700">■</span> = assignment due after that session: Assignment 1 (Session 2), Assignment 2 (Session 4), Assignment 3 (Session 9), Assignment 4 (Session 15).</p>
 
             {{-- Programme curriculum: content, experiential, and IC pillars by session --}}
             <div id="programme-curriculum-pillars" class="mt-10 scroll-mt-20 sm:mt-12">
-                <h3 class="text-lg font-bold tracking-tight text-[#0f3d34] sm:text-xl">Programme curriculum</h3>
-                <p class="mt-1 text-sm text-gray-600">Content pillar, experiential track, and investment-committee work aligned across all fifteen sessions.</p>
-                <div class="mt-4 overflow-x-auto rounded-xl border border-[#c5e6d8]/90 shadow-sm sm:rounded-2xl">
+                <h3 class="text-xl font-bold tracking-tight text-[#0f3d34] sm:text-xl">Programme curriculum</h3>
+                <p class="mt-1 text-base leading-relaxed text-gray-700 sm:text-sm">Content pillar, experiential track, and investment-committee work aligned across all fifteen sessions.</p>
+                <div class="aa-table-scroll mt-4 overflow-x-auto rounded-xl border border-[#c5e6d8]/90 shadow-sm sm:rounded-2xl">
                     <div class="aa-curric-header-shine aa-curric-header flex min-w-[64rem] flex-col gap-1 px-4 py-4 sm:min-w-0 sm:flex-row sm:items-end sm:justify-between sm:px-5 sm:py-4">
                         <div>
-                            <p class="text-[0.65rem] font-bold uppercase leading-tight tracking-[0.2em] text-emerald-100/90 sm:text-xs">BAN Angel Academy</p>
-                            <p class="mt-1.5 text-lg font-extrabold leading-tight text-white sm:text-xl">Programme curriculum</p>
+                            <p class="text-xs font-bold uppercase leading-tight tracking-[0.2em] text-emerald-100/90 sm:text-xs">BAN Angel Academy</p>
+                            <p class="mt-1.5 text-xl font-extrabold leading-tight text-white sm:text-xl">Programme curriculum</p>
                         </div>
-                        <p class="shrink-0 text-xs text-emerald-200/90 sm:text-sm">15 sessions · 3 months · 5 phases</p>
+                        <p class="shrink-0 text-sm text-emerald-200/90 sm:text-sm">15 sessions · 3 months · 5 phases</p>
                     </div>
-                    <table class="w-full min-w-[64rem] table-fixed border-collapse text-left text-sm text-gray-800" role="table" aria-label="BAN Angel Academy curriculum: sessions with experiential and investment committee pillars">
+                    <table class="aa-curric-table w-full min-w-[64rem] table-fixed border-collapse text-left text-sm text-gray-800" role="table" aria-label="BAN Angel Academy curriculum: sessions with experiential and investment committee pillars">
                         <thead>
                             <tr class="aa-table-bar">
                                 <th scope="col" class="w-[9%] px-2 py-2.5 text-[0.65rem] font-bold uppercase leading-tight sm:px-2.5 sm:py-3 sm:text-xs">Phase</th>
@@ -942,7 +951,7 @@
                         </tbody>
                     </table>
                 </div>
-                <p class="mt-4 text-center text-xs text-gray-500 sm:text-sm">Bangladesh Angels Network — cohort size 12–15 · Fee <span class="whitespace-nowrap">BDT 40,000</span> <span class="text-gray-400">|</span> <span class="whitespace-nowrap">USD 420</span> · 50% BAN membership discount where applicable</p>
+                <p class="mt-4 text-center text-sm leading-relaxed text-gray-600 sm:text-sm">Bangladesh Angels Network — cohort size 12–15 · Fee <span class="whitespace-nowrap">BDT 40,000</span> <span class="text-gray-400">|</span> <span class="whitespace-nowrap">USD 420</span> · 50% BAN membership discount where applicable</p>
             </div>
         </div>
     </section>
