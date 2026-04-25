@@ -28,8 +28,13 @@ class PrimaryController extends Controller
 
         $landingResourceEvents = Resource::query()
             ->with('media')
-            ->where('type', 'event')
-            ->where('show_on_landing', true)
+            ->whereIn('type', ['event', 'webinar'])
+            ->where(function ($query) {
+                $query->where('show_on_landing', true)
+                    ->orWhereNull('date')
+                    ->orWhereDate('date', '>=', now()->toDateString());
+            })
+            ->orderByDesc('show_on_landing')
             ->orderByRaw('CASE WHEN date IS NULL THEN 1 ELSE 0 END')
             ->orderByDesc('date')
             ->orderByDesc('id')

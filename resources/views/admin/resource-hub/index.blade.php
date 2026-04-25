@@ -4,7 +4,7 @@
 <div class="container w-full p-6">
     <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 p-4 bg-white shadow mb-6">
         <div>
-            <h1 class="text-lg md:text-xl font-bold">Resources page (BAN /ban-resources)</h1>
+            <h1 class="text-lg md:text-xl font-bold">Resources page (BAN /deckvue)</h1>
             <p class="text-sm text-gray-600 mt-1">Add, remove, or edit cards (title, one-liner, CTA, logo, link).</p>
         </div>
         <div class="flex flex-wrap items-center gap-3">

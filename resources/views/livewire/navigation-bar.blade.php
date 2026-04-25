@@ -16,7 +16,7 @@
             <ul class="flex flex-row font-bold text-gray-700">
                 <li class="m-3"><a href="{{ route('startups') }}" title="Startups — portfolio, deals, pitch, and founder services">Startups</a></li>
                 <li class="m-3"><a href="{{ route('investors') }}" title="Our angel investors and how to join BAN">Investors</a></li>
-                <li class="m-3"><a href="{{ route('resources') }}" title="Resources — events, webinars, and programs">Resources</a></li>
+                <li class="m-3"><a href="{{ route('resources') }}" title="DeckVue — events, webinars, and programs">DeckVue</a></li>
                 <li class="m-3"><a href="{{ route('team') }}" title="About Bangladesh Angels Network and our team">Our Team</a></li>
             </ul>
         </div>
@@ -83,7 +83,7 @@
                 @endguest
                 <li class="px-4 py-2 border-b"><a href="{{ route('startups') }}" title="Startups — portfolio, deals, pitch, and founder services">Startups</a></li>
                 <li class="px-4 py-2 border-b"><a href="{{ route('investors') }}" title="Our angel investors and how to join BAN">Investors</a></li>
-                <li class="px-4 py-2 border-b"><a href="{{ route('resources') }}" title="Resources — events, webinars, and programs">Resources</a></li>
+                <li class="px-4 py-2 border-b"><a href="{{ route('resources') }}" title="DeckVue — events, webinars, and programs">DeckVue</a></li>
                 <li class="px-4 py-2"><a href="{{ route('team') }}" title="About Bangladesh Angels Network and our team">Our Team</a></li>
                 @auth
                 <hr>
