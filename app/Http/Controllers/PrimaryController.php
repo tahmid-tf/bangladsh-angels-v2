@@ -135,6 +135,12 @@ class PrimaryController extends Controller
         return view('faq');
     }
 
+    /** Public marketing page for the BAN Angel Academy programme. */
+    public function viewAngelAcademy()
+    {
+        return view('angel-academy');
+    }
+
     // View Team Page
     public function viewTeam()
     {

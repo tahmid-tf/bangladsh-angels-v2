@@ -7,6 +7,7 @@
 
     <title>@yield('page_title')</title>
     @stack('head_meta')
+    @stack('head_styles')
     <link rel="icon" type="image/webp" href="{{ asset('icon.webp') }}">
     <link rel="preload" as="style" href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap">
     
@@ -77,7 +78,7 @@
     </script>
 </head>
 
-<body class="flex flex-col justify-center items-center w-full font-sans text-gray-900 mt-4 md:mt-8 lg:mt-[150px] antialiased">
+<body class="flex flex-col items-center w-full font-sans text-gray-900 antialiased pt-[calc(6.5rem+env(safe-area-inset-top,0px))] md:pt-[calc(8rem+env(safe-area-inset-top,0px))] lg:pt-[calc(9.375rem+env(safe-area-inset-top,0px))]">
     
     <!-- Loading Screen -->
     <div id="loading-screen">

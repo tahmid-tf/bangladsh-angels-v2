@@ -35,6 +35,7 @@ Route::get('/our-investors', [PrimaryController::class, 'viewInvestors'])->name(
 Route::redirect('/ban-resources', '/deckvue', 301);
 Route::get('/deckvue', [PrimaryController::class, 'viewResources'])->name('resources');
 Route::get('/team', [PrimaryController::class, 'viewTeam'])->name('team');
+Route::get('/angel-academy', [PrimaryController::class, 'viewAngelAcademy'])->name('angel-academy');
 Route::get('/startups', [PrimaryController::class, 'viewStartups'])->name('startups');
 Route::post('/startups/pitch', [FounderPitchController::class, 'store'])
     ->middleware('throttle:10,1')

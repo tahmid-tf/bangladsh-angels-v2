@@ -1,5 +1,5 @@
-<section class="fixed flex flex-col z-10 top-0 text-center justify-center items-center w-full">
-    <div class="align-self-center w-full md:w-[70vw] bg-gray-100/30 backdrop-blur-lg z-50 shadow-md flex flex-row justify-between items-center rounded-lg md:rounded-full mt-6 px-4">
+<section class="fixed top-0 z-40 flex w-full flex-col items-center justify-center text-center pt-[env(safe-area-inset-top,0px)]">
+    <div class="relative align-self-center mt-6 flex w-full flex-row items-center justify-between rounded-lg bg-gray-100/30 px-4 shadow-md backdrop-blur-lg md:w-[70vw] md:rounded-full z-50">
         
         <!-- Logo (Left for Desktop) -->
         <a href="{{ route('home') }}" class="flex justify-start" title="Bangladesh Angels Network — home">
@@ -14,6 +14,7 @@
         <!-- Navigation Menu (Center for Desktop) -->
         <div class="hidden md:flex flex-1 justify-center">
             <ul class="flex flex-row font-bold text-gray-700">
+                <li class="m-3"><a href="{{ route('angel-academy') }}" title="BAN Angel Academy — programme for angel investors">Angel Academy</a></li>
                 <li class="m-3"><a href="{{ route('startups') }}" title="Startups — portfolio, deals, pitch, and founder services">Startups</a></li>
                 <li class="m-3"><a href="{{ route('investors') }}" title="Our angel investors and how to join BAN">Investors</a></li>
                 <li class="m-3"><a href="{{ route('resources') }}" title="DeckVue — events, webinars, and programs">DeckVue</a></li>
@@ -69,7 +70,7 @@
         </div>
 
         <!-- Mobile Menu -->
-        <div id="mobile-menu" class="hidden flex-col items-center bg-white w-full shadow-md md:hidden absolute top-[70px] left-0 z-20">
+        <div id="mobile-menu" class="absolute left-0 right-0 top-full z-20 hidden w-full flex-col items-center border-t border-gray-100 bg-white shadow-md md:hidden">
             <ul class="flex flex-col text-gray-700 w-full">
                 @auth
                 <li class="px-4 py-2 border-b w-full flex items-end justify-end">
@@ -81,6 +82,7 @@
                 @guest
                 <li class="px-4 py-2 border-b"><a href="{{ route('login') }}" title="Log in or sign up">Login/Sign Up</a></li>
                 @endguest
+                <li class="px-4 py-2 border-b"><a href="{{ route('angel-academy') }}" title="BAN Angel Academy — programme for angel investors">Angel Academy</a></li>
                 <li class="px-4 py-2 border-b"><a href="{{ route('startups') }}" title="Startups — portfolio, deals, pitch, and founder services">Startups</a></li>
                 <li class="px-4 py-2 border-b"><a href="{{ route('investors') }}" title="Our angel investors and how to join BAN">Investors</a></li>
                 <li class="px-4 py-2 border-b"><a href="{{ route('resources') }}" title="DeckVue — events, webinars, and programs">DeckVue</a></li>
