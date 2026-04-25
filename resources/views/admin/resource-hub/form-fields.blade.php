@@ -4,7 +4,7 @@
 @endphp
 
 <div>
-    <label for="title" class="block text-sm font-semibold text-gray-700 mb-1">Title</label>
+    <label for="title" class="block text-sm font-semibold text-gray-700 mb-1">Card title</label>
     <input type="text" name="title" id="title" value="{{ old('title', $card?->title) }}" required maxlength="255"
         class="w-full rounded-lg border border-gray-300 px-3 py-2 text-gray-900 focus:ring-2 focus:ring-[#0a5554] focus:border-[#0a5554]">
 </div>
@@ -33,10 +33,14 @@
 <div>
     <label for="logo" class="block text-sm font-semibold text-gray-700 mb-1">Logo</label>
     @if ($card?->logoUrl())
-        <p class="text-sm text-gray-600 mb-2">Current:</p>
+        <p class="text-sm text-gray-600 mb-2">Current logo:</p>
         <img src="{{ $card->logoUrl() }}" alt="" class="h-20 w-20 rounded-full object-cover border border-gray-200 mb-3">
+        <label class="mt-2 flex cursor-pointer items-center gap-2 text-sm text-gray-700">
+            <input type="checkbox" name="remove_logo" value="1" class="rounded border-gray-300 text-[#0a5554] focus:ring-[#0a5554]">
+            <span>Remove current logo</span>
+        </label>
     @endif
     <input type="file" name="logo" id="logo" accept="image/*"
-        class="block w-full text-sm text-gray-600 file:mr-4 file:rounded-lg file:border-0 file:bg-green-50 file:px-4 file:py-2 file:font-semibold file:text-[#0a5554]">
-    <p class="mt-1 text-xs text-gray-500">Optional. Square images work best. Max 4&nbsp;MB.</p>
+        class="mt-3 block w-full text-sm text-gray-600 file:mr-4 file:rounded-lg file:border-0 file:bg-green-50 file:px-4 file:py-2 file:font-semibold file:text-[#0a5554]">
+    <p class="mt-1 text-xs text-gray-500">Optional. Square images work best. Max 4&nbsp;MB. Uploading a new image replaces the current one.</p>
 </div>

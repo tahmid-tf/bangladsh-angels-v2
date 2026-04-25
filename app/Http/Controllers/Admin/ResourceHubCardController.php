@@ -72,6 +72,10 @@ class ResourceHubCardController extends Controller
             'cta_label' => $validated['cta_label'],
         ]);
 
+        if ($request->boolean('remove_logo')) {
+            $resourceHubCard->clearMediaCollection(ResourceHubCard::MEDIA_LOGO);
+        }
+
         if ($request->hasFile('logo')) {
             $resourceHubCard->clearMediaCollection(ResourceHubCard::MEDIA_LOGO);
             $resourceHubCard->addMediaFromRequest('logo')
@@ -122,6 +126,7 @@ class ResourceHubCardController extends Controller
             }],
             'cta_label' => ['required', 'string', 'max:120'],
             'logo' => ['nullable', 'image', 'max:4096'],
+            'remove_logo' => ['sometimes', 'boolean'],
         ]);
     }
 }

@@ -37,7 +37,7 @@ return new class extends Migration
                 'updated_at' => $now,
             ],
             [
-                'title' => 'DeckVue',
+                'title' => 'Resources',
                 'one_liner' => 'AI-assisted deck feedback so founders can sharpen their story before investors see it.',
                 'link' => 'https://deckvue.ai',
                 'sort_order' => 3,

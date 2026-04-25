@@ -1,11 +1,11 @@
 @extends('layouts.admin')
-@section('page_title', 'Resources page cards | Dashboard')
+@section('page_title', 'Resources page (/deckvue) cards | Dashboard')
 @section('page_content')
 <div class="container w-full p-6">
     <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 p-4 bg-white shadow mb-6">
         <div>
-            <h1 class="text-lg md:text-xl font-bold">Resources page (BAN /deckvue)</h1>
-            <p class="text-sm text-gray-600 mt-1">Add, remove, or edit cards (title, one-liner, CTA, logo, link).</p>
+            <h1 class="text-lg md:text-xl font-bold">Public resources page (/deckvue)</h1>
+            <p class="text-sm text-gray-600 mt-1">Edits the partner cards on the public Resources page (<code class="text-xs bg-gray-100 px-1 rounded">/deckvue</code>): card title, one-line description, button text, link, and optional logo. Upload a new file to replace the logo, or use &ldquo;Remove current logo&rdquo; on edit.</p>
         </div>
         <div class="flex flex-wrap items-center gap-3">
             <a href="{{ route('admin.resource-hub.create') }}" class="inline-flex items-center justify-center rounded-lg bg-green-600 px-4 py-2 text-sm font-semibold text-white hover:bg-green-700 transition">

@@ -66,7 +66,7 @@
                         <div class="flex justify-center shrink-0">
                             <div class="h-28 w-28 md:h-32 md:w-32 shrink-0 overflow-hidden rounded-full border-2 border-white shadow-md ring-2 ring-[#36b37e]/20 bg-gray-50">
                                 @if ($card->logoUrl())
-                                    <img src="{{ $card->logoUrl() }}" alt="" class="h-full w-full object-cover object-center">
+                                    <img src="{{ $card->logoUrl() }}" alt="{{ $card->title }}" class="h-full w-full object-cover object-center">
                                 @else
                                     <div class="flex h-full w-full items-center justify-center text-xs font-medium text-gray-400 tracking-wide" aria-hidden="true">Logo</div>
                                 @endif
@@ -77,20 +77,24 @@
                                @if ($isExternal) target="_blank" rel="noopener noreferrer" @endif
                                class="inline-flex items-center justify-center gap-2 rounded-full bg-[#0f3d34] px-6 py-3 text-sm md:text-base font-semibold text-white shadow-sm hover:bg-[#156755] transition-colors w-full sm:w-auto">
                                 <span>{{ $card->cta_label ?: 'Learn more' }}</span>
-                                <span aria-hidden="true">?</span>
+                                @if ($isExternal)
+                                    <span aria-hidden="true" class="opacity-90">↗</span>
+                                @else
+                                    <span aria-hidden="true" class="opacity-90">→</span>
+                                @endif
                             </a>
                         </div>
                     </div>
                 </article>
-                <p class="mt-4 text-center">
-                    <a href="{{ $brochureUrl }}" target="_blank" rel="noopener noreferrer" class="text-sm font-semibold text-[#36b37e] hover:text-[#18736a] underline underline-offset-4">
-                        Click here to see our brochure
-                    </a>
-                </p>
             </div>
         @empty
             <p class="text-center text-gray-600 py-12">No resource cards are configured yet.</p>
         @endforelse
+        <p class="mt-10 text-center md:mt-12">
+            <a href="{{ $brochureUrl }}" target="_blank" rel="noopener noreferrer" class="text-sm font-semibold text-[#36b37e] hover:text-[#18736a] underline underline-offset-4">
+                Click here to see our brochure
+            </a>
+        </p>
     </div>
 </section>
 @endsection
