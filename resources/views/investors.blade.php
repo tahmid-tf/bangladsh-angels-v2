@@ -34,7 +34,8 @@
     </section>
 </div>
 
-{{-- 2. Our Membership Plans (pricing) --}}
+{{-- 2. Our Membership Plans (pricing) — hidden for logged-in paid members --}}
+@if ($showMembershipPlans ?? true)
 <section class="w-full max-w-6xl mx-auto px-4 sm:px-6 py-10 sm:py-12 border-t border-gray-100" aria-label="Our membership plans">
     @include('partials.subscription-plans', [
         'tiers' => $tiers,
@@ -42,6 +43,7 @@
         'tierSectionSubtitle' => 'Choose the tier that fits how you invest with Bangladesh Angels Network.',
     ])
 </section>
+@endif
 
 {{-- 3. Investor highlights — unified spotlight layout --}}
 <section class="relative border-t border-[#d4ebe3]" aria-labelledby="investor-highlight-heading">

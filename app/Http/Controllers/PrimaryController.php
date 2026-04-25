@@ -165,9 +165,13 @@ class PrimaryController extends Controller
             ->orderBy('name')
             ->get();
 
-        $tiers = SubscriptionTier::query()->active()->ordered()->get();
+        $showMembershipPlans = ! auth()->check() || auth()->user()->isFree();
 
-        return view('investors', compact('investors', 'tiers'));
+        $tiers = $showMembershipPlans
+            ? SubscriptionTier::query()->active()->ordered()->get()
+            : collect();
+
+        return view('investors', compact('investors', 'tiers', 'showMembershipPlans'));
     }
 
     // View Resources Page (hub cards; content managed in admin)
