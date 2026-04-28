@@ -55,9 +55,14 @@
             @endauth
 
             @guest
-            <a href="{{ route('login') }}" title="Log in or create a Bangladesh Angels Network account" class="inline-flex items-center justify-center px-6 py-3 rounded-full bg-[#00877a] font-bold text-white text-center whitespace-nowrap min-w-max">
-                Login / Sign Up
-            </a>
+            <div class="flex items-center gap-3 shrink-0">
+                <a href="{{ route('login') }}" title="Log in to your Bangladesh Angels Network account" class="text-sm font-medium text-gray-600 hover:text-[#00877a] transition-colors px-2 py-2">
+                    Login
+                </a>
+                <a href="{{ route('investor.signup') }}" title="Apply to become an angel investor with Bangladesh Angels Network" class="inline-flex items-center justify-center px-5 py-2.5 md:px-6 md:py-3 rounded-full bg-[#0f3d34] font-bold text-white text-center whitespace-nowrap shadow-md hover:bg-[#156755] transition-colors min-w-max text-sm md:text-base">
+                    Become an Investor
+                </a>
+            </div>
             @endguest
         </div>
 
@@ -85,7 +90,12 @@
                 <li class="px-4 py-2 border-b"><a href="{{ route('profile.edit') }}">Profile</a></li>
                 @endauth
                 @guest
-                <li class="px-4 py-2 border-b"><a href="{{ route('login') }}" title="Log in or sign up">Login/Sign Up</a></li>
+                <li class="px-4 py-3 border-b">
+                    <a href="{{ route('investor.signup') }}" title="Apply to become an angel investor" class="flex w-full items-center justify-center rounded-full bg-[#0f3d34] py-3 font-bold text-white shadow-md hover:bg-[#156755] transition-colors">
+                        Become an Investor
+                    </a>
+                </li>
+                <li class="px-4 py-2 border-b text-center"><a href="{{ route('login') }}" title="Log in to your account" class="text-sm text-gray-600 hover:text-[#00877a]">Login</a></li>
                 @endguest
                 <li class="px-4 py-2 border-b"><a href="{{ route('angel-academy') }}" title="BAN Angel Academy — programme for angel investors">Angel Academy</a></li>
                 <li class="px-4 py-2 border-b"><a href="{{ route('startups') }}" title="Startups — portfolio, deals, pitch, and founder services">Startups</a></li>

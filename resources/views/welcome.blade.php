@@ -187,18 +187,25 @@
             <p class="my-6 text-[1em] md:text-[1.1em]">
                 Bangladesh's first and largest angel investment platform, BAN connects early-stage startups with investors who bring capital, expertise, and a global network. We back founders solving real challenges, turning ambition into action.
             </p>
-            <a href="{{ route('startups') }}"
-               class="hero-cta-pill inline-flex flex-wrap items-baseline justify-center md:justify-start p-3 px-5 sm:px-6 rounded-full bg-[#eefff1] font-bold text-[#36b37e] text-[0.9rem] sm:text-base leading-snug"
-               aria-label="I'm looking to fundraise or invest">
-                <span class="whitespace-nowrap">I'm looking to</span>
-                <span class="hero-cta-rotator" aria-hidden="true">
-                    <span class="hero-cta-rotator-track">
-                        <span class="hero-cta-rotator-item">fundraise</span>
-                        <span class="hero-cta-rotator-item">invest</span>
-                        <span class="hero-cta-rotator-item">fundraise</span>
+            <div class="flex flex-col items-center gap-4 md:items-start">
+                <a href="{{ route('investor.signup') }}"
+                   class="inline-flex items-center justify-center rounded-full bg-[#0f3d34] px-7 py-3.5 text-base font-bold text-white shadow-lg hover:bg-[#156755] transition-colors w-full max-w-xs sm:max-w-none sm:w-auto"
+                   title="Apply to become an angel investor with Bangladesh Angels Network">
+                    Become an Investor
+                </a>
+                <a href="{{ route('startups') }}"
+                   class="hero-cta-pill inline-flex flex-wrap items-baseline justify-center md:justify-start p-3 px-5 sm:px-6 rounded-full bg-[#eefff1] font-bold text-[#36b37e] text-[0.9rem] sm:text-base leading-snug"
+                   aria-label="I'm looking to fundraise or invest">
+                    <span class="whitespace-nowrap">I'm looking to</span>
+                    <span class="hero-cta-rotator" aria-hidden="true">
+                        <span class="hero-cta-rotator-track">
+                            <span class="hero-cta-rotator-item">fundraise</span>
+                            <span class="hero-cta-rotator-item">invest</span>
+                            <span class="hero-cta-rotator-item">fundraise</span>
+                        </span>
                     </span>
-                </span>
-            </a>
+                </a>
+            </div>
         </div>
     </div>
   </section>
