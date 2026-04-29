@@ -34,13 +34,36 @@
                       class="w-full rounded-lg border border-gray-300 px-3 py-2 text-gray-900 focus:border-green-600 focus:ring-1 focus:ring-green-600">{{ old('description', $card->description) }}</textarea>
         </div>
 
-        <div>
-            <label for="cta_link" class="block text-sm font-semibold text-gray-700 mb-1">CTA link (optional)</label>
-            <input type="text" name="cta_link" id="cta_link" value="{{ old('cta_link', $card->cta_link) }}" maxlength="2048"
-                   placeholder="https://example.com or /startups or #contact"
-                   class="w-full rounded-lg border border-gray-300 px-3 py-2 text-gray-900 focus:border-green-600 focus:ring-1 focus:ring-green-600">
-            <p class="mt-1 text-xs text-gray-500">If provided, a CTA button will appear on the landing What We Do card. Leave empty to hide the button.</p>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+                <label for="learn_more_label" class="block text-sm font-semibold text-gray-700 mb-1">Learn more button label (optional)</label>
+                <input type="text" name="learn_more_label" id="learn_more_label" value="{{ old('learn_more_label', $card->learn_more_label ?: 'Learn more') }}" maxlength="120"
+                       placeholder="Learn more"
+                       class="w-full rounded-lg border border-gray-300 px-3 py-2 text-gray-900 focus:border-green-600 focus:ring-1 focus:ring-green-600">
+            </div>
+            <div>
+                <label for="learn_more_link" class="block text-sm font-semibold text-gray-700 mb-1">Learn more link (optional)</label>
+                <input type="text" name="learn_more_link" id="learn_more_link" value="{{ old('learn_more_link', $card->learn_more_link ?: $card->cta_link) }}" maxlength="2048"
+                       placeholder="https://example.com or /startups or #contact"
+                       class="w-full rounded-lg border border-gray-300 px-3 py-2 text-gray-900 focus:border-green-600 focus:ring-1 focus:ring-green-600">
+            </div>
         </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+                <label for="action_label" class="block text-sm font-semibold text-gray-700 mb-1">Action button label (optional)</label>
+                <input type="text" name="action_label" id="action_label" value="{{ old('action_label', $card->action_label) }}" maxlength="120"
+                       placeholder="Book a call / Book a demo"
+                       class="w-full rounded-lg border border-gray-300 px-3 py-2 text-gray-900 focus:border-green-600 focus:ring-1 focus:ring-green-600">
+            </div>
+            <div>
+                <label for="action_link" class="block text-sm font-semibold text-gray-700 mb-1">Action button link (optional)</label>
+                <input type="text" name="action_link" id="action_link" value="{{ old('action_link', $card->action_link) }}" maxlength="2048"
+                       placeholder="https://calendar... or https://deckview.ai/..."
+                       class="w-full rounded-lg border border-gray-300 px-3 py-2 text-gray-900 focus:border-green-600 focus:ring-1 focus:ring-green-600">
+            </div>
+        </div>
+        <p class="mt-1 text-xs text-gray-500">Set both labels and links to show two buttons on homepage cards. Leave action fields empty to show only Learn more.</p>
 
         <div>
             <span class="block text-sm font-semibold text-gray-700 mb-2">Cover image</span>

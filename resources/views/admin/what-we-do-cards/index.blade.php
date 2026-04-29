@@ -5,7 +5,7 @@
     <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 p-4 bg-white shadow mb-6">
         <div>
             <h1 class="text-lg md:text-xl font-bold">Homepage — What We Do</h1>
-            <p class="text-sm text-gray-600 mt-1">Edit each card’s title, description, and cover image. If no image is uploaded, a placeholder is shown (BWIN uses <code class="text-xs bg-gray-100 px-1 rounded">bwin.png</code> when present).</p>
+            <p class="text-sm text-gray-600 mt-1">Edit each card’s title, description, cover image, and button labels/links. You can set both Learn more and an action CTA (e.g., Book a call / Book a demo).</p>
         </div>
         <a href="{{ route('home') }}#what-we-do" target="_blank" rel="noopener noreferrer" class="text-sm font-semibold text-[#0a5554] hover:underline">View section on site →</a>
     </div>

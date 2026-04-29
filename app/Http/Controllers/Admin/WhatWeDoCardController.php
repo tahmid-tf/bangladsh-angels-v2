@@ -33,7 +33,8 @@ class WhatWeDoCardController extends Controller
         $validated = $request->validate([
             'title' => ['required', 'string', 'max:255'],
             'description' => ['required', 'string', 'max:8000'],
-            'cta_link' => [
+            'learn_more_label' => ['nullable', 'string', 'max:120'],
+            'learn_more_link' => [
                 'nullable',
                 'string',
                 'max:2048',
@@ -47,7 +48,26 @@ class WhatWeDoCardController extends Controller
                     $isAnchor = str_starts_with($value, '#');
 
                     if (! $isAbsoluteUrl && ! $isRelativePath && ! $isAnchor) {
-                        $fail('The CTA link must be a valid URL, a relative path starting with "/", or an anchor starting with "#".');
+                        $fail('The Learn more link must be a valid URL, a relative path starting with "/", or an anchor starting with "#".');
+                    }
+                },
+            ],
+            'action_label' => ['nullable', 'string', 'max:120'],
+            'action_link' => [
+                'nullable',
+                'string',
+                'max:2048',
+                function (string $attribute, mixed $value, \Closure $fail): void {
+                    if (! filled($value)) {
+                        return;
+                    }
+
+                    $isAbsoluteUrl = filter_var($value, FILTER_VALIDATE_URL) !== false;
+                    $isRelativePath = str_starts_with($value, '/');
+                    $isAnchor = str_starts_with($value, '#');
+
+                    if (! $isAbsoluteUrl && ! $isRelativePath && ! $isAnchor) {
+                        $fail('The Action button link must be a valid URL, a relative path starting with "/", or an anchor starting with "#".');
                     }
                 },
             ],
@@ -57,7 +77,11 @@ class WhatWeDoCardController extends Controller
         $whatWeDoCard->update([
             'title' => $validated['title'],
             'description' => $validated['description'],
-            'cta_link' => filled($validated['cta_link'] ?? null) ? $validated['cta_link'] : null,
+            'cta_link' => filled($validated['learn_more_link'] ?? null) ? $validated['learn_more_link'] : null,
+            'learn_more_label' => filled($validated['learn_more_label'] ?? null) ? $validated['learn_more_label'] : null,
+            'learn_more_link' => filled($validated['learn_more_link'] ?? null) ? $validated['learn_more_link'] : null,
+            'action_label' => filled($validated['action_label'] ?? null) ? $validated['action_label'] : null,
+            'action_link' => filled($validated['action_link'] ?? null) ? $validated['action_link'] : null,
         ]);
 
         if ($request->boolean('remove_cover')) {

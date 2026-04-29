@@ -54,13 +54,17 @@
             @php
                 $i = $loop->index % 3;
                 $isExternal = str_starts_with(strtolower(trim($card->link)), 'http');
+                $normalizedTitle = strtolower(trim((string) $card->title));
+                $isResourcesCard = in_array($normalizedTitle, ['deckvue', 'resources'], true);
+                $displayTitle = $isResourcesCard ? 'Resources' : $card->title;
+                $displayCtaLabel = $isResourcesCard ? 'Learn more' : ($card->cta_label ?: 'Learn more');
             @endphp
-            <div class="relative">
+            <div class="relative" @if (strtolower(trim((string) $card->title)) === 'bwin') id="bwin" @endif>
                 <div class="absolute inset-0 translate-x-2 translate-y-2 rounded-3xl {{ $shadowClasses[$i] }}" aria-hidden="true"></div>
                 <article class="relative overflow-hidden rounded-3xl border bg-gradient-to-br {{ $surfaceClasses[$i] }} shadow-md">
                     <div class="flex flex-col lg:flex-row lg:items-center gap-8 lg:gap-10 p-8 md:p-10">
                         <div class="lg:flex-1 text-center lg:text-left min-w-0">
-                            <h2 class="text-2xl md:text-3xl font-bold text-[#0f3d34]">{{ $card->title }}</h2>
+                            <h2 class="text-2xl md:text-3xl font-bold text-[#0f3d34]">{{ $displayTitle }}</h2>
                             <p class="mt-2 text-sm md:text-base text-gray-600 leading-relaxed">{{ $card->one_liner }}</p>
                         </div>
                         <div class="flex justify-center shrink-0">
@@ -76,7 +80,7 @@
                             <a href="{{ $card->link }}"
                                @if ($isExternal) target="_blank" rel="noopener noreferrer" @endif
                                class="inline-flex items-center justify-center gap-2 rounded-full bg-[#0f3d34] px-6 py-3 text-sm md:text-base font-semibold text-white shadow-sm hover:bg-[#156755] transition-colors w-full sm:w-auto">
-                                <span>{{ $card->cta_label ?: 'Learn more' }}</span>
+                                <span>{{ $displayCtaLabel }}</span>
                                 @if ($isExternal)
                                     <span aria-hidden="true" class="opacity-90">↗</span>
                                 @else

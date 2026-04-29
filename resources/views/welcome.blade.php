@@ -223,6 +223,14 @@
 
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10">
         @forelse ($whatWeDoCards as $card)
+          @php
+            $learnMoreLabel = filled($card->learn_more_label) ? $card->learn_more_label : 'Learn more';
+            $learnMoreLink = filled($card->learn_more_link) ? $card->learn_more_link : $card->cta_link;
+            $hasLearnMore = filled($learnMoreLink);
+            $hasAction = filled($card->action_label) && filled($card->action_link);
+            $learnMoreExternal = $hasLearnMore && str_starts_with(strtolower(trim((string) $learnMoreLink)), 'http');
+            $actionExternal = $hasAction && str_starts_with(strtolower(trim((string) $card->action_link)), 'http');
+          @endphp
           <article class="what-we-do-card rounded-3xl p-5 md:p-6 flex flex-col h-full">
             <h3 class="what-we-do-badge mx-auto text-center font-bold text-lg md:text-xl px-8 py-2.5 mb-5 w-fit min-w-[170px]">
               {{ $card->title }}
@@ -234,10 +242,23 @@
 
             <div class="what-we-do-card-body">
               <p>{{ $card->description }}</p>
-              @if (filled($card->cta_link))
-                <a href="{{ $card->cta_link }}" class="mt-5 inline-flex items-center justify-center px-4 py-2 rounded-full bg-[#eefff1] text-[#0f6a4b] font-semibold text-sm border border-green-100/70 hover:bg-[#dff7e8] transition-colors">
-                  Learn More
-                </a>
+              @if ($hasLearnMore || $hasAction)
+                <div class="mt-5 flex flex-wrap gap-2">
+                  @if ($hasLearnMore)
+                    <a href="{{ $learnMoreLink }}"
+                       @if ($learnMoreExternal) target="_blank" rel="noopener noreferrer" @endif
+                       class="inline-flex items-center justify-center px-4 py-2 rounded-full bg-[#eefff1] text-[#0f6a4b] font-semibold text-sm border border-green-100/70 hover:bg-[#dff7e8] transition-colors">
+                      {{ $learnMoreLabel }}
+                    </a>
+                  @endif
+                  @if ($hasAction)
+                    <a href="{{ $card->action_link }}"
+                       @if ($actionExternal) target="_blank" rel="noopener noreferrer" @endif
+                       class="inline-flex items-center justify-center px-4 py-2 rounded-full bg-[#0f3d34] text-white font-semibold text-sm border border-[#0f3d34] hover:bg-[#156755] transition-colors">
+                      {{ $card->action_label }}
+                    </a>
+                  @endif
+                </div>
               @endif
             </div>
           </article>

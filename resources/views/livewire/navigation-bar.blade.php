@@ -16,7 +16,16 @@
             <ul class="flex flex-row items-center font-bold text-gray-700 text-sm xl:text-[15px]">
                 <li class="mx-2 xl:mx-3"><a href="{{ route('angel-academy') }}" title="BAN Angel Academy — programme for angel investors">Angel Academy</a></li>
                 <li class="mx-2 xl:mx-3"><a href="{{ route('startups') }}" title="Startups — portfolio, deals, pitch, and founder services">Startups</a></li>
-                <li class="mx-2 xl:mx-3"><a href="{{ route('investors') }}" title="Our angel investors and how to join BAN">Investors</a></li>
+                <li class="mx-2 xl:mx-3 relative group">
+                    <button type="button" class="inline-flex items-center gap-1" aria-haspopup="true">
+                        <span>Investors</span>
+                        <span class="text-xs" aria-hidden="true">▾</span>
+                    </button>
+                    <div class="invisible opacity-0 group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100 transition absolute left-0 mt-2 min-w-[170px] rounded-xl border border-gray-100 bg-white shadow-lg z-50">
+                        <a href="{{ route('resources') }}#bwin" class="block px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-50 rounded-t-xl">BWIN</a>
+                        <a href="{{ route('investor.signup') }}" class="block px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-50 rounded-b-xl">BAN</a>
+                    </div>
+                </li>
                 <li class="mx-2 xl:mx-3">
                     <a
                         href="{{ route('resources') }}"
@@ -99,7 +108,13 @@
                 @endguest
                 <li class="px-4 py-2 border-b"><a href="{{ route('angel-academy') }}" title="BAN Angel Academy — programme for angel investors">Angel Academy</a></li>
                 <li class="px-4 py-2 border-b"><a href="{{ route('startups') }}" title="Startups — portfolio, deals, pitch, and founder services">Startups</a></li>
-                <li class="px-4 py-2 border-b"><a href="{{ route('investors') }}" title="Our angel investors and how to join BAN">Investors</a></li>
+                <li class="px-4 py-2 border-b">
+                    <span class="font-semibold text-gray-800">Investors</span>
+                    <div class="mt-2 flex flex-col">
+                        <a href="{{ route('resources') }}#bwin" class="py-1 text-sm text-gray-700">BWIN</a>
+                        <a href="{{ route('investor.signup') }}" class="py-1 text-sm text-gray-700">BAN</a>
+                    </div>
+                </li>
                 <li class="px-4 py-2 border-b">
                     <a
                         href="{{ route('resources') }}"
