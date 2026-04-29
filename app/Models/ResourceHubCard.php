@@ -18,6 +18,7 @@ class ResourceHubCard extends Model implements HasMedia
         'one_liner',
         'link',
         'cta_label',
+        'cta_link',
         'sort_order',
     ];
 

@@ -25,7 +25,7 @@
                 <tr>
                     <th class="px-4 py-3 font-semibold text-gray-700">Order</th>
                     <th class="px-4 py-3 font-semibold text-gray-700">Title</th>
-                    <th class="px-4 py-3 font-semibold text-gray-700">Button</th>
+                    <th class="px-4 py-3 font-semibold text-gray-700">Second Button</th>
                     <th class="px-4 py-3 font-semibold text-gray-700">Link</th>
                     <th class="px-4 py-3 font-semibold text-gray-700"></th>
                 </tr>
@@ -35,7 +35,7 @@
                     <tr class="hover:bg-gray-50/80">
                         <td class="px-4 py-3 text-gray-600">{{ $card->sort_order }}</td>
                         <td class="px-4 py-3 font-medium text-gray-900">{{ $card->title }}</td>
-                        <td class="px-4 py-3 text-gray-600 max-w-[10rem] truncate" title="{{ $card->cta_label }}">{{ $card->cta_label ?: '—' }}</td>
+                        <td class="px-4 py-3 text-gray-600 max-w-[12rem] truncate" title="{{ $card->cta_label }} {{ $card->cta_link ? '→ '.$card->cta_link : '' }}">{{ $card->cta_label ?: '—' }}</td>
                         <td class="px-4 py-3 text-gray-600 max-w-md truncate" title="{{ $card->link }}">{{ $card->link }}</td>
                         <td class="px-4 py-3 whitespace-nowrap">
                             <a href="{{ route('admin.resource-hub.edit', $card) }}" class="text-[#0a5554] font-semibold hover:underline">Edit</a>

@@ -38,7 +38,8 @@ class ResourceHubCardController extends Controller
             'title' => $validated['title'],
             'one_liner' => $validated['one_liner'],
             'link' => $validated['link'],
-            'cta_label' => $validated['cta_label'],
+            'cta_label' => filled($validated['cta_label'] ?? null) ? $validated['cta_label'] : null,
+            'cta_link' => filled($validated['cta_link'] ?? null) ? $validated['cta_link'] : null,
             'sort_order' => $nextOrder,
         ]);
 
@@ -69,7 +70,8 @@ class ResourceHubCardController extends Controller
             'title' => $validated['title'],
             'one_liner' => $validated['one_liner'],
             'link' => $validated['link'],
-            'cta_label' => $validated['cta_label'],
+            'cta_label' => filled($validated['cta_label'] ?? null) ? $validated['cta_label'] : null,
+            'cta_link' => filled($validated['cta_link'] ?? null) ? $validated['cta_link'] : null,
         ]);
 
         if ($request->boolean('remove_logo')) {
@@ -124,7 +126,22 @@ class ResourceHubCardController extends Controller
                     $fail('The '.$attribute.' must be a valid URL (https://, http://, or mailto:).');
                 }
             }],
-            'cta_label' => ['required', 'string', 'max:120'],
+            'cta_label' => ['nullable', 'string', 'max:120'],
+            'cta_link' => ['nullable', 'string', 'max:2048', function (string $attribute, mixed $value, \Closure $fail): void {
+                if (! is_string($value) || trim($value) === '') {
+                    return;
+                }
+                if (preg_match('#^mailto:#i', $value)) {
+                    if (! str_contains($value, '@')) {
+                        $fail('The '.$attribute.' must be a valid mailto link.');
+                    }
+
+                    return;
+                }
+                if (filter_var($value, FILTER_VALIDATE_URL) === false) {
+                    $fail('The '.$attribute.' must be a valid URL (https://, http://, or mailto:).');
+                }
+            }],
             'logo' => ['nullable', 'image', 'max:4096'],
             'remove_logo' => ['sometimes', 'boolean'],
         ]);
