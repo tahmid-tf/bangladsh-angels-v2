@@ -21,9 +21,11 @@
                         <span>Investors</span>
                         <span class="text-xs" aria-hidden="true">▾</span>
                     </button>
-                    <div class="invisible opacity-0 group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100 transition absolute left-0 mt-2 min-w-[170px] rounded-xl border border-gray-100 bg-white shadow-lg z-50">
+                    <div class="invisible opacity-0 group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100 transition absolute left-0 top-full pt-1 min-w-[170px] z-50">
+                        <div class="rounded-xl border border-gray-100 bg-white shadow-lg overflow-hidden">
                         <a href="{{ route('resources') }}#bwin" class="block px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-50 rounded-t-xl">BWIN</a>
                         <a href="{{ route('investor.signup') }}" class="block px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-50 rounded-b-xl">BAN</a>
+                        </div>
                     </div>
                 </li>
                 <li class="mx-2 xl:mx-3">

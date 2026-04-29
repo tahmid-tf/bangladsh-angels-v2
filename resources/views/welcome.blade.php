@@ -226,10 +226,21 @@
           @php
             $learnMoreLabel = filled($card->learn_more_label) ? $card->learn_more_label : 'Learn more';
             $learnMoreLink = filled($card->learn_more_link) ? $card->learn_more_link : $card->cta_link;
+            if (! filled($learnMoreLink) && $card->slug === 'angel-academy') {
+              $learnMoreLink = '/angel-academy';
+            } elseif (! filled($learnMoreLink) && $card->slug === 'bwin') {
+              $learnMoreLink = '/deckvue#bwin';
+            }
+            $fallbackActionLabel = $card->slug === 'angel-academy' ? 'Book a demo' : ($card->slug === 'bwin' ? 'Book a call' : null);
+            $fallbackActionLink = in_array($card->slug, ['angel-academy', 'bwin'], true)
+              ? 'https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ1oFoHy0m9As4PtSfm4Ee-nVyoZRNNyZ38doHCWpVwDfo5u3qxnesRT_LqD_Fv5nUlbE3EvxyYN'
+              : null;
+            $actionLabel = filled($card->action_label) ? $card->action_label : $fallbackActionLabel;
+            $actionLink = filled($card->action_link) ? $card->action_link : $fallbackActionLink;
             $hasLearnMore = filled($learnMoreLink);
-            $hasAction = filled($card->action_label) && filled($card->action_link);
+            $hasAction = filled($actionLabel) && filled($actionLink);
             $learnMoreExternal = $hasLearnMore && str_starts_with(strtolower(trim((string) $learnMoreLink)), 'http');
-            $actionExternal = $hasAction && str_starts_with(strtolower(trim((string) $card->action_link)), 'http');
+            $actionExternal = $hasAction && str_starts_with(strtolower(trim((string) $actionLink)), 'http');
           @endphp
           <article class="what-we-do-card rounded-3xl p-5 md:p-6 flex flex-col h-full">
             <h3 class="what-we-do-badge mx-auto text-center font-bold text-lg md:text-xl px-8 py-2.5 mb-5 w-fit min-w-[170px]">
@@ -243,20 +254,26 @@
             <div class="what-we-do-card-body">
               <p>{{ $card->description }}</p>
               @if ($hasLearnMore || $hasAction)
-                <div class="mt-5 flex flex-wrap gap-2">
+                <div class="mt-5 grid w-full grid-cols-1 gap-2 sm:grid-cols-2">
                   @if ($hasLearnMore)
                     <a href="{{ $learnMoreLink }}"
                        @if ($learnMoreExternal) target="_blank" rel="noopener noreferrer" @endif
-                       class="inline-flex items-center justify-center px-4 py-2 rounded-full bg-[#eefff1] text-[#0f6a4b] font-semibold text-sm border border-green-100/70 hover:bg-[#dff7e8] transition-colors">
+                       class="inline-flex w-full min-h-[40px] items-center justify-center px-4 py-2 rounded-full bg-[#eefff1] text-[#0f6a4b] font-semibold text-sm border border-green-100/70 hover:bg-[#dff7e8] transition-colors">
                       {{ $learnMoreLabel }}
                     </a>
                   @endif
+                  @if (!$hasLearnMore)
+                    <span class="hidden sm:inline-flex min-h-[40px]"></span>
+                  @endif
                   @if ($hasAction)
-                    <a href="{{ $card->action_link }}"
+                    <a href="{{ $actionLink }}"
                        @if ($actionExternal) target="_blank" rel="noopener noreferrer" @endif
-                       class="inline-flex items-center justify-center px-4 py-2 rounded-full bg-[#0f3d34] text-white font-semibold text-sm border border-[#0f3d34] hover:bg-[#156755] transition-colors">
-                      {{ $card->action_label }}
+                       class="inline-flex w-full min-h-[40px] items-center justify-center px-4 py-2 rounded-full bg-[#0f3d34] text-white font-semibold text-sm border border-[#0f3d34] hover:bg-[#156755] transition-colors">
+                      {{ $actionLabel }}
                     </a>
+                  @endif
+                  @if (!$hasAction)
+                    <span class="hidden sm:inline-flex min-h-[40px]"></span>
                   @endif
                 </div>
               @endif
