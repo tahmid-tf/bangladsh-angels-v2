@@ -25,15 +25,15 @@
             @php
                 $freeContinueRoute = auth()->check() && auth()->user()->is_approved ? route('dashboard') : route('approval.success');
             @endphp
-            <div class="border rounded-lg p-6 shadow-sm bg-white text-center">
+            <div class="border rounded-lg p-6 shadow-sm bg-white text-center flex flex-col h-full">
                 <h3 class="text-lg font-bold text-gray-800 mb-2 uppercase">Free</h3>
                 <p class="text-4xl font-extrabold text-gray-800 mb-2">
                     $0 <span class="text-lg font-normal text-gray-500">/yr</span>
                 </p>
                 <div class="flex justify-center mb-4">
-                    <img class="h-[100px]" src="{{ asset('plan_free.webp') }}" alt="Free tier">
+                    <img class="h-[100px] object-contain" src="{{ asset('icon.webp') }}" alt="Free tier">
                 </div>
-                <ul class="text-gray-600 space-y-2">
+                <ul class="text-gray-600 space-y-2 mb-6">
                     <li class="flex items-center justify-center space-x-2">
                         <span class="text-green-600">✔</span> <span>Keep your free investor account</span>
                     </li>
@@ -41,13 +41,13 @@
                         <span class="text-green-600">✔</span> <span>Upgrade any time later</span>
                     </li>
                 </ul>
-                <a href="{{ $freeContinueRoute }}" class="inline-block mt-6 bg-gray-700 text-white py-2 px-6 rounded-full hover:bg-gray-800 transition">
+                <a href="{{ $freeContinueRoute }}" class="inline-block mt-auto bg-gray-700 text-white py-2 px-6 rounded-full hover:bg-gray-800 transition">
                     Continue with Free
                 </a>
             </div>
         @endif
         @foreach ($tiers as $tier)
-            <div class="border rounded-lg p-6 shadow-sm bg-white text-center {{ $tier->is_highlighted ? 'relative' : '' }}">
+            <div class="border rounded-lg p-6 shadow-sm bg-white text-center flex flex-col h-full {{ $tier->is_highlighted ? 'relative' : '' }}">
                 <h3 class="text-lg font-bold text-gray-800 mb-2 uppercase">{{ $tier->name }}</h3>
                 <p class="text-4xl font-extrabold text-gray-800 mb-2">
                     ${{ number_format((float) $tier->price_yearly, 0) }} <span class="text-lg font-normal text-gray-500">/yr</span>
@@ -60,7 +60,7 @@
                         Popular
                     </span>
                 @endif
-                <ul class="text-gray-600 space-y-2 {{ $tier->is_highlighted ? 'mb-6' : '' }}">
+                <ul class="text-gray-600 space-y-2 mb-6">
                     @foreach ($tier->includedFeatureLines() as $line)
                         <li class="flex items-center justify-center space-x-2">
                             <span class="text-green-600">✔</span> <span>{{ $line }}</span>
@@ -76,7 +76,7 @@
                     @csrf
                     <input type="hidden" name="plan" value="{{ $tier->slug }}">
                     <input type="hidden" name="plan_price" value="{{ $tier->price_yearly }}">
-                    <button type="submit" class="mt-6 bg-green-600 text-white py-2 px-6 rounded-full hover:bg-green-700 transition">
+                    <button type="submit" class="mt-auto bg-green-600 text-white py-2 px-6 rounded-full hover:bg-green-700 transition">
                         Choose {{ $tier->name }}
                     </button>
                 </form>
