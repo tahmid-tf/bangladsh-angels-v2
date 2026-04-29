@@ -57,7 +57,7 @@
                 $normalizedTitle = strtolower(trim((string) $card->title));
                 $isResourcesCard = in_array($normalizedTitle, ['deckvue', 'resources'], true);
                 $displayTitle = $isResourcesCard ? 'Resources' : $card->title;
-                $displayCtaLabel = $isResourcesCard ? 'Learn more' : ($card->cta_label ?: 'Learn more');
+                $displayCtaLabel = 'Learn more';
                 $hasSecondCta = ! $isResourcesCard && filled($card->cta_label) && filled($card->cta_link);
                 $secondCtaExternal = $hasSecondCta && str_starts_with(strtolower(trim((string) $card->cta_link)), 'http');
             @endphp
