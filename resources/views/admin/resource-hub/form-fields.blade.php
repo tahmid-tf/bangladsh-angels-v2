@@ -28,7 +28,7 @@
 </div>
 
 <div>
-    <label for="cta_label" class="block text-sm font-semibold text-gray-700 mb-1">Second button text (CTA, optional)</label>
+    <label for="cta_label" class="block text-sm font-semibold text-gray-700 mb-1">CTA button text (optional)</label>
     <input type="text" name="cta_label" id="cta_label" value="{{ old('cta_label', $card?->cta_label) }}" maxlength="120"
         placeholder="Book a call / Book a demo"
         class="w-full rounded-lg border border-gray-300 px-3 py-2 text-gray-900 focus:ring-2 focus:ring-[#0a5554] focus:border-[#0a5554]">
@@ -39,7 +39,7 @@
 </div>
 
 <div>
-    <label for="cta_link" class="block text-sm font-semibold text-gray-700 mb-1">Second button link (optional)</label>
+    <label for="cta_link" class="block text-sm font-semibold text-gray-700 mb-1">CTA button link (optional)</label>
     <input type="text" name="cta_link" id="cta_link" value="{{ old('cta_link', $card?->cta_link) }}" maxlength="2048"
         placeholder="https://calendar... or https://deckvue.ai/..."
         class="w-full rounded-lg border border-gray-300 px-3 py-2 text-gray-900 focus:ring-2 focus:ring-[#0a5554] focus:border-[#0a5554]">
@@ -47,6 +47,7 @@
         <button type="button" data-fill-target="cta_link" data-fill-value="https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ1oFoHy0m9As4PtSfm4Ee-nVyoZRNNyZ38doHCWpVwDfo5u3qxnesRT_LqD_Fv5nUlbE3EvxyYN" class="rounded-full border border-gray-300 px-3 py-1 text-xs font-semibold text-gray-700 hover:bg-gray-50">Calendar</button>
         <button type="button" data-fill-target="cta_link" data-fill-value="https://deckvue.ai" class="rounded-full border border-gray-300 px-3 py-1 text-xs font-semibold text-gray-700 hover:bg-gray-50">DeckVue</button>
     </div>
+    <p class="mt-1 text-xs text-gray-500">DeckVue card will show a subtle Learn more button from the Learn more link above, and a prominent CTA when both CTA text and CTA link are set.</p>
 </div>
 
 <div>

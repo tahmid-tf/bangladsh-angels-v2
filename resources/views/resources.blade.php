@@ -81,23 +81,23 @@
                         <div class="flex flex-col items-center lg:items-end shrink-0 w-full lg:w-auto gap-2">
                             <a href="{{ $card->link }}"
                                @if ($isExternal) target="_blank" rel="noopener noreferrer" @endif
-                               class="inline-flex items-center justify-center gap-2 rounded-full bg-[#0f3d34] px-6 py-3 text-sm md:text-base font-semibold text-white shadow-sm hover:bg-[#156755] transition-colors w-full sm:w-auto">
+                               class="inline-flex items-center justify-center gap-2 rounded-full bg-[#eefff1] px-6 py-3 text-sm md:text-base font-semibold text-[#0f6a4b] border border-green-100/70 hover:bg-[#dff7e8] transition-colors w-full sm:w-auto">
                                 <span>{{ $displayCtaLabel }}</span>
                                 @if ($isExternal)
-                                    <span aria-hidden="true" class="opacity-90">↗</span>
+                                    <span aria-hidden="true" class="opacity-80">↗</span>
                                 @else
-                                    <span aria-hidden="true" class="opacity-90">→</span>
+                                    <span aria-hidden="true" class="opacity-80">→</span>
                                 @endif
                             </a>
                             @if ($hasSecondCta)
                                 <a href="{{ $card->cta_link }}"
                                    @if ($secondCtaExternal) target="_blank" rel="noopener noreferrer" @endif
-                                   class="inline-flex items-center justify-center gap-2 rounded-full bg-[#eefff1] px-6 py-3 text-sm md:text-base font-semibold text-[#0f6a4b] border border-green-100/70 hover:bg-[#dff7e8] transition-colors w-full sm:w-auto">
+                                   class="inline-flex items-center justify-center gap-2 rounded-full bg-[#0f3d34] px-6 py-3 text-sm md:text-base font-semibold text-white shadow-sm hover:bg-[#156755] transition-colors w-full sm:w-auto">
                                     <span>{{ $card->cta_label }}</span>
                                     @if ($secondCtaExternal)
-                                        <span aria-hidden="true" class="opacity-80">↗</span>
+                                        <span aria-hidden="true" class="opacity-90">↗</span>
                                     @else
-                                        <span aria-hidden="true" class="opacity-80">→</span>
+                                        <span aria-hidden="true" class="opacity-90">→</span>
                                     @endif
                                 </a>
                             @endif
