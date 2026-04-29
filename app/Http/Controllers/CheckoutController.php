@@ -65,7 +65,7 @@ class CheckoutController extends Controller
             'designation' => 'required|string|max:255',
             'gender' => 'required|in:male,female,other',
             'investment_expertise' => 'required|in:beginner,intermediate,expert',
-            'linkedin' => 'required|url|max:255',
+            'linkedin' => 'nullable|url|max:255',
             'password' => Auth::check() ? '' : 'required|confirmed|min:8',
             'profile_photo' => 'nullable',
             'plan' => 'required|string|max:64',

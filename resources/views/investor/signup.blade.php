@@ -486,7 +486,7 @@
 
             <!-- LinkedIn -->
             <div>
-                <label class="block text-gray-700 font-semibold mb-2" for="linkedin">LinkedIn</label>
+                <label class="block text-gray-700 font-semibold mb-2" for="linkedin">LinkedIn <span class="text-gray-500 font-normal">(optional)</span></label>
                 <div class="relative">
                     <span class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-gray-500">
                         <svg class="w-5 h-5" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">

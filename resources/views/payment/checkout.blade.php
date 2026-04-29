@@ -20,6 +20,24 @@
     $planSlug = (string) ($cp['slug'] ?? '');
     $planName = (string) ($cp['name'] ?? 'Default Plan');
     $planPrice = $cp['price'] ?? 0;
+    $checkoutUser = auth()->user();
+    $isLoggedInCheckout = (bool) $checkoutUser;
+    $knownCodes = ['880', '44', '1', '971', '91', '92', '61', '65', '81'];
+    $savedPhoneRaw = $checkoutUser?->phone ? preg_replace('/\D+/', '', (string) $checkoutUser->phone) : '';
+    $savedCountryCode = old('country_code', '44');
+    $savedPhoneLocal = old('phone', '');
+    if ($savedPhoneRaw) {
+        foreach ($knownCodes as $code) {
+            if (str_starts_with($savedPhoneRaw, $code) && strlen($savedPhoneRaw) > strlen($code)) {
+                $savedCountryCode = $code;
+                $savedPhoneLocal = substr($savedPhoneRaw, strlen($code));
+                break;
+            }
+        }
+        if ($savedPhoneLocal === '' && $savedPhoneRaw !== '') {
+            $savedPhoneLocal = $savedPhoneRaw;
+        }
+    }
 @endphp
 
 <!-- Page Container -->
@@ -93,40 +111,59 @@
                             </svg>
                             Billing Information
                         </h2>
+                        @if($isLoggedInCheckout)
+                            <p class="mb-3 text-xs text-gray-500">Using details already saved on your investor profile. Only missing fields are shown.</p>
+                        @endif
                         <!-- Full Name -->
-                        <div class="flex">
-                            <div class="flex flex-col w-full">
-                                <label class="block text-gray-700 font-semibold mb-1 text-sm" for="name">Full Name <span class="text-red-500">*</span></label>
-                                <input type="text" id="name" placeholder="Enter your full name" name="name" value="{{auth()->user() && auth()->user()->name ? old('name',auth()->user()->name) : ''}}" class="w-full p-3 rounded-lg border border-gray-300 shadow-sm focus:border-green-500 focus:ring focus:ring-green-200 transition" required>
+                        @if($isLoggedInCheckout && filled($checkoutUser->name))
+                            <input type="hidden" name="name" value="{{ old('name', $checkoutUser->name) }}">
+                        @else
+                            <div class="flex">
+                                <div class="flex flex-col w-full">
+                                    <label class="block text-gray-700 font-semibold mb-1 text-sm" for="name">Full Name <span class="text-red-500">*</span></label>
+                                    <input type="text" id="name" placeholder="Enter your full name" name="name" value="{{ old('name', $checkoutUser?->name ?? '') }}" class="w-full p-3 rounded-lg border border-gray-300 shadow-sm focus:border-green-500 focus:ring focus:ring-green-200 transition" required>
+                                </div>
                             </div>
-                        </div>
+                        @endif
                 <div class="mt-3">
                     <!-- Email -->
-                    <div>
-                        <label class="block text-gray-700 font-semibold mb-1 text-sm" for="email">Email <span class="text-red-500">*</span></label>
-                        <input type="email" id="email" name="email" placeholder="Your email address" class="w-full border rounded-lg p-3 text-gray-700 border-gray-300 shadow-sm focus:border-green-500 focus:ring focus:ring-green-200 transition" value="{{auth()->user() && auth()->user()->email ? old('email',auth()->user()->email) : ''}}" required>
-                    </div>
+                    @if($isLoggedInCheckout && filled($checkoutUser->email))
+                        <input type="hidden" name="email" value="{{ old('email', $checkoutUser->email) }}">
+                    @else
+                        <div>
+                            <label class="block text-gray-700 font-semibold mb-1 text-sm" for="email">Email <span class="text-red-500">*</span></label>
+                            <input type="email" id="email" name="email" placeholder="Your email address" class="w-full border rounded-lg p-3 text-gray-700 border-gray-300 shadow-sm focus:border-green-500 focus:ring focus:ring-green-200 transition" value="{{ old('email', $checkoutUser?->email ?? '') }}" required>
+                        </div>
+                    @endif
                 </div>
                 <div class="mt-3">
-                    <div>    
-                        <label class="block text-gray-700 font-semibold mb-1 text-sm" for="address">Billing Address <span class="text-red-500">*</span></label>
-                        <input 
-                            type="text" 
-                            id="address"
-                            name="address" 
-                            placeholder="Street address" 
-                            value="{{auth()->user() && auth()->user()->address ? old('address',auth()->user()->address) : ''}}" 
-                            class="w-full border rounded-lg p-3 text-gray-700 border-gray-300 shadow-sm focus:border-green-500 focus:ring focus:ring-green-200 transition"
-                        >
-                    </div>
+                    @if($isLoggedInCheckout && filled($checkoutUser->address))
+                        <input type="hidden" name="address" value="{{ old('address', $checkoutUser->address) }}">
+                    @else
+                        <div>    
+                            <label class="block text-gray-700 font-semibold mb-1 text-sm" for="address">Billing Address <span class="text-red-500">*</span></label>
+                            <input 
+                                type="text" 
+                                id="address"
+                                name="address" 
+                                placeholder="Street address" 
+                                value="{{ old('address', $checkoutUser?->address ?? '') }}" 
+                                class="w-full border rounded-lg p-3 text-gray-700 border-gray-300 shadow-sm focus:border-green-500 focus:ring focus:ring-green-200 transition"
+                            >
+                        </div>
+                    @endif
                 </div>
                 <div class="mt-3">
+                    @if($isLoggedInCheckout && filled($savedPhoneLocal))
+                        <input type="hidden" name="country_code" value="{{ $savedCountryCode }}">
+                        <input type="hidden" name="phone" value="{{ $savedPhoneLocal }}">
+                    @else
                     <label class="block text-gray-700 font-semibold mb-1 text-sm" for="phone">Phone Number <span class="text-red-500">*</span></label>
                     <div class="flex space-x-2">
                         <select name="country_code" class="w-1/3 p-3 rounded-lg border-gray-300 shadow-sm focus:border-green-500 focus:ring focus:ring-green-200 transition" id="country_code" style="font-size: 16px; padding-right: 30px;">
-                            <option data-countryCode="BD" value="880" style="display: flex; align-items: center;">🇧🇩 (+880)</option>
-                            <option data-countryCode="GB" value="44" selected style="display: flex; align-items: center;">🇬🇧 (+44)</option>
-                            <option data-countryCode="US" value="1" style="display: flex; align-items: center;">🇺🇸 (+1)</option>
+                            <option data-countryCode="BD" value="880" {{ $savedCountryCode === '880' ? 'selected' : '' }} style="display: flex; align-items: center;">🇧🇩 (+880)</option>
+                            <option data-countryCode="GB" value="44" {{ $savedCountryCode === '44' ? 'selected' : '' }} style="display: flex; align-items: center;">🇬🇧 (+44)</option>
+                            <option data-countryCode="US" value="1" {{ $savedCountryCode === '1' ? 'selected' : '' }} style="display: flex; align-items: center;">🇺🇸 (+1)</option>
                             <optgroup label="Other countries">
                                 <option data-countryCode="DZ" value="213" style="display: flex; align-items: center;">🇩🇿 (+213)</option>
                                 <option data-countryCode="AD" value="376" style="display: flex; align-items: center;">🇦🇩 (+376)</option>
@@ -207,8 +244,9 @@
                                 <option data-countryCode="US" value="1" style="display: flex; align-items: center;">🇺🇸 (+1)</option>
                             </optgroup>
                         </select>
-                        <input type="text" id="phone" name="phone" placeholder="Phone number" class="w-full p-3 rounded-lg border-gray-300 shadow-sm focus:border-green-500 focus:ring focus:ring-green-200 transition" value="{{ old('phone') }}" required>
+                        <input type="text" id="phone" name="phone" placeholder="Phone number" class="w-full p-3 rounded-lg border-gray-300 shadow-sm focus:border-green-500 focus:ring focus:ring-green-200 transition" value="{{ $savedPhoneLocal }}" required>
                     </div>
+                    @endif
                 </div>
                 
                 @guest
@@ -226,31 +264,35 @@
                 @endguest
             <!-- Password -->
             
-            <div class="mt-3">
-                <label class="block text-gray-700 font-semibold mb-1 text-sm" for="investment_expertise">
-                    Level of Investment Expertise <span class="text-red-500">*</span>
-                </label>
-                <select id="investment_expertise" name="investment_expertise"
-                        class="w-full p-3 rounded-lg border-gray-300 shadow-sm focus:border-green-500 focus:ring focus:ring-green-200 transition"
-                        required>
-                    <option value="">Select your expertise level</option>
-                    
-                    <option value="beginner"
-                        {{ (auth()->check() && auth()->user()->investment_expertise == 'beginner') ? 'selected' : '' }}>
-                        Beginner
-                    </option>
-                    
-                    <option value="intermediate"
-                        {{ (auth()->check() && auth()->user()->investment_expertise == 'intermediate') ? 'selected' : '' }}>
-                        Intermediate
-                    </option>
-                    
-                    <option value="expert"
-                        {{ (auth()->check() && auth()->user()->investment_expertise == 'expert') ? 'selected' : '' }}>
-                        Expert
-                    </option>
-                </select>
-            </div>
+            @if($isLoggedInCheckout && filled($checkoutUser->investment_expertise))
+                <input type="hidden" name="investment_expertise" value="{{ old('investment_expertise', $checkoutUser->investment_expertise) }}">
+            @else
+                <div class="mt-3">
+                    <label class="block text-gray-700 font-semibold mb-1 text-sm" for="investment_expertise">
+                        Level of Investment Expertise <span class="text-red-500">*</span>
+                    </label>
+                    <select id="investment_expertise" name="investment_expertise"
+                            class="w-full p-3 rounded-lg border-gray-300 shadow-sm focus:border-green-500 focus:ring focus:ring-green-200 transition"
+                            required>
+                        <option value="">Select your expertise level</option>
+                        
+                        <option value="beginner"
+                            {{ ($checkoutUser && $checkoutUser->investment_expertise == 'beginner') ? 'selected' : '' }}>
+                            Beginner
+                        </option>
+                        
+                        <option value="intermediate"
+                            {{ ($checkoutUser && $checkoutUser->investment_expertise == 'intermediate') ? 'selected' : '' }}>
+                            Intermediate
+                        </option>
+                        
+                        <option value="expert"
+                            {{ ($checkoutUser && $checkoutUser->investment_expertise == 'expert') ? 'selected' : '' }}>
+                            Expert
+                        </option>
+                    </select>
+                </div>
+            @endif
             
             </div>  
 
@@ -265,25 +307,36 @@
                         </h2>
                         
                         <!-- Company Name -->
-                        <div>
-                            <label class="block text-gray-700 font-semibold mb-1 text-sm" for="company_name">Company Name <span class="text-red-500">*</span></label>
-                            <input 
-                                type="text" 
-                                id="company_name" 
-                                name="company_name"
-                                value="{{ old('company_name', optional(auth()->user())->company_name) }}"
-                                placeholder="Your company name"
-                                class="w-full p-3 rounded-lg border-gray-300 shadow-sm focus:border-green-500 focus:ring focus:ring-green-200 transition"
-                                required
-                            >
-                        </div>
+                        @if($isLoggedInCheckout && filled($checkoutUser->company_name))
+                            <input type="hidden" name="company_name" value="{{ old('company_name', $checkoutUser->company_name) }}">
+                        @else
+                            <div>
+                                <label class="block text-gray-700 font-semibold mb-1 text-sm" for="company_name">Company Name <span class="text-red-500">*</span></label>
+                                <input 
+                                    type="text" 
+                                    id="company_name" 
+                                    name="company_name"
+                                    value="{{ old('company_name', $checkoutUser?->company_name ?? '') }}"
+                                    placeholder="Your company name"
+                                    class="w-full p-3 rounded-lg border-gray-300 shadow-sm focus:border-green-500 focus:ring focus:ring-green-200 transition"
+                                    required
+                                >
+                            </div>
+                        @endif
 
                         <!-- Designation -->
-                        <div class="mt-3">
-                            <label class="block text-gray-700 font-semibold mb-1 text-sm" for="designation">Designation <span class="text-red-500">*</span></label>
-                            <input type="text" id="designation" name="designation" placeholder="Your job title" class="w-full p-3 rounded-lg border-gray-300 shadow-sm focus:border-green-500 focus:ring focus:ring-green-200 transition" value="{{auth()->user() && auth()->user()->designation ? old('designation',auth()->user()->designation) : ''}}" required>
-                        </div>
+                        @if($isLoggedInCheckout && filled($checkoutUser->designation))
+                            <input type="hidden" name="designation" value="{{ old('designation', $checkoutUser->designation) }}">
+                        @else
+                            <div class="mt-3">
+                                <label class="block text-gray-700 font-semibold mb-1 text-sm" for="designation">Designation <span class="text-red-500">*</span></label>
+                                <input type="text" id="designation" name="designation" placeholder="Your job title" class="w-full p-3 rounded-lg border-gray-300 shadow-sm focus:border-green-500 focus:ring focus:ring-green-200 transition" value="{{ old('designation', $checkoutUser?->designation ?? '') }}" required>
+                            </div>
+                        @endif
 
+                        @if($isLoggedInCheckout && filled($checkoutUser->primary_country))
+                            <input type="hidden" name="primary_country" value="{{ old('primary_country', $checkoutUser->primary_country) }}">
+                        @else
                         <div class="mt-3">
                             <label class="block text-gray-700 font-semibold mb-1 text-sm" for="primary_country">Country <span class="text-red-500">*</span></label>
                             <select id="primary_country" name="primary_country" class="w-full p-3 rounded-lg border-gray-300 shadow-sm focus:border-green-500 focus:ring focus:ring-green-200 transition" required>
@@ -324,8 +377,12 @@
                                 @endforeach
                             </select>
                         </div>
+                        @endif
                         
                         <!-- Gender -->
+                        @if($isLoggedInCheckout && filled($checkoutUser->gender))
+                            <input type="hidden" name="gender" value="{{ old('gender', $checkoutUser->gender) }}">
+                        @else
                         <div class="mt-3">
                             <label class="block text-gray-700 font-semibold mb-1 text-sm" for="gender">Gender <span class="text-red-500">*</span></label>
                             <select id="gender" name="gender" class="w-full p-3 rounded-lg border-gray-300 shadow-sm focus:border-green-500 focus:ring focus:ring-green-200 transition" required>
@@ -347,17 +404,18 @@
                                 </option>
                             </select>
                         </div>
+                        @endif
                         
                         <!-- LinkedIn -->
                         <div class="mt-3">
-                            <label class="block text-gray-700 font-semibold mb-1 text-sm" for="linkedin">LinkedIn <span class="text-red-500">*</span></label>
+                            <label class="block text-gray-700 font-semibold mb-1 text-sm" for="linkedin">LinkedIn <span class="text-gray-500 font-normal">(optional)</span></label>
                             <div class="relative">
                                 <span class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-gray-500">
                                     <svg class="w-5 h-5" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
                                         <path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9V416z"/>
                                     </svg>
                                 </span>
-                                <input type="text" id="linkedin" name="linkedin" placeholder="LinkedIn profile URL" class="w-full p-3 pl-10 rounded-lg border-gray-300 shadow-sm focus:border-green-500 focus:ring focus:ring-green-200 transition" value="{{auth()->user() && auth()->user()->linkedin ? old('linkedin',auth()->user()->linkedin) : ''}}" required>
+                                <input type="text" id="linkedin" name="linkedin" placeholder="LinkedIn profile URL" class="w-full p-3 pl-10 rounded-lg border-gray-300 shadow-sm focus:border-green-500 focus:ring focus:ring-green-200 transition" value="{{ old('linkedin', $checkoutUser?->linkedin ?? '') }}">
                             </div>
                         </div>
                     </div>
