@@ -12,6 +12,6 @@
 
 @section('page_content')
 <section class="container mx-auto px-4 py-12">
-    @include('partials.subscription-plans', ['tiers' => $tiers])
+    @include('partials.subscription-plans', ['tiers' => $tiers, 'showFreeTierOption' => $showFreeTierOption ?? false])
 </section>
 @endsection

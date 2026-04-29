@@ -66,8 +66,11 @@ class PrimaryController extends Controller
     public function viewPlans()
     {
         $tiers = SubscriptionTier::query()->active()->ordered()->get();
+        $showFreeTierOption = auth()->check()
+            && auth()->user()->hasVerifiedEmail()
+            && auth()->user()->account_status === 'free';
 
-        return view('plans', compact('tiers'));
+        return view('plans', compact('tiers', 'showFreeTierOption'));
     }
 
     // Checkout Page
