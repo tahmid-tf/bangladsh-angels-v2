@@ -1,34 +1,34 @@
 <section class="fixed top-0 z-40 flex w-full flex-col items-center justify-center text-center pt-[env(safe-area-inset-top,0px)]">
-    <div class="relative align-self-center mt-6 flex w-full flex-row items-center justify-between rounded-lg bg-gray-100/30 px-4 shadow-md backdrop-blur-lg md:w-[70vw] md:rounded-full z-50">
+    <div class="relative align-self-center mt-6 flex w-full flex-row items-center justify-between rounded-lg bg-gray-100/30 px-4 shadow-md backdrop-blur-lg lg:w-[90vw] xl:w-[82vw] 2xl:w-[70vw] lg:rounded-full z-50">
         
         <!-- Logo (Left for Desktop) -->
         <a href="{{ route('home') }}" class="flex justify-start" title="Bangladesh Angels Network — home">
             <img 
                 src="{{ asset('logo.webp') }}" 
                 alt="Bangladesh Angels Network Logo"
-                class="h-[40px] w-auto max-w-[150px] md:max-w-[200px] my-4 md:mx-[40px] object-contain"
+                class="h-[40px] w-auto max-w-[150px] lg:max-w-[200px] my-4 lg:mx-6 xl:mx-10 object-contain"
             />
         </a>
 
 
         <!-- Navigation Menu (Center for Desktop) -->
-        <div class="hidden md:flex flex-1 justify-center">
-            <ul class="flex flex-row font-bold text-gray-700">
-                <li class="m-3"><a href="{{ route('angel-academy') }}" title="BAN Angel Academy — programme for angel investors">Angel Academy</a></li>
-                <li class="m-3"><a href="{{ route('startups') }}" title="Startups — portfolio, deals, pitch, and founder services">Startups</a></li>
-                <li class="m-3"><a href="{{ route('investors') }}" title="Our angel investors and how to join BAN">Investors</a></li>
-                <li class="m-3">
+        <div class="hidden lg:flex flex-1 justify-center">
+            <ul class="flex flex-row items-center font-bold text-gray-700 text-sm xl:text-[15px]">
+                <li class="mx-2 xl:mx-3"><a href="{{ route('angel-academy') }}" title="BAN Angel Academy — programme for angel investors">Angel Academy</a></li>
+                <li class="mx-2 xl:mx-3"><a href="{{ route('startups') }}" title="Startups — portfolio, deals, pitch, and founder services">Startups</a></li>
+                <li class="mx-2 xl:mx-3"><a href="{{ route('investors') }}" title="Our angel investors and how to join BAN">Investors</a></li>
+                <li class="mx-2 xl:mx-3">
                     <a
                         href="{{ route('resources') }}"
-                        title="{{ auth()->check() ? 'DeckVue — events, webinars, and programs' : 'Resources — events, webinars, and programs' }}"
-                    >{{ auth()->check() ? 'DeckVue' : 'Resources' }}</a>
+                        title="DeckVue — events, webinars, and programs"
+                    >DeckVue</a>
                 </li>
-                <li class="m-3"><a href="{{ route('team') }}" title="About Bangladesh Angels Network and our team">Our Team</a></li>
+                <li class="mx-2 xl:mx-3"><a href="{{ route('team') }}" title="About Bangladesh Angels Network and our team">Our Team</a></li>
             </ul>
         </div>
 
         <!-- User Actions (Right for Desktop) -->
-        <div class="hidden md:flex items-center space-x-4">
+        <div class="hidden lg:flex items-center space-x-4">
             @auth
             <div class="relative">
                 <!-- User Avatar -->
@@ -67,7 +67,7 @@
         </div>
 
         <!-- Mobile Menu Button (With Avatar if Logged In) -->
-        <div class="md:hidden flex items-center justify-end">
+        <div class="lg:hidden flex items-center justify-end">
             <button id="mobile-menu-button" onclick="toggleMobileMenu()" class="flex items-center focus:outline-none">
                 <!-- User Avatar for Mobile -->
                 @auth
@@ -80,7 +80,7 @@
         </div>
 
         <!-- Mobile Menu -->
-        <div id="mobile-menu" class="absolute left-0 right-0 top-full z-20 hidden w-full flex-col items-center border-t border-gray-100 bg-white shadow-md md:hidden">
+        <div id="mobile-menu" class="absolute left-0 right-0 top-full z-20 hidden w-full flex-col items-center border-t border-gray-100 bg-white shadow-md lg:hidden">
             <ul class="flex flex-col text-gray-700 w-full">
                 @auth
                 <li class="px-4 py-2 border-b w-full flex items-end justify-end">
@@ -103,8 +103,8 @@
                 <li class="px-4 py-2 border-b">
                     <a
                         href="{{ route('resources') }}"
-                        title="{{ auth()->check() ? 'DeckVue — events, webinars, and programs' : 'Resources — events, webinars, and programs' }}"
-                    >{{ auth()->check() ? 'DeckVue' : 'Resources' }}</a>
+                        title="DeckVue — events, webinars, and programs"
+                    >DeckVue</a>
                 </li>
                 <li class="px-4 py-2"><a href="{{ route('team') }}" title="About Bangladesh Angels Network and our team">Our Team</a></li>
                 @auth

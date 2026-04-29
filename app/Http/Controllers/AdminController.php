@@ -6,7 +6,9 @@ use App\Mail\AccountApproved;
 use App\Models\Deal;
 use App\Models\Payment;
 use App\Models\Subscription;
+use App\Models\SubscriptionTier;
 use App\Models\User;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -298,6 +300,8 @@ class AdminController extends Controller
             'company_name.*' => 'nullable|string|max:255',
             'investment_amount.*' => 'nullable|numeric|min:0',
             'password' => 'required|string|min:8|confirmed', // Ensure password and re_password match
+            'selected_plan' => 'required|string|max:64',
+            'selected_plan_price' => 'nullable|numeric|min:0',
         ]);
 
         if ($validator->fails()) {
@@ -306,6 +310,28 @@ class AdminController extends Controller
 
         $fullName = $request->first_name.' '.$request->last_name;
         $phone = $request->country_code.$request->phone;
+        $selectedPlan = $request->input('selected_plan', 'free');
+        $selectedPlanPrice = (float) $request->input('selected_plan_price', 0);
+
+        $paidTier = null;
+        if ($selectedPlan !== 'free') {
+            $paidTier = SubscriptionTier::query()
+                ->active()
+                ->where('slug', $selectedPlan)
+                ->first();
+
+            if (! $paidTier) {
+                return redirect()->back()
+                    ->withErrors(['selected_plan' => 'The selected tier is no longer available.'])
+                    ->withInput();
+            }
+
+            if (abs((float) $paidTier->price_yearly - $selectedPlanPrice) > 0.009) {
+                return redirect()->back()
+                    ->withErrors(['selected_plan' => 'Tier pricing was updated. Please select your tier again.'])
+                    ->withInput();
+            }
+        }
 
         // Create the user as an investor
         $user = User::create([
@@ -324,6 +350,8 @@ class AdminController extends Controller
             'primary_country' => $request->primary_country,
             'preference_sector' => $request->preference_sector,
             'strategic_investment_analyst' => $request->strategic_analyst,
+                'account_status' => 'free',
+                'payment_status' => 'free',
             'role' => 'investor', // Assign the investor role
             'is_approved' => $approval,
         ]);
@@ -353,6 +381,27 @@ class AdminController extends Controller
         // Log in the user if not already logged in
         if (! Auth::check()) {
             Auth::login($user);
+        }
+
+        if ($paidTier) {
+            if (! $user->hasVerifiedEmail()) {
+                event(new Registered($user));
+            }
+
+            session([
+                'checkout.plan' => [
+                    'slug' => $paidTier->slug,
+                    'name' => $paidTier->name,
+                    'price' => (float) $paidTier->price_yearly,
+                ],
+                'url.intended' => route('checkout'),
+            ]);
+
+            if (! $user->hasVerifiedEmail()) {
+                return redirect()->route('verification.notice')->with('status', 'verification-link-sent');
+            }
+
+            return redirect()->route('checkout');
         }
 
         // Redirect to the success page instead of dashboard

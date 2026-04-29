@@ -32,6 +32,32 @@
 <!-- Investor Application Form -->
 <section class="container mx-auto px-6 py-12 bg-white rounded-lg shadow-lg mt-8">
     <h2 class="text-2xl font-bold mb-8">Investor Application</h2>
+    @php
+        $selectedPlan = old('selected_plan', 'free');
+    @endphp
+
+    <div class="mb-8">
+        <h3 class="text-lg font-semibold text-gray-800 mb-2">Choose your tier</h3>
+        <p class="text-sm text-gray-600 mb-4">Free is selected by default. You can upgrade now and continue to secure payment after email verification.</p>
+        <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4">
+            <label class="block cursor-pointer rounded-xl border-2 p-4 transition {{ $selectedPlan === 'free' ? 'border-[#0f3d34] bg-[#eaf6f3]' : 'border-gray-200 bg-white' }}">
+                <input class="sr-only plan-radio" type="radio" name="selected_plan" value="free" data-price="0" {{ $selectedPlan === 'free' ? 'checked' : '' }}>
+                <p class="text-sm font-semibold uppercase text-gray-500">Free</p>
+                <p class="mt-1 text-xl font-bold text-[#0f3d34]">$0 <span class="text-sm font-normal text-gray-500">/yr</span></p>
+                <p class="mt-2 text-sm text-gray-600">Create your investor account and start with the free tier.</p>
+            </label>
+
+            @foreach ($tiers as $tier)
+                <label class="block cursor-pointer rounded-xl border-2 p-4 transition {{ $selectedPlan === $tier->slug ? 'border-[#0f3d34] bg-[#eaf6f3]' : 'border-gray-200 bg-white' }}">
+                    <input class="sr-only plan-radio" type="radio" name="selected_plan" value="{{ $tier->slug }}" data-price="{{ (float) $tier->price_yearly }}" {{ $selectedPlan === $tier->slug ? 'checked' : '' }}>
+                    <p class="text-sm font-semibold uppercase text-gray-500">{{ $tier->name }}</p>
+                    <p class="mt-1 text-xl font-bold text-[#0f3d34]">${{ number_format((float) $tier->price_yearly, 0) }} <span class="text-sm font-normal text-gray-500">/yr</span></p>
+                    <p class="mt-2 text-sm text-gray-600">Upgrade now, verify email, then continue to payment gateway.</p>
+                </label>
+            @endforeach
+        </div>
+    </div>
+
     <!-- Error Message Section -->
     @if ($errors->any())
         <div class="mb-6 p-4 rounded-lg bg-red-100 text-red-800">
@@ -44,6 +70,8 @@
     @endif
     <form method="POST" action="{{route('member.apply')}}" enctype="multipart/form-data">
         @csrf
+        <input type="hidden" id="selected_plan" name="selected_plan" value="{{ $selectedPlan }}">
+        <input type="hidden" id="selected_plan_price" name="selected_plan_price" value="{{ old('selected_plan_price', '0') }}">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <!-- Full Name -->
             <div class="flex">
@@ -64,7 +92,7 @@
             </div>
             
             <div>    
-                <label class="block text-gray-700 font-semibold mb-2" for="address">Billing Address <span class="text-red-500">*</span></label>
+                <label class="block text-gray-700 font-semibold mb-2" for="address">Preferred Address <span class="text-red-500">*</span></label>
                 <input 
                     type="text" 
                     id="address"
@@ -458,14 +486,14 @@
 
             <!-- LinkedIn -->
             <div>
-                <label class="block text-gray-700 font-semibold mb-2" for="linkedin">LinkedIn <span class="text-red-500">*</span></label>
+                <label class="block text-gray-700 font-semibold mb-2" for="linkedin">LinkedIn</label>
                 <div class="relative">
                     <span class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-gray-500">
                         <svg class="w-5 h-5" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
                             <path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9V416z"/>
                         </svg>
                     </span>
-                    <input type="text" id="linkedin" name="linkedin" placeholder="Please add the link to your LinkedIn profile" class="w-full p-3 pl-10 rounded-lg border-gray-300 shadow-sm focus:border-green-500 focus:ring focus:ring-green-200" value="{{ old('linkedin') }}" required>
+                    <input type="text" id="linkedin" name="linkedin" placeholder="Please add the link to your LinkedIn profile" class="w-full p-3 pl-10 rounded-lg border-gray-300 shadow-sm focus:border-green-500 focus:ring focus:ring-green-200" value="{{ old('linkedin') }}">
                 </div>
             </div>
 
@@ -489,12 +517,6 @@
             </label>
         </div>
 
-        <!-- Free Account Info -->
-        <div class="mt-6 p-4 bg-green-50 rounded-lg border border-green-100">
-            <h3 class="font-semibold text-green-700">Free Tier Account</h3>
-            <p class="text-gray-600 mt-1">You're creating a free investor account. To access premium features and investment opportunities, you can upgrade your account later.</p>
-        </div>
-
         <!-- Submit Button -->
         <div class="mt-8 text-right">
             <button type="submit" class="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg transition flex items-center justify-center font-medium">
@@ -506,4 +528,45 @@
         </div>
     </form>
 </section>
+<script>
+    (function () {
+        const planRadios = document.querySelectorAll('.plan-radio');
+        const planInput = document.getElementById('selected_plan');
+        const planPriceInput = document.getElementById('selected_plan_price');
+
+        function syncPlan() {
+            const checked = document.querySelector('.plan-radio:checked');
+            if (!checked) {
+                return;
+            }
+
+            if (planInput) {
+                planInput.value = checked.value;
+            }
+            if (planPriceInput) {
+                planPriceInput.value = checked.getAttribute('data-price') || '0';
+            }
+
+            document.querySelectorAll('.plan-radio').forEach((radio) => {
+                const card = radio.closest('label');
+                if (!card) {
+                    return;
+                }
+                if (radio.checked) {
+                    card.classList.add('border-[#0f3d34]', 'bg-[#eaf6f3]');
+                    card.classList.remove('border-gray-200', 'bg-white');
+                } else {
+                    card.classList.remove('border-[#0f3d34]', 'bg-[#eaf6f3]');
+                    card.classList.add('border-gray-200', 'bg-white');
+                }
+            });
+        }
+
+        planRadios.forEach((radio) => {
+            radio.addEventListener('change', syncPlan);
+        });
+
+        syncPlan();
+    })();
+</script>
 @endsection

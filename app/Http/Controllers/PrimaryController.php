@@ -160,7 +160,9 @@ class PrimaryController extends Controller
     // View Sign up Page
     public function viewInvestorSignup()
     {
-        return view('investor.signup');
+        $tiers = SubscriptionTier::query()->active()->ordered()->get();
+
+        return view('investor.signup', compact('tiers'));
     }
 
     // View Investors Page (public; curated featured members)

@@ -76,49 +76,6 @@
             }
         }
 
-        /* Hero CTA — vertical word swap (fundraise / invest) */
-        .hero-cta-pill {
-            gap: 0.15em 0.35em;
-            max-width: 100%;
-            text-align: center;
-        }
-
-        .hero-cta-rotator {
-            display: inline-block;
-            height: 1.3em;
-            overflow: hidden;
-            vertical-align: bottom;
-            min-width: 6.25rem;
-            text-align: left;
-        }
-
-        .hero-cta-rotator-track {
-            display: flex;
-            flex-direction: column;
-            animation: hero-cta-word-slide 6s ease-in-out infinite;
-        }
-
-        .hero-cta-rotator-item {
-            display: block;
-            line-height: 1.3;
-            height: 1.3em;
-            white-space: nowrap;
-        }
-
-        /* End each cycle on the duplicate 'fundraise' so the loop reset is invisible */
-        @keyframes hero-cta-word-slide {
-            0%, 28% { transform: translateY(0); }
-            33%, 61% { transform: translateY(-1.3em); }
-            66%, 100% { transform: translateY(-2.6em); }
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-            .hero-cta-rotator-track {
-                animation: none;
-                transform: translateY(0);
-            }
-        }
-
         .ban-stats-grid .ban-stat-value {
             font-variant-numeric: tabular-nums;
         }
@@ -189,22 +146,23 @@
             </p>
             <div class="flex flex-col items-center gap-4 md:items-start">
                 <a href="{{ route('investor.signup') }}"
-                   class="inline-flex items-center justify-center rounded-full bg-[#0f3d34] px-7 py-3.5 text-base font-bold text-white shadow-lg hover:bg-[#156755] transition-colors w-full max-w-xs sm:max-w-none sm:w-auto"
+                   class="inline-flex items-center justify-center rounded-full bg-[#0f3d34] px-7 py-3.5 text-base font-bold text-white shadow-lg hover:bg-[#156755] transition-colors w-full max-w-sm"
                    title="Apply to become an angel investor with Bangladesh Angels Network">
                     Become an Investor
                 </a>
-                <a href="{{ route('startups') }}"
-                   class="hero-cta-pill inline-flex flex-wrap items-baseline justify-center md:justify-start p-3 px-5 sm:px-6 rounded-full bg-[#eefff1] font-bold text-[#36b37e] text-[0.9rem] sm:text-base leading-snug"
-                   aria-label="I'm looking to fundraise or invest">
-                    <span class="whitespace-nowrap">I'm looking to</span>
-                    <span class="hero-cta-rotator" aria-hidden="true">
-                        <span class="hero-cta-rotator-track">
-                            <span class="hero-cta-rotator-item">fundraise</span>
-                            <span class="hero-cta-rotator-item">invest</span>
-                            <span class="hero-cta-rotator-item">fundraise</span>
-                        </span>
-                    </span>
-                </a>
+                <div class="w-full max-w-sm" aria-label="I'm looking to fundraise or invest">
+                    <p class="mb-2 text-sm font-semibold text-[#0f3d34] text-center md:text-left">I'm looking to</p>
+                    <div class="grid grid-cols-2 gap-2 rounded-full bg-[#e7f6ef] p-1">
+                        <a href="{{ route('startups').'#send-pitch' }}"
+                           class="inline-flex h-11 items-center justify-center rounded-full bg-[#36b37e] px-4 text-sm font-bold text-white transition-colors hover:bg-[#2f9e6f]">
+                            Fundraise
+                        </a>
+                        <a href="{{ route('investor.signup') }}"
+                           class="inline-flex h-11 items-center justify-center rounded-full bg-[#0f3d34] px-4 text-sm font-bold text-white transition-colors hover:bg-[#156755]">
+                            Invest
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
