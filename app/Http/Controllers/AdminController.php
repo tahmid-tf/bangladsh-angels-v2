@@ -147,25 +147,37 @@ class AdminController extends Controller
         $accountScope = $filters['account_scope'] ?? 'all';
         $approvalScope = $filters['approval_scope'] ?? 'all';
 
-        $users = User::query()
+        $baseQuery = User::query()
             ->when($accountScope === 'active', fn ($query) => $query->where('account_status', '!=', 'free'))
             ->when($accountScope === 'inactive', fn ($query) => $query->where('account_status', 'free'))
             ->when($approvalScope === 'approved', fn ($query) => $query->where('is_approved', true))
             ->when($approvalScope === 'pending', fn ($query) => $query->where('is_approved', false))
-            ->orderBy('id')
-            ->get();
+            ->orderBy('id');
+
+        $users = (clone $baseQuery)->get();
         $timestamp = now()->format('Ymd_His');
 
         if ($format === 'json') {
-            return response()->streamDownload(function () use ($users) {
-                echo $users->toJson(JSON_PRETTY_PRINT);
+            return response()->streamDownload(function () use ($baseQuery) {
+                echo '[';
+                $first = true;
+                (clone $baseQuery)->chunkById(500, function ($chunk) use (&$first) {
+                    foreach ($chunk as $user) {
+                        if (! $first) {
+                            echo ',';
+                        }
+                        echo json_encode($user, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+                        $first = false;
+                    }
+                }, 'id');
+                echo ']';
             }, "members_{$timestamp}.json", [
                 'Content-Type' => 'application/json',
             ]);
         }
 
         if ($format === 'csv') {
-            return response()->streamDownload(function () use ($users) {
+            return response()->streamDownload(function () use ($baseQuery) {
                 $handle = fopen('php://output', 'w');
                 fputcsv($handle, [
                     'id', 'name', 'email', 'phone', 'gender', 'company_name', 'designation',
@@ -173,24 +185,26 @@ class AdminController extends Controller
                     'created_at', 'updated_at',
                 ]);
 
-                foreach ($users as $user) {
-                    fputcsv($handle, [
-                        $user->id,
-                        $user->name,
-                        $user->email,
-                        $user->phone,
-                        $user->gender,
-                        $user->company_name,
-                        $user->designation,
-                        $user->primary_country,
-                        $user->account_status,
-                        $user->payment_status,
-                        $user->role,
-                        $user->is_approved ? 1 : 0,
-                        optional($user->created_at)->toDateTimeString(),
-                        optional($user->updated_at)->toDateTimeString(),
-                    ]);
-                }
+                (clone $baseQuery)->chunkById(500, function ($chunk) use ($handle) {
+                    foreach ($chunk as $user) {
+                        fputcsv($handle, [
+                            $user->id,
+                            $user->name,
+                            $user->email,
+                            $user->phone,
+                            $user->gender,
+                            $user->company_name,
+                            $user->designation,
+                            $user->primary_country,
+                            $user->account_status,
+                            $user->payment_status,
+                            $user->role,
+                            $user->is_approved ? 1 : 0,
+                            optional($user->created_at)->toDateTimeString(),
+                            optional($user->updated_at)->toDateTimeString(),
+                        ]);
+                    }
+                }, 'id');
 
                 fclose($handle);
             }, "members_{$timestamp}.csv", [
@@ -199,10 +213,19 @@ class AdminController extends Controller
         }
 
         if ($format === 'excel') {
-            return Excel::download(new MembersExport, "members_{$timestamp}.xlsx");
+            return Excel::download(new MembersExport($accountScope, $approvalScope), "members_{$timestamp}.xlsx");
         }
 
         if ($format === 'pdf') {
+            $total = (clone $baseQuery)->count();
+            $pdfMaxRows = 1200;
+            if ($total > $pdfMaxRows) {
+                return redirect()
+                    ->route('admin.members', ['account_scope' => $accountScope, 'approval_scope' => $approvalScope])
+                    ->with('error', "PDF export is limited to {$pdfMaxRows} records. Please narrow filters or use CSV/Excel/JSON for larger exports.");
+            }
+
+            @ini_set('memory_limit', '512M');
             $pdf = Pdf::loadView('admin.members.exports.pdf', [
                 'users' => $users,
                 'generatedAt' => now(),
@@ -221,24 +244,23 @@ class AdminController extends Controller
         $lines[] = '-- Generated at '.now()->toDateTimeString();
         $lines[] = '';
 
-        foreach ($users as $user) {
-            $values = [];
-            foreach ($columns as $column) {
-                $value = $user->{$column};
-                if ($value === null) {
-                    $values[] = 'NULL';
-                } else {
-                    $escaped = str_replace(["\\", "'"], ["\\\\", "\\'"], (string) $value);
-                    $values[] = "'{$escaped}'";
+        return response()->streamDownload(function () use ($baseQuery, $columns, $quotedColumns, $lines) {
+            echo implode(PHP_EOL, $lines).PHP_EOL;
+            (clone $baseQuery)->chunkById(500, function ($chunk) use ($columns, $quotedColumns) {
+                foreach ($chunk as $user) {
+                    $values = [];
+                    foreach ($columns as $column) {
+                        $value = $user->{$column};
+                        if ($value === null) {
+                            $values[] = 'NULL';
+                        } else {
+                            $escaped = str_replace(["\\", "'"], ["\\\\", "\\'"], (string) $value);
+                            $values[] = "'{$escaped}'";
+                        }
+                    }
+                    echo 'INSERT INTO `users` ('.$quotedColumns.') VALUES ('.implode(', ', $values).');'.PHP_EOL;
                 }
-            }
-            $lines[] = 'INSERT INTO `users` ('.$quotedColumns.') VALUES ('.implode(', ', $values).');';
-        }
-
-        $sqlContent = implode(PHP_EOL, $lines).PHP_EOL;
-
-        return response()->streamDownload(function () use ($sqlContent) {
-            echo $sqlContent;
+            }, 'id');
         }, "members_{$timestamp}.sql", [
             'Content-Type' => 'application/sql',
         ]);

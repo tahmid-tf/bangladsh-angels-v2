@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Mail\CampaignBroadcastMail;
+use App\Jobs\SendCampaignEmailJob;
 use App\Models\CampaignSendLog;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -134,7 +135,11 @@ class MailController extends Controller
         $sentCount = 0;
         foreach ($uniqueRecipients->chunk(100) as $batch) {
             foreach ($batch as $recipient) {
-                Mail::to($recipient)->send(new CampaignBroadcastMail($validated['subject'], $htmlBody));
+                SendCampaignEmailJob::dispatch(
+                    recipientEmail: $recipient,
+                    subject: $validated['subject'],
+                    htmlBody: $htmlBody
+                );
                 $sentCount++;
             }
         }
@@ -148,7 +153,7 @@ class MailController extends Controller
             'sent_at' => now(),
         ]);
 
-        return back()->with('success', "Campaign sent successfully to {$sentCount} recipients.");
+        return back()->with('success', "Campaign queued successfully for {$sentCount} recipients.");
     }
 
     private function extractValidEmails(?string $rawEmails): Collection

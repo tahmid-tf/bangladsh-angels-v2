@@ -59,6 +59,20 @@
 </div>
 @endif
 
+@if (session('error'))
+<div class="mt-4 mx-4 md:mx-6 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative flex items-center justify-between">
+    <div>
+        <strong class="font-bold">Error:</strong>
+        <span class="block sm:inline">{{ session('error') }}</span>
+    </div>
+    <button onclick="this.parentElement.remove()" class="ml-4">
+        <svg class="fill-current h-6 w-6 text-red-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+            <path d="M14.59 5.41L10 10l-4.59-4.59L4 7l6 6 6-6z"/>
+        </svg>
+    </button>
+</div>
+@endif
+
 <livewire:members-table />
 
 @endsection
