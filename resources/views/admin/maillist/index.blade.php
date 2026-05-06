@@ -255,6 +255,9 @@
                             <td class="px-3 py-2 text-gray-700">{{ $log->recipients_count }}</td>
                             <td class="px-3 py-2 text-gray-700">{{ optional($log->sent_at)->format('M j, Y g:i A') }}</td>
                             <td class="px-3 py-2 text-right">
+                                <button type="button" class="inline-flex items-center px-2.5 py-1.5 rounded-md bg-gray-100 text-gray-700 text-xs font-semibold border border-gray-200 hover:bg-gray-200 mr-1 log-expand-btn" data-log-id="{{ $log->id }}">
+                                    Expand
+                                </button>
                                 <form method="POST" action="{{ route('admin.mail.logs.destroy', $log) }}" onsubmit="return confirm('Delete this campaign log entry?');" class="inline">
                                     @csrf
                                     @method('DELETE')
@@ -262,6 +265,32 @@
                                         Delete
                                     </button>
                                 </form>
+                            </td>
+                        </tr>
+                        <tr id="log-details-{{ $log->id }}" class="hidden bg-gray-50/70">
+                            <td colspan="6" class="px-3 py-3">
+                                <div class="rounded-lg border border-gray-200 bg-white p-3 space-y-2">
+                                    <div class="text-xs text-gray-600">
+                                        <span class="font-semibold text-gray-700">Subject:</span>
+                                        {{ $log->subject }}
+                                    </div>
+                                    <div class="text-xs text-gray-600">
+                                        <span class="font-semibold text-gray-700">Sender:</span>
+                                        {{ $log->sender?->name ?? 'System' }}
+                                    </div>
+                                    <div class="text-xs text-gray-600">
+                                        <span class="font-semibold text-gray-700">Recipients ({{ $log->recipients_count }}):</span>
+                                    </div>
+                                    <div class="flex flex-wrap gap-1.5">
+                                        @forelse ((array) $log->recipients as $recipient)
+                                            <span class="inline-flex items-center rounded-full bg-gray-100 text-gray-700 text-xs px-2 py-0.5 border border-gray-200">
+                                                {{ $recipient }}
+                                            </span>
+                                        @empty
+                                            <span class="text-xs text-gray-500">No recipient details stored.</span>
+                                        @endforelse
+                                    </div>
+                                </div>
                             </td>
                         </tr>
                     @empty
@@ -456,6 +485,20 @@
     if (emailForm) {
         emailForm.addEventListener('submit', syncEditorHtml);
     }
+
+    const logExpandButtons = document.querySelectorAll('.log-expand-btn');
+    logExpandButtons.forEach((button) => {
+        button.addEventListener('click', () => {
+            const logId = button.getAttribute('data-log-id');
+            if (!logId) return;
+            const detailsRow = document.getElementById(`log-details-${logId}`);
+            if (!detailsRow) return;
+
+            const isHidden = detailsRow.classList.contains('hidden');
+            detailsRow.classList.toggle('hidden');
+            button.textContent = isHidden ? 'Collapse' : 'Expand';
+        });
+    });
 
     syncEditorHtml();
     refreshSelectedCount();
