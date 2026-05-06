@@ -224,7 +224,7 @@
     <div class="bg-white rounded-xl shadow p-4 md:p-5 mt-5">
         <div class="mb-3 flex flex-wrap items-center justify-between gap-3">
             <h2 class="text-base font-semibold text-gray-900">Campaign Send History</h2>
-            @if ($campaignLogs->isNotEmpty())
+            @if ($campaignLogs->isNotEmpty() && $isSuperadmin)
                 <form method="POST" action="{{ route('admin.mail.logs.destroy-all') }}" onsubmit="return confirm('Clear all campaign send history? This cannot be undone.');">
                     @csrf
                     @method('DELETE')
@@ -258,13 +258,15 @@
                                 <button type="button" class="inline-flex items-center px-2.5 py-1.5 rounded-md bg-gray-100 text-gray-700 text-xs font-semibold border border-gray-200 hover:bg-gray-200 mr-1 log-expand-btn" data-log-id="{{ $log->id }}">
                                     Expand
                                 </button>
-                                <form method="POST" action="{{ route('admin.mail.logs.destroy', $log) }}" onsubmit="return confirm('Delete this campaign log entry?');" class="inline">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="inline-flex items-center px-2.5 py-1.5 rounded-md bg-red-50 text-red-700 text-xs font-semibold border border-red-200 hover:bg-red-100">
-                                        Delete
-                                    </button>
-                                </form>
+                                @if ($isSuperadmin)
+                                    <form method="POST" action="{{ route('admin.mail.logs.destroy', $log) }}" onsubmit="return confirm('Delete this campaign log entry?');" class="inline">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="inline-flex items-center px-2.5 py-1.5 rounded-md bg-red-50 text-red-700 text-xs font-semibold border border-red-200 hover:bg-red-100">
+                                            Delete
+                                        </button>
+                                    </form>
+                                @endif
                             </td>
                         </tr>
                         <tr id="log-details-{{ $log->id }}" class="hidden bg-gray-50/70">

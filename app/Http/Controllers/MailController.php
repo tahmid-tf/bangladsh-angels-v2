@@ -62,6 +62,7 @@ class MailController extends Controller
             'validEmails' => $validEmails,
             'filters' => $filters,
             'campaignLogs' => CampaignSendLog::query()->with('sender')->latest('sent_at')->latest()->limit(20)->get(),
+            'isSuperadmin' => auth()->user()?->role === 'superadmin',
             'stats' => [
                 'users_considered' => $users->count(),
                 'reachable_contacts' => $validEmails->count(),
@@ -184,7 +185,7 @@ class MailController extends Controller
 
     public function destroyLog(CampaignSendLog $campaignSendLog): RedirectResponse
     {
-        abort_unless(auth()->user()?->isAdmin(), 403);
+        abort_unless(auth()->user()?->role === 'superadmin', 403);
 
         $campaignSendLog->delete();
 
@@ -193,7 +194,7 @@ class MailController extends Controller
 
     public function destroyAllLogs(): RedirectResponse
     {
-        abort_unless(auth()->user()?->isAdmin(), 403);
+        abort_unless(auth()->user()?->role === 'superadmin', 403);
 
         CampaignSendLog::query()->delete();
 
