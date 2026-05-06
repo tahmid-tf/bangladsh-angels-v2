@@ -51,11 +51,19 @@
             </label>
 
             @foreach ($tiers as $tier)
+                @php
+                    $tierValueCopy = match (strtolower((string) $tier->slug)) {
+                        'core' => 'Designed for angels getting started with curated opportunities.',
+                        'advanced' => 'Ideal for active investors who want deeper access and insights.',
+                        'institutional' => 'Built for professional investors managing larger portfolios.',
+                        default => 'Access premium investor features with this plan.',
+                    };
+                @endphp
                 <label class="block cursor-pointer rounded-xl border-2 p-4 transition {{ $selectedPlan === $tier->slug ? 'border-[#0f3d34] bg-[#eaf6f3]' : 'border-gray-200 bg-white' }}">
                     <input class="sr-only plan-radio" type="radio" name="selected_plan" value="{{ $tier->slug }}" data-price="{{ (float) $tier->price_yearly }}" {{ $selectedPlan === $tier->slug ? 'checked' : '' }}>
                     <p class="text-sm font-semibold uppercase text-gray-500">{{ $tier->name }}</p>
                     <p class="mt-1 text-xl font-bold text-[#0f3d34]">${{ number_format((float) $tier->price_yearly, 0) }} <span class="text-sm font-normal text-gray-500">/yr</span></p>
-                    <p class="mt-2 text-sm text-gray-600">Access premium investor features with this plan.</p>
+                    <p class="mt-2 text-sm text-gray-600">{{ $tierValueCopy }}</p>
                 </label>
             @endforeach
         </div>
