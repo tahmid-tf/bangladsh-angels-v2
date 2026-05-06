@@ -15,7 +15,8 @@ class CampaignBroadcastMail extends Mailable
 
     public function __construct(
         public string $campaignSubject,
-        public string $campaignHtml
+        public string $campaignHtml,
+        public array $attachments = []
     ) {}
 
     public function build(): self
@@ -40,6 +41,21 @@ class CampaignBroadcastMail extends Mailable
                     $message->addPart($part);
                 }
             });
+
+        foreach ($this->attachments as $attachment) {
+            $binary = base64_decode((string) ($attachment['data'] ?? ''), true);
+            if ($binary === false) {
+                continue;
+            }
+
+            $mail->attachData(
+                $binary,
+                (string) ($attachment['filename'] ?? 'attachment'),
+                ['mime' => (string) ($attachment['mime'] ?? 'application/octet-stream')]
+            );
+        }
+
+        return $mail;
     }
 
     /**
@@ -66,13 +82,13 @@ class CampaignBroadcastMail extends Mailable
                 }
 
                 $extension = $this->mimeToExtension($mime);
-                $cid = Str::uuid()->toString().'@bangladesh-angels';
+                $cid = 'banimg-'.Str::uuid()->toString();
 
                 $inlineImages[] = [
                     'cid' => $cid,
                     'binary' => $binary,
                     'mime' => $mime,
-                    'filename' => 'campaign-inline-'.$cid.'.'.$extension,
+                    'filename' => 'campaign-inline.'.$extension,
                 ];
 
                 return 'src="cid:'.$cid.'"';

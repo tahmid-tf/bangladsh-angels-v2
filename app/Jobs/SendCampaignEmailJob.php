@@ -25,7 +25,8 @@ class SendCampaignEmailJob implements ShouldQueue
     public function __construct(
         public string $recipientEmail,
         public string $subject,
-        public string $htmlBody
+        public string $htmlBody,
+        public array $attachments = []
     ) {
         $this->onQueue('mail-campaigns');
     }
@@ -40,7 +41,7 @@ class SendCampaignEmailJob implements ShouldQueue
     public function handle(): void
     {
         Mail::to($this->recipientEmail)->send(
-            new CampaignBroadcastMail($this->subject, $this->htmlBody)
+            new CampaignBroadcastMail($this->subject, $this->htmlBody, $this->attachments)
         );
     }
 }

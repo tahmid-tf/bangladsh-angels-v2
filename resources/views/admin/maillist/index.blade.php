@@ -121,9 +121,9 @@
                     <p class="mt-1 text-xs text-gray-500">Use the editor for rich formatting. Plain text is supported too.</p>
                 </div>
                 <div>
-                    <label for="campaign_images" class="block text-xs font-semibold text-gray-600 mb-1">Campaign images (optional)</label>
-                    <input id="campaign_images" name="campaign_images[]" type="file" accept="image/*" multiple class="w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm bg-white">
-                    <p class="mt-1 text-xs text-gray-500">Upload up to multiple images. They will be included in the email content.</p>
+                    <label for="campaign_images" class="block text-xs font-semibold text-gray-600 mb-1">Campaign attachments (optional)</label>
+                    <input id="campaign_images" name="campaign_images[]" type="file" accept="image/*,.pdf,application/pdf" multiple class="w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm bg-white">
+                    <p class="mt-1 text-xs text-gray-500">Upload images or PDF files. They are sent as attachments.</p>
                     @php
                         $draftImageIds = collect(old('draft_image_ids', []))
                             ->map(fn ($id) => (int) $id)
@@ -139,8 +139,15 @@
                             <div class="flex flex-wrap gap-3">
                                 @foreach ($draftImages as $image)
                                     <div class="flex items-start gap-2 rounded-lg border border-gray-200 bg-gray-50 p-2">
-                                        <img src="{{ $image->getUrl() }}" alt="Retained campaign image" class="h-16 w-16 rounded object-cover border border-gray-200">
+                                        @if (str_starts_with((string) $image->mime_type, 'image/'))
+                                            <img src="{{ $image->getUrl() }}" alt="Retained campaign file" class="h-16 w-16 rounded object-cover border border-gray-200">
+                                        @else
+                                            <div class="h-16 w-16 rounded border border-gray-200 bg-white flex items-center justify-center text-xs font-semibold text-gray-600">
+                                                PDF
+                                            </div>
+                                        @endif
                                         <div class="text-xs text-gray-600">
+                                            <p class="mb-1 font-medium text-gray-700 break-all">{{ $image->file_name }}</p>
                                             <label class="inline-flex items-center gap-1">
                                                 <input type="checkbox" name="draft_image_ids[]" value="{{ $image->id }}" checked>
                                                 Keep

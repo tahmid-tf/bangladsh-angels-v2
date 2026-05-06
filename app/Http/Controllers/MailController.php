@@ -87,7 +87,7 @@ class MailController extends Controller
         if ($request->hasFile('campaign_images')) {
             $request->validate([
                 'campaign_images' => ['array'],
-                'campaign_images.*' => ['image', 'max:4096'],
+                'campaign_images.*' => ['file', 'mimetypes:image/jpeg,image/png,image/gif,image/webp,application/pdf', 'max:10240'],
             ]);
 
             foreach ($request->file('campaign_images') as $uploadedImage) {
@@ -123,25 +123,14 @@ class MailController extends Controller
         }
 
         $htmlBody = $this->buildCampaignHtml($validated);
-
-        $inlineImages = $user->getMedia('mail_campaign_images_draft')
+        $draftMedia = $user->getMedia('mail_campaign_images_draft')
             ->whereIn('id', $draftImageIds->all())
-            ->map(fn (Media $media) => $this->toInlineImageDataUri($media))
-            ->filter(fn (?string $dataUri) => is_string($dataUri) && $dataUri !== '')
-            ->values()
-            ->all();
-
-        if (! empty($inlineImages)) {
-            $htmlBody .= '<hr style="margin:24px 0;border:none;border-top:1px solid #e5e7eb;">';
-            foreach ($inlineImages as $dataUri) {
-                $safeSrc = e($dataUri);
-                $htmlBody .= '<p style="margin:0 0 16px;"><img src="'.$safeSrc.'" alt="Campaign image" style="max-width:100%;height:auto;border-radius:8px;display:block;"></p>';
-            }
-        }
+            ->values();
+        $attachmentPayload = $this->buildAttachmentPayload($draftMedia);
 
         if ($isTestMode) {
             $testRecipient = $validated['preview_email'] ?? auth()->user()->email;
-            Mail::to($testRecipient)->send(new CampaignBroadcastMail($validated['subject'], $htmlBody));
+            Mail::to($testRecipient)->send(new CampaignBroadcastMail($validated['subject'], $htmlBody, $attachmentPayload));
 
             CampaignSendLog::query()->create([
                 'sender_id' => auth()->id(),
@@ -163,7 +152,8 @@ class MailController extends Controller
                 SendCampaignEmailJob::dispatch(
                     recipientEmail: $recipient,
                     subject: $validated['subject'],
-                    htmlBody: $htmlBody
+                    htmlBody: $htmlBody,
+                    attachments: $attachmentPayload
                 );
                 $sentCount++;
             }
@@ -228,20 +218,28 @@ class MailController extends Controller
         return nl2br(e($plainMessage));
     }
 
-    private function toInlineImageDataUri(Media $media): ?string
+    /**
+     * @param  Collection<int, Media>  $mediaItems
+     * @return array<int, array{filename:string,mime:string,data:string}>
+     */
+    private function buildAttachmentPayload(Collection $mediaItems): array
     {
-        $path = $media->getPath();
-        if (! is_string($path) || $path === '' || ! is_file($path) || ! is_readable($path)) {
-            return null;
-        }
+        return $mediaItems->map(function (Media $media): ?array {
+            $path = $media->getPath();
+            if (! is_string($path) || $path === '' || ! is_file($path) || ! is_readable($path)) {
+                return null;
+            }
 
-        $binary = file_get_contents($path);
-        if ($binary === false) {
-            return null;
-        }
+            $binary = file_get_contents($path);
+            if ($binary === false) {
+                return null;
+            }
 
-        $mime = (string) ($media->mime_type ?: mime_content_type($path) ?: 'image/jpeg');
-
-        return 'data:'.$mime.';base64,'.base64_encode($binary);
+            return [
+                'filename' => $media->file_name ?: 'attachment',
+                'mime' => (string) ($media->mime_type ?: mime_content_type($path) ?: 'application/octet-stream'),
+                'data' => base64_encode($binary),
+            ];
+        })->filter()->values()->all();
     }
 }
