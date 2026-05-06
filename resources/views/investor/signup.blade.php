@@ -55,7 +55,7 @@
                     <input class="sr-only plan-radio" type="radio" name="selected_plan" value="{{ $tier->slug }}" data-price="{{ (float) $tier->price_yearly }}" {{ $selectedPlan === $tier->slug ? 'checked' : '' }}>
                     <p class="text-sm font-semibold uppercase text-gray-500">{{ $tier->name }}</p>
                     <p class="mt-1 text-xl font-bold text-[#0f3d34]">${{ number_format((float) $tier->price_yearly, 0) }} <span class="text-sm font-normal text-gray-500">/yr</span></p>
-                    <p class="mt-2 text-sm text-gray-600">Upgrade now, verify email, then continue to payment gateway.</p>
+                    <p class="mt-2 text-sm text-gray-600">Choose this tier now, verify your email, and complete payment securely.</p>
                 </label>
             @endforeach
         </div>
