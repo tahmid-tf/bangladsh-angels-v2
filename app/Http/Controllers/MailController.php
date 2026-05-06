@@ -311,7 +311,7 @@ class MailController extends Controller
                     'data' => base64_encode($binary),
                 ];
 
-                return '<p style="margin:12px 0;color:#6b7280;font-size:13px;">[Inline image converted to attachment: '.e($filename).']</p>';
+                return '<p style="margin:12px 0;color:#6b7280;font-size:13px;">See attached image: '.e($filename).'</p>';
             },
             $html
         );
