@@ -123,10 +123,14 @@ class MailController extends Controller
         }
 
         $htmlBody = $this->buildCampaignHtml($validated);
+        [$htmlBody, $inlineConvertedAttachments] = $this->extractInlineImageAttachments($htmlBody);
         $draftMedia = $user->getMedia('mail_campaign_images_draft')
             ->whereIn('id', $draftImageIds->all())
             ->values();
-        $attachmentPayload = $this->buildAttachmentPayload($draftMedia);
+        $attachmentPayload = array_merge(
+            $this->buildAttachmentPayload($draftMedia),
+            $inlineConvertedAttachments
+        );
         $attachmentLogPayload = $this->buildAttachmentLogPayload($attachmentPayload);
 
         if ($isTestMode) {
@@ -262,5 +266,56 @@ class MailController extends Controller
                 'size_kb' => (int) ceil($bytes / 1024),
             ];
         })->values()->all();
+    }
+
+    /**
+     * Convert inline data-image tags to regular attachments and
+     * replace body images with a plain placeholder for email-client safety.
+     *
+     * @return array{0:string,1:array<int, array{filename:string,mime:string,data:string}>}
+     */
+    private function extractInlineImageAttachments(string $html): array
+    {
+        $attachments = [];
+        $counter = 1;
+
+        $updatedHtml = preg_replace_callback(
+            '/<img\b[^>]*\bsrc=(["\'])(data:image\/[^"\']+)\1[^>]*>/i',
+            function (array $matches) use (&$attachments, &$counter): string {
+                $dataUri = (string) ($matches[2] ?? '');
+                if (! str_contains($dataUri, ';base64,')) {
+                    return $matches[0];
+                }
+
+                [$meta, $encoded] = explode(';base64,', $dataUri, 2);
+                $mime = strtolower(str_replace('data:', '', $meta));
+                $binary = base64_decode($encoded, true);
+                if ($binary === false) {
+                    return $matches[0];
+                }
+
+                $extension = match ($mime) {
+                    'image/jpeg', 'image/jpg' => 'jpg',
+                    'image/png' => 'png',
+                    'image/gif' => 'gif',
+                    'image/webp' => 'webp',
+                    default => 'img',
+                };
+
+                $filename = 'inline-image-'.$counter.'.'.$extension;
+                $counter++;
+
+                $attachments[] = [
+                    'filename' => $filename,
+                    'mime' => $mime,
+                    'data' => base64_encode($binary),
+                ];
+
+                return '<p style="margin:12px 0;color:#6b7280;font-size:13px;">[Inline image converted to attachment: '.e($filename).']</p>';
+            },
+            $html
+        );
+
+        return [$updatedHtml ?? $html, $attachments];
     }
 }
