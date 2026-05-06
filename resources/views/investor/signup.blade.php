@@ -30,8 +30,11 @@
 </section>
 
 <!-- Investor Application Form -->
-<section class="container mx-auto px-6 py-12 bg-white rounded-lg shadow-lg mt-8">
-    <h2 class="text-2xl font-bold mb-8">Investor Application</h2>
+<section class="container mx-auto px-6 py-12 bg-white rounded-2xl border border-green-100/70 shadow-xl mt-8">
+    <div class="mb-8 border-b border-green-100 pb-6">
+        <h2 class="text-2xl font-bold text-[#0f3d34]">Investor Application</h2>
+        <p class="mt-2 text-sm text-gray-600">Please complete the form below. Fields marked with * are required.</p>
+    </div>
     @php
         $selectedPlan = old('selected_plan', 'free');
     @endphp
@@ -68,18 +71,18 @@
             </ul>
         </div>
     @endif
-    <form method="POST" action="{{route('member.apply')}}" enctype="multipart/form-data">
+    <form method="POST" action="{{route('member.apply')}}" enctype="multipart/form-data" class="space-y-8">
         @csrf
         <input type="hidden" id="selected_plan" name="selected_plan" value="{{ $selectedPlan }}">
         <input type="hidden" id="selected_plan_price" name="selected_plan_price" value="{{ old('selected_plan_price', '0') }}">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <!-- Full Name -->
-            <div class="flex">
-                <div class="flex flex-col w-1/2">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 md:col-span-2">
+                <div class="flex flex-col">
                     <label class="block text-gray-700 font-semibold mb-2" for="first_name">First Name <span class="text-red-500">*</span></label>
                     <input type="text" id="first_name" placeholder="John" value="{{old('first_name')}}" name="first_name" class="w-full p-3 rounded-lg border-gray-300 shadow-sm focus:border-green-500 focus:ring focus:ring-green-200" required>
                 </div>
-                <div class="flex flex-col w-1/2 ml-3">
+                <div class="flex flex-col">
                     <label class="block text-gray-700 font-semibold mb-2" for="last_name">Last Name <span class="text-red-500">*</span></label>
                     <input type="text" id="last_name" placeholder="Doe" value="{{old('last_name')}}" name="last_name" class="w-full p-3 rounded-lg border-gray-300 shadow-sm focus:border-green-500 focus:ring focus:ring-green-200" required>
                 </div>
@@ -104,17 +107,19 @@
                 >
             </div>
 
-            <!-- Password -->
-            <div>
-                <label class="block text-gray-700 font-semibold mb-2" for="password">Password <span class="text-red-500">*</span></label>
-                <input type="password" id="password" name="password" placeholder="Enter a password for logging into the platform" class="w-full p-3 rounded-lg border-gray-300 shadow-sm focus:border-green-500 focus:ring focus:ring-green-200" required>
-                <p class="text-sm text-gray-600 mt-1">Password must contain at least 8 characters, including uppercase, lowercase, number, and special character.</p>
-            </div>
-
-            <!-- Re-enter Password -->
-            <div>
-                <label class="block text-gray-700 font-semibold mb-2" for="re_password">Confirm Password <span class="text-red-500">*</span></label>
-                <input type="password" id="re_password" name="password_confirmation" placeholder="Re-enter password" class="w-full p-3 rounded-lg border-gray-300 shadow-sm focus:border-green-500 focus:ring focus:ring-green-200" required>
+            <div class="md:col-span-2 rounded-xl border border-green-100 bg-green-50/40 p-5">
+                <h3 class="text-base font-bold text-[#0f3d34] mb-4">Account Access</h3>
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-gray-700 font-semibold mb-2" for="password">Password <span class="text-red-500">*</span></label>
+                        <input type="password" id="password" name="password" placeholder="Enter a secure password" class="w-full p-3 rounded-lg border-gray-300 shadow-sm focus:border-green-500 focus:ring focus:ring-green-200" required>
+                        <p class="text-sm text-gray-600 mt-1">Use at least 8 characters with uppercase, lowercase, number, and special character.</p>
+                    </div>
+                    <div>
+                        <label class="block text-gray-700 font-semibold mb-2" for="re_password">Confirm Password <span class="text-red-500">*</span></label>
+                        <input type="password" id="re_password" name="password_confirmation" placeholder="Re-enter your password" class="w-full p-3 rounded-lg border-gray-300 shadow-sm focus:border-green-500 focus:ring focus:ring-green-200" required>
+                    </div>
+                </div>
             </div>
 
             <!-- Company Name -->
@@ -510,20 +515,20 @@
         </div>
 
         <!-- Agreement and Newsletter -->
-        <div class="mt-6">
-            <label class="flex items-center space-x-2">
+        <div class="mt-6 rounded-xl border border-gray-200 bg-gray-50 p-4">
+            <label class="flex items-start space-x-2">
                 <input type="checkbox" class="rounded border-gray-300 text-green-500 focus:ring-green-400" name="terms" required>
                 <span class="text-gray-700">I agree to the <a href="{{ asset('MoU.pdf') }}" class="text-green-500 underline" target="_blank">terms and conditions</a> and privacy policy.</span>
             </label>
         </div>
 
         <!-- Submit Button -->
-        <div class="mt-8 text-right">
-            <button type="submit" class="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg transition flex items-center justify-center font-medium">
+        <div class="mt-8 flex justify-end">
+            <button type="submit" class="bg-[#0f3d34] hover:bg-[#156755] text-white px-8 py-3 rounded-lg transition flex items-center justify-center font-semibold shadow-md">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
                     <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-8.707l-3-3a1 1 0 00-1.414 0l-3 3a1 1 0 001.414 1.414L9 9.414V13a1 1 0 102 0V9.414l1.293 1.293a1 1 0 001.414-1.414z" clip-rule="evenodd" />
                 </svg>
-                Sign Up
+                Submit Application
             </button>
         </div>
     </form>
