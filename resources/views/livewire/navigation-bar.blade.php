@@ -67,7 +67,7 @@
 
             @guest
             <div class="flex items-center gap-3 shrink-0">
-                <a href="{{ route('login') }}" title="Log in to your Bangladesh Angels Network account" class="text-sm font-medium text-gray-600 hover:text-[#00877a] transition-colors px-2 py-2">
+                <a href="{{ route('login') }}" title="Log in to your Bangladesh Angels Network account" class="inline-flex h-11 items-center justify-center rounded-full bg-[#36b37e] px-5 text-sm font-bold text-white shadow-sm transition-colors hover:bg-[#2f9e6f]">
                     Login
                 </a>
                 <a href="{{ route('investor.signup') }}" title="Apply to become an angel investor with Bangladesh Angels Network" class="inline-flex items-center justify-center px-5 py-2.5 md:px-6 md:py-3 rounded-full bg-[#0f3d34] font-bold text-white text-center whitespace-nowrap shadow-md hover:bg-[#156755] transition-colors min-w-max text-sm md:text-base">
@@ -106,7 +106,11 @@
                         Become an Investor
                     </a>
                 </li>
-                <li class="px-4 py-2 border-b text-center"><a href="{{ route('login') }}" title="Log in to your account" class="text-sm text-gray-600 hover:text-[#00877a]">Login</a></li>
+                <li class="px-4 py-3 border-b">
+                    <a href="{{ route('login') }}" title="Log in to your account" class="inline-flex h-11 w-full items-center justify-center rounded-full bg-[#36b37e] px-4 text-sm font-bold text-white shadow-sm transition-colors hover:bg-[#2f9e6f]">
+                        Login
+                    </a>
+                </li>
                 @endguest
                 <li class="px-4 py-2 border-b"><a href="{{ route('angel-academy') }}" title="BAN Angel Academy — programme for angel investors">Angel Academy</a></li>
                 <li class="px-4 py-2 border-b"><a href="{{ route('startups') }}" title="Startups — portfolio, deals, pitch, and founder services">Startups</a></li>

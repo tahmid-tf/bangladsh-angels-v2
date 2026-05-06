@@ -1,4 +1,4 @@
-<form action="{{route('deal.invest', $deal->id)}}" class="mt-6" method="POST">
+<form action="{{route('deal.invest', $deal->id)}}" class="mt-0" method="POST">
     @csrf
     <input type="text" name="user_id" value="{{auth()->id()}}" hidden id="user_id">
     <input type="text" name="deal_id" value="{{$deal->id}}" hidden id="deal_id">
@@ -12,5 +12,5 @@
         } else {
             echo ucfirst($deal->type);
         }
-    @endphp" class="px-4 w-full cursor-pointer mt-6 py-3 bg-green-600 text-white text-sm font-semibold rounded-lg hover:bg-green-700 transition leading-snug">
+    @endphp" class="px-4 w-full cursor-pointer py-3 bg-[#36b37e] text-white text-sm font-bold rounded-full shadow-md hover:bg-[#2f9e6f] transition leading-snug">
 </form>

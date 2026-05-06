@@ -5,8 +5,8 @@
 
 @php
     $href = auth()->check()
-        ? (($deal->type !== 'review') ? route('deal.view', $deal->id) : $deal->groupchat_invite_link)
-        : route('deal.public.view', $deal->id);
+        ? (($deal->type !== 'review') ? route('deal.view', $deal) : $deal->groupchat_invite_link)
+        : route('deal.view', $deal);
     $rawDesc = $deal->description ?? '';
     $oneLiner = $rawDesc !== '' ? \Illuminate\Support\Str::limit(strip_tags($rawDesc), 140, '…') : '—';
     $stage = $deal->investment_stage ? $deal->investment_stage : '—';

@@ -41,7 +41,7 @@
                             <img src="{{ $deal ? $deal->getFirstMediaUrl('company_cover') : asset('default-company.jpg') }}" 
                                  class="w-16 h-16 rounded-md hidden md:block">
                             <div>
-                                <a href="{{ $deal ? route('deal.public.view', $deal->id) : '#' }}" class="text-blue-600 font-semibold hover:underline">
+                                <a href="{{ $deal ? route('deal.view', $deal) : '#' }}" class="text-blue-600 font-semibold hover:underline">
                                     {{ $deal->title ?? 'No Title Available' }}
                                 </a>
                                 <p class="text-gray-500 text-xs md:text-sm">

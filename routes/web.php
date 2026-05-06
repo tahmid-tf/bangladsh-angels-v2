@@ -93,6 +93,9 @@ Route::get('/deals/review', function () {
     return app(PrimaryController::class)->viewDeals_review();
 })->middleware(['auth', 'verified', ApprovedUserMiddleware::class])->name('deals.review');
 
+/** Canonical deal profile URL (must stay below /deals/invest|commit|review) */
+Route::get('/deals/{deal:slug}', [AdminController::class, 'showDeal'])->name('deal.view');
+
 Route::get('/faq', [PrimaryController::class, 'viewFAQ'])->name('faq');
 Route::get('/investor/signup', [PrimaryController::class, 'viewInvestorSignup'])->name('investor.signup');
 
@@ -107,7 +110,11 @@ Route::get('/dashboard', function () {
  * Member Routes
  */
 Route::post('/member/create', [AdminController::class, 'memberApply'])->name('member.apply');
-Route::get('/view/{deal:id}', [AdminController::class, 'showDeal'])->name('deal.public.view');
+Route::get('/view/{deal:id}', function (Deal $deal) {
+    abort_unless(filled($deal->slug), 404);
+
+    return redirect()->route('deal.view', $deal, 301);
+})->name('deal.public.view');
 
 // Legacy numeric URLs (/resources/1) → canonical slug URL (301)
 Route::get('/resources/{legacyId}', function (string $legacyId) {
@@ -214,7 +221,12 @@ Route::middleware('auth')->group(function () {
             Route::get('/portfolio', [AdminController::class, 'viewDeals_portfolio'])->name('admin.deals.portfolio');
             Route::post('/{deal:id}/invest', [InvestmentController::class, 'invest'])->name('deal.invest');
 
-            Route::get('/{deal:id}', [AdminController::class, 'showDeal'])->name('deal.view');
+            Route::get('/{deal:id}', function (Deal $deal) {
+                abort_unless(filled($deal->slug), 404);
+
+                return redirect()->route('deal.view', $deal, 301);
+            })->name('deal.view.legacy');
+
             Route::get('/add/new', [AdminController::class, 'addDeal'])->name('deal.add');
             Route::post('/add', [AdminController::class, 'storeDeal'])->name('deal.store');
         });

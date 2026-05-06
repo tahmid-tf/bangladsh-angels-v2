@@ -1,11 +1,14 @@
 @extends('layouts.investor')
 @section('page_title','Deals | Bangladesh Angels Network Limited')
 @section('page_content')
+@php
+    $memberDealLinks = auth()->check() && auth()->user() && !auth()->user()->isFree();
+@endphp
 <section class="bg-[#0a5554] py-12 rounded-3xl border-box w-[95%]">
     @if ($errors->any())
-        <div class="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 mb-4">
+        <div class="mx-6 mb-4 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-red-800 shadow-sm">
             <p class="font-bold">Whoops! Something went wrong.</p>
-            <ul class="mt-2 list-disc list-inside">
+            <ul class="mt-2 list-disc list-inside text-sm">
                 @foreach ($errors->all() as $error)
                     <li>{{ $error }}</li>
                 @endforeach
@@ -13,104 +16,92 @@
         </div>
     @endif
     @if (session('error'))
-        <div class="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 mb-4">
+        <div class="mx-6 mb-4 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-red-800 shadow-sm">
             {{ session('error') }}
         </div>
     @endif
 
     @if (session('success'))
-        <div class="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 mb-4">
+        <div class="mx-6 mb-4 rounded-xl border border-green-200 bg-green-50 px-4 py-3 text-green-900 shadow-sm">
             {{ session('success') }}
         </div>
     @endif
-    <!-- Hero Section -->
-    @php
-        $memberDealLinks = auth()->check() && auth()->user() && !auth()->user()->isFree();
-    @endphp
+
     <div class="container mx-auto px-6 lg:flex lg:items-center text-white">
-        <!-- Left Content -->
         <div class="lg:w-full">
-            <h1 class="text-4xl font-extrabold mb-4">{{$deal->title}}</h1>
-            <p class="text-lg  mb-6">
-                {{$deal->description}}
+            <h1 class="text-4xl font-extrabold mb-4">{{ $deal->title }}</h1>
+            <p class="text-lg mb-6 text-white/95">
+                {{ $deal->description }}
             </p>
-            <div class="flex items-center space-x-8 mb-6">
+            <div class="flex flex-wrap items-center gap-8 mb-6">
                 @if ($deal->investment_stage)
-                <div>
-                    <p class=" text-sm">Investment Stage</p>
-                    <p class="text-lg font-semibold">{{ $deal->investment_stage }}</p>
-                </div>
+                    <div>
+                        <p class="text-sm text-white/80">Investment Stage</p>
+                        <p class="text-lg font-semibold">{{ $deal->investment_stage }}</p>
+                    </div>
                 @endif
                 @if ($deal->amount_seeking)
-                <div>
-                    <p class=" text-sm">Amount Seeking</p>
-                    <p class="text-lg font-semibold">$ {{$deal->amount_seeking}}</p>
-                </div>
+                    <div>
+                        <p class="text-sm text-white/80">Amount Seeking</p>
+                        <p class="text-lg font-semibold">$ {{ $deal->amountSeeking() }}</p>
+                    </div>
                 @endif
             </div>
             <div class="flex flex-wrap items-center gap-3 mb-6">
                 @if (filled($deal->commit_link))
                     <a href="{{ $memberDealLinks ? $deal->commit_link : route('plans') }}"
                        @if ($memberDealLinks) target="_blank" rel="noopener noreferrer" @endif
-                       class="inline-flex items-center justify-center px-8 py-3.5 bg-green-500 text-white text-base font-bold rounded-xl shadow-lg hover:bg-green-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/90 transition">
+                       class="inline-flex h-11 items-center justify-center rounded-full bg-[#36b37e] px-5 text-sm font-bold text-white shadow-md transition-colors hover:bg-[#2f9e6f]">
                         Commit Link
                     </a>
                 @endif
-                <a href="{{ $memberDealLinks ? $deal->pitch_deck_url : route('plans')}}" class="inline-flex items-center justify-center px-6 py-2.5 bg-gray-200 text-gray-800 font-semibold rounded-lg shadow hover:bg-gray-300">
+                <a href="{{ $memberDealLinks ? $deal->pitch_deck_url : route('plans')}}"
+                   @if ($memberDealLinks && $deal->pitch_deck_url) target="_blank" rel="noopener noreferrer" @endif
+                   class="inline-flex h-11 items-center justify-center rounded-full bg-gray-200 px-5 text-sm font-semibold text-gray-800 shadow hover:bg-gray-300">
                     View
                 </a>
                 @if ($deal->substack_link)
-                <a href="{{ $memberDealLinks ? $deal->substack_link : route('plans')}}" class="inline-flex items-center justify-center px-6 py-2.5 bg-gray-200 text-gray-800 font-semibold rounded-lg shadow hover:bg-gray-300">
-                    View on Substack
-                </a>
+                    <a href="{{ $memberDealLinks ? $deal->substack_link : route('plans')}}"
+                       @if ($memberDealLinks) target="_blank" rel="noopener noreferrer" @endif
+                       class="inline-flex h-11 items-center justify-center rounded-full bg-gray-200 px-5 text-sm font-semibold text-gray-800 shadow hover:bg-gray-300">
+                        View on Substack
+                    </a>
                 @endif
             </div>
-            @if ($deal->type!=="review" && $deal->groupchat_invite_link && auth()->check())
-            <br><br>
-            <form action="{{route('deal.invest',$deal->id)}}" method="POST" class="w-1/4">
-                @csrf
-                <input type="text" hidden name="user_id" value="{{auth()->user()->id}}">
-                <input type="text" hidden name="deal_id" value="{{$deal->id}}">
-                <input type="text" hidden name="type" value="review">
-                <button type="submit" class="px-6 w-full text-center cursor-pointer mt-6 py-3 bg-green-600 text-white font-semibold rounded-lg hover:bg-green-700 transition">
-                    Join WhatsApp Group
-                </button>
-
-            </form>
-            {{-- <a target="_blank" href="{{ (auth()->user() && !auth()->user()->isFree()) ? $deal->groupchat_invite_link : route('plans')}}" class="px-6 w-full text-center cursor-pointer mt-6 py-3 bg-green-600 text-white font-semibold rounded-lg hover:bg-green-700 transition">
-                Join WhatsApp Group
-            </a> --}}
+            @if ($deal->type !== 'review' && $deal->groupchat_invite_link && auth()->check())
+                <form action="{{ route('deal.invest', $deal->id) }}" method="POST" class="mt-6 max-w-md">
+                    @csrf
+                    <input type="text" hidden name="user_id" value="{{ auth()->user()->id }}">
+                    <input type="text" hidden name="deal_id" value="{{ $deal->id }}">
+                    <input type="text" hidden name="type" value="review">
+                    <button type="submit" class="inline-flex h-11 w-full cursor-pointer items-center justify-center rounded-full bg-[#36b37e] px-6 text-sm font-bold text-white shadow-md transition-colors hover:bg-[#2f9e6f]">
+                        Join WhatsApp Group
+                    </button>
+                </form>
             @endif
-            @if ($deal->type!=="portfolio" && auth()->check())
-            <div class="w-1/2">
-                <livewire:deal-action-button :deal="$deal"></livewire:deal-action-button>
-            </div>
-            
+            @if ($deal->type !== 'portfolio' && auth()->check())
+                <div class="mt-6 max-w-md">
+                    <livewire:deal-action-button :deal="$deal" />
+                </div>
             @endif
-            
-            
-            
-            
         </div>
 
-        <!-- Right Content -->
-        <div class="lg:w-1/2 mt-6 lg:mt-0">
-            <img src="{{$deal->getCoverUrl()}}" alt="Jatri Image" class="w-full h-auto rounded-lg shadow-md">
-            
+        <div class="lg:w-1/2 mt-6 lg:mt-0 lg:pl-8">
+            <img src="{{ $deal->getCoverUrl() }}" alt="{{ $deal->title }}" class="w-full h-auto rounded-lg shadow-md ring-1 ring-white/10">
         </div>
     </div>
 </section>
 
 <!-- Company Bio Section -->
 <section class="container mx-auto px-6 py-12">
-    <h2 class="text-3xl font-bold mb-4">Company Bio</h2>
+    <h2 class="text-2xl md:text-3xl font-bold mb-4 text-[#0f3d34]">Company Bio</h2>
     <p class="text-gray-700 leading-relaxed">
         {{$deal->description}}
     </p>
 </section>
 @if ($deal->hasKeyMetric())
     <section class="container mx-auto px-6 py-12">
-        <h2 class="text-3xl font-bold mb-8 text-center">Key Metrics</h2>
+        <h2 class="text-2xl md:text-3xl font-bold mb-8 text-center text-[#0f3d34]">Key Metrics</h2>
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
             @forelse($deal->getKeyMetrics() as $metric)
             <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
@@ -133,9 +124,9 @@
     <!-- More Live Deals Section -->
     <section class="container mx-auto px-6 py-12">
         @if (auth()->check() && auth()->user() && auth()->user()->isFree())
-            <h2 class="text-3xl font-bold mb-8">More Portfolios</h2>
+            <h2 class="text-2xl md:text-3xl font-bold mb-8 text-[#0f3d34]">More Portfolios</h2>
         @else
-            <h2 class="text-3xl font-bold mb-8">More Live Deals</h2>
+            <h2 class="text-2xl md:text-3xl font-bold mb-8 text-[#0f3d34]">More Live Deals</h2>
         @endif
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
             @forelse ($otherDeals as $otherDeal)

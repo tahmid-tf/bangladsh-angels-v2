@@ -12,6 +12,51 @@ class Deal extends Model implements HasMedia
 {
     use HasFactory, InteractsWithMedia;
 
+    /** Routes beginning with /deals/{slug} — cannot collide with these path segments */
+    public static function reservedSlugSegments(): array
+    {
+        return ['invest', 'commit', 'review'];
+    }
+
+    public static function slugBaseFromTitle(string $title): string
+    {
+        $base = Str::slug($title);
+
+        return $base !== '' ? $base : 'deal';
+    }
+
+    /**
+     * Unique slug for deals table (append -2, -3 on collision; avoid reserved segments).
+     */
+    public static function makeUniqueSlug(string $base, ?int $ignoreId = null): string
+    {
+        $slug = $base;
+
+        if ($slug !== '' && ctype_digit((string) $slug)) {
+            $slug = $slug.'-startup';
+        }
+
+        if ($slug !== '' && in_array(strtolower($slug), self::reservedSlugSegments(), true)) {
+            $slug = $slug.'-deal';
+        }
+
+        if ($slug === '') {
+            $slug = 'deal';
+        }
+
+        $original = $slug;
+        $n = 2;
+        while (static::query()
+            ->where('slug', $slug)
+            ->when($ignoreId !== null, fn ($q) => $q->where('id', '!=', $ignoreId))
+            ->exists()) {
+            $slug = $original.'-'.$n;
+            $n++;
+        }
+
+        return $slug;
+    }
+
     protected $fillable = [
         'title',
         'description',

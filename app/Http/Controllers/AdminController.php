@@ -14,7 +14,6 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Str;
 
 class AdminController extends Controller
 {
@@ -350,8 +349,8 @@ class AdminController extends Controller
             'primary_country' => $request->primary_country,
             'preference_sector' => $request->preference_sector,
             'strategic_investment_analyst' => $request->strategic_analyst,
-                'account_status' => 'free',
-                'payment_status' => 'free',
+            'account_status' => 'free',
+            'payment_status' => 'free',
             'role' => 'investor', // Assign the investor role
             'is_approved' => $approval,
         ]);
@@ -509,8 +508,7 @@ class AdminController extends Controller
                 'key_metrics.*.value' => 'nullable|string|max:255',
             ]);
 
-            // Inside your store method
-            $slug = Str::slug($validatedData['title'], '-');
+            $slug = Deal::makeUniqueSlug(Deal::slugBaseFromTitle($validatedData['title']));
 
             // Create a new Deal record
             $deal = Deal::create([
@@ -601,6 +599,13 @@ class AdminController extends Controller
             'groupchat_invite_link' => 'nullable',
             'status' => 'required|string',
         ]);
+
+        if ($validatedData['title'] !== $deal->title) {
+            $deal->slug = Deal::makeUniqueSlug(
+                Deal::slugBaseFromTitle($validatedData['title']),
+                $deal->id
+            );
+        }
 
         $deal->update($validatedData);
 
