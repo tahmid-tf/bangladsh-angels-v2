@@ -133,7 +133,7 @@ class AdminController extends Controller
 
     public function exportMembers(string $format)
     {
-        abort_unless(auth()->user()?->isAdmin(), 403);
+        abort_unless(auth()->user()?->role === 'superadmin', 403);
 
         $format = strtolower($format);
         $supported = ['pdf', 'sql', 'csv', 'excel', 'json'];
