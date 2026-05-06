@@ -33,34 +33,14 @@
         </p>
     </header>
 
-    <section class="mb-14 md:mb-16" aria-labelledby="member-events-heading">
-        <h2 id="member-events-heading" class="mb-6 flex items-center gap-2 text-xl font-bold text-[#0f6a4b] md:text-2xl">
-            <span aria-hidden="true" class="text-[#0f6a4b]/90">✽</span>
-            <span>BAN Events</span>
-        </h2>
-        <div class="flex max-w-4xl flex-col gap-6 md:gap-8">
-            @forelse ($resourceEvents as $event)
-                <x-ban-event-card :resource="$event" />
-            @empty
-                <p class="rounded-xl border border-green-100/80 bg-white px-5 py-6 text-sm text-gray-600 shadow-sm">
-                    No events or webinars are listed yet.
-                </p>
-            @endforelse
-        </div>
-    </section>
-
     <div class="flex flex-col gap-12 md:gap-16">
         @forelse ($hubCards as $card)
             @php
                 $i = $loop->index % 3;
                 $isExternal = str_starts_with(strtolower(trim($card->link)), 'http');
-                $normalizedTitle = strtolower(trim((string) $card->title));
-                $isResourcesCard = in_array($normalizedTitle, ['deckvue', 'resources'], true);
-                $displayTitle = $isResourcesCard ? 'Resources' : $card->title;
                 $displayCtaLabel = 'Learn more';
                 $normalizedSecondCtaLabel = strtolower(trim((string) $card->cta_label));
-                $hasSecondCta = ! $isResourcesCard
-                    && filled($card->cta_label)
+                $hasSecondCta = filled($card->cta_label)
                     && filled($card->cta_link)
                     && $normalizedSecondCtaLabel !== 'learn more';
                 $secondCtaExternal = $hasSecondCta && str_starts_with(strtolower(trim((string) $card->cta_link)), 'http');
@@ -70,7 +50,7 @@
                 <article class="relative overflow-hidden rounded-3xl border bg-gradient-to-br {{ $surfaceClasses[$i] }} shadow-md">
                     <div class="flex flex-col lg:flex-row lg:items-center gap-8 lg:gap-10 p-8 md:p-10">
                         <div class="lg:flex-1 text-center lg:text-left min-w-0">
-                            <h2 class="text-2xl md:text-3xl font-bold text-[#0f3d34]">{{ $displayTitle }}</h2>
+                            <h2 class="text-2xl md:text-3xl font-bold text-[#0f3d34]">{{ $card->title }}</h2>
                             <p class="mt-2 text-sm md:text-base text-gray-600 leading-relaxed">{{ $card->one_liner }}</p>
                         </div>
                         <div class="flex justify-center shrink-0">
