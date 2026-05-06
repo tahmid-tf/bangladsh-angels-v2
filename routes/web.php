@@ -181,6 +181,8 @@ Route::middleware('auth')->group(function () {
         });
 
         Route::get('/founder-pitches', [FounderPitchSubmissionController::class, 'index'])->name('admin.founder-pitches');
+        Route::get('/founder-pitches/{founderPitchSubmission}', [FounderPitchSubmissionController::class, 'show'])
+            ->name('admin.founder-pitches.show');
         Route::get('/founder-pitches/{founderPitchSubmission}/deck', [FounderPitchSubmissionController::class, 'downloadDeck'])
             ->name('admin.founder-pitches.deck');
 

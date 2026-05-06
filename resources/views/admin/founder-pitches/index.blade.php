@@ -24,6 +24,7 @@
                             <th class="px-4 py-3 font-semibold text-gray-700">Email</th>
                             <th class="px-4 py-3 font-semibold text-gray-700">One-line</th>
                             <th class="px-4 py-3 font-semibold text-gray-700">Member</th>
+                            <th class="px-4 py-3 font-semibold text-gray-700">Details</th>
                             <th class="px-4 py-3 font-semibold text-gray-700">Deck</th>
                         </tr>
                     </thead>
@@ -39,6 +40,11 @@
                                     @else
                                         —
                                     @endif
+                                </td>
+                                <td class="px-4 py-3">
+                                    <a href="{{ route('admin.founder-pitches.show', $row) }}" class="inline-flex items-center px-3 py-1.5 rounded-lg bg-[#0a5554] text-white text-xs font-semibold hover:bg-[#084646]">
+                                        View details
+                                    </a>
                                 </td>
                                 <td class="px-4 py-3">
                                     @if ($row->getFirstMedia(\App\Models\FounderPitchSubmission::MEDIA_PITCH_DECK))

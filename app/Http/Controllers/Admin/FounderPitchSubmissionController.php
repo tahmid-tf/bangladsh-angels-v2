@@ -20,6 +20,17 @@ class FounderPitchSubmissionController extends Controller
         return view('admin.founder-pitches.index', compact('submissions'));
     }
 
+    public function show(FounderPitchSubmission $founderPitchSubmission)
+    {
+        abort_unless(auth()->user()?->isAdmin(), 403);
+
+        $founderPitchSubmission->load(['user', 'media']);
+
+        return view('admin.founder-pitches.show', [
+            'submission' => $founderPitchSubmission,
+        ]);
+    }
+
     public function downloadDeck(FounderPitchSubmission $founderPitchSubmission): BinaryFileResponse
     {
         abort_unless(auth()->user()?->isAdmin(), 403);
