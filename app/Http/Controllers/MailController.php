@@ -182,6 +182,24 @@ class MailController extends Controller
         return back()->with('success', "Campaign queued successfully for {$sentCount} recipients.");
     }
 
+    public function destroyLog(CampaignSendLog $campaignSendLog): RedirectResponse
+    {
+        abort_unless(auth()->user()?->isAdmin(), 403);
+
+        $campaignSendLog->delete();
+
+        return back()->with('success', 'Campaign log entry deleted.');
+    }
+
+    public function destroyAllLogs(): RedirectResponse
+    {
+        abort_unless(auth()->user()?->isAdmin(), 403);
+
+        CampaignSendLog::query()->delete();
+
+        return back()->with('success', 'All campaign log history has been cleared.');
+    }
+
     private function extractValidEmails(?string $rawEmails): Collection
     {
         if (! is_string($rawEmails) || trim($rawEmails) === '') {

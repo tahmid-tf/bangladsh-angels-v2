@@ -179,7 +179,8 @@ Route::middleware('auth')->group(function () {
         Route::prefix('mail-list')->group(function () {
             Route::get('/', MailController::class)->name('admin.mail');
             Route::post('/send', [MailController::class, 'send'])->name('mail.send');
-
+            Route::delete('/logs/{campaignSendLog}', [MailController::class, 'destroyLog'])->name('admin.mail.logs.destroy');
+            Route::delete('/logs', [MailController::class, 'destroyAllLogs'])->name('admin.mail.logs.destroy-all');
         });
 
         Route::get('/founder-pitches', [FounderPitchSubmissionController::class, 'index'])->name('admin.founder-pitches');

@@ -222,7 +222,18 @@
     </form>
 
     <div class="bg-white rounded-xl shadow p-4 md:p-5 mt-5">
-        <h2 class="text-base font-semibold text-gray-900 mb-3">Campaign Send History</h2>
+        <div class="mb-3 flex flex-wrap items-center justify-between gap-3">
+            <h2 class="text-base font-semibold text-gray-900">Campaign Send History</h2>
+            @if ($campaignLogs->isNotEmpty())
+                <form method="POST" action="{{ route('admin.mail.logs.destroy-all') }}" onsubmit="return confirm('Clear all campaign send history? This cannot be undone.');">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="inline-flex items-center px-3 py-2 rounded-lg bg-red-50 text-red-700 text-xs font-semibold border border-red-200 hover:bg-red-100">
+                        Clear All History
+                    </button>
+                </form>
+            @endif
+        </div>
         <div class="overflow-x-auto">
             <table class="w-full text-left text-sm">
                 <thead class="bg-gray-50 border-b border-gray-200">
@@ -232,6 +243,7 @@
                         <th class="px-3 py-2 font-semibold text-gray-700">Mode</th>
                         <th class="px-3 py-2 font-semibold text-gray-700">Recipients</th>
                         <th class="px-3 py-2 font-semibold text-gray-700">Sent At</th>
+                        <th class="px-3 py-2 font-semibold text-gray-700 text-right">Actions</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-gray-100">
@@ -242,10 +254,19 @@
                             <td class="px-3 py-2 text-gray-700 uppercase">{{ $log->send_mode }}</td>
                             <td class="px-3 py-2 text-gray-700">{{ $log->recipients_count }}</td>
                             <td class="px-3 py-2 text-gray-700">{{ optional($log->sent_at)->format('M j, Y g:i A') }}</td>
+                            <td class="px-3 py-2 text-right">
+                                <form method="POST" action="{{ route('admin.mail.logs.destroy', $log) }}" onsubmit="return confirm('Delete this campaign log entry?');" class="inline">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="inline-flex items-center px-2.5 py-1.5 rounded-md bg-red-50 text-red-700 text-xs font-semibold border border-red-200 hover:bg-red-100">
+                                        Delete
+                                    </button>
+                                </form>
+                            </td>
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="5" class="px-3 py-6 text-center text-gray-500">No campaign sends logged yet.</td>
+                            <td colspan="6" class="px-3 py-6 text-center text-gray-500">No campaign sends logged yet.</td>
                         </tr>
                     @endforelse
                 </tbody>
