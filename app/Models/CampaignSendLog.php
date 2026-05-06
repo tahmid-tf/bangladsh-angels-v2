@@ -12,6 +12,7 @@ class CampaignSendLog extends Model
         'subject',
         'recipients_count',
         'recipients',
+        'attachments',
         'send_mode',
         'sent_at',
     ];
@@ -20,6 +21,7 @@ class CampaignSendLog extends Model
     {
         return [
             'recipients' => 'array',
+            'attachments' => 'array',
             'sent_at' => 'datetime',
         ];
     }

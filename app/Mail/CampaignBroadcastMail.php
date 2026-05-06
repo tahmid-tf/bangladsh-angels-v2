@@ -13,17 +13,24 @@ class CampaignBroadcastMail extends Mailable
 {
     use Queueable, SerializesModels;
 
+    /**
+     * @var array<int, array{filename:string,mime:string,data:string}>
+     */
+    protected array $campaignAttachments;
+
     public function __construct(
         public string $campaignSubject,
         public string $campaignHtml,
-        public array $attachments = []
-    ) {}
+        array $attachments = []
+    ) {
+        $this->campaignAttachments = $attachments;
+    }
 
     public function build(): self
     {
         [$preparedHtml, $inlineImages] = $this->prepareInlineImages($this->campaignHtml);
 
-        return $this
+        $mail = $this
             ->subject($this->campaignSubject)
             ->view('emails.campaign-broadcast')
             ->with([
@@ -42,7 +49,7 @@ class CampaignBroadcastMail extends Mailable
                 }
             });
 
-        foreach ($this->attachments as $attachment) {
+        foreach ($this->campaignAttachments as $attachment) {
             $binary = base64_decode((string) ($attachment['data'] ?? ''), true);
             if ($binary === false) {
                 continue;

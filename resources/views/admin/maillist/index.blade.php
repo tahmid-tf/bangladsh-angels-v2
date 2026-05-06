@@ -299,6 +299,19 @@
                                             <span class="text-xs text-gray-500">No recipient details stored.</span>
                                         @endforelse
                                     </div>
+                                    <div class="pt-1 text-xs text-gray-600">
+                                        <span class="font-semibold text-gray-700">Attachments ({{ count((array) $log->attachments) }}):</span>
+                                    </div>
+                                    <div class="flex flex-wrap gap-1.5">
+                                        @forelse ((array) $log->attachments as $attachment)
+                                            <span class="inline-flex items-center rounded-full bg-blue-50 text-blue-700 text-xs px-2 py-0.5 border border-blue-100">
+                                                {{ $attachment['filename'] ?? 'attachment' }}
+                                                ({{ $attachment['size_kb'] ?? 0 }}KB)
+                                            </span>
+                                        @empty
+                                            <span class="text-xs text-gray-500">No attachments recorded.</span>
+                                        @endforelse
+                                    </div>
                                 </div>
                             </td>
                         </tr>

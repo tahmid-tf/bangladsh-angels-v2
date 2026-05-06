@@ -127,6 +127,7 @@ class MailController extends Controller
             ->whereIn('id', $draftImageIds->all())
             ->values();
         $attachmentPayload = $this->buildAttachmentPayload($draftMedia);
+        $attachmentLogPayload = $this->buildAttachmentLogPayload($attachmentPayload);
 
         if ($isTestMode) {
             $testRecipient = $validated['preview_email'] ?? auth()->user()->email;
@@ -137,6 +138,7 @@ class MailController extends Controller
                 'subject' => $validated['subject'],
                 'recipients_count' => 1,
                 'recipients' => [$testRecipient],
+                'attachments' => $attachmentLogPayload,
                 'send_mode' => 'test',
                 'sent_at' => now(),
             ]);
@@ -164,6 +166,7 @@ class MailController extends Controller
             'subject' => $validated['subject'],
             'recipients_count' => $sentCount,
             'recipients' => $uniqueRecipients->all(),
+            'attachments' => $attachmentLogPayload,
             'send_mode' => 'live',
             'sent_at' => now(),
         ]);
@@ -241,5 +244,23 @@ class MailController extends Controller
                 'data' => base64_encode($binary),
             ];
         })->filter()->values()->all();
+    }
+
+    /**
+     * @param  array<int, array{filename:string,mime:string,data:string}>  $attachments
+     * @return array<int, array{filename:string,mime:string,size_kb:int}>
+     */
+    private function buildAttachmentLogPayload(array $attachments): array
+    {
+        return collect($attachments)->map(function (array $attachment): array {
+            $decoded = base64_decode((string) ($attachment['data'] ?? ''), true);
+            $bytes = is_string($decoded) ? strlen($decoded) : 0;
+
+            return [
+                'filename' => (string) ($attachment['filename'] ?? 'attachment'),
+                'mime' => (string) ($attachment['mime'] ?? 'application/octet-stream'),
+                'size_kb' => (int) ceil($bytes / 1024),
+            ];
+        })->values()->all();
     }
 }
