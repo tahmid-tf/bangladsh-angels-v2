@@ -105,11 +105,19 @@
                             <button type="button" data-cmd="insertUnorderedList" class="px-2 py-1 text-xs font-semibold rounded bg-white border border-gray-200">Bullet List</button>
                             <button type="button" data-cmd="formatBlock" data-value="h3" class="px-2 py-1 text-xs font-semibold rounded bg-white border border-gray-200">Heading</button>
                             <button type="button" data-cmd="createLink" class="px-2 py-1 text-xs font-semibold rounded bg-white border border-gray-200">Link</button>
+                            <button type="button" data-cmd="justifyLeft" class="px-2 py-1 text-xs font-semibold rounded bg-white border border-gray-200">Align Left</button>
+                            <button type="button" data-cmd="justifyCenter" class="px-2 py-1 text-xs font-semibold rounded bg-white border border-gray-200">Align Center</button>
+                            <button type="button" data-cmd="justifyRight" class="px-2 py-1 text-xs font-semibold rounded bg-white border border-gray-200">Align Right</button>
+                            <button type="button" id="insert-image-btn" class="px-2 py-1 text-xs font-semibold rounded bg-white border border-gray-200">Insert Image</button>
+                            <button type="button" data-image-align="left" class="px-2 py-1 text-xs font-semibold rounded bg-white border border-gray-200">Image Left</button>
+                            <button type="button" data-image-align="center" class="px-2 py-1 text-xs font-semibold rounded bg-white border border-gray-200">Image Center</button>
+                            <button type="button" data-image-align="right" class="px-2 py-1 text-xs font-semibold rounded bg-white border border-gray-200">Image Right</button>
                         </div>
                         <div id="message-editor" contenteditable="true" class="min-h-[220px] p-3 text-sm text-gray-800 focus:outline-none">{!! old('message_html', old('message')) !!}</div>
                     </div>
                     <textarea id="message" name="message" rows="4" maxlength="50000" class="hidden">{{ old('message') }}</textarea>
                     <input type="hidden" id="message_html" name="message_html" value="{{ old('message_html') }}">
+                    <input type="file" id="inline-image-input" accept="image/*" class="hidden">
                     <p class="mt-1 text-xs text-gray-500">Use the editor for rich formatting. Plain text is supported too.</p>
                 </div>
                 <div>
@@ -273,6 +281,11 @@
     const messageHtmlInput = document.getElementById('message_html');
     const emailForm = document.getElementById('emailForm');
     const editorButtons = document.querySelectorAll('[data-cmd]');
+    const insertImageBtn = document.getElementById('insert-image-btn');
+    const inlineImageInput = document.getElementById('inline-image-input');
+    const imageAlignButtons = document.querySelectorAll('[data-image-align]');
+    let selectedEditorImage = null;
+    let savedRange = null;
 
     function syncEditorHtml() {
         if (!editor || !messageHtmlInput) return;
@@ -285,12 +298,130 @@
             const value = button.getAttribute('data-value');
             if (!cmd) return;
 
+            if (editor) {
+                editor.focus();
+            }
+
             if (cmd === 'createLink') {
                 const url = window.prompt('Enter URL');
                 if (!url) return;
                 document.execCommand(cmd, false, url);
             } else {
                 document.execCommand(cmd, false, value || null);
+            }
+
+            syncEditorHtml();
+        });
+    });
+
+    function saveCurrentSelection() {
+        if (!editor) return;
+        const selection = window.getSelection();
+        if (!selection || selection.rangeCount === 0) return;
+        const range = selection.getRangeAt(0);
+        if (editor.contains(range.commonAncestorContainer)) {
+            savedRange = range.cloneRange();
+        }
+    }
+
+    function restoreSavedSelection() {
+        if (!savedRange) return;
+        const selection = window.getSelection();
+        if (!selection) return;
+        selection.removeAllRanges();
+        selection.addRange(savedRange);
+    }
+
+    function clearImageSelection() {
+        if (!editor) return;
+        editor.querySelectorAll('img[data-editor-image="true"]').forEach((img) => {
+            img.style.outline = '';
+        });
+        selectedEditorImage = null;
+    }
+
+    function selectEditorImage(img) {
+        clearImageSelection();
+        selectedEditorImage = img;
+        selectedEditorImage.style.outline = '2px solid #0a5554';
+    }
+
+    if (editor) {
+        editor.addEventListener('keyup', saveCurrentSelection);
+        editor.addEventListener('mouseup', saveCurrentSelection);
+        editor.addEventListener('focus', saveCurrentSelection);
+
+        editor.addEventListener('click', (event) => {
+            const target = event.target;
+            if (target instanceof HTMLImageElement && target.dataset.editorImage === 'true') {
+                selectEditorImage(target);
+            } else {
+                clearImageSelection();
+            }
+        });
+    }
+
+    if (insertImageBtn && inlineImageInput) {
+        insertImageBtn.addEventListener('click', () => {
+            saveCurrentSelection();
+            inlineImageInput.click();
+        });
+
+        inlineImageInput.addEventListener('change', () => {
+            const file = inlineImageInput.files && inlineImageInput.files[0];
+            if (!file || !editor) return;
+
+            const reader = new FileReader();
+            reader.onload = () => {
+                editor.focus();
+                restoreSavedSelection();
+
+                const img = document.createElement('img');
+                img.src = String(reader.result || '');
+                img.alt = file.name || 'Inserted image';
+                img.dataset.editorImage = 'true';
+                img.style.maxWidth = '100%';
+                img.style.height = 'auto';
+                img.style.display = 'block';
+                img.style.margin = '12px 0';
+
+                const selection = window.getSelection();
+                if (selection && selection.rangeCount > 0) {
+                    const range = selection.getRangeAt(0);
+                    range.deleteContents();
+                    range.insertNode(img);
+                    range.setStartAfter(img);
+                    range.setEndAfter(img);
+                    selection.removeAllRanges();
+                    selection.addRange(range);
+                } else {
+                    editor.appendChild(img);
+                }
+
+                selectEditorImage(img);
+                saveCurrentSelection();
+                syncEditorHtml();
+                inlineImageInput.value = '';
+            };
+            reader.readAsDataURL(file);
+        });
+    }
+
+    imageAlignButtons.forEach((button) => {
+        button.addEventListener('click', () => {
+            if (!selectedEditorImage) return;
+
+            const align = button.getAttribute('data-image-align');
+            selectedEditorImage.style.float = '';
+            selectedEditorImage.style.margin = '12px 0';
+            selectedEditorImage.style.display = 'block';
+
+            if (align === 'left') {
+                selectedEditorImage.style.margin = '12px auto 12px 0';
+            } else if (align === 'center') {
+                selectedEditorImage.style.margin = '12px auto';
+            } else if (align === 'right') {
+                selectedEditorImage.style.margin = '12px 0 12px auto';
             }
 
             syncEditorHtml();

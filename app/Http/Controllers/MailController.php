@@ -11,6 +11,7 @@ use App\Models\User;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\View\View;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class MailController extends Controller
 {
@@ -103,7 +104,7 @@ class MailController extends Controller
             'emails.*' => ['email'],
             'subject' => ['required', 'string', 'max:255'],
             'message' => ['required_without:message_html', 'nullable', 'string', 'max:50000'],
-            'message_html' => ['required_without:message', 'nullable', 'string', 'max:200000'],
+            'message_html' => ['required_without:message', 'nullable', 'string', 'max:2000000'],
             'preview_email' => ['nullable', 'email'],
             'send_mode' => ['nullable', 'in:test,live'],
             'draft_image_ids' => ['nullable', 'array'],
@@ -122,17 +123,18 @@ class MailController extends Controller
 
         $htmlBody = $this->buildCampaignHtml($validated);
 
-        $imageUrls = $user->getMedia('mail_campaign_images_draft')
+        $inlineImages = $user->getMedia('mail_campaign_images_draft')
             ->whereIn('id', $draftImageIds->all())
-            ->map(fn ($media) => $media->getUrl())
+            ->map(fn (Media $media) => $this->toInlineImageDataUri($media))
+            ->filter(fn (?string $dataUri) => is_string($dataUri) && $dataUri !== '')
             ->values()
             ->all();
 
-        if (! empty($imageUrls)) {
+        if (! empty($inlineImages)) {
             $htmlBody .= '<hr style="margin:24px 0;border:none;border-top:1px solid #e5e7eb;">';
-            foreach ($imageUrls as $url) {
-                $safeUrl = e($url);
-                $htmlBody .= '<p style="margin:0 0 16px;"><img src="'.$safeUrl.'" alt="Campaign image" style="max-width:100%;height:auto;border-radius:8px;"></p>';
+            foreach ($inlineImages as $dataUri) {
+                $safeSrc = e($dataUri);
+                $htmlBody .= '<p style="margin:0 0 16px;"><img src="'.$safeSrc.'" alt="Campaign image" style="max-width:100%;height:auto;border-radius:8px;display:block;"></p>';
             }
         }
 
@@ -205,5 +207,22 @@ class MailController extends Controller
         $plainMessage = (string) ($validated['message'] ?? '');
 
         return nl2br(e($plainMessage));
+    }
+
+    private function toInlineImageDataUri(Media $media): ?string
+    {
+        $path = $media->getPath();
+        if (! is_string($path) || $path === '' || ! is_file($path) || ! is_readable($path)) {
+            return null;
+        }
+
+        $binary = file_get_contents($path);
+        if ($binary === false) {
+            return null;
+        }
+
+        $mime = (string) ($media->mime_type ?: mime_content_type($path) ?: 'image/jpeg');
+
+        return 'data:'.$mime.';base64,'.base64_encode($binary);
     }
 }
