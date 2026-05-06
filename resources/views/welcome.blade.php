@@ -157,10 +157,9 @@
                             Fundraise
                         </a>
                         <a href="{{ route('investor.signup') }}"
-                           class="inline-flex min-h-[2.75rem] flex-col items-center justify-center gap-0.5 rounded-full bg-[#0f3d34] px-2 py-1.5 text-center text-[0.65rem] font-bold leading-tight text-white transition-colors hover:bg-[#156755] sm:px-4 sm:text-xs sm:leading-snug"
-                           title="Commit Investment / Express Interest to Invest">
-                            <span>Commit Investment /</span>
-                            <span>Express Interest to Invest</span>
+                           class="inline-flex h-11 items-center justify-center rounded-full bg-[#0f3d34] px-4 text-sm font-bold text-white transition-colors hover:bg-[#156755]"
+                           title="Apply to invest with Bangladesh Angels Network">
+                            Invest
                         </a>
                     </div>
                 </div>
