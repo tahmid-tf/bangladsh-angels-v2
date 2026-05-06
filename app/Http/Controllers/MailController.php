@@ -73,39 +73,60 @@ class MailController extends Controller
     {
         abort_unless(auth()->user()?->isAdmin(), 403);
 
+        $sendMode = $request->input('send_mode', 'live');
+        $isTestMode = $sendMode === 'test';
+        $user = auth()->user();
+
+        $draftImageIds = collect($request->input('draft_image_ids', []))
+            ->map(fn ($id) => (int) $id)
+            ->filter(fn ($id) => $id > 0)
+            ->values();
+
+        if ($request->hasFile('campaign_images')) {
+            $request->validate([
+                'campaign_images' => ['array'],
+                'campaign_images.*' => ['image', 'max:4096'],
+            ]);
+
+            foreach ($request->file('campaign_images') as $uploadedImage) {
+                $media = $user->addMedia($uploadedImage)->toMediaCollection('mail_campaign_images_draft');
+                $draftImageIds->push((int) $media->id);
+            }
+        }
+
+        $request->merge([
+            'draft_image_ids' => $draftImageIds->unique()->values()->all(),
+        ]);
+
         $validated = $request->validate([
-            'emails' => ['required', 'array', 'min:1'],
-            'emails.*' => ['required', 'email'],
+            'emails' => [$isTestMode ? 'nullable' : 'required', 'array', 'min:1'],
+            'emails.*' => ['email'],
             'subject' => ['required', 'string', 'max:255'],
             'message' => ['required_without:message_html', 'nullable', 'string', 'max:50000'],
             'message_html' => ['required_without:message', 'nullable', 'string', 'max:200000'],
             'preview_email' => ['nullable', 'email'],
             'send_mode' => ['nullable', 'in:test,live'],
-            'campaign_images' => ['nullable', 'array'],
-            'campaign_images.*' => ['image', 'max:4096'],
+            'draft_image_ids' => ['nullable', 'array'],
+            'draft_image_ids.*' => ['integer'],
         ]);
 
-        $uniqueRecipients = collect($validated['emails'])
+        $uniqueRecipients = collect($validated['emails'] ?? [])
             ->map(fn (string $email) => strtolower(trim($email)))
             ->filter(fn (string $email) => $email !== '')
             ->unique()
             ->values();
 
-        if ($uniqueRecipients->isEmpty()) {
+        if (! $isTestMode && $uniqueRecipients->isEmpty()) {
             return back()->withErrors(['emails' => 'Please select at least one valid recipient email.'])->withInput();
         }
 
         $htmlBody = $this->buildCampaignHtml($validated);
 
-        $imageUrls = [];
-        if ($request->hasFile('campaign_images')) {
-            $user = auth()->user();
-            $user->clearMediaCollection('mail_campaign_images');
-            foreach ($request->file('campaign_images') as $uploadedImage) {
-                $media = $user->addMedia($uploadedImage)->toMediaCollection('mail_campaign_images');
-                $imageUrls[] = $media->getUrl();
-            }
-        }
+        $imageUrls = $user->getMedia('mail_campaign_images_draft')
+            ->whereIn('id', $draftImageIds->all())
+            ->map(fn ($media) => $media->getUrl())
+            ->values()
+            ->all();
 
         if (! empty($imageUrls)) {
             $htmlBody .= '<hr style="margin:24px 0;border:none;border-top:1px solid #e5e7eb;">';
@@ -115,8 +136,7 @@ class MailController extends Controller
             }
         }
 
-        $sendMode = $validated['send_mode'] ?? 'live';
-        if ($sendMode === 'test') {
+        if ($isTestMode) {
             $testRecipient = $validated['preview_email'] ?? auth()->user()->email;
             Mail::to($testRecipient)->send(new CampaignBroadcastMail($validated['subject'], $htmlBody));
 
@@ -128,6 +148,8 @@ class MailController extends Controller
                 'send_mode' => 'test',
                 'sent_at' => now(),
             ]);
+
+            $user->clearMediaCollection('mail_campaign_images_draft');
 
             return back()->with('success', "Test campaign sent to {$testRecipient}.");
         }
@@ -152,6 +174,8 @@ class MailController extends Controller
             'send_mode' => 'live',
             'sent_at' => now(),
         ]);
+
+        $user->clearMediaCollection('mail_campaign_images_draft');
 
         return back()->with('success', "Campaign queued successfully for {$sentCount} recipients.");
     }

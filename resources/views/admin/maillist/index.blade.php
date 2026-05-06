@@ -116,6 +116,33 @@
                     <label for="campaign_images" class="block text-xs font-semibold text-gray-600 mb-1">Campaign images (optional)</label>
                     <input id="campaign_images" name="campaign_images[]" type="file" accept="image/*" multiple class="w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm bg-white">
                     <p class="mt-1 text-xs text-gray-500">Upload up to multiple images. They will be included in the email content.</p>
+                    @php
+                        $draftImageIds = collect(old('draft_image_ids', []))
+                            ->map(fn ($id) => (int) $id)
+                            ->filter(fn ($id) => $id > 0)
+                            ->values();
+                        $draftImages = $draftImageIds->isNotEmpty()
+                            ? auth()->user()->getMedia('mail_campaign_images_draft')->whereIn('id', $draftImageIds->all())
+                            : collect();
+                    @endphp
+                    @if ($draftImages->isNotEmpty())
+                        <div class="mt-3">
+                            <p class="text-xs font-semibold text-gray-600 mb-2">Retained attachments from previous attempt</p>
+                            <div class="flex flex-wrap gap-3">
+                                @foreach ($draftImages as $image)
+                                    <div class="flex items-start gap-2 rounded-lg border border-gray-200 bg-gray-50 p-2">
+                                        <img src="{{ $image->getUrl() }}" alt="Retained campaign image" class="h-16 w-16 rounded object-cover border border-gray-200">
+                                        <div class="text-xs text-gray-600">
+                                            <label class="inline-flex items-center gap-1">
+                                                <input type="checkbox" name="draft_image_ids[]" value="{{ $image->id }}" checked>
+                                                Keep
+                                            </label>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </div>
+                        </div>
+                    @endif
                 </div>
             </div>
         </div>
