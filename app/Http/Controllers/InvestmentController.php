@@ -10,15 +10,79 @@ use Illuminate\Http\Request;
 
 class InvestmentController extends Controller
 {
-    public function __invoke()
+    public function __invoke(Request $request)
     {
-        $totalInvestments = Investment::all();
+        $q = trim((string) $request->string('q'));
+        $typeFilter = $request->string('type')->toString();
+        $statusFilter = $request->string('status')->toString();
+        $stageFilter = $request->string('stage')->toString();
+        $sort = $request->string('sort')->toString() ?: 'latest_activity';
 
-        $investments = Investment::with(['user', 'deal'])
-            ->get()
-            ->groupBy('deal_id'); // Groups investments by each deal
+        $dealsQuery = Deal::query()
+            ->withCount([
+                'investments as total_investments_count',
+                'investments as invest_count' => fn ($query) => $query->where('type', 'invest'),
+                'investments as commit_count' => fn ($query) => $query->where('type', 'commit'),
+                'investments as review_count' => fn ($query) => $query->where('type', 'review'),
+            ])
+            ->withMax('investments', 'created_at')
+            ->when($q !== '', function ($query) use ($q) {
+                $query->where(function ($innerQuery) use ($q) {
+                    $innerQuery->where('title', 'like', "%{$q}%")
+                        ->orWhere('sector', 'like', "%{$q}%")
+                        ->orWhere('description', 'like', "%{$q}%")
+                        ->orWhereHas('investments.user', function ($userQuery) use ($q) {
+                            $userQuery->where('name', 'like', "%{$q}%")
+                                ->orWhere('email', 'like', "%{$q}%");
+                        });
+                });
+            })
+            ->when(in_array($typeFilter, ['invest', 'commit', 'review'], true), function ($query) use ($typeFilter) {
+                $query->whereHas('investments', fn ($investmentQuery) => $investmentQuery->where('type', $typeFilter));
+            })
+            ->when($statusFilter !== '', fn ($query) => $query->where('status', $statusFilter))
+            ->when($stageFilter !== '', fn ($query) => $query->where('investment_stage', $stageFilter));
 
-        return view('admin.investments.index', compact('investments', 'totalInvestments'));
+        if ($sort === 'most_investments') {
+            $dealsQuery->orderByDesc('total_investments_count');
+        } elseif ($sort === 'title_asc') {
+            $dealsQuery->orderBy('title');
+        } elseif ($sort === 'title_desc') {
+            $dealsQuery->orderByDesc('title');
+        } else {
+            $dealsQuery->orderByDesc('investments_max_created_at');
+        }
+
+        $deals = $dealsQuery
+            ->paginate(20)
+            ->withQueryString();
+
+        $availableStatuses = Deal::query()
+            ->select('status')
+            ->whereNotNull('status')
+            ->distinct()
+            ->orderBy('status')
+            ->pluck('status');
+
+        $availableStages = Deal::query()
+            ->select('investment_stage')
+            ->whereNotNull('investment_stage')
+            ->distinct()
+            ->orderBy('investment_stage')
+            ->pluck('investment_stage');
+
+        return view('admin.investments.index', [
+            'deals' => $deals,
+            'availableStatuses' => $availableStatuses,
+            'availableStages' => $availableStages,
+            'filters' => [
+                'q' => $q,
+                'type' => $typeFilter,
+                'status' => $statusFilter,
+                'stage' => $stageFilter,
+                'sort' => $sort,
+            ],
+        ]);
     }
 
     public function invest(Request $request, Deal $deal)
