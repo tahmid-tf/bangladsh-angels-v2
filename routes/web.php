@@ -100,10 +100,10 @@ Route::get('/faq', [PrimaryController::class, 'viewFAQ'])->name('faq');
 Route::get('/investor/signup', [PrimaryController::class, 'viewInvestorSignup'])->name('investor.signup');
 
 /**
- * Dashboard Route
+ * Legacy dashboard path now redirects to the landing page.
  */
 Route::get('/dashboard', function () {
-    return view('dashboard');
+    return redirect()->route('home');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 /**
