@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\MembersExport;
 use App\Mail\AccountApproved;
 use App\Models\Deal;
 use App\Models\Payment;
@@ -13,7 +14,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Validator;
+use Maatwebsite\Excel\Facades\Excel;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class AdminController extends Controller
 {
@@ -125,6 +129,119 @@ class AdminController extends Controller
         } else {
             return redirect()->route('home');
         }
+    }
+
+    public function exportMembers(string $format)
+    {
+        abort_unless(auth()->user()?->isAdmin(), 403);
+
+        $format = strtolower($format);
+        $supported = ['pdf', 'sql', 'csv', 'excel', 'json'];
+        abort_unless(in_array($format, $supported, true), 404);
+
+        $filters = request()->validate([
+            'account_scope' => 'nullable|in:all,active,inactive',
+            'approval_scope' => 'nullable|in:all,approved,pending',
+        ]);
+
+        $accountScope = $filters['account_scope'] ?? 'all';
+        $approvalScope = $filters['approval_scope'] ?? 'all';
+
+        $users = User::query()
+            ->when($accountScope === 'active', fn ($query) => $query->where('account_status', '!=', 'free'))
+            ->when($accountScope === 'inactive', fn ($query) => $query->where('account_status', 'free'))
+            ->when($approvalScope === 'approved', fn ($query) => $query->where('is_approved', true))
+            ->when($approvalScope === 'pending', fn ($query) => $query->where('is_approved', false))
+            ->orderBy('id')
+            ->get();
+        $timestamp = now()->format('Ymd_His');
+
+        if ($format === 'json') {
+            return response()->streamDownload(function () use ($users) {
+                echo $users->toJson(JSON_PRETTY_PRINT);
+            }, "members_{$timestamp}.json", [
+                'Content-Type' => 'application/json',
+            ]);
+        }
+
+        if ($format === 'csv') {
+            return response()->streamDownload(function () use ($users) {
+                $handle = fopen('php://output', 'w');
+                fputcsv($handle, [
+                    'id', 'name', 'email', 'phone', 'gender', 'company_name', 'designation',
+                    'primary_country', 'account_status', 'payment_status', 'role', 'is_approved',
+                    'created_at', 'updated_at',
+                ]);
+
+                foreach ($users as $user) {
+                    fputcsv($handle, [
+                        $user->id,
+                        $user->name,
+                        $user->email,
+                        $user->phone,
+                        $user->gender,
+                        $user->company_name,
+                        $user->designation,
+                        $user->primary_country,
+                        $user->account_status,
+                        $user->payment_status,
+                        $user->role,
+                        $user->is_approved ? 1 : 0,
+                        optional($user->created_at)->toDateTimeString(),
+                        optional($user->updated_at)->toDateTimeString(),
+                    ]);
+                }
+
+                fclose($handle);
+            }, "members_{$timestamp}.csv", [
+                'Content-Type' => 'text/csv',
+            ]);
+        }
+
+        if ($format === 'excel') {
+            return Excel::download(new MembersExport, "members_{$timestamp}.xlsx");
+        }
+
+        if ($format === 'pdf') {
+            $pdf = Pdf::loadView('admin.members.exports.pdf', [
+                'users' => $users,
+                'generatedAt' => now(),
+                'accountScope' => $accountScope,
+                'approvalScope' => $approvalScope,
+            ])->setPaper('a4', 'landscape');
+
+            return $pdf->download("members_{$timestamp}.pdf");
+        }
+
+        // SQL backup export
+        $columns = Schema::getColumnListing('users');
+        $quotedColumns = implode(', ', array_map(fn ($col) => "`{$col}`", $columns));
+        $lines = [];
+        $lines[] = "-- BAN members backup";
+        $lines[] = '-- Generated at '.now()->toDateTimeString();
+        $lines[] = '';
+
+        foreach ($users as $user) {
+            $values = [];
+            foreach ($columns as $column) {
+                $value = $user->{$column};
+                if ($value === null) {
+                    $values[] = 'NULL';
+                } else {
+                    $escaped = str_replace(["\\", "'"], ["\\\\", "\\'"], (string) $value);
+                    $values[] = "'{$escaped}'";
+                }
+            }
+            $lines[] = 'INSERT INTO `users` ('.$quotedColumns.') VALUES ('.implode(', ', $values).');';
+        }
+
+        $sqlContent = implode(PHP_EOL, $lines).PHP_EOL;
+
+        return response()->streamDownload(function () use ($sqlContent) {
+            echo $sqlContent;
+        }, "members_{$timestamp}.sql", [
+            'Content-Type' => 'application/sql',
+        ]);
     }
 
     public function viewActiveMembers()

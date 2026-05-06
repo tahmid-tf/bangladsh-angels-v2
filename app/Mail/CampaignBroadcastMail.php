@@ -12,7 +12,7 @@ class CampaignBroadcastMail extends Mailable
 
     public function __construct(
         public string $campaignSubject,
-        public string $campaignMessage
+        public string $campaignHtml
     ) {}
 
     public function build(): self
@@ -21,7 +21,7 @@ class CampaignBroadcastMail extends Mailable
             ->subject($this->campaignSubject)
             ->view('emails.campaign-broadcast')
             ->with([
-                'campaignMessage' => $this->campaignMessage,
+                'campaignHtml' => $this->campaignHtml,
             ]);
     }
 }

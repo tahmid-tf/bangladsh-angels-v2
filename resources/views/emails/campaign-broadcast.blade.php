@@ -14,7 +14,7 @@
         </tr>
         <tr>
             <td style="padding: 24px; color: #1f2937; font-size: 15px; line-height: 1.7;">
-                {!! nl2br(e($campaignMessage)) !!}
+                {!! $campaignHtml !!}
             </td>
         </tr>
         <tr>

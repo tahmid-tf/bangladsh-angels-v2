@@ -86,7 +86,7 @@
         </div>
     @endif
 
-    <form id="emailForm" action="{{ route('mail.send') }}" method="POST" class="space-y-5">
+    <form id="emailForm" action="{{ route('mail.send') }}" method="POST" enctype="multipart/form-data" class="space-y-5">
         @csrf
         <div class="bg-white rounded-xl shadow p-4 md:p-5">
             <h2 class="text-base font-semibold text-gray-900 mb-3">Compose Campaign</h2>
@@ -97,8 +97,25 @@
                 </div>
                 <div>
                     <label for="message" class="block text-xs font-semibold text-gray-600 mb-1">Email message</label>
-                    <textarea id="message" name="message" rows="8" maxlength="50000" required class="w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm" placeholder="Write your campaign content here...">{{ old('message') }}</textarea>
-                    <p class="mt-1 text-xs text-gray-500">Line breaks are preserved in the email.</p>
+                    <div class="border border-gray-300 rounded-lg overflow-hidden">
+                        <div class="flex flex-wrap items-center gap-2 p-2 border-b border-gray-200 bg-gray-50">
+                            <button type="button" data-cmd="bold" class="px-2 py-1 text-xs font-semibold rounded bg-white border border-gray-200">Bold</button>
+                            <button type="button" data-cmd="italic" class="px-2 py-1 text-xs font-semibold rounded bg-white border border-gray-200">Italic</button>
+                            <button type="button" data-cmd="underline" class="px-2 py-1 text-xs font-semibold rounded bg-white border border-gray-200">Underline</button>
+                            <button type="button" data-cmd="insertUnorderedList" class="px-2 py-1 text-xs font-semibold rounded bg-white border border-gray-200">Bullet List</button>
+                            <button type="button" data-cmd="formatBlock" data-value="h3" class="px-2 py-1 text-xs font-semibold rounded bg-white border border-gray-200">Heading</button>
+                            <button type="button" data-cmd="createLink" class="px-2 py-1 text-xs font-semibold rounded bg-white border border-gray-200">Link</button>
+                        </div>
+                        <div id="message-editor" contenteditable="true" class="min-h-[220px] p-3 text-sm text-gray-800 focus:outline-none">{!! old('message_html', old('message')) !!}</div>
+                    </div>
+                    <textarea id="message" name="message" rows="4" maxlength="50000" class="hidden">{{ old('message') }}</textarea>
+                    <input type="hidden" id="message_html" name="message_html" value="{{ old('message_html') }}">
+                    <p class="mt-1 text-xs text-gray-500">Use the editor for rich formatting. Plain text is supported too.</p>
+                </div>
+                <div>
+                    <label for="campaign_images" class="block text-xs font-semibold text-gray-600 mb-1">Campaign images (optional)</label>
+                    <input id="campaign_images" name="campaign_images[]" type="file" accept="image/*" multiple class="w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm bg-white">
+                    <p class="mt-1 text-xs text-gray-500">Upload up to multiple images. They will be included in the email content.</p>
                 </div>
             </div>
         </div>
@@ -168,6 +185,38 @@
             </div>
         </div>
     </form>
+
+    <div class="bg-white rounded-xl shadow p-4 md:p-5 mt-5">
+        <h2 class="text-base font-semibold text-gray-900 mb-3">Campaign Send History</h2>
+        <div class="overflow-x-auto">
+            <table class="w-full text-left text-sm">
+                <thead class="bg-gray-50 border-b border-gray-200">
+                    <tr>
+                        <th class="px-3 py-2 font-semibold text-gray-700">Subject</th>
+                        <th class="px-3 py-2 font-semibold text-gray-700">Sender</th>
+                        <th class="px-3 py-2 font-semibold text-gray-700">Mode</th>
+                        <th class="px-3 py-2 font-semibold text-gray-700">Recipients</th>
+                        <th class="px-3 py-2 font-semibold text-gray-700">Sent At</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-100">
+                    @forelse ($campaignLogs as $log)
+                        <tr>
+                            <td class="px-3 py-2 text-gray-900">{{ $log->subject }}</td>
+                            <td class="px-3 py-2 text-gray-700">{{ $log->sender?->name ?? 'System' }}</td>
+                            <td class="px-3 py-2 text-gray-700 uppercase">{{ $log->send_mode }}</td>
+                            <td class="px-3 py-2 text-gray-700">{{ $log->recipients_count }}</td>
+                            <td class="px-3 py-2 text-gray-700">{{ optional($log->sent_at)->format('M j, Y g:i A') }}</td>
+                        </tr>
+                    @empty
+                        <tr>
+                            <td colspan="5" class="px-3 py-6 text-center text-gray-500">No campaign sends logged yet.</td>
+                        </tr>
+                    @endforelse
+                </tbody>
+            </table>
+        </div>
+    </div>
 </section>
 
 <script>
@@ -193,6 +242,43 @@
         checkbox.addEventListener('change', refreshSelectedCount);
     });
 
+    const editor = document.getElementById('message-editor');
+    const messageHtmlInput = document.getElementById('message_html');
+    const emailForm = document.getElementById('emailForm');
+    const editorButtons = document.querySelectorAll('[data-cmd]');
+
+    function syncEditorHtml() {
+        if (!editor || !messageHtmlInput) return;
+        messageHtmlInput.value = editor.innerHTML.trim();
+    }
+
+    editorButtons.forEach((button) => {
+        button.addEventListener('click', () => {
+            const cmd = button.getAttribute('data-cmd');
+            const value = button.getAttribute('data-value');
+            if (!cmd) return;
+
+            if (cmd === 'createLink') {
+                const url = window.prompt('Enter URL');
+                if (!url) return;
+                document.execCommand(cmd, false, url);
+            } else {
+                document.execCommand(cmd, false, value || null);
+            }
+
+            syncEditorHtml();
+        });
+    });
+
+    if (editor) {
+        editor.addEventListener('input', syncEditorHtml);
+    }
+
+    if (emailForm) {
+        emailForm.addEventListener('submit', syncEditorHtml);
+    }
+
+    syncEditorHtml();
     refreshSelectedCount();
 </script>
 @endsection
