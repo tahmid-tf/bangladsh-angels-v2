@@ -147,12 +147,16 @@
                 <button @click="show = false" class="absolute top-auto right-2 text-[#494130] hover:text-[#7a734f] transition">
                     ✖
                 </button>
-                <p><strong>Welcome!</strong> Please verify your email address by 
-                    <button wire:click="sendVerificationEmail" class="font-bold underline cursor-pointer">clicking here</button>.
+                <p>
+                    <strong>Welcome!</strong> Please verify your email address by
+                    <form method="POST" action="{{ route('verification.send') }}" class="inline">
+                        @csrf
+                        <button type="submit" class="font-bold underline cursor-pointer">clicking here</button>.
+                    </form>
                 </p>
-                @if (session('verification-notice'))
+                @if (session('status') === 'verification-link-sent' || session('verification-notice'))
                     <p class="mt-2 text-sm font-medium text-[#494130]">
-                        {{ session('verification-notice') }}
+                        {{ session('verification-notice') ?? 'A new verification link has been sent to your email address.' }}
                     </p>
                 @endif
             </div>

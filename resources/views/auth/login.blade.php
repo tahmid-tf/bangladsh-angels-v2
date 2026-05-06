@@ -59,12 +59,29 @@
                         <label for="password" class="block text-sm font-medium text-gray-700">
                             Password
                         </label>
-                        <input
-                            type="password"
-                            id="password"
-                            name="password"
-                            class="mt-1 p-3 border-box w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm"
-                        />
+                        <div class="relative mt-1">
+                            <input
+                                type="password"
+                                id="password"
+                                name="password"
+                                class="p-3 pr-12 border-box w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm"
+                            />
+                            <button
+                                type="button"
+                                id="toggle-password"
+                                class="absolute inset-y-0 right-0 flex items-center px-3 text-gray-500 hover:text-gray-700"
+                                aria-label="Show password"
+                                aria-pressed="false"
+                            >
+                                <svg id="eye-open" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                    <path d="M10 3c-4.5 0-8.06 2.95-9.5 7 1.44 4.05 5 7 9.5 7s8.06-2.95 9.5-7c-1.44-4.05-5-7-9.5-7Zm0 11a4 4 0 1 1 0-8 4 4 0 0 1 0 8Z" />
+                                    <path d="M10 8a2 2 0 1 0 0 4 2 2 0 0 0 0-4Z" />
+                                </svg>
+                                <svg id="eye-closed" xmlns="http://www.w3.org/2000/svg" class="hidden h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                    <path d="M3.28 2.22a.75.75 0 0 0-1.06 1.06l1.68 1.68A10.94 10.94 0 0 0 .5 10c1.44 4.05 5 7 9.5 7 1.94 0 3.72-.55 5.22-1.48l1.5 1.5a.75.75 0 1 0 1.06-1.06l-14.5-14.5ZM10 14a4 4 0 0 1-4-4c0-.72.19-1.4.52-1.98l5.46 5.46A3.98 3.98 0 0 1 10 14Zm9.5-4c-.62 1.75-1.73 3.28-3.17 4.4l-2.03-2.03A4 4 0 0 0 8.63 6.7L6.96 5.03A10.7 10.7 0 0 1 10 4c4.5 0 8.06 2.95 9.5 6Z" />
+                                </svg>
+                            </button>
+                        </div>
                         <x-input-error :messages="$errors->get('password')" class="mt-2" />
                         <p class="text-sm text-gray-500 mt-1">Password requires uppercase, lowercase, number, and special character.</p>
                     </div>
@@ -95,4 +112,25 @@
         </main>
     </div>
 </section>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const passwordInput = document.getElementById('password');
+        const toggleButton = document.getElementById('toggle-password');
+        const eyeOpen = document.getElementById('eye-open');
+        const eyeClosed = document.getElementById('eye-closed');
+
+        if (!passwordInput || !toggleButton || !eyeOpen || !eyeClosed) {
+            return;
+        }
+
+        toggleButton.addEventListener('click', function () {
+            const shouldShowPassword = passwordInput.type === 'password';
+            passwordInput.type = shouldShowPassword ? 'text' : 'password';
+            toggleButton.setAttribute('aria-label', shouldShowPassword ? 'Hide password' : 'Show password');
+            toggleButton.setAttribute('aria-pressed', shouldShowPassword ? 'true' : 'false');
+            eyeOpen.classList.toggle('hidden', shouldShowPassword);
+            eyeClosed.classList.toggle('hidden', !shouldShowPassword);
+        });
+    });
+</script>
 </html>
