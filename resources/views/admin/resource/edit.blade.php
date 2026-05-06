@@ -1,5 +1,5 @@
 @extends('layouts.admin')
-@section('page_title','Edit Resource | Bangladesh Angels Network')
+@section('page_title','Edit Event | Bangladesh Angels Network')
 @section('page_content')
 @if(session('success'))
     <div class="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 rounded-lg mb-4">
@@ -10,12 +10,12 @@
 <section class="container mx-auto px-4 py-8 bg-white rounded-lg shadow-md">
     <header class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6">
         <div>
-            <h1 class="text-2xl font-bold mb-1">Edit Resource</h1>
-            <p class="text-sm text-gray-500">Dashboard &gt; Resources &gt; Edit Resource</p>
+            <h1 class="text-2xl font-bold mb-1">Edit Event</h1>
+            <p class="text-sm text-gray-500">Dashboard &gt; Events &gt; Edit event</p>
         </div>
         <div class="flex">
             <!-- Delete Form -->
-            <form action="{{route('resource.destory',$resource->id)}}" method="POST" onsubmit="return confirmDelete()">
+            <form action="{{route('admin.events.destroy',$resource->id)}}" method="POST" onsubmit="return confirmDelete()">
                 @csrf
                 <button type="submit" class="mt-4 mr-6 md:mt-0 px-6 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition">
                     Delete
@@ -24,7 +24,7 @@
 
             <!-- Update Button -->
             <button type="submit" form="resource-form" class="mt-4 md:mt-0 px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition">
-                Update Resource
+                Update Event
             </button>
         </div>
     </header>
@@ -49,7 +49,7 @@
 
     <form 
         id="resource-form" 
-        action="{{ route('resource.update', $resource->id) }}" 
+        action="{{ route('admin.events.update', $resource->id) }}" 
         method="POST" 
         enctype="multipart/form-data"
     >

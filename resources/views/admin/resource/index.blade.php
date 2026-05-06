@@ -1,18 +1,18 @@
 @extends('layouts.admin')
-@section('page_title','Resources | Dashboard')
+@section('page_title','Events | Dashboard')
 @section('page_content')
 <section class="container w-full p-6">
 
     <!-- Header Section -->
     <div class="flex flex-col md:flex-row justify-between items-start md:items-center p-4 bg-white shadow">
         <h1 class="text-lg md:text-xl font-bold mb-2 md:mb-0">
-            Resources ({{ count($resources) }})
+            Events ({{ count($resources) }})
         </h1>
 
-        <!-- Button to add a new resource -->
-        <a href="{{ route('resource.create') }}"
+        <!-- Button to add a new event -->
+        <a href="{{ route('admin.events.create') }}"
            class="bg-green-600 text-white px-4 py-2 rounded-lg shadow hover:bg-green-700 whitespace-nowrap">
-            + Add New Resource
+            + Add New Event
         </a>
     </div>
 
@@ -21,7 +21,7 @@
         <div class="flex flex-wrap items-center gap-4">
             <!-- Example Tabs -->
             <div class="flex space-x-4">
-                <a href="{{ route('admin.resources') }}"
+                <a href="{{ route('admin.events') }}"
                    class="px-4 py-2 bg-green-100 text-green-700 rounded-full">
                     All
                 </a>
@@ -116,7 +116,7 @@
                             {{ $resource->cta_link ? 'Yes' : '—' }}
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                            <a href="{{ route('resource.edit', $resource->id) }}"
+                            <a href="{{ route('admin.events.edit', $resource->id) }}"
                                class="text-blue-600 hover:text-blue-900">
                                 Edit
                             </a>
@@ -126,7 +126,7 @@
                 @empty
                     <tr>
                         <td colspan="8" class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">
-                            No resources found.
+                            No events found.
                         </td>
                     </tr>
                 @endforelse

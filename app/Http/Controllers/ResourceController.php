@@ -158,8 +158,8 @@ class ResourceController extends Controller
         }
 
         return redirect()
-            ->route('resource.edit', $resource->id)
-            ->with('success', 'Resource updated successfully!');
+            ->route('admin.events.edit', $resource->id)
+            ->with('success', 'Event updated successfully!');
     }
 
     public function destroy(Resource $resource)
@@ -170,8 +170,8 @@ class ResourceController extends Controller
 
         // Redirect back to the resources index with a success message
         return redirect()
-            ->route('admin.resources')
-            ->with('success', 'Resource deleted successfully!');
+            ->route('admin.events')
+            ->with('success', 'Event deleted successfully!');
     }
 
     /**

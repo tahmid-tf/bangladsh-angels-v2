@@ -141,14 +141,15 @@ Route::middleware('auth')->group(function () {
      */
     Route::prefix('admin')->group(function () {
         Route::get('/dashboard', AdminController::class)->name('admin.dashboard');
-        Route::get('/resources', ResourceController::class)->name('admin.resources');
-        Route::get('/resources/create', [ResourceController::class, 'create'])->name('resource.create');
-        Route::post('/resources/create', [ResourceController::class, 'store'])->name('resource.store');
+        Route::redirect('/resources', '/admin/events', 301);
+        Route::get('/events', ResourceController::class)->name('admin.events');
+        Route::get('/events/create', [ResourceController::class, 'create'])->name('admin.events.create');
+        Route::post('/events/create', [ResourceController::class, 'store'])->name('admin.events.store');
 
-        Route::get('/resources/{resource:id}/edit', [ResourceController::class, 'edit'])->name('resource.edit');
-        Route::put('/resources/{resource:id}/update', [ResourceController::class, 'update'])->name('resource.update');
+        Route::get('/events/{resource:id}/edit', [ResourceController::class, 'edit'])->name('admin.events.edit');
+        Route::put('/events/{resource:id}/update', [ResourceController::class, 'update'])->name('admin.events.update');
 
-        Route::post('/resources/{resource:id}/delete', [ResourceController::class, 'destroy'])->name('resource.destory');
+        Route::post('/events/{resource:id}/delete', [ResourceController::class, 'destroy'])->name('admin.events.destroy');
 
         // Subscription Routes
         Route::prefix('subscriptions')->group(function () {

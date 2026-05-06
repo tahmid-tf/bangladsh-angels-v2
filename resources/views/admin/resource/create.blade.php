@@ -1,17 +1,17 @@
 @extends('layouts.admin')
-@section('page_title','Add a new Resource | Bangladesh Angels Network')
+@section('page_title','Add New Event | Bangladesh Angels Network')
 @section('page_content')
 
 <section class="container mx-auto px-6 py-12 bg-white rounded-lg shadow-lg mt-8">
     <header class="flex justify-between items-center mb-8">
         <div>
-            <h1 class="text-2xl font-bold">Add New Resource</h1>
-            <p class="text-gray-500">Dashboard &gt; Resources &gt; Add new resource</p>
+            <h1 class="text-2xl font-bold">Add New Event</h1>
+            <p class="text-gray-500">Dashboard &gt; Events &gt; Add new event</p>
         </div>
         <div class="flex space-x-4">
             <!-- The form ID is "resource-form" -->
             <button type="submit" form="resource-form" class="px-4 py-2 bg-green-600 text-white rounded-lg shadow hover:bg-green-700">
-                Add new resource
+                Add new event
             </button>
         </div>
     </header>
@@ -27,7 +27,7 @@
         </div>
     @endif
 
-    <form id="resource-form" action="{{ route('resource.store') }}" method="POST" enctype="multipart/form-data" class="space-y-8">
+    <form id="resource-form" action="{{ route('admin.events.store') }}" method="POST" enctype="multipart/form-data" class="space-y-8">
         @csrf
 
         <!-- Banner Image Upload -->
