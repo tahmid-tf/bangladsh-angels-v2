@@ -71,7 +71,7 @@
             </ul>
         </div>
     @endif
-    <form method="POST" action="{{route('member.apply')}}" enctype="multipart/form-data" class="space-y-8">
+    <form id="investor-signup-form" method="POST" action="{{route('member.apply')}}" enctype="multipart/form-data" class="space-y-8">
         @csrf
         <input type="hidden" id="selected_plan" name="selected_plan" value="{{ $selectedPlan }}">
         <input type="hidden" id="selected_plan_price" name="selected_plan_price" value="{{ old('selected_plan_price', '0') }}">
@@ -81,10 +81,16 @@
                 <div class="flex flex-col">
                     <label class="block text-gray-700 font-semibold mb-2" for="first_name">First Name <span class="text-red-500">*</span></label>
                     <input type="text" id="first_name" placeholder="John" value="{{old('first_name')}}" name="first_name" class="w-full p-3 rounded-lg border-gray-300 shadow-sm focus:border-green-500 focus:ring focus:ring-green-200" required>
+                    @error('first_name')
+                        <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
+                    @enderror
                 </div>
                 <div class="flex flex-col">
                     <label class="block text-gray-700 font-semibold mb-2" for="last_name">Last Name <span class="text-red-500">*</span></label>
                     <input type="text" id="last_name" placeholder="Doe" value="{{old('last_name')}}" name="last_name" class="w-full p-3 rounded-lg border-gray-300 shadow-sm focus:border-green-500 focus:ring focus:ring-green-200" required>
+                    @error('last_name')
+                        <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
+                    @enderror
                 </div>
             </div>
 
@@ -92,6 +98,9 @@
             <div>
                 <label class="block text-gray-700 font-semibold mb-2" for="email">Email <span class="text-red-500">*</span></label>
                 <input type="email" id="email" name="email" placeholder="Email" class="w-full p-3 rounded-lg border-gray-300 shadow-sm focus:border-green-500 focus:ring focus:ring-green-200" value="{{ old('email') }}" required>
+                @error('email')
+                    <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
+                @enderror
             </div>
             
             <div>    
@@ -105,6 +114,9 @@
                     class="w-full p-3 rounded-lg border-gray-300 shadow-sm focus:border-green-500 focus:ring focus:ring-green-200"
                     required
                 >
+                @error('address')
+                    <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
+                @enderror
             </div>
 
             <div class="md:col-span-2 rounded-xl border border-green-100 bg-green-50/40 p-5">
@@ -112,12 +124,40 @@
                 <div class="space-y-4">
                     <div>
                         <label class="block text-gray-700 font-semibold mb-2" for="password">Password <span class="text-red-500">*</span></label>
-                        <input type="password" id="password" name="password" placeholder="Enter a secure password" class="w-full p-3 rounded-lg border-gray-300 shadow-sm focus:border-green-500 focus:ring focus:ring-green-200" required>
+                        <div class="relative">
+                            <input type="password" id="password" name="password" placeholder="Enter a secure password" class="w-full p-3 pr-12 rounded-lg border-gray-300 shadow-sm focus:border-green-500 focus:ring focus:ring-green-200" required>
+                            <button type="button" id="toggle-password" class="absolute inset-y-0 right-0 flex items-center px-3 text-gray-500 hover:text-gray-700" aria-label="Show password" aria-pressed="false">
+                                <svg id="eye-open-password" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                    <path d="M10 3c-4.5 0-8.06 2.95-9.5 7 1.44 4.05 5 7 9.5 7s8.06-2.95 9.5-7c-1.44-4.05-5-7-9.5-7Zm0 11a4 4 0 1 1 0-8 4 4 0 0 1 0 8Z" />
+                                    <path d="M10 8a2 2 0 1 0 0 4 2 2 0 0 0 0-4Z" />
+                                </svg>
+                                <svg id="eye-closed-password" xmlns="http://www.w3.org/2000/svg" class="hidden h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                    <path d="M3.28 2.22a.75.75 0 0 0-1.06 1.06l1.68 1.68A10.94 10.94 0 0 0 .5 10c1.44 4.05 5 7 9.5 7 1.94 0 3.72-.55 5.22-1.48l1.5 1.5a.75.75 0 1 0 1.06-1.06l-14.5-14.5ZM10 14a4 4 0 0 1-4-4c0-.72.19-1.4.52-1.98l5.46 5.46A3.98 3.98 0 0 1 10 14Zm9.5-4c-.62 1.75-1.73 3.28-3.17 4.4l-2.03-2.03A4 4 0 0 0 8.63 6.7L6.96 5.03A10.7 10.7 0 0 1 10 4c4.5 0 8.06 2.95 9.5 6Z" />
+                                </svg>
+                            </button>
+                        </div>
                         <p class="text-sm text-gray-600 mt-1">Use at least 8 characters with uppercase, lowercase, number, and special character.</p>
+                        @error('password')
+                            <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
+                        @enderror
                     </div>
                     <div>
                         <label class="block text-gray-700 font-semibold mb-2" for="re_password">Confirm Password <span class="text-red-500">*</span></label>
-                        <input type="password" id="re_password" name="password_confirmation" placeholder="Re-enter your password" class="w-full p-3 rounded-lg border-gray-300 shadow-sm focus:border-green-500 focus:ring focus:ring-green-200" required>
+                        <div class="relative">
+                            <input type="password" id="re_password" name="password_confirmation" placeholder="Re-enter your password" class="w-full p-3 pr-12 rounded-lg border-gray-300 shadow-sm focus:border-green-500 focus:ring focus:ring-green-200" required>
+                            <button type="button" id="toggle-password-confirmation" class="absolute inset-y-0 right-0 flex items-center px-3 text-gray-500 hover:text-gray-700" aria-label="Show password confirmation" aria-pressed="false">
+                                <svg id="eye-open-confirmation" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                    <path d="M10 3c-4.5 0-8.06 2.95-9.5 7 1.44 4.05 5 7 9.5 7s8.06-2.95 9.5-7c-1.44-4.05-5-7-9.5-7Zm0 11a4 4 0 1 1 0-8 4 4 0 0 1 0 8Z" />
+                                    <path d="M10 8a2 2 0 1 0 0 4 2 2 0 0 0 0-4Z" />
+                                </svg>
+                                <svg id="eye-closed-confirmation" xmlns="http://www.w3.org/2000/svg" class="hidden h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                    <path d="M3.28 2.22a.75.75 0 0 0-1.06 1.06l1.68 1.68A10.94 10.94 0 0 0 .5 10c1.44 4.05 5 7 9.5 7 1.94 0 3.72-.55 5.22-1.48l1.5 1.5a.75.75 0 1 0 1.06-1.06l-14.5-14.5ZM10 14a4 4 0 0 1-4-4c0-.72.19-1.4.52-1.98l5.46 5.46A3.98 3.98 0 0 1 10 14Zm9.5-4c-.62 1.75-1.73 3.28-3.17 4.4l-2.03-2.03A4 4 0 0 0 8.63 6.7L6.96 5.03A10.7 10.7 0 0 1 10 4c4.5 0 8.06 2.95 9.5 6Z" />
+                                </svg>
+                            </button>
+                        </div>
+                        @error('password_confirmation')
+                            <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
+                        @enderror
                     </div>
                 </div>
             </div>
@@ -126,12 +166,18 @@
             <div>
                 <label class="block text-gray-700 font-semibold mb-2" for="company_name">Company Name <span class="text-red-500">*</span></label>
                 <input type="text" id="company_name" name="company_name" placeholder="Company Name" class="w-full p-3 rounded-lg border-gray-300 shadow-sm focus:border-green-500 focus:ring focus:ring-green-200" value="{{ old('company_name') }}" required>
+                @error('company_name')
+                    <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
+                @enderror
             </div>
 
             <!-- Designation -->
             <div>
                 <label class="block text-gray-700 font-semibold mb-2" for="designation">Designation <span class="text-red-500">*</span></label>
                 <input type="text" id="designation" name="designation" placeholder="Designation in the company" class="w-full p-3 rounded-lg border-gray-300 shadow-sm focus:border-green-500 focus:ring focus:ring-green-200" value="{{ old('designation') }}" required>
+                @error('designation')
+                    <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
+                @enderror
             </div>
 
             <!-- Primary Country -->
@@ -384,6 +430,9 @@
                     <option value="Zambia">Zambia</option>
                     <option value="Zimbabwe">Zimbabwe</option>
                 </select>
+                @error('primary_country')
+                    <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
+                @enderror
             </div>
 
             <!-- Phone Number -->
@@ -476,6 +525,12 @@
                     </select>
                     <input type="text" id="phone" name="phone" placeholder="Phone Number / WhatsApp" class="w-full p-3 rounded-lg border-gray-300 shadow-sm focus:border-green-500 focus:ring focus:ring-green-200" value="{{ old('phone') }}" required>
                 </div>
+                @error('country_code')
+                    <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
+                @enderror
+                @error('phone')
+                    <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
+                @enderror
             </div>
 
             <!-- Gender -->
@@ -487,6 +542,9 @@
                     <option value="female" {{ old('gender') == 'female' ? 'selected' : '' }}>Female</option>
                     <option value="other" {{ old('gender') == 'other' ? 'selected' : '' }}>Other</option>
                 </select>
+                @error('gender')
+                    <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
+                @enderror
             </div>
 
             <!-- LinkedIn -->
@@ -500,6 +558,9 @@
                     </span>
                     <input type="text" id="linkedin" name="linkedin" placeholder="Please add the link to your LinkedIn profile" class="w-full p-3 pl-10 rounded-lg border-gray-300 shadow-sm focus:border-green-500 focus:ring focus:ring-green-200" value="{{ old('linkedin') }}">
                 </div>
+                @error('linkedin')
+                    <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
+                @enderror
             </div>
 
             <!-- Investment Expertise -->
@@ -511,6 +572,9 @@
                     <option value="intermediate" {{ old('investment_expertise') == 'intermediate' ? 'selected' : '' }}>Intermediate</option>
                     <option value="expert" {{ old('investment_expertise') == 'expert' ? 'selected' : '' }}>Expert</option>
                 </select>
+                @error('investment_expertise')
+                    <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
+                @enderror
             </div>
         </div>
 
@@ -520,6 +584,9 @@
                 <input type="checkbox" class="rounded border-gray-300 text-green-500 focus:ring-green-400" name="terms" required>
                 <span class="text-gray-700">I agree to the <a href="{{ asset('MoU.pdf') }}" class="text-green-500 underline" target="_blank">terms and conditions</a> and privacy policy.</span>
             </label>
+            @error('terms')
+                <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
+            @enderror
         </div>
 
         <!-- Submit Button -->
@@ -538,6 +605,14 @@
         const planRadios = document.querySelectorAll('.plan-radio');
         const planInput = document.getElementById('selected_plan');
         const planPriceInput = document.getElementById('selected_plan_price');
+        const togglePasswordButton = document.getElementById('toggle-password');
+        const togglePasswordConfirmationButton = document.getElementById('toggle-password-confirmation');
+        const passwordInput = document.getElementById('password');
+        const confirmationInput = document.getElementById('re_password');
+        const eyeOpenPassword = document.getElementById('eye-open-password');
+        const eyeClosedPassword = document.getElementById('eye-closed-password');
+        const eyeOpenConfirmation = document.getElementById('eye-open-confirmation');
+        const eyeClosedConfirmation = document.getElementById('eye-closed-confirmation');
 
         function syncPlan() {
             const checked = document.querySelector('.plan-radio:checked');
@@ -571,7 +646,56 @@
             radio.addEventListener('change', syncPlan);
         });
 
+        if (togglePasswordButton && passwordInput && eyeOpenPassword && eyeClosedPassword) {
+            togglePasswordButton.addEventListener('click', function () {
+                const shouldShowPassword = passwordInput.type === 'password';
+                passwordInput.type = shouldShowPassword ? 'text' : 'password';
+                togglePasswordButton.setAttribute('aria-label', shouldShowPassword ? 'Hide password' : 'Show password');
+                togglePasswordButton.setAttribute('aria-pressed', shouldShowPassword ? 'true' : 'false');
+                eyeOpenPassword.classList.toggle('hidden', shouldShowPassword);
+                eyeClosedPassword.classList.toggle('hidden', !shouldShowPassword);
+            });
+        }
+
+        if (togglePasswordConfirmationButton && confirmationInput && eyeOpenConfirmation && eyeClosedConfirmation) {
+            togglePasswordConfirmationButton.addEventListener('click', function () {
+                const shouldShowPassword = confirmationInput.type === 'password';
+                confirmationInput.type = shouldShowPassword ? 'text' : 'password';
+                togglePasswordConfirmationButton.setAttribute('aria-label', shouldShowPassword ? 'Hide password confirmation' : 'Show password confirmation');
+                togglePasswordConfirmationButton.setAttribute('aria-pressed', shouldShowPassword ? 'true' : 'false');
+                eyeOpenConfirmation.classList.toggle('hidden', shouldShowPassword);
+                eyeClosedConfirmation.classList.toggle('hidden', !shouldShowPassword);
+            });
+        }
+
         syncPlan();
     })();
 </script>
+<style>
+    #investor-signup-form input[type="text"],
+    #investor-signup-form input[type="email"],
+    #investor-signup-form input[type="password"],
+    #investor-signup-form input[type="date"],
+    #investor-signup-form input[type="time"],
+    #investor-signup-form input[type="number"],
+    #investor-signup-form select,
+    #investor-signup-form textarea {
+        background-color: #f7fbf9;
+        border-color: #a9c4bc;
+        color: #111827;
+    }
+
+    #investor-signup-form input::placeholder,
+    #investor-signup-form textarea::placeholder {
+        color: #6b7280;
+    }
+
+    #investor-signup-form input:focus,
+    #investor-signup-form select:focus,
+    #investor-signup-form textarea:focus {
+        background-color: #ffffff;
+        border-color: #0f6a4b;
+        box-shadow: 0 0 0 3px rgba(15, 106, 75, 0.16);
+    }
+</style>
 @endsection
