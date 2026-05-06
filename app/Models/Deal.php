@@ -2,15 +2,11 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
-use App\Models\Investment;
-use App\Models\Commit;
-
-use Illuminate\Support\Str;
-
 
 class Deal extends Model implements HasMedia
 {
@@ -78,7 +74,7 @@ class Deal extends Model implements HasMedia
         $keyMetrics = json_decode($this->key_metrics, true);
 
         // Check if key_metrics is not a valid array or empty
-        if (!is_array($keyMetrics) || empty($keyMetrics)) {
+        if (! is_array($keyMetrics) || empty($keyMetrics)) {
             return false; // Invalid key metrics
         }
 
@@ -105,36 +101,39 @@ class Deal extends Model implements HasMedia
 
     public function getOtherDeals($limit = 5)
     {
-        if(auth()->user()){
-            if(auth()->user()->isFree()){
+        if (auth()->user()) {
+            if (auth()->user()->isFree()) {
                 return self::where('id', '!=', $this->id)
-                ->where('type','portfolio')
-                ->orderBy('created_at', 'desc') // Order by the most recently created
-                ->take($limit) // Limit the number of deals fetched
-                ->get();
+                    ->where('type', 'portfolio')
+                    ->orderBy('created_at', 'desc') // Order by the most recently created
+                    ->take($limit) // Limit the number of deals fetched
+                    ->get();
             } else {
+                // Paid members: only active “live” deals—exclude portfolio companies from this list.
                 return self::where('id', '!=', $this->id)
-                ->orderBy('created_at', 'desc') // Order by the most recently created
-                ->take($limit) // Limit the number of deals fetched
-                ->get();
+                    ->where('type', '!=', 'portfolio')
+                    ->where('status', 'active')
+                    ->orderBy('created_at', 'desc')
+                    ->take($limit)
+                    ->get();
             }
-            
+
         } else {
             return self::where('id', '!=', $this->id)
-            ->where('type','portfolio')
-            ->orderBy('created_at', 'desc') // Order by the most recently created
-            ->take($limit) // Limit the number of deals fetched
-            ->get();
+                ->where('type', 'portfolio')
+                ->orderBy('created_at', 'desc') // Order by the most recently created
+                ->take($limit) // Limit the number of deals fetched
+                ->get();
         }
-        
+
     }
 
     public function getExcerpt(): string
     {
         $excerpt = Str::limit($this->description, 75, '...');
-        
+
         if (strlen($this->description) > 75) {
-            return $excerpt . ' [Read more]';
+            return $excerpt.' [Read more]';
         }
 
         return $excerpt;
@@ -184,5 +183,4 @@ class Deal extends Model implements HasMedia
         $this->addMedia($file)
             ->toMediaCollection('company_cover');
     }
-
 }

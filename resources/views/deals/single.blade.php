@@ -24,6 +24,9 @@
         </div>
     @endif
     <!-- Hero Section -->
+    @php
+        $memberDealLinks = auth()->check() && auth()->user() && !auth()->user()->isFree();
+    @endphp
     <div class="container mx-auto px-6 lg:flex lg:items-center text-white">
         <!-- Left Content -->
         <div class="lg:w-full">
@@ -45,14 +48,23 @@
                 </div>
                 @endif
             </div>
-            <a href="{{ (auth()->check() && auth()->user() && !auth()->user()->isFree()) ? $deal->pitch_deck_url : route('plans')}}" class="my-6 px-6 py-2 bg-gray-200 text-gray-700 font-semibold rounded-lg shadow hover:bg-gray-300">
-                View
-            </a>
-            @if ($deal->substack_link)
-            <a href="{{ (auth()->check() && auth()->user() && !auth()->user()->isFree()) ? $deal->substack_link : route('plans')}}" class="my-6 m-3 px-6 py-2 bg-gray-200 text-gray-700 font-semibold rounded-lg shadow hover:bg-gray-300">
-                View on Substack
-            </a>
-            @endif
+            <div class="flex flex-wrap items-center gap-3 mb-6">
+                @if (filled($deal->commit_link))
+                    <a href="{{ $memberDealLinks ? $deal->commit_link : route('plans') }}"
+                       @if ($memberDealLinks) target="_blank" rel="noopener noreferrer" @endif
+                       class="inline-flex items-center justify-center px-8 py-3.5 bg-green-500 text-white text-base font-bold rounded-xl shadow-lg hover:bg-green-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/90 transition">
+                        Commit Link
+                    </a>
+                @endif
+                <a href="{{ $memberDealLinks ? $deal->pitch_deck_url : route('plans')}}" class="inline-flex items-center justify-center px-6 py-2.5 bg-gray-200 text-gray-800 font-semibold rounded-lg shadow hover:bg-gray-300">
+                    View
+                </a>
+                @if ($deal->substack_link)
+                <a href="{{ $memberDealLinks ? $deal->substack_link : route('plans')}}" class="inline-flex items-center justify-center px-6 py-2.5 bg-gray-200 text-gray-800 font-semibold rounded-lg shadow hover:bg-gray-300">
+                    View on Substack
+                </a>
+                @endif
+            </div>
             @if ($deal->type!=="review" && $deal->groupchat_invite_link && auth()->check())
             <br><br>
             <form action="{{route('deal.invest',$deal->id)}}" method="POST" class="w-1/4">

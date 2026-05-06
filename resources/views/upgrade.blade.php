@@ -42,8 +42,8 @@
             <span class="text-green-500 font-bold">Filters</span>
         </button>
     </div>
-    <div class="flex space-x-4 mb-6">
-        <a href="#" class="font-bold border-b-2 border-black pb-2">Invest</a>
+    <div class="flex flex-wrap gap-x-4 gap-y-2 mb-6">
+        <a href="#" class="font-bold border-b-2 border-black pb-2 text-sm max-w-[min(100%,22rem)] leading-snug text-center sm:text-left">Commit Investment / Express Interest to Invest</a>
         <a href="#" class="text-gray-500 pb-2">Commit</a>
         <a href="#" class="text-gray-500 pb-2">Review</a>
     </div>    
@@ -76,8 +76,8 @@
                    <p class="font-semibold">৳ 9,80,000</p>
                </div>
            </div>
-           <button class="w-full mt-4 bg-[#36b37e] text-white py-2 rounded-full font-semibold hover:bg-green-600 transition">
-               Invest
+           <button type="button" class="w-full mt-4 bg-[#36b37e] text-white px-2 py-2.5 rounded-full text-xs font-semibold leading-snug hover:bg-green-600 transition">
+               Commit Investment / Express Interest to Invest
            </button>
        </div>
    </div>

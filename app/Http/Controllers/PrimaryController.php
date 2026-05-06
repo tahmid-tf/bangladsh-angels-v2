@@ -11,6 +11,7 @@ use App\Models\TeamMember;
 use App\Models\User;
 use App\Models\WhatWeDoCard;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 
 class PrimaryController extends Controller
 {
@@ -26,6 +27,8 @@ class PrimaryController extends Controller
             ->ordered()
             ->get();
 
+        $whatWeDoCards = $this->orderWhatWeDoCardsForLanding($whatWeDoCards);
+
         // Same pool as /deckvue BAN Events (event + webinar); homepage shows the six most recent, with "featured" first.
         $landingResourceEvents = Resource::query()
             ->with('media')
@@ -38,6 +41,21 @@ class PrimaryController extends Controller
             ->get();
 
         return view('welcome', compact('whatWeDoCards', 'landingResourceEvents'));
+    }
+
+    /**
+     * On the landing “What We Do” grid (three cards), place Showcases in the center column.
+     */
+    private function orderWhatWeDoCardsForLanding(Collection $cards): Collection
+    {
+        $showcases = $cards->firstWhere('slug', WhatWeDoCard::SLUG_SHOWCASES);
+        $others = $cards->where('slug', '!=', WhatWeDoCard::SLUG_SHOWCASES)->values();
+
+        if ($showcases !== null && $others->count() === 2) {
+            return collect([$others[0], $showcases, $others[1]]);
+        }
+
+        return $cards;
     }
 
     // Upgrade Page

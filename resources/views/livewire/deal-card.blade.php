@@ -2,21 +2,23 @@
     $href = auth()->check()
         ? (($deal->type !== 'review') ? route('deal.view', $deal->id) : $deal->groupchat_invite_link)
         : route('deal.public.view', $deal->id);
+    $pitchDeckHref = auth()->check()
+        ? ((! auth()->user()->isFree())
+            ? ($deal->pitch_deck_url ?: route('deal.view', $deal->id))
+            : route('plans'))
+        : route('deal.public.view', $deal->id);
     $rawDesc = $deal->description ?? '';
     $oneLiner = $rawDesc !== '' ? \Illuminate\Support\Str::limit(strip_tags($rawDesc), 140, '…') : '—';
     $stage = $deal->investment_stage ? $deal->investment_stage : '—';
     $amount = $deal->amount_seeking ? '$ '.$deal->amountSeeking() : '—';
     $hideAmountSeeking = $deal->type === 'portfolio';
 
-    if (auth()->check()) {
-        $ctaLabel = match ($deal->type) {
-            'review' => 'Join WhatsApp Group',
-            'portfolio' => 'View Portfolio',
-            default => ucfirst((string) $deal->type),
-        };
-    } else {
-        $ctaLabel = $deal->type !== 'review' ? ucfirst((string) $deal->type) : 'Join WhatsApp Group';
-    }
+    $ctaLabel = match ($deal->type) {
+        'review' => 'Join WhatsApp Group',
+        'portfolio' => 'View Portfolio',
+        'invest' => 'Commit Investment / Express Interest to Invest',
+        default => ucfirst((string) $deal->type),
+    };
 @endphp
 
 <article class="flex h-full flex-col rounded-[1.75rem] bg-gradient-to-b from-[#108A5E] to-[#0B3022] p-6 md:p-7 text-white shadow-lg ring-1 ring-black/5">
@@ -25,7 +27,14 @@
             <img src="{{ $deal->getLogoUrl() }}" alt="" class="h-full w-full object-cover object-center">
         </div>
     </div>
-    <h3 class="mt-5 text-center text-lg md:text-xl font-bold tracking-tight">{{ $deal->title }}</h3>
+    <h3 class="mt-5 text-center text-lg md:text-xl font-bold tracking-tight">
+        <a href="{{ $pitchDeckHref }}"
+           target="_blank"
+           rel="noopener noreferrer"
+           class="text-inherit hover:underline decoration-white/80 underline-offset-4 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/80 rounded-sm">
+            {{ $deal->title }}
+        </a>
+    </h3>
 
     <div class="mt-6 flex flex-1 flex-col space-y-3 text-sm leading-relaxed text-white/95">
         <div>
@@ -45,7 +54,9 @@
     </div>
 
     <a href="{{ $href }}"
-       class="mt-8 inline-flex w-full items-center justify-center rounded-full border border-white/35 bg-white/15 px-5 py-3 text-center font-mono text-sm font-medium tracking-wide text-white shadow-sm backdrop-blur-sm transition hover:bg-white/25 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/80">
+       target="_blank"
+       rel="noopener noreferrer"
+       class="mt-8 inline-flex w-full items-center justify-center rounded-full border border-white/35 bg-white/15 px-4 py-3 text-center text-xs sm:text-sm font-medium leading-snug tracking-wide text-white shadow-sm backdrop-blur-sm transition hover:bg-white/25 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/80">
         {{ $ctaLabel }}
     </a>
 </article>

@@ -100,7 +100,6 @@
             margin-top: 1rem;
             padding-top: 1rem;
             border-top: 1px solid rgba(255, 255, 255, 0.14);
-            flex: 1 1 auto;
             min-height: 0;
         }
 
@@ -158,8 +157,10 @@
                             Fundraise
                         </a>
                         <a href="{{ route('investor.signup') }}"
-                           class="inline-flex h-11 items-center justify-center rounded-full bg-[#0f3d34] px-4 text-sm font-bold text-white transition-colors hover:bg-[#156755]">
-                            Invest
+                           class="inline-flex min-h-[2.75rem] flex-col items-center justify-center gap-0.5 rounded-full bg-[#0f3d34] px-2 py-1.5 text-center text-[0.65rem] font-bold leading-tight text-white transition-colors hover:bg-[#156755] sm:px-4 sm:text-xs sm:leading-snug"
+                           title="Commit Investment / Express Interest to Invest">
+                            <span>Commit Investment /</span>
+                            <span>Express Interest to Invest</span>
                         </a>
                     </div>
                 </div>
@@ -221,7 +222,7 @@
         </span>
       </h2>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10 items-stretch">
         @forelse ($whatWeDoCards as $card)
           @php
             $learnMoreLabel = filled($card->learn_more_label) ? $card->learn_more_label : 'Learn more';
@@ -251,10 +252,13 @@
               <img src="{{ $card->coverImageUrl() }}" alt="{{ $card->title }} — cover image" class="w-full h-[150px] sm:h-[164px] object-contain object-center bg-[#0a5c45]" width="480" height="260" loading="lazy" decoding="async">
             </figure>
 
-            <div class="what-we-do-card-body">
-              <p>{{ $card->description }}</p>
+            <div class="what-we-do-card-body flex flex-1 flex-col min-h-0">
+              <div class="min-h-0 flex-1">
+                <p>{{ $card->description }}</p>
+              </div>
               @if ($hasLearnMore || $hasAction)
-                <div class="mt-5 grid w-full grid-cols-1 gap-2 sm:grid-cols-2">
+                <div class="mt-auto pt-5 w-full shrink-0">
+                  <div class="grid w-full grid-cols-1 gap-2 sm:grid-cols-2">
                   @if ($hasLearnMore)
                     <a href="{{ $learnMoreLink }}"
                        @if ($learnMoreExternal) target="_blank" rel="noopener noreferrer" @endif
@@ -275,6 +279,7 @@
                   @if (!$hasAction)
                     <span class="hidden sm:inline-flex min-h-[40px]"></span>
                   @endif
+                  </div>
                 </div>
               @endif
             </div>

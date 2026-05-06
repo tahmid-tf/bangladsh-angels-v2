@@ -7,8 +7,10 @@
             echo "Join WhatsApp Group";
         } else if($deal->type == "portfolio") {
             echo "View Portfolio";
-        } else { 
+        } else if ($deal->type === 'invest') {
+            echo "Commit Investment / Express Interest to Invest";
+        } else {
             echo ucfirst($deal->type);
         }
-    @endphp" class="px-6 w-full cursor-pointer mt-6 py-3 bg-green-600 text-white font-semibold rounded-lg hover:bg-green-700 transition">
+    @endphp" class="px-4 w-full cursor-pointer mt-6 py-3 bg-green-600 text-white text-sm font-semibold rounded-lg hover:bg-green-700 transition leading-snug">
 </form>

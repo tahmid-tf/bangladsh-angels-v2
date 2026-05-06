@@ -15,6 +15,8 @@ class WhatWeDoCard extends Model implements HasMedia
 
     public const SLUG_BWIN = 'bwin';
 
+    public const SLUG_SHOWCASES = 'showcases';
+
     protected $fillable = [
         'slug',
         'title',
