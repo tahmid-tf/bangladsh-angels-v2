@@ -89,7 +89,7 @@ class CampaignBroadcastMail extends Mailable
                 }
 
                 $extension = $this->mimeToExtension($mime);
-                $cid = 'banimg-'.Str::uuid()->toString();
+                $cid = 'banimg-'.Str::uuid()->toString().'@bangladesh-angels.local';
 
                 $inlineImages[] = [
                     'cid' => $cid,
