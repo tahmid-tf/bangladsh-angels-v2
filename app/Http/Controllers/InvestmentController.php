@@ -178,21 +178,30 @@ class InvestmentController extends Controller
 
     public function viewInvest()
     {
-        $investments = Investment::with('deal')->where('type', 'invest')->get();
+        $investments = Investment::with(['deal', 'user'])
+            ->where('type', 'invest')
+            ->orderByDesc('created_at')
+            ->get();
 
         return view('admin.investments.invest_index', compact('investments'));
     }
 
     public function viewCommit()
     {
-        $investments = Investment::with('deal')->where('type', 'commit')->get();
+        $investments = Investment::with(['deal', 'user'])
+            ->where('type', 'commit')
+            ->orderByDesc('created_at')
+            ->get();
 
         return view('admin.investments.commit_index', compact('investments'));
     }
 
     public function viewReview()
     {
-        $investments = Investment::with('deal')->where('type', 'review')->get();
+        $investments = Investment::with(['deal', 'user'])
+            ->where('type', 'review')
+            ->orderByDesc('created_at')
+            ->get();
 
         return view('admin.investments.review_index', compact('investments'));
     }

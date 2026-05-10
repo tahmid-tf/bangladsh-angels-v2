@@ -35,7 +35,8 @@
         <table class="w-full table-auto">
             <thead class="bg-gray-50">
                 <tr>
-                    <th class="px-4 py-2 text-left text-gray-600 font-semibold">Name</th>
+                    <th class="px-4 py-2 text-left text-gray-600 font-semibold">Deal</th>
+                    <th class="px-4 py-2 text-left text-gray-600 font-semibold">Investor</th>
                     <th class="px-4 py-2 text-left text-gray-600 font-semibold">Investment stage</th>
                     <th class="px-4 py-2 text-left text-gray-600 font-semibold">Amount Seeking</th>
                     <th class="px-4 py-2 text-left text-gray-600 font-semibold">Description</th>
@@ -53,6 +54,15 @@
                             <p class="font-semibold">{{ $investment->deal->title }}</p>
                             <p class="text-sm text-gray-500">{{ $investment->deal->sector }}</p>
                         </div>
+                    </td>
+                    <td class="px-4 py-2 align-top min-w-[200px]">
+                        @if ($investment->user)
+                            <p class="font-semibold text-gray-900">{{ $investment->user->name }}</p>
+                            <p class="text-sm text-gray-600 break-all">{{ $investment->user->email }}</p>
+                            <p class="text-xs text-gray-500 mt-1">{{ $investment->created_at?->diffForHumans() }}</p>
+                        @else
+                            <span class="text-gray-500 text-sm">Unknown user</span>
+                        @endif
                     </td>
                     <td class="px-4 py-2">{{ $investment->deal->investment_stage }}</td>
                     <td class="px-4 py-2">${{ number_format($investment->deal->amount_seeking, 2) }}</td>
