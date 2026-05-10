@@ -15,9 +15,6 @@ class InvestmentController extends Controller
     {
         $q = trim((string) $request->string('q'));
         $typeFilter = $request->string('type')->toString();
-        if ($typeFilter === 'invest') {
-            $typeFilter = 'interested';
-        }
         $statusFilter = $request->string('status')->toString();
         $stageFilter = $request->string('stage')->toString();
         $sort = $request->string('sort')->toString() ?: 'latest_activity';
@@ -25,6 +22,7 @@ class InvestmentController extends Controller
         $dealsQuery = Deal::query()
             ->withCount([
                 'investments as interested_count' => fn ($query) => $query->where('type', 'interested'),
+                'investments as invest_count' => fn ($query) => $query->where('type', 'invest'),
                 'investments as review_count' => fn ($query) => $query->where('type', 'review'),
                 'commits as commit_count',
             ])
@@ -45,7 +43,7 @@ class InvestmentController extends Controller
                         });
                 });
             })
-            ->when(in_array($typeFilter, ['interested', 'commit', 'review'], true), function ($query) use ($typeFilter) {
+            ->when(in_array($typeFilter, ['interested', 'invest', 'commit', 'review'], true), function ($query) use ($typeFilter) {
                 if ($typeFilter === 'commit') {
                     $query->whereHas('commits');
                 } else {
@@ -59,8 +57,9 @@ class InvestmentController extends Controller
             $dealsQuery->orderByRaw('(
                 (SELECT COUNT(*) FROM investments WHERE investments.deal_id = deals.id AND investments.type = ?)
                 + (SELECT COUNT(*) FROM investments WHERE investments.deal_id = deals.id AND investments.type = ?)
+                + (SELECT COUNT(*) FROM investments WHERE investments.deal_id = deals.id AND investments.type = ?)
                 + (SELECT COUNT(*) FROM commits WHERE commits.deal_id = deals.id)
-            ) DESC', ['interested', 'review']);
+            ) DESC', ['interested', 'invest', 'review']);
         } elseif ($sort === 'title_asc') {
             $dealsQuery->orderBy('title');
         } elseif ($sort === 'title_desc') {
@@ -140,24 +139,25 @@ class InvestmentController extends Controller
             return redirect()->route('deal.commit.form', $deal->id);
         }
 
-        // Express interest (invest deals) and other deal types: one investments row per user per deal
-        $existingInvestment = Investment::where('user_id', $request->user_id)
-            ->where('deal_id', $request->deal_id)
-            ->first();
+        $investmentType = match (true) {
+            $requestedType === 'invest' && in_array($deal->type, ['invest', 'portfolio'], true) => 'invest',
+            $deal->type === 'review' => 'review',
+            in_array($deal->type, ['invest', 'portfolio'], true) => 'interested',
+            default => 'interested',
+        };
 
-        if ($existingInvestment) {
+        $duplicate = Investment::where('user_id', $request->user_id)
+            ->where('deal_id', $request->deal_id)
+            ->where('type', $investmentType)
+            ->exists();
+
+        if ($duplicate) {
             if ($deal->type == 'review') {
                 return redirect()->to($deal->groupchat_invite_link);
             }
 
-            return back()->with('error', 'You have already recorded activity for this deal.');
+            return back()->with('error', 'You have already recorded this type of activity for this deal.');
         }
-
-        $investmentType = match ($deal->type) {
-            'invest', 'portfolio' => 'interested',
-            'review' => 'review',
-            default => 'interested',
-        };
 
         Investment::create([
             'deal_id' => $request->deal_id,
@@ -168,9 +168,12 @@ class InvestmentController extends Controller
         if ($deal->type == 'invest') {
             if ($deal->invest_link) {
                 return redirect()->to($deal->invest_link);
-            } else {
-                return back()->with('success', 'Thanks — your interest has been recorded. You will receive investment details from the lead investment analyst shortly.');
             }
+            $msg = $investmentType === 'invest'
+                ? 'Thanks — your investment activity has been recorded. You will receive details from the lead investment analyst shortly.'
+                : 'Thanks — your interest has been recorded. You will receive investment details from the lead investment analyst shortly.';
+
+            return back()->with('success', $msg);
         } elseif ($deal->type == 'review') {
             return redirect()->to($deal->groupchat_invite_link);
         } elseif ($deal->type == 'portfolio') {
@@ -220,6 +223,16 @@ class InvestmentController extends Controller
     {
         $investments = Investment::with(['deal', 'user'])
             ->where('type', 'interested')
+            ->orderByDesc('created_at')
+            ->get();
+
+        return view('admin.investments.interested_index', compact('investments'));
+    }
+
+    public function viewInvest()
+    {
+        $investments = Investment::with(['deal', 'user'])
+            ->where('type', 'invest')
             ->orderByDesc('created_at')
             ->get();
 

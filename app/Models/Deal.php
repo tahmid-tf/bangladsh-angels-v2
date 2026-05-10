@@ -196,7 +196,7 @@ class Deal extends Model implements HasMedia
 
     public function investorsCount()
     {
-        return $this->investments()->where('type', 'interested')->count();
+        return $this->investments()->whereIn('type', ['interested', 'invest'])->count();
     }
 
     public function commitCount()

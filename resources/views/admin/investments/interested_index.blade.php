@@ -3,18 +3,15 @@
 @section('page_content')
 <section class="container mx-auto p-6">
     <div class="flex flex-col md:flex-row justify-between items-start md:items-center p-4 bg-white shadow">
-        <div>
-            <h1 class="text-lg md:text-xl font-bold mb-2 md:mb-0">Invest — investment records ({{ count($investments) }})</h1>
-            <p class="text-sm text-gray-600 mt-1">Rows with <code class="text-xs bg-gray-100 px-1 rounded">investments.type = invest</code> (e.g. legacy data or POST with <code class="text-xs bg-gray-100 px-1 rounded">type=invest</code>). Express-interest clicks create <strong>Interested</strong> instead.</p>
-        </div>
+        <h1 class="text-lg md:text-xl font-bold mb-2 md:mb-0">Interested — express interest ({{ count($investments) }})</h1>
     </div>
 
     <div class="bg-white rounded-lg shadow p-4 mb-6">
         <div class="flex flex-wrap items-center gap-2 gap-y-3">
             <div class="flex flex-wrap gap-2">
                 <a href="{{ route('admin.investments') }}" class="px-4 py-2 text-gray-600 hover:bg-gray-200 rounded-full">All</a>
-                <a href="{{ route('investment.type.interested') }}" class="px-4 py-2 text-gray-600 hover:bg-gray-200 rounded-full">Interested</a>
-                <a href="{{ route('investment.type.invest') }}" class="px-4 py-2 bg-green-100 text-green-700 rounded-full">Invest</a>
+                <a href="{{ route('investment.type.interested') }}" class="px-4 py-2 bg-green-100 text-green-700 rounded-full">Interested</a>
+                <a href="{{ route('investment.type.invest') }}" class="px-4 py-2 text-gray-600 hover:bg-gray-200 rounded-full">Invest</a>
                 <a href="{{ route('investment.type.commit') }}" class="px-4 py-2 text-gray-600 hover:bg-gray-200 rounded-full">Commitments</a>
                 <a href="{{ route('investment.type.review') }}" class="px-4 py-2 text-gray-600 hover:bg-gray-200 rounded-full">Review</a>
             </div>

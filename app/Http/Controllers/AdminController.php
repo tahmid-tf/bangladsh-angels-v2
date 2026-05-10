@@ -909,4 +909,26 @@ class AdminController extends Controller
 
         return view('deals.single', compact('deal', 'otherDeals'));
     }
+
+    /**
+     * Admin-only breakdown of member signals for a deal (not exposed on the public deal page).
+     */
+    public function dealMemberActivity(Deal $deal)
+    {
+        $deal->load([
+            'investments' => fn ($q) => $q->with('user')->orderByDesc('created_at'),
+            'commits' => fn ($q) => $q->with('user')->orderByDesc('created_at'),
+        ]);
+
+        $interested = $deal->investments->where('type', 'interested')->values();
+        $investRows = $deal->investments->where('type', 'invest')->values();
+        $reviewRows = $deal->investments->where('type', 'review')->values();
+
+        return view('admin.deals.member-activity', [
+            'deal' => $deal,
+            'interested' => $interested,
+            'investRows' => $investRows,
+            'reviewRows' => $reviewRows,
+        ]);
+    }
 }
