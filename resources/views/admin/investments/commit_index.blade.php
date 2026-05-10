@@ -16,7 +16,7 @@
             <!-- Tabs -->
             <div class="flex space-x-4">
                 <a href="{{route('admin.investments')}}" class="px-4 py-2 text-gray-600 hover:bg-gray-200 rounded-full">All</a>
-                <a href="{{route('investment.type.invest')}}" class="px-4 py-2 text-gray-600 hover:bg-gray-200 rounded-full">Interest</a>
+                <a href="{{route('investment.type.interested')}}" class="px-4 py-2 text-gray-600 hover:bg-gray-200 rounded-full">Interested</a>
                 <a href="{{route('investment.type.commit')}}" class="px-4 py-2 bg-green-100 text-green-700 rounded-full">Commitments</a>
                 <a href="{{route('investment.type.review')}}" class="px-4 py-2 text-gray-600 hover:bg-gray-200 rounded-full">Review</a>
             </div>

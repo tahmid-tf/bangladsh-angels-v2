@@ -1,92 +1,577 @@
 @extends('layouts.guest')
-@section('page_title', 'Resources | Bangladesh Angels Network Limited')
+@section('page_title', 'DeckVue | Bangladesh Angels Network Limited')
 
 @push('head_meta')
     <x-seo-meta
-        title="Resources | Bangladesh Angels Network Limited"
-        description="BAN Resources — events, webinars, programs, and tools for angel investors and founders across the Bangladesh Angels Network."
+        title="DeckVue | Bangladesh Angels Network Limited"
+        description="DeckVue is an AI-powered platform for pitch deck analysis — extract key data, enrich with market intel, verify claims, and generate strategic insights in minutes."
         :canonical="route('resources')"
         :image="asset('icon.webp')"
     />
 @endpush
 
+@push('head_styles')
+<style>
+    #ban-deckvue-page * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    #ban-deckvue-page {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+        background: #ffffff;
+        color: #1a1a1a;
+        line-height: 1.6;
+        width: 100%;
+    }
+
+    #ban-deckvue-page .deckvue-container {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 0 24px;
+    }
+
+    #ban-deckvue-page .hero {
+        background: #ffffff;
+        padding: 80px 0 60px;
+        text-align: center;
+    }
+
+    #ban-deckvue-page .hero h1 {
+        font-size: 52px;
+        font-weight: 700;
+        letter-spacing: -1.5px;
+        line-height: 1.1;
+        margin-bottom: 20px;
+        color: #111;
+    }
+
+    #ban-deckvue-page .hero .subtitle {
+        font-size: 19px;
+        color: #666;
+        max-width: 600px;
+        margin: 0 auto 36px;
+        line-height: 1.6;
+    }
+
+    #ban-deckvue-page .cta-button {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        background: #15803d;
+        color: #fff;
+        padding: 16px 36px;
+        border-radius: 12px;
+        font-size: 16px;
+        font-weight: 600;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 16px rgba(21, 128, 61, 0.25);
+    }
+
+    #ban-deckvue-page .cta-button:hover {
+        background: #166534;
+        transform: translateY(-2px);
+        box-shadow: 0 8px 28px rgba(21, 128, 61, 0.35);
+    }
+
+    #ban-deckvue-page .cta-button svg {
+        transition: transform 0.3s ease;
+    }
+
+    #ban-deckvue-page .cta-button:hover svg {
+        transform: translateX(4px);
+    }
+
+    #ban-deckvue-page .pipeline-tags {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        margin-top: 36px;
+        flex-wrap: wrap;
+    }
+
+    #ban-deckvue-page .deckvue-tag {
+        padding: 8px 18px;
+        border-radius: 100px;
+        font-size: 13px;
+        font-weight: 500;
+        border: 1px solid;
+    }
+
+    #ban-deckvue-page .deckvue-tag.extract { background: #fff7ed; color: #c2410c; border-color: #fed7aa; }
+    #ban-deckvue-page .deckvue-tag.enrich { background: #eff6ff; color: #1d4ed8; border-color: #bfdbfe; }
+    #ban-deckvue-page .deckvue-tag.verify { background: #f0fdf4; color: #15803d; border-color: #bbf7d0; }
+    #ban-deckvue-page .deckvue-tag.analyze { background: #faf5ff; color: #7c3aed; border-color: #ddd6fe; }
+
+    #ban-deckvue-page .section-header {
+        text-align: center;
+        margin-bottom: 48px;
+    }
+
+    #ban-deckvue-page .section-header h2 {
+        font-size: 36px;
+        font-weight: 700;
+        letter-spacing: -1px;
+        margin-bottom: 10px;
+        color: #111;
+    }
+
+    #ban-deckvue-page .section-header p {
+        font-size: 17px;
+        color: #666;
+    }
+
+    #ban-deckvue-page .how-it-works {
+        padding: 60px 0;
+        background: #ffffff;
+    }
+
+    #ban-deckvue-page .steps-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 20px;
+    }
+
+    #ban-deckvue-page .step-card {
+        background: #ffffff;
+        border: 1px solid #e5e7eb;
+        border-radius: 16px;
+        padding: 32px 24px;
+        transition: all 0.35s ease;
+        position: relative;
+    }
+
+    #ban-deckvue-page .step-card:hover {
+        border-color: #bbf7d0;
+        transform: translateY(-4px);
+        box-shadow: 0 12px 32px rgba(0,0,0,0.06);
+    }
+
+    #ban-deckvue-page .step-number {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 36px;
+        height: 36px;
+        background: #15803d;
+        color: #fff;
+        border-radius: 10px;
+        font-size: 14px;
+        font-weight: 700;
+        margin-bottom: 16px;
+    }
+
+    #ban-deckvue-page .step-card h3 {
+        font-size: 17px;
+        font-weight: 600;
+        margin-bottom: 8px;
+        color: #111;
+    }
+
+    #ban-deckvue-page .step-card p {
+        font-size: 14px;
+        color: #666;
+        line-height: 1.6;
+    }
+
+    #ban-deckvue-page .divider {
+        height: 1px;
+        background: #e5e7eb;
+        margin: 0 auto;
+        max-width: 1100px;
+    }
+
+    #ban-deckvue-page .features {
+        padding: 60px 0;
+        background: #ffffff;
+    }
+
+    #ban-deckvue-page .features-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+    }
+
+    #ban-deckvue-page .feature-card {
+        background: #ffffff;
+        border: 1px solid #e5e7eb;
+        border-radius: 16px;
+        padding: 32px;
+        transition: all 0.35s ease;
+    }
+
+    #ban-deckvue-page .feature-card:hover {
+        box-shadow: 0 12px 32px rgba(0,0,0,0.06);
+        transform: translateY(-4px);
+        border-color: #d1d5db;
+    }
+
+    #ban-deckvue-page .feature-icon {
+        width: 44px;
+        height: 44px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #f0fdf4;
+        border-radius: 12px;
+        margin-bottom: 16px;
+    }
+
+    #ban-deckvue-page .feature-icon svg {
+        width: 22px;
+        height: 22px;
+        stroke: #15803d;
+        stroke-width: 2;
+        fill: none;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+    }
+
+    #ban-deckvue-page .feature-card h3 {
+        font-size: 16px;
+        font-weight: 600;
+        margin-bottom: 8px;
+        color: #111;
+    }
+
+    #ban-deckvue-page .feature-card p {
+        font-size: 14px;
+        color: #666;
+        line-height: 1.6;
+    }
+
+    #ban-deckvue-page .use-cases {
+        padding: 60px 0;
+        background: #ffffff;
+    }
+
+    #ban-deckvue-page .use-cases-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+    }
+
+    #ban-deckvue-page .use-case-card {
+        background: #f9fafb;
+        border: 1px solid #e5e7eb;
+        border-radius: 16px;
+        padding: 32px;
+        transition: all 0.35s ease;
+    }
+
+    #ban-deckvue-page .use-case-card:hover {
+        box-shadow: 0 12px 32px rgba(0,0,0,0.06);
+        transform: translateY(-4px);
+        border-color: #d1d5db;
+    }
+
+    #ban-deckvue-page .use-case-label {
+        display: inline-block;
+        background: #ffffff;
+        border: 1px solid #e5e7eb;
+        padding: 5px 14px;
+        border-radius: 100px;
+        font-size: 11px;
+        font-weight: 600;
+        color: #666;
+        text-transform: uppercase;
+        letter-spacing: 0.8px;
+        margin-bottom: 16px;
+    }
+
+    #ban-deckvue-page .use-case-card h3 {
+        font-size: 18px;
+        font-weight: 600;
+        margin-bottom: 10px;
+        line-height: 1.3;
+        color: #111;
+    }
+
+    #ban-deckvue-page .use-case-card p {
+        font-size: 14px;
+        color: #666;
+        line-height: 1.6;
+    }
+
+    #ban-deckvue-page .faq {
+        padding: 60px 0;
+        background: #ffffff;
+    }
+
+    #ban-deckvue-page .faq-list {
+        max-width: 720px;
+        margin: 0 auto;
+    }
+
+    #ban-deckvue-page .faq-item {
+        background: #ffffff;
+        border: 1px solid #e5e7eb;
+        border-radius: 12px;
+        margin-bottom: 12px;
+        overflow: hidden;
+        transition: all 0.3s ease;
+    }
+
+    #ban-deckvue-page .faq-item:hover {
+        border-color: #d1d5db;
+    }
+
+    #ban-deckvue-page .faq-question {
+        padding: 20px 24px;
+        font-size: 15px;
+        font-weight: 600;
+        cursor: pointer;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        transition: background 0.2s ease;
+        color: #111;
+    }
+
+    #ban-deckvue-page .faq-question:hover {
+        background: #f9fafb;
+    }
+
+    #ban-deckvue-page .faq-answer {
+        padding: 0 24px;
+        max-height: 0;
+        overflow: hidden;
+        transition: all 0.35s ease;
+        color: #666;
+        font-size: 14px;
+        line-height: 1.7;
+    }
+
+    #ban-deckvue-page .faq-item.active .faq-answer {
+        padding: 0 24px 20px;
+        max-height: 300px;
+    }
+
+    #ban-deckvue-page .faq-item.active .faq-icon {
+        transform: rotate(180deg);
+        color: #15803d;
+    }
+
+    #ban-deckvue-page .faq-icon {
+        transition: transform 0.35s ease;
+        color: #9ca3af;
+    }
+
+    #ban-deckvue-page .deckvue-partner-strip {
+        padding: 40px 0;
+        text-align: center;
+        border-top: 1px solid #e5e7eb;
+    }
+
+    #ban-deckvue-page .deckvue-partner-strip p {
+        color: #9ca3af;
+        font-size: 13px;
+    }
+
+    @media (max-width: 1024px) {
+        #ban-deckvue-page .steps-grid { grid-template-columns: repeat(2, 1fr); }
+        #ban-deckvue-page .features-grid { grid-template-columns: repeat(2, 1fr); }
+        #ban-deckvue-page .use-cases-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 768px) {
+        #ban-deckvue-page .hero h1 { font-size: 34px; }
+        #ban-deckvue-page .section-header h2 { font-size: 28px; }
+        #ban-deckvue-page .steps-grid { grid-template-columns: 1fr; }
+        #ban-deckvue-page .features-grid { grid-template-columns: 1fr; }
+        #ban-deckvue-page .use-cases-grid { grid-template-columns: 1fr; }
+    }
+</style>
+@endpush
+
 @section('page_content')
-@php
-    $brochureUrl = asset('MoU.pdf');
-    $shadowClasses = [
-        'bg-[#36b37e]/22',
-        'bg-[#18736a]/18',
-        'bg-[#0f3d34]/14',
-    ];
-    $surfaceClasses = [
-        'from-white via-[#f7fdf9] to-[#eefaf4] border-green-100/90',
-        'from-white via-[#f3faf8] to-[#e6f4f0] border-[#18736a]/25',
-        'from-white via-[#f4faf7] to-[#e8f5ef] border-[#0f3d34]/18',
-    ];
-@endphp
-
-<section class="w-full max-w-5xl mx-auto px-4 sm:px-6 py-10 md:py-14">
-    <header class="mb-10 md:mb-14">
-        <h1 class="text-3xl md:text-4xl font-bold text-[#0f3d34] tracking-tight">Resources</h1>
-        <p class="mt-3 text-gray-600 max-w-2xl leading-relaxed">
-            Programs and tools we work with to support angels and founders across the network.
-        </p>
-    </header>
-
-    <div class="flex flex-col gap-12 md:gap-16">
-        @forelse ($hubCards as $card)
-            @php
-                $i = $loop->index % 3;
-                $isExternal = str_starts_with(strtolower(trim($card->link)), 'http');
-                $displayCtaLabel = 'Learn more';
-                $normalizedSecondCtaLabel = strtolower(trim((string) $card->cta_label));
-                $hasSecondCta = filled($card->cta_label)
-                    && filled($card->cta_link)
-                    && $normalizedSecondCtaLabel !== 'learn more';
-                $secondCtaExternal = $hasSecondCta && str_starts_with(strtolower(trim((string) $card->cta_link)), 'http');
-            @endphp
-            <div class="relative" @if (strtolower(trim((string) $card->title)) === 'bwin') id="bwin" @endif>
-                <div class="absolute inset-0 translate-x-2 translate-y-2 rounded-3xl {{ $shadowClasses[$i] }}" aria-hidden="true"></div>
-                <article class="relative overflow-hidden rounded-3xl border bg-gradient-to-br {{ $surfaceClasses[$i] }} shadow-md">
-                    <div class="flex flex-col lg:flex-row lg:items-center gap-8 lg:gap-10 p-8 md:p-10">
-                        <div class="lg:flex-1 text-center lg:text-left min-w-0">
-                            <h2 class="text-2xl md:text-3xl font-bold text-[#0f3d34]">{{ $card->title }}</h2>
-                            <p class="mt-2 text-sm md:text-base text-gray-600 leading-relaxed">{{ $card->one_liner }}</p>
-                        </div>
-                        <div class="flex justify-center shrink-0">
-                            <div class="h-28 w-28 md:h-32 md:w-32 shrink-0 overflow-hidden rounded-full border-2 border-white shadow-md ring-2 ring-[#36b37e]/20 bg-gray-50">
-                                @if ($card->logoUrl())
-                                    <img src="{{ $card->logoUrl() }}" alt="{{ $card->title }}" class="h-full w-full object-cover object-center">
-                                @else
-                                    <div class="flex h-full w-full items-center justify-center text-xs font-medium text-gray-400 tracking-wide" aria-hidden="true">Logo</div>
-                                @endif
-                            </div>
-                        </div>
-                        <div class="flex flex-col items-center lg:items-end shrink-0 w-full lg:w-auto gap-2">
-                            <a href="{{ $card->link }}"
-                               @if ($isExternal) target="_blank" rel="noopener noreferrer" @endif
-                               class="inline-flex items-center justify-center rounded-full bg-[#eefff1] px-6 py-3 text-sm md:text-base font-semibold text-[#0f6a4b] border border-green-100/70 hover:bg-[#dff7e8] transition-colors w-full sm:w-auto">
-                                <span>{{ $displayCtaLabel }}</span>
-                            </a>
-                            @if ($hasSecondCta)
-                                <a href="{{ $card->cta_link }}"
-                                   @if ($secondCtaExternal) target="_blank" rel="noopener noreferrer" @endif
-                                   class="inline-flex items-center justify-center rounded-full bg-[#0f3d34] px-6 py-3 text-sm md:text-base font-semibold text-white shadow-sm hover:bg-[#156755] transition-colors w-full sm:w-auto">
-                                    <span>{{ $card->cta_label }}</span>
-                                </a>
-                            @endif
-                        </div>
-                    </div>
-                </article>
-            </div>
-        @empty
-            <p class="text-center text-gray-600 py-12">No resource cards are configured yet.</p>
-        @endforelse
-        <p class="mt-10 text-center md:mt-12">
-            <a href="{{ $brochureUrl }}" target="_blank" rel="noopener noreferrer" class="text-sm font-semibold text-[#36b37e] hover:text-[#18736a] underline underline-offset-4">
-                Click here to see our brochure
+<div id="ban-deckvue-page">
+    <section class="hero">
+        <div class="deckvue-container">
+            <h1>Turn decks into decisions</h1>
+            <p class="subtitle">DeckVue is an AI-powered platform for pitch deck analysis — extract key data, enrich with market intel, verify claims, and generate strategic insights in minutes.</p>
+            <a href="https://deckvue.ai/" target="_blank" rel="noopener noreferrer" class="cta-button">
+                Click here to try DeckVue
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                    <polyline points="12 5 19 12 12 19"></polyline>
+                </svg>
             </a>
-        </p>
+            <div class="pipeline-tags">
+                <span class="deckvue-tag extract">Extraction</span>
+                <span class="deckvue-tag enrich">Enrichment</span>
+                <span class="deckvue-tag verify">Verification</span>
+                <span class="deckvue-tag analyze">Analysis</span>
+            </div>
+        </div>
+    </section>
+
+    <section class="how-it-works">
+        <div class="deckvue-container">
+            <div class="section-header">
+                <h2>How DeckVue works</h2>
+                <p>A focused pipeline tuned for investor workflows.</p>
+            </div>
+            <div class="steps-grid">
+                <div class="step-card">
+                    <div class="step-number">1</div>
+                    <h3>Extract</h3>
+                    <p>Upload a PDF and extract 12 structured sections — company, market, team, metrics, and more.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">2</div>
+                    <h3>Enrich</h3>
+                    <p>Automatically pull company intel from Crunchbase — funding history, investors, and news.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">3</div>
+                    <h3>Verify</h3>
+                    <p>AI fact-checks key claims on market size, competition, and team against web sources with confidence scores.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">4</div>
+                    <h3>Analyze</h3>
+                    <p>Generate per-section strategic analysis with scoring, red flags, and investment recommendations.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <section class="features">
+        <div class="deckvue-container">
+            <div class="section-header">
+                <h2>Designed for speed and clarity</h2>
+                <p>From raw PDF to verified analysis — faster.</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+                    </div>
+                    <h3>Structured extraction</h3>
+                    <p>Extract 12 data sections from any pitch deck — company overview, market size, team, metrics, and more.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24"><path d="M18 20V10M12 20V4M6 20v-6"/></svg>
+                    </div>
+                    <h3>Key metric extraction</h3>
+                    <p>Pull traction, market size, competition, and team signals into structured fields.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+                    </div>
+                    <h3>Claim verification</h3>
+                    <p>AI fact-checks claims on market size, competition, team, and problem against web sources.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+                    </div>
+                    <h3>Strategic analysis</h3>
+                    <p>Per-section scoring with insights, red flags, and investment recommendations across 6 areas.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
+                    </div>
+                    <h3>Sharing & collaboration</h3>
+                    <p>Share decks with your team via email or secure time-limited links.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                    </div>
+                    <h3>Private by design</h3>
+                    <p>Tenant-scoped storage with seat-based access. We don't use your data for model training.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <section class="use-cases">
+        <div class="deckvue-container">
+            <div class="section-header">
+                <h2>Built for today's early-stage investors</h2>
+                <p>Pick your path and get leverage where it counts.</p>
+            </div>
+            <div class="use-cases-grid">
+                <div class="use-case-card">
+                    <span class="use-case-label">Solo Operator Angels</span>
+                    <h3>Get structured analysis on any deck in minutes.</h3>
+                    <p>Upload a deck and get extraction, verification, and analysis automatically.</p>
+                </div>
+                <div class="use-case-card">
+                    <span class="use-case-label">Syndicate Managers</span>
+                    <h3>Share verified deal analysis with your network.</h3>
+                    <p>Generate shareable summaries with AI-verified claims and red flags.</p>
+                </div>
+                <div class="use-case-card">
+                    <span class="use-case-label">Emerging Funds</span>
+                    <h3>Streamline due diligence across your team.</h3>
+                    <p>Multi-seat workspace with role-based access and shared deal analysis.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <section class="faq">
+        <div class="deckvue-container">
+            <div class="section-header">
+                <h2>Questions</h2>
+                <p>A few common things investors ask us.</p>
+            </div>
+            <div class="faq-list">
+                <div class="faq-item">
+                    <div class="faq-question" onclick="this.parentElement.classList.toggle('active')">
+                        How do you handle privacy and training?
+                        <svg class="faq-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="6 9 12 15 18 9"></polyline>
+                        </svg>
+                    </div>
+                    <div class="faq-answer">
+                        DeckVue uses tenant-scoped storage with seat-based access. Your data is never used for model training, ensuring complete confidentiality of your deal flow.
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="this.parentElement.classList.toggle('active')">
+                        How accurate is extraction and verification?
+                        <svg class="faq-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="6 9 12 15 18 9"></polyline>
+                        </svg>
+                    </div>
+                    <div class="faq-answer">
+                        Our AI extracts 12 structured sections with high precision. Verification provides confidence scores by cross-referencing claims against multiple web sources and databases like Crunchbase.
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="this.parentElement.classList.toggle('active')">
+                        How do I get started?
+                        <svg class="faq-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="6 9 12 15 18 9"></polyline>
+                        </svg>
+                    </div>
+                    <div class="faq-answer">
+                        Simply upload a pitch deck PDF and DeckVue automatically processes it through extraction, enrichment, verification, and analysis — delivering a complete report in minutes.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="deckvue-partner-strip">
+        <div class="deckvue-container">
+            <p>DeckVue by Aevumis — Featured partner product of Bangladesh Angels Network</p>
+        </div>
     </div>
-</section>
+</div>
 @endsection

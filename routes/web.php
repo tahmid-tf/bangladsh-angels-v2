@@ -255,7 +255,8 @@ Route::middleware('auth')->group(function () {
     // Investment
     Route::prefix('investments')->group(function () {
 
-        Route::get('/type/invest', [InvestmentController::class, 'viewInvest'])->name('investment.type.invest');
+        Route::get('/type/interested', [InvestmentController::class, 'viewInterested'])->name('investment.type.interested');
+        Route::redirect('/type/invest', '/investments/type/interested', 301);
         Route::get('/type/commit', [InvestmentController::class, 'viewCommit'])->name('investment.type.commit');
         Route::get('/type/review', [InvestmentController::class, 'viewReview'])->name('investment.type.review');
 

@@ -33,7 +33,7 @@
                 <label for="type" class="block text-xs font-semibold text-gray-600 mb-1">Activity</label>
                 <select id="type" name="type" class="w-full px-3 py-2 border border-gray-300 rounded-lg bg-white shadow-sm focus:ring focus:ring-green-200 focus:border-green-500">
                     <option value="">All</option>
-                    <option value="invest" @selected($filters['type'] === 'invest')>Interest (invest deals)</option>
+                    <option value="interested" @selected($filters['type'] === 'interested')>Interested (express interest)</option>
                     <option value="commit" @selected($filters['type'] === 'commit')>Recorded commitments</option>
                     <option value="review" @selected($filters['type'] === 'review')>WhatsApp / review signal</option>
                 </select>
@@ -127,11 +127,11 @@
                             </td>
                             <td class="px-4 py-3 min-w-[240px]">
                                 @php
-                                    $activityTotal = $deal->invest_count + $deal->review_count + $deal->commit_count;
+                                    $activityTotal = $deal->interested_count + $deal->review_count + $deal->commit_count;
                                 @endphp
                                 <p class="font-semibold text-gray-900">{{ $activityTotal }} total</p>
                                 <p class="text-xs text-gray-600 mt-1">
-                                    Interest: {{ $deal->invest_count }} |
+                                    Interested: {{ $deal->interested_count }} |
                                     Committed: {{ $deal->commit_count }} |
                                     Review: {{ $deal->review_count }}
                                 </p>

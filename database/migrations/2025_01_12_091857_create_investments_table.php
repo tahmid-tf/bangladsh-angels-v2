@@ -24,7 +24,7 @@ return new class extends Migration
             $table->foreign('user_id')->references('id')->on('users');
 
             // Type column
-            $table->enum('type', ['invest', 'commit', 'review']);
+            $table->enum('type', ['interested', 'commit', 'review']);
         });
     }
 

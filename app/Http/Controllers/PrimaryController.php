@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Deal;
 use App\Models\Resource;
-use App\Models\ResourceHubCard;
 use App\Models\StartupService;
 use App\Models\SubscriptionTier;
 use App\Models\TeamMember;
@@ -220,17 +219,7 @@ class PrimaryController extends Controller
             return redirect()->route('approval.pending');
         }
 
-        $hubCards = ResourceHubCard::query()->ordered()->get();
-
-        $resourceEvents = Resource::query()
-            ->with('media')
-            ->whereIn('type', ['event', 'webinar'])
-            ->orderByRaw('CASE WHEN date IS NULL THEN 1 ELSE 0 END')
-            ->orderByDesc('date')
-            ->orderByDesc('id')
-            ->get();
-
-        return view('resources', compact('hubCards', 'resourceEvents'));
+        return view('resources');
     }
 
     public function checkout(Request $request)
