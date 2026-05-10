@@ -7,6 +7,7 @@ use App\Models\Deal;
 use App\Models\Investment;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class InvestmentController extends Controller
 {
@@ -20,12 +21,12 @@ class InvestmentController extends Controller
 
         $dealsQuery = Deal::query()
             ->withCount([
-                'investments as total_investments_count',
                 'investments as invest_count' => fn ($query) => $query->where('type', 'invest'),
-                'investments as commit_count' => fn ($query) => $query->where('type', 'commit'),
                 'investments as review_count' => fn ($query) => $query->where('type', 'review'),
+                'commits as commit_count',
             ])
             ->withMax('investments', 'created_at')
+            ->withMax('commits', 'created_at')
             ->when($q !== '', function ($query) use ($q) {
                 $query->where(function ($innerQuery) use ($q) {
                     $innerQuery->where('title', 'like', "%{$q}%")
@@ -34,23 +35,44 @@ class InvestmentController extends Controller
                         ->orWhereHas('investments.user', function ($userQuery) use ($q) {
                             $userQuery->where('name', 'like', "%{$q}%")
                                 ->orWhere('email', 'like', "%{$q}%");
+                        })
+                        ->orWhereHas('commits.user', function ($userQuery) use ($q) {
+                            $userQuery->where('name', 'like', "%{$q}%")
+                                ->orWhere('email', 'like', "%{$q}%");
                         });
                 });
             })
             ->when(in_array($typeFilter, ['invest', 'commit', 'review'], true), function ($query) use ($typeFilter) {
-                $query->whereHas('investments', fn ($investmentQuery) => $investmentQuery->where('type', $typeFilter));
+                if ($typeFilter === 'commit') {
+                    $query->whereHas('commits');
+                } else {
+                    $query->whereHas('investments', fn ($investmentQuery) => $investmentQuery->where('type', $typeFilter));
+                }
             })
             ->when($statusFilter !== '', fn ($query) => $query->where('status', $statusFilter))
             ->when($stageFilter !== '', fn ($query) => $query->where('investment_stage', $stageFilter));
 
         if ($sort === 'most_investments') {
-            $dealsQuery->orderByDesc('total_investments_count');
+            $dealsQuery->orderByRaw('(
+                (SELECT COUNT(*) FROM investments WHERE investments.deal_id = deals.id AND investments.type = ?)
+                + (SELECT COUNT(*) FROM investments WHERE investments.deal_id = deals.id AND investments.type = ?)
+                + (SELECT COUNT(*) FROM commits WHERE commits.deal_id = deals.id)
+            ) DESC', ['invest', 'review']);
         } elseif ($sort === 'title_asc') {
             $dealsQuery->orderBy('title');
         } elseif ($sort === 'title_desc') {
             $dealsQuery->orderByDesc('title');
         } else {
-            $dealsQuery->orderByDesc('investments_max_created_at');
+            $driver = DB::connection()->getDriverName();
+            if (in_array($driver, ['mysql', 'pgsql'], true)) {
+                $dealsQuery->orderByRaw('GREATEST(
+                    COALESCE((SELECT MAX(created_at) FROM investments WHERE investments.deal_id = deals.id), ?),
+                    COALESCE((SELECT MAX(created_at) FROM commits WHERE commits.deal_id = deals.id), ?)
+                ) DESC', ['1970-01-01 00:00:00', '1970-01-01 00:00:00']);
+            } else {
+                // SQLite etc.: approximate ordering (commits-only activity may sort slightly late)
+                $dealsQuery->orderByDesc('investments_max_created_at');
+            }
         }
 
         $deals = $dealsQuery
@@ -93,35 +115,46 @@ class InvestmentController extends Controller
             'type' => 'nullable|string', // Handles Added Buttons
         ]);
 
-        if (isset($request->type) && $request->type == 'review') {
-            // Do not check if investment exists
-        } else {
-            // Check if the user has already invested in the deal
-            $existingInvestment = Investment::where('user_id', $request->user_id)
-                ->where('deal_id', $request->deal_id)
-                ->first();
+        $requestedType = $request->input('type');
 
-            if ($existingInvestment) {
-                // Exception for Review Deals
-                if ($deal->type == 'review') {
-                    return redirect()->to($deal->groupchat_invite_link);
-                }
+        // Join WhatsApp / review signal — always stored on investments as type "review"
+        if ($requestedType === 'review') {
+            Investment::create([
+                'deal_id' => $request->deal_id,
+                'user_id' => $request->user_id,
+                'type' => 'review',
+            ]);
 
-                return back()->with('error', 'You have already invested in this deal.');
-            }
-
+            return redirect()->to($deal->groupchat_invite_link);
         }
 
-        // Create a new investment record
+        // Commit deals: recorded commitments live in `commits` only (amount/deadline), not as investments rows
+        if ($deal->type === 'commit') {
+            if (Commit::where('deal_id', $deal->id)->where('user_id', $request->user_id)->exists()) {
+                return redirect()->route('deal.view', $deal)->with('error', 'You have already committed to this deal.');
+            }
+
+            return redirect()->route('deal.commit.form', $deal->id);
+        }
+
+        // Express interest (invest deals) and other deal types: one investments row per user per deal
+        $existingInvestment = Investment::where('user_id', $request->user_id)
+            ->where('deal_id', $request->deal_id)
+            ->first();
+
+        if ($existingInvestment) {
+            if ($deal->type == 'review') {
+                return redirect()->to($deal->groupchat_invite_link);
+            }
+
+            return back()->with('error', 'You have already recorded activity for this deal.');
+        }
+
         Investment::create([
             'deal_id' => $request->deal_id,
             'user_id' => $request->user_id,
-            'type' => (! $request->type) ? $deal->type : $request->type, // If a Type is defined in initial request, use that defined type as opposed to the native type of the investment
+            'type' => $requestedType ?: $deal->type,
         ]);
-
-        if (isset($request->type) && $request->type == 'review') {
-            return redirect()->to($deal->groupchat_invite_link);
-        }
 
         if ($deal->type == 'invest') {
             if ($deal->invest_link) {
@@ -129,8 +162,6 @@ class InvestmentController extends Controller
             } else {
                 return back()->with('success', 'Investment recorded! You will receive investment details from the lead investment analyst shortly');
             }
-        } elseif ($deal->type == 'commit') {
-            return redirect()->route('deal.commit.form', $deal->id);
         } elseif ($deal->type == 'review') {
             return redirect()->to($deal->groupchat_invite_link);
         } elseif ($deal->type == 'portfolio') {
@@ -188,12 +219,11 @@ class InvestmentController extends Controller
 
     public function viewCommit()
     {
-        $investments = Investment::with(['deal', 'user'])
-            ->where('type', 'commit')
+        $commits = Commit::with(['deal', 'user'])
             ->orderByDesc('created_at')
             ->get();
 
-        return view('admin.investments.commit_index', compact('investments'));
+        return view('admin.investments.commit_index', compact('commits'));
     }
 
     public function viewReview()

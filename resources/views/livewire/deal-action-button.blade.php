@@ -8,7 +8,9 @@
         } else if($deal->type == "portfolio") {
             echo "View Portfolio";
         } else if ($deal->type === 'invest') {
-            echo "Commit Investment / Express Interest to Invest";
+            echo "Express interest to invest";
+        } else if ($deal->type === 'commit') {
+            echo "Enter commitment (amount & deadline)";
         } else {
             echo ucfirst($deal->type);
         }

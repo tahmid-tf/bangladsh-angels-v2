@@ -16,7 +16,8 @@
     $ctaLabel = match ($deal->type) {
         'review' => 'Join WhatsApp Group',
         'portfolio' => 'View Portfolio',
-        'invest' => 'Commit Investment / Express Interest to Invest',
+        'invest' => 'Express interest to invest',
+        'commit' => 'Enter commitment (amount & deadline)',
         default => ucfirst((string) $deal->type),
     };
 @endphp

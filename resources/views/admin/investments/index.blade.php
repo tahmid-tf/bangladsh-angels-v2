@@ -30,12 +30,12 @@
             </div>
 
             <div>
-                <label for="type" class="block text-xs font-semibold text-gray-600 mb-1">Investment type</label>
+                <label for="type" class="block text-xs font-semibold text-gray-600 mb-1">Activity</label>
                 <select id="type" name="type" class="w-full px-3 py-2 border border-gray-300 rounded-lg bg-white shadow-sm focus:ring focus:ring-green-200 focus:border-green-500">
                     <option value="">All</option>
-                    <option value="invest" @selected($filters['type'] === 'invest')>Invest</option>
-                    <option value="commit" @selected($filters['type'] === 'commit')>Commit</option>
-                    <option value="review" @selected($filters['type'] === 'review')>Review</option>
+                    <option value="invest" @selected($filters['type'] === 'invest')>Interest (invest deals)</option>
+                    <option value="commit" @selected($filters['type'] === 'commit')>Recorded commitments</option>
+                    <option value="review" @selected($filters['type'] === 'review')>WhatsApp / review signal</option>
                 </select>
             </div>
 
@@ -63,7 +63,7 @@
                 <label for="sort" class="block text-xs font-semibold text-gray-600 mb-1">Sort</label>
                 <select id="sort" name="sort" class="w-full px-3 py-2 border border-gray-300 rounded-lg bg-white shadow-sm focus:ring focus:ring-green-200 focus:border-green-500">
                     <option value="latest_activity" @selected($filters['sort'] === 'latest_activity')>Latest activity</option>
-                    <option value="most_investments" @selected($filters['sort'] === 'most_investments')>Most investments</option>
+                    <option value="most_investments" @selected($filters['sort'] === 'most_investments')>Most member activity</option>
                     <option value="title_asc" @selected($filters['sort'] === 'title_asc')>Title A-Z</option>
                     <option value="title_desc" @selected($filters['sort'] === 'title_desc')>Title Z-A</option>
                 </select>
@@ -89,7 +89,7 @@
                         <th class="px-4 py-3 font-semibold text-gray-700">Status</th>
                         <th class="px-4 py-3 font-semibold text-gray-700">Stage</th>
                         <th class="px-4 py-3 font-semibold text-gray-700">Amount Seeking</th>
-                        <th class="px-4 py-3 font-semibold text-gray-700">Investment Activity</th>
+                        <th class="px-4 py-3 font-semibold text-gray-700">Member activity</th>
                         <th class="px-4 py-3 font-semibold text-gray-700">Last Activity</th>
                         <th class="px-4 py-3 font-semibold text-gray-700 text-right">Actions</th>
                     </tr>
@@ -125,16 +125,23 @@
                             <td class="px-4 py-3 text-gray-800 whitespace-nowrap">
                                 {{ $deal->amount_seeking ? '$'.number_format($deal->amount_seeking, 2) : 'N/A' }}
                             </td>
-                            <td class="px-4 py-3 min-w-[220px]">
-                                <p class="font-semibold text-gray-900">{{ $deal->total_investments_count }} total</p>
+                            <td class="px-4 py-3 min-w-[240px]">
+                                @php
+                                    $activityTotal = $deal->invest_count + $deal->review_count + $deal->commit_count;
+                                @endphp
+                                <p class="font-semibold text-gray-900">{{ $activityTotal }} total</p>
                                 <p class="text-xs text-gray-600 mt-1">
-                                    Invest: {{ $deal->invest_count }} |
-                                    Commit: {{ $deal->commit_count }} |
+                                    Interest: {{ $deal->invest_count }} |
+                                    Committed: {{ $deal->commit_count }} |
                                     Review: {{ $deal->review_count }}
                                 </p>
                             </td>
                             <td class="px-4 py-3 whitespace-nowrap text-gray-600">
-                                {{ $deal->investments_max_created_at ? \Carbon\Carbon::parse($deal->investments_max_created_at)->diffForHumans() : 'No activity yet' }}
+                                @php
+                                    $dates = array_filter([$deal->investments_max_created_at ?? null, $deal->commits_max_created_at ?? null]);
+                                    $latest = count($dates) ? max($dates) : null;
+                                @endphp
+                                {{ $latest ? \Carbon\Carbon::parse($latest)->diffForHumans() : 'No activity yet' }}
                             </td>
                             <td class="px-4 py-3 text-right whitespace-nowrap">
                                 <div class="inline-flex items-center gap-2">

@@ -52,7 +52,7 @@
                     <a href="{{ $memberDealLinks ? $deal->commit_link : route('plans') }}"
                        @if ($memberDealLinks) target="_blank" rel="noopener noreferrer" @endif
                        class="inline-flex h-11 items-center justify-center rounded-full bg-[#36b37e] px-5 text-sm font-bold text-white shadow-md transition-colors hover:bg-[#2f9e6f]">
-                        Commit Link
+                        External commitment link
                     </a>
                 @endif
                 <a href="{{ $memberDealLinks ? $deal->pitch_deck_url : route('plans')}}"
