@@ -149,8 +149,12 @@
         <!-- External Links -->
         <div class="mt-6 space-y-4">
             <div>
-                <label for="pitch_deck_url" class="block text-sm font-semibold text-gray-700 mb-1">Pitch Deck URL *</label>
-                <input type="text" id="pitch_deck_url" name="pitch_deck_url" class="input-field" value="{{ old('pitch_deck_url', $deal->pitch_deck_url) }}">
+                <label for="pitch_deck_url" class="block text-sm font-semibold text-gray-700 mb-1">Pitch deck URL (public “View” on this deal)</label>
+                <input type="url" id="pitch_deck_url" name="pitch_deck_url" placeholder="https://…" class="input-field" value="{{ old('pitch_deck_url', $deal->pitch_deck_url) }}">
+                <p class="text-xs text-gray-500 mt-1.5 leading-relaxed">
+                    Full URL for this company’s deck/PDF — powers the gray <strong>View</strong> button on the live deal page. Optional in the database; no upload on this screen.
+                    The site-wide brochure link on <strong>/startups</strong> uses <code class="text-[11px] bg-gray-100 px-1 rounded">public/MoU.pdf</code>, not this field.
+                </p>
             </div>
             <div>
                 <label for="substack_link" class="block text-sm font-semibold text-gray-700 mb-1">Substack URL</label>

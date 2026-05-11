@@ -197,8 +197,12 @@
             }
         </style>
         <div>
-            <label for="pitch_deck_url" class="block text-gray-700 font-semibold mb-2">Pitch Deck URL </label>
-            <input type="text" id="pitch_deck_url" name="pitch_deck_url" placeholder="Enter link here" class="input-field" value="{{ old('pitch_deck_url') }}">
+            <label for="pitch_deck_url" class="block text-gray-700 font-semibold mb-2">Pitch deck URL (public “View” on this deal)</label>
+            <input type="url" id="pitch_deck_url" name="pitch_deck_url" placeholder="https://… (PDF, Google Drive, Dropbox, etc.)" class="input-field" value="{{ old('pitch_deck_url') }}">
+            <p class="text-xs text-gray-500 mt-1.5 leading-relaxed">
+                This is the link behind the gray <strong>View</strong> button on the deal’s public page (members who can access deals). Paste a full <code class="text-[11px] bg-gray-100 px-1 rounded">https://</code> URL — there is no separate file upload here.
+                The general network brochure (<strong>MoU.pdf</strong> on the Startups / Resources side) is not set on this form; that file lives in <code class="text-[11px] bg-gray-100 px-1 rounded">public/MoU.pdf</code> unless you change it in code or elsewhere.
+            </p>
             @error('pitch_deck_url')
                 <span class="text-red-500 text-sm">{{ $message }}</span>
             @enderror
