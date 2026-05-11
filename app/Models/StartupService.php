@@ -13,6 +13,8 @@ class StartupService extends Model implements HasMedia
 
     public const MEDIA_LOGO = 'logo';
 
+    public const MEDIA_BROCHURE = 'brochure';
+
     protected $fillable = [
         'title',
         'intro',
@@ -20,6 +22,7 @@ class StartupService extends Model implements HasMedia
         'footer_note',
         'link',
         'cta_label',
+        'brochure_url',
         'show_brochure_link',
         'sort_order',
     ];
@@ -43,6 +46,11 @@ class StartupService extends Model implements HasMedia
         $this->addMediaCollection(self::MEDIA_LOGO)
             ->singleFile()
             ->useDisk('public');
+
+        $this->addMediaCollection(self::MEDIA_BROCHURE)
+            ->singleFile()
+            ->useDisk('public')
+            ->acceptsMimeTypes(['application/pdf']);
     }
 
     public function logoUrl(): string
@@ -50,6 +58,24 @@ class StartupService extends Model implements HasMedia
         $media = $this->getFirstMedia(self::MEDIA_LOGO);
 
         return $media ? $media->getUrl() : '';
+    }
+
+    /**
+     * Resolved brochure href for the public “brochure” link: uploaded PDF first, then custom URL, then site default.
+     */
+    public function brochurePublicHref(): string
+    {
+        $media = $this->getFirstMedia(self::MEDIA_BROCHURE);
+        if ($media) {
+            return $media->getUrl();
+        }
+
+        $url = $this->brochure_url;
+        if (is_string($url) && $url !== '') {
+            return $url;
+        }
+
+        return asset('MoU.pdf');
     }
 
     /**

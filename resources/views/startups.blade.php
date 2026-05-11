@@ -12,7 +12,6 @@
 
 @section('page_content')
 @php
-    $brochureUrl = asset('MoU.pdf');
     $shadowClasses = [
         'bg-[#36b37e]/22',
         'bg-[#18736a]/18',
@@ -183,7 +182,7 @@
                         </article>
                         @if ($svc->show_brochure_link)
                             <p class="mt-4 text-center">
-                                <a href="{{ $brochureUrl }}" target="_blank" rel="noopener noreferrer" class="text-sm font-semibold text-[#36b37e] hover:text-[#18736a] underline underline-offset-4">
+                                <a href="{{ $svc->brochurePublicHref() }}" target="_blank" rel="noopener noreferrer" class="text-sm font-semibold text-[#36b37e] hover:text-[#18736a] underline underline-offset-4">
                                     Click here to see our brochure
                                 </a>
                             </p>

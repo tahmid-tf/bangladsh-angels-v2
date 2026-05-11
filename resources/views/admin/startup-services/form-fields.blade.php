@@ -59,9 +59,40 @@
     <input type="hidden" name="show_brochure_link" value="0">
     <input type="checkbox" name="show_brochure_link" id="show_brochure_link" value="1" class="mt-1 h-4 w-4 rounded border-gray-300 text-green-600 focus:ring-[#0a5554]"
         @checked($brochureChecked)>
-    <div>
-        <label for="show_brochure_link" class="text-sm font-semibold text-gray-700">Show brochure link under this card</label>
-        <p class="text-xs text-gray-500 mt-0.5">Uses the same brochure PDF as the Resources page.</p>
+    <div class="flex-1 min-w-0 space-y-4">
+        <div>
+            <label for="show_brochure_link" class="text-sm font-semibold text-gray-700">Show brochure link under this card</label>
+            <p class="text-xs text-gray-500 mt-0.5">When enabled, visitors see “Click here to see our brochure” under the CTA on <code class="text-[11px] bg-gray-100 px-1 rounded">/startups</code>.</p>
+        </div>
+        <div>
+            <label for="brochure_url" class="block text-sm font-semibold text-gray-700 mb-1">Brochure link (optional)</label>
+            <input type="url" name="brochure_url" id="brochure_url" value="{{ old('brochure_url', $service?->brochure_url) }}" maxlength="2048" placeholder="https://example.com/brochure.pdf"
+                class="w-full rounded-lg border border-gray-300 px-3 py-2 text-gray-900 focus:ring-2 focus:ring-[#0a5554] focus:border-[#0a5554]">
+            <p class="mt-1 text-xs text-gray-500">Paste a full <code class="text-[11px] bg-gray-100 px-1 rounded">https://</code> URL to a PDF or hosted document.</p>
+            @error('brochure_url')
+                <span class="text-red-500 text-sm">{{ $message }}</span>
+            @enderror
+        </div>
+        <div>
+            <label for="brochure" class="block text-sm font-semibold text-gray-700 mb-1">Or upload brochure PDF</label>
+            @php
+                $brochureMedia = $service?->getFirstMedia(\App\Models\StartupService::MEDIA_BROCHURE);
+            @endphp
+            @if ($brochureMedia)
+                <p class="text-sm text-gray-600 mb-2">Current file: <a href="{{ $brochureMedia->getUrl() }}" target="_blank" rel="noopener noreferrer" class="font-semibold text-[#0a5554] underline">{{ $brochureMedia->file_name }}</a></p>
+                <label class="flex items-center gap-2 text-sm text-gray-700 mb-3">
+                    <input type="checkbox" name="remove_brochure" value="1" class="rounded border-gray-300 text-green-600 focus:ring-[#0a5554]" @checked(old('remove_brochure'))>
+                    Remove uploaded PDF
+                </label>
+            @endif
+            <input type="file" name="brochure" id="brochure" accept="application/pdf,.pdf"
+                class="block w-full text-sm text-gray-600 file:mr-4 file:rounded-lg file:border-0 file:bg-green-50 file:px-4 file:py-2 file:font-semibold file:text-[#0a5554]">
+            <p class="mt-1 text-xs text-gray-500">PDF only, max 10&nbsp;MB. An upload takes precedence over the link until you remove it.</p>
+            @error('brochure')
+                <span class="text-red-500 text-sm">{{ $message }}</span>
+            @enderror
+        </div>
+        <p class="text-xs text-gray-500 border-t border-gray-200 pt-3">If both link and upload are empty, the public page uses the site default <code class="text-[11px] bg-gray-100 px-1 rounded">/MoU.pdf</code> (<code class="text-[11px] bg-gray-100 px-1 rounded">public/MoU.pdf</code>).</p>
     </div>
 </div>
 

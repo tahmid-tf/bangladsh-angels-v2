@@ -5,7 +5,7 @@
     <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 p-4 bg-white shadow mb-6">
         <div>
             <h1 class="text-lg md:text-xl font-bold">Startups page — Our services</h1>
-            <p class="text-sm text-gray-600 mt-1">Manage service cards on the public <code class="text-xs bg-gray-100 px-1 rounded">/startups</code> page (title, intro, bullets, CTA, logo, brochure link).</p>
+            <p class="text-sm text-gray-600 mt-1">Manage service cards on the public <code class="text-xs bg-gray-100 px-1 rounded">/startups</code> page (title, intro, bullets, CTA, logo, optional brochure URL or PDF upload).</p>
         </div>
         <div class="flex flex-wrap items-center gap-3">
             <a href="{{ route('admin.startup-services.create') }}" class="inline-flex items-center justify-center rounded-lg bg-green-600 px-4 py-2 text-sm font-semibold text-white hover:bg-green-700 transition">

@@ -203,22 +203,9 @@ class PrimaryController extends Controller
         return view('investors', compact('investors', 'tiers', 'showMembershipPlans'));
     }
 
-    // View Resources Page (hub cards; content managed in admin)
+    // View Resources Page (public DeckVue marketing page at /deckvue)
     public function viewResources()
     {
-        if (! auth()->check()) {
-            return redirect()->route('upgrade.page');
-        }
-
-        $user = auth()->user();
-        if (! $user->hasVerifiedEmail()) {
-            return redirect()->route('verification.notice');
-        }
-
-        if (! $user->is_approved) {
-            return redirect()->route('approval.pending');
-        }
-
         return view('resources');
     }
 

@@ -42,6 +42,7 @@ class StartupServiceController extends Controller
             'footer_note' => $validated['footer_note'] ?: null,
             'link' => $validated['link'],
             'cta_label' => $validated['cta_label'],
+            'brochure_url' => $validated['brochure_url'] ?? null,
             'show_brochure_link' => $request->boolean('show_brochure_link'),
             'sort_order' => (int) ($validated['sort_order'] ?? $nextOrder),
         ]);
@@ -50,6 +51,8 @@ class StartupServiceController extends Controller
             $service->addMediaFromRequest('logo')
                 ->toMediaCollection(StartupService::MEDIA_LOGO);
         }
+
+        $this->syncBrochureUpload($service, $request);
 
         return redirect()
             ->route('admin.startup-services')
@@ -77,6 +80,7 @@ class StartupServiceController extends Controller
             'footer_note' => $validated['footer_note'] ?: null,
             'link' => $validated['link'],
             'cta_label' => $validated['cta_label'],
+            'brochure_url' => $validated['brochure_url'] ?? null,
             'show_brochure_link' => $request->boolean('show_brochure_link'),
             'sort_order' => (int) ($validated['sort_order'] ?? $startupService->sort_order),
         ]);
@@ -86,6 +90,8 @@ class StartupServiceController extends Controller
             $startupService->addMediaFromRequest('logo')
                 ->toMediaCollection(StartupService::MEDIA_LOGO);
         }
+
+        $this->syncBrochureUpload($startupService, $request);
 
         return redirect()
             ->route('admin.startup-services')
@@ -97,6 +103,7 @@ class StartupServiceController extends Controller
         abort_unless(auth()->user()?->isAdmin(), 403);
 
         $startupService->clearMediaCollection(StartupService::MEDIA_LOGO);
+        $startupService->clearMediaCollection(StartupService::MEDIA_BROCHURE);
         $startupService->delete();
 
         return redirect()
@@ -131,7 +138,11 @@ class StartupServiceController extends Controller
             $request->merge(['sort_order' => null]);
         }
 
-        return $request->validate([
+        if ($request->input('brochure_url') === '') {
+            $request->merge(['brochure_url' => null]);
+        }
+
+        $validated = $request->validate([
             'title' => ['required', 'string', 'max:255'],
             'intro' => ['required', 'string', 'max:5000'],
             'bullets_text' => ['nullable', 'string', 'max:10000'],
@@ -154,9 +165,32 @@ class StartupServiceController extends Controller
                 }
             }],
             'cta_label' => ['required', 'string', 'max:120'],
+            'brochure_url' => ['nullable', 'string', 'max:2048', 'url'],
             'sort_order' => ['nullable', 'integer', 'min:0', 'max:999999'],
             'logo' => ['nullable', 'image', 'max:4096'],
+            'brochure' => ['nullable', 'file', 'mimes:pdf', 'max:10240'],
+            'remove_brochure' => ['sometimes', 'boolean'],
             'show_brochure_link' => ['sometimes', 'boolean'],
         ]);
+
+        $bu = $validated['brochure_url'] ?? null;
+        $validated['brochure_url'] = is_string($bu) && $bu !== '' ? trim($bu) : null;
+
+        return $validated;
+    }
+
+    private function syncBrochureUpload(StartupService $service, Request $request): void
+    {
+        if ($request->hasFile('brochure')) {
+            $service->clearMediaCollection(StartupService::MEDIA_BROCHURE);
+            $service->addMediaFromRequest('brochure')
+                ->toMediaCollection(StartupService::MEDIA_BROCHURE);
+
+            return;
+        }
+
+        if ($request->boolean('remove_brochure')) {
+            $service->clearMediaCollection(StartupService::MEDIA_BROCHURE);
+        }
     }
 }
