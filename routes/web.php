@@ -1,11 +1,13 @@
 <?php
 
+use App\Http\Controllers\Admin\AngelAcademyNetworkApplicationController as AdminAngelAcademyNetworkApplicationController;
 use App\Http\Controllers\Admin\FounderPitchSubmissionController;
 use App\Http\Controllers\Admin\ResourceHubCardController;
 use App\Http\Controllers\Admin\StartupServiceController;
 use App\Http\Controllers\Admin\TeamMemberController;
 use App\Http\Controllers\Admin\WhatWeDoCardController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\AngelAcademyNetworkApplicationController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\FounderPitchController;
 use App\Http\Controllers\InvestmentController;
@@ -36,6 +38,10 @@ Route::redirect('/ban-resources', '/deckvue', 301);
 Route::get('/deckvue', [PrimaryController::class, 'viewResources'])->name('resources');
 Route::get('/team', [PrimaryController::class, 'viewTeam'])->name('team');
 Route::get('/angel-academy', [PrimaryController::class, 'viewAngelAcademy'])->name('angel-academy');
+Route::get('/angel-academy/apply', [AngelAcademyNetworkApplicationController::class, 'create'])->name('angel-academy.apply');
+Route::post('/angel-academy/apply', [AngelAcademyNetworkApplicationController::class, 'store'])
+    ->middleware('throttle:10,1')
+    ->name('angel-academy.apply.store');
 Route::get('/startups', [PrimaryController::class, 'viewStartups'])->name('startups');
 Route::post('/startups/pitch', [FounderPitchController::class, 'store'])
     ->middleware('throttle:10,1')
@@ -188,6 +194,11 @@ Route::middleware('auth')->group(function () {
             ->name('admin.founder-pitches.show');
         Route::get('/founder-pitches/{founderPitchSubmission}/deck', [FounderPitchSubmissionController::class, 'downloadDeck'])
             ->name('admin.founder-pitches.deck');
+
+        Route::get('/angel-academy-applications', [AdminAngelAcademyNetworkApplicationController::class, 'index'])
+            ->name('admin.angel-academy-applications');
+        Route::get('/angel-academy-applications/{angelAcademyNetworkApplication}', [AdminAngelAcademyNetworkApplicationController::class, 'show'])
+            ->name('admin.angel-academy-applications.show');
 
         Route::get('/resource-hub-cards', [ResourceHubCardController::class, 'index'])->name('admin.resource-hub');
         Route::get('/resource-hub-cards/create', [ResourceHubCardController::class, 'create'])->name('admin.resource-hub.create');

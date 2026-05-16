@@ -181,10 +181,10 @@
 
             <div class="mx-auto mt-8 flex w-full min-w-0 max-w-md flex-col items-stretch justify-center gap-3 sm:mt-10 sm:max-w-none sm:flex-row sm:items-center sm:gap-4">
                 <a
-                    href="{{ route('investor.signup') }}"
+                    href="{{ route('angel-academy.apply') }}"
                     class="inline-flex min-h-[48px] w-full min-w-0 items-center justify-center rounded-full bg-white px-6 text-base font-bold text-[#042f28] shadow-lg shadow-emerald-950/40 transition duration-300 ease-out hover:-translate-y-0.5 hover:bg-emerald-50 hover:shadow-xl active:scale-[0.98] sm:w-auto sm:min-w-[12rem] sm:px-8 sm:text-sm"
                 >
-                    Apply to the network
+                    Apply to the Network
                 </a>
                 <a
                     href="https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ1oFoHy0m9As4PtSfm4Ee-nVyoZRNNyZ38doHCWpVwDfo5u3qxnesRT_LqD_Fv5nUlbE3EvxyYN"
