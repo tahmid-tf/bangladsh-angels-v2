@@ -10,15 +10,16 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
+use Illuminate\View\View;
 
 class RegisteredUserController extends Controller
 {
     /**
      * Display the registration view.
      */
-    public function create(): RedirectResponse
+    public function create(): View
     {
-        return redirect()->route('investor.signup');
+        return view('auth.register');
     }
 
     /**

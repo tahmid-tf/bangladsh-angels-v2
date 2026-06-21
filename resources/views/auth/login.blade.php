@@ -39,6 +39,20 @@
                     New user? <a href="{{route('investor.signup')}}" class="font-bold text-green-800">Create an account</a>
                 </p>
 
+                <div class="mt-6 max-w-md">
+                    <x-google-auth-button intent="login" label="Login with Gmail" />
+                    <x-input-error :messages="$errors->get('google')" class="mt-2" />
+                </div>
+
+                <div class="relative my-8 max-w-md">
+                    <div class="absolute inset-0 flex items-center" aria-hidden="true">
+                        <div class="w-full border-t border-gray-200"></div>
+                    </div>
+                    <div class="relative flex justify-center text-sm">
+                        <span class="bg-white px-3 text-gray-500">Or continue with email</span>
+                    </div>
+                </div>
+
                 <form method="POST" action="{{ route('login') }}">
                     @csrf
                     <div class="col-span-6 sm:col-span-3 my-3">

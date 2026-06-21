@@ -9,6 +9,7 @@ use App\Models\Payment;
 use App\Models\Subscription;
 use App\Models\SubscriptionTier;
 use App\Models\User;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -16,8 +17,8 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 use Maatwebsite\Excel\Facades\Excel;
-use Barryvdh\DomPDF\Facade\Pdf;
 
 class AdminController extends Controller
 {
@@ -240,7 +241,7 @@ class AdminController extends Controller
         $columns = Schema::getColumnListing('users');
         $quotedColumns = implode(', ', array_map(fn ($col) => "`{$col}`", $columns));
         $lines = [];
-        $lines[] = "-- BAN members backup";
+        $lines[] = '-- BAN members backup';
         $lines[] = '-- Generated at '.now()->toDateTimeString();
         $lines[] = '';
 
@@ -254,7 +255,7 @@ class AdminController extends Controller
                         if ($value === null) {
                             $values[] = 'NULL';
                         } else {
-                            $escaped = str_replace(["\\", "'"], ["\\\\", "\\'"], (string) $value);
+                            $escaped = str_replace(['\\', "'"], ['\\\\', "\\'"], (string) $value);
                             $values[] = "'{$escaped}'";
                         }
                     }
@@ -417,6 +418,11 @@ class AdminController extends Controller
     {
         $approval = false;
 
+        $googleSignup = $request->session()->get('google_signup');
+        $usingGoogleSignup = is_array($googleSignup)
+            && filled($googleSignup['google_id'] ?? null)
+            && Str::lower((string) $request->input('email')) === Str::lower((string) ($googleSignup['email'] ?? ''));
+
         $validator = Validator::make($request->all(), [
             'first_name' => 'required|string|max:255',
             'last_name' => 'required|string|max:255',
@@ -437,7 +443,7 @@ class AdminController extends Controller
             'profile_photo' => 'nullable|image|max:5120|mimes:jpeg,png,jpg,gif', // Max size: 5MB (5120 KB)
             'company_name.*' => 'nullable|string|max:255',
             'investment_amount.*' => 'nullable|numeric|min:0',
-            'password' => 'required|string|min:8|confirmed', // Ensure password and re_password match
+            'password' => [$usingGoogleSignup ? 'nullable' : 'required', 'string', 'min:8', 'confirmed'],
             'selected_plan' => 'required|string|max:64',
             'selected_plan_price' => 'nullable|numeric|min:0',
         ]);
@@ -475,7 +481,10 @@ class AdminController extends Controller
         $user = User::create([
             'name' => $fullName,
             'email' => $request->email,
-            'password' => Hash::make($request->password), // Hash the password
+            'password' => Hash::make($usingGoogleSignup ? Str::password(32) : $request->password),
+            'google_id' => $usingGoogleSignup ? $googleSignup['google_id'] : null,
+            'email_verified_at' => $usingGoogleSignup ? now() : null,
+            'email_verified_by' => null,
             'phone' => $phone,
             'address' => $request->address,
             'gender' => $request->gender,
@@ -519,6 +528,10 @@ class AdminController extends Controller
         // Log in the user if not already logged in
         if (! Auth::check()) {
             Auth::login($user);
+        }
+
+        if ($usingGoogleSignup) {
+            $request->session()->forget('google_signup');
         }
 
         if ($paidTier) {

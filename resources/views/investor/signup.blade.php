@@ -37,7 +37,28 @@
     </div>
     @php
         $selectedPlan = old('selected_plan', 'free');
+        $googleSignup = session('google_signup');
+        $usingGoogleSignup = is_array($googleSignup) && filled($googleSignup['google_id'] ?? null);
     @endphp
+
+    @if (session('info'))
+        <div class="mb-6 p-4 rounded-lg bg-blue-50 border border-blue-200 text-blue-900 text-sm">{{ session('info') }}</div>
+    @endif
+
+    @if ($errors->has('google'))
+        <div class="mb-6 p-4 rounded-lg bg-red-100 text-red-800 text-sm">{{ $errors->first('google') }}</div>
+    @endif
+
+    <div class="mb-8 rounded-xl border border-gray-200 bg-gray-50 p-5">
+        <x-google-auth-button intent="signup" class="max-w-md" />
+        <p class="mt-3 text-xs text-gray-500">Use Google to pre-fill your name and email, then complete the rest of the investor application.</p>
+    </div>
+
+    @if ($usingGoogleSignup)
+        <div class="mb-6 p-4 rounded-lg bg-emerald-50 border border-emerald-200 text-emerald-900 text-sm">
+            Signed in with Google as <strong>{{ $googleSignup['email'] }}</strong>. Complete the remaining fields below and submit your application.
+        </div>
+    @endif
 
     <div class="mb-8">
         <h3 class="text-lg font-semibold text-gray-800 mb-2">Choose your tier</h3>
@@ -88,14 +109,14 @@
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 md:col-span-2">
                 <div class="flex flex-col">
                     <label class="block text-gray-700 font-semibold mb-2" for="first_name">First Name <span class="text-red-500">*</span></label>
-                    <input type="text" id="first_name" placeholder="John" value="{{old('first_name')}}" name="first_name" class="w-full p-3 rounded-lg border-gray-300 shadow-sm focus:border-green-500 focus:ring focus:ring-green-200" required>
+                    <input type="text" id="first_name" placeholder="John" value="{{ old('first_name', $usingGoogleSignup ? ($googleSignup['first_name'] ?? '') : '') }}" name="first_name" class="w-full p-3 rounded-lg border-gray-300 shadow-sm focus:border-green-500 focus:ring focus:ring-green-200" required>
                     @error('first_name')
                         <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
                     @enderror
                 </div>
                 <div class="flex flex-col">
                     <label class="block text-gray-700 font-semibold mb-2" for="last_name">Last Name <span class="text-red-500">*</span></label>
-                    <input type="text" id="last_name" placeholder="Doe" value="{{old('last_name')}}" name="last_name" class="w-full p-3 rounded-lg border-gray-300 shadow-sm focus:border-green-500 focus:ring focus:ring-green-200" required>
+                    <input type="text" id="last_name" placeholder="Doe" value="{{ old('last_name', $usingGoogleSignup ? ($googleSignup['last_name'] ?? '') : '') }}" name="last_name" class="w-full p-3 rounded-lg border-gray-300 shadow-sm focus:border-green-500 focus:ring focus:ring-green-200" required>
                     @error('last_name')
                         <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
                     @enderror
@@ -105,7 +126,7 @@
             <!-- Email -->
             <div>
                 <label class="block text-gray-700 font-semibold mb-2" for="email">Email <span class="text-red-500">*</span></label>
-                <input type="email" id="email" name="email" placeholder="Email" class="w-full p-3 rounded-lg border-gray-300 shadow-sm focus:border-green-500 focus:ring focus:ring-green-200" value="{{ old('email') }}" required>
+                <input type="email" id="email" name="email" placeholder="Email" class="w-full p-3 rounded-lg border-gray-300 shadow-sm focus:border-green-500 focus:ring focus:ring-green-200 {{ $usingGoogleSignup ? 'bg-gray-100' : '' }}" value="{{ old('email', $usingGoogleSignup ? ($googleSignup['email'] ?? '') : '') }}" {{ $usingGoogleSignup ? 'readonly' : '' }} required>
                 @error('email')
                     <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
                 @enderror
@@ -127,6 +148,7 @@
                 @enderror
             </div>
 
+            @unless ($usingGoogleSignup)
             <div class="md:col-span-2 rounded-xl border border-green-100 bg-green-50/40 p-5">
                 <h3 class="text-base font-bold text-[#0f3d34] mb-4">Account Access</h3>
                 <div class="space-y-4">
@@ -169,6 +191,7 @@
                     </div>
                 </div>
             </div>
+            @endunless
 
             <!-- Company Name -->
             <div>

@@ -1,6 +1,12 @@
 @extends('layouts.guest')
 @section('page_title','Register | Bangladesh Angels Network')
 @section('page_content')
+<div class="container mx-auto max-w-md px-6 py-12">
+    <div class="mb-6">
+        <x-google-auth-button intent="signup" class="w-full" />
+        <p class="mt-3 text-center text-xs text-gray-500">Or register with email below</p>
+    </div>
+
 <form method="POST" action="{{ route('register') }}">
     @csrf
 
@@ -52,5 +58,6 @@
         </x-primary-button>
     </div>
 </form>
+</div>
 @endsection
 
