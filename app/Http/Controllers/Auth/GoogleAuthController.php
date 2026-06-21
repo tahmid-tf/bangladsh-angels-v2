@@ -19,12 +19,16 @@ class GoogleAuthController extends Controller
             in_array($intent, ['login', 'signup'], true) ? $intent : 'login'
         );
 
+        $this->configureGoogleRedirect($request);
+
         return Socialite::driver('google')->redirect();
     }
 
     public function callback(Request $request): RedirectResponse
     {
         $intent = $request->session()->pull('google_oauth_intent', 'login');
+
+        $this->configureGoogleRedirect($request);
 
         try {
             $googleUser = Socialite::driver('google')->user();
@@ -121,5 +125,13 @@ class GoogleAuthController extends Controller
         }
 
         return redirect()->route('login')->withErrors(['google' => $message]);
+    }
+
+    /** Use the current site URL so Google redirect_uri matches how the user opened the app. */
+    private function configureGoogleRedirect(Request $request): void
+    {
+        config([
+            'services.google.redirect' => $request->getSchemeAndHttpHost().'/auth/google/callback',
+        ]);
     }
 }
