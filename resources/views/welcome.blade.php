@@ -361,11 +361,6 @@
               <img src="{{ asset('bangladesh venture capital.webp') }}" alt="Bangladesh Venture Capital" class="h-16 md:h-20 w-auto object-contain" width="150" height="80" loading="lazy">
             </a>
             <div class="flex justify-center">
-              <a target="_blank" rel="noopener noreferrer" href="https://sajidafoundation.org/" class="flex justify-center items-center p-5 min-w-[140px] max-w-xs border border-green-100/60 rounded-xl shadow-sm hover:shadow-md hover:border-green-200/80 transition-all bg-white/90">
-                <img src="{{ asset('sajidafoundation.webp') }}" alt="Sajida Foundation" class="h-16 md:h-20 w-auto object-contain" width="150" height="80" loading="lazy">
-              </a>
-            </div>
-            <div class="flex justify-center">
               <a target="_blank" rel="noopener noreferrer" href="https://lightcastlepartners.com/" class="flex justify-center items-center p-5 min-w-[140px] max-w-xs border border-green-100/60 rounded-xl shadow-sm hover:shadow-md hover:border-green-200/80 transition-all bg-white/90">
                 <img src="{{ asset('lcp.svg') }}" alt="LightCastle Partners" class="h-16 md:h-20 w-auto object-contain" width="150" height="80" loading="lazy">
               </a>
