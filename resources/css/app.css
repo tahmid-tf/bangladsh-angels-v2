@@ -1200,12 +1200,18 @@ html {
 
 .ban-footer__top {
     display: grid;
-    grid-template-columns: minmax(280px, 1.4fr) minmax(170px, 0.55fr) minmax(
-            220px,
-            0.7fr
-        );
-    gap: clamp(36px, 7vw, 90px);
+    grid-template-columns: minmax(270px, 1.25fr) repeat(3, minmax(145px, 0.65fr));
+    gap: clamp(30px, 4vw, 58px);
     align-items: start;
+}
+
+.ban-footer__brand-column > p {
+    max-width: 330px;
+    margin: 24px 0 0;
+    color: rgba(255, 255, 255, 0.58);
+    font-size: 0.88rem;
+    font-weight: 500;
+    line-height: 1.75;
 }
 
 .ban-footer__brand {
@@ -1226,11 +1232,13 @@ html {
 }
 
 .ban-footer__links h2 {
-    margin: 0 0 20px;
-    color: white;
-    font-size: 0.95rem;
+    margin: 0 0 22px;
+    color: var(--ban-mint);
+    font-size: 0.72rem;
     font-weight: 800;
-    letter-spacing: 0.01em;
+    letter-spacing: 0.14em;
+    line-height: 1.4;
+    text-transform: uppercase;
 }
 
 .ban-footer__links ul {
@@ -1251,6 +1259,32 @@ html {
 
 .ban-footer__links a:hover {
     color: var(--ban-mint);
+}
+
+.ban-footer__contact-heading {
+    display: flex;
+    min-height: 50px;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 10px;
+}
+
+.ban-footer__contact-heading h2 {
+    margin-bottom: 0;
+}
+
+.ban-footer__email {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+}
+
+.ban-footer__email small {
+    color: rgba(188, 241, 212, 0.56);
+    font-size: 0.72rem;
+    font-weight: 600;
 }
 
 .ban-footer__social-area {
@@ -1288,8 +1322,9 @@ html {
 .ban-footer__socials {
     display: flex;
     align-items: center;
-    justify-content: flex-end;
+    justify-content: flex-start;
     gap: 10px;
+    margin-top: 26px;
 }
 
 .ban-footer__socials a {
