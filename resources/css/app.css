@@ -656,73 +656,178 @@ html {
 }
 
 .ban-what-we-do {
+    position: relative;
+    overflow: hidden;
     background:
-        linear-gradient(rgba(9, 47, 41, 0.025) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(9, 47, 41, 0.025) 1px, transparent 1px),
+        radial-gradient(circle at 8% 12%, rgba(188, 241, 212, 0.42), transparent 24%),
+        radial-gradient(circle at 94% 88%, rgba(21, 150, 111, 0.11), transparent 22%),
         var(--ban-ivory);
-    background-size: 56px 56px;
+}
+
+.ban-what-we-do::before {
+    position: absolute;
+    top: 9%;
+    right: -170px;
+    width: 360px;
+    aspect-ratio: 1;
+    border: 1px solid rgba(9, 47, 41, 0.08);
+    border-radius: 50%;
+    content: '';
+    box-shadow: 0 0 0 42px rgba(9, 47, 41, 0.018), 0 0 0 84px rgba(9, 47, 41, 0.012);
+    pointer-events: none;
+}
+
+.ban-what-we-do .ban-content-section__inner {
+    position: relative;
+    z-index: 1;
+}
+
+.ban-what-we-do .ban-section-heading {
+    display: flex;
+    align-items: center;
+    gap: clamp(24px, 4vw, 52px);
+    text-align: left;
+}
+
+.ban-what-we-do .ban-section-heading::after {
+    flex: 1;
+    height: 1px;
+    content: '';
+    background: linear-gradient(90deg, rgba(9, 47, 41, 0.22), rgba(9, 47, 41, 0.02));
+}
+
+.ban-what-we-do .ban-section-heading__ornament > span:first-child {
+    width: 52px;
+    height: 52px;
+    border: 1px solid rgba(21, 150, 111, 0.2);
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.62);
+    box-shadow: 0 12px 30px rgba(9, 47, 41, 0.07);
 }
 
 .ban-what-we-do__grid {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 22px;
-    margin-top: 58px;
+    align-items: start;
+    gap: 20px;
+    margin-top: 66px;
+    counter-reset: ban-service;
 }
 
 .what-we-do-card {
     position: relative;
     display: flex;
-    height: 100%;
+    min-height: 610px;
     flex-direction: column;
-    padding: 18px;
-    border: 1px solid rgba(9, 47, 41, 0.1);
-    border-radius: 28px;
+    padding: 0;
+    border: 1px solid rgba(9, 47, 41, 0.095);
+    border-radius: 30px;
     overflow: hidden;
-    background: rgba(255, 255, 255, 0.91);
-    box-shadow: 0 24px 65px -42px rgba(9, 47, 41, 0.42);
+    background: rgba(255, 255, 255, 0.86);
+    box-shadow: 0 26px 70px -44px rgba(9, 47, 41, 0.48);
+    counter-increment: ban-service;
     transition:
-        transform 240ms ease,
-        box-shadow 240ms ease,
-        border-color 240ms ease;
+        transform 280ms cubic-bezier(0.2, 0.7, 0.2, 1),
+        box-shadow 280ms ease,
+        border-color 280ms ease;
+}
+
+.what-we-do-card:nth-child(odd) {
+    transform: translateY(24px);
+}
+
+.what-we-do-card::before {
+    position: absolute;
+    top: 22px;
+    right: 22px;
+    z-index: 3;
+    display: grid;
+    width: 46px;
+    height: 46px;
+    place-items: center;
+    border: 1px solid rgba(255, 255, 255, 0.36);
+    border-radius: 50%;
+    color: white;
+    content: '0' counter(ban-service);
+    background: rgba(4, 43, 37, 0.58);
+    box-shadow: 0 10px 24px rgba(4, 43, 37, 0.14);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    font-size: 0.7rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
 }
 
 .what-we-do-card:hover {
     transform: translateY(-8px);
-    border-color: rgba(21, 150, 111, 0.32);
-    box-shadow: 0 34px 76px -42px rgba(9, 47, 41, 0.5);
+    border-color: rgba(21, 150, 111, 0.28);
+    box-shadow: 0 38px 82px -42px rgba(9, 47, 41, 0.55);
+}
+
+.what-we-do-card:nth-child(odd):hover {
+    transform: translateY(16px);
+}
+
+.what-we-do-card:nth-child(2) {
+    color: white;
+    border-color: rgba(255, 255, 255, 0.08);
+    background:
+        radial-gradient(circle at 100% 80%, rgba(21, 150, 111, 0.3), transparent 38%),
+        linear-gradient(150deg, #0b4a3e, #042c25 72%);
+    box-shadow: 0 34px 82px -40px rgba(4, 43, 37, 0.72);
+}
+
+.what-we-do-card:nth-child(2):hover {
+    transform: translateY(-8px);
+    border-color: rgba(188, 241, 212, 0.24);
+    box-shadow: 0 44px 90px -40px rgba(4, 43, 37, 0.8);
 }
 
 .what-we-do-badge {
     order: 2;
     width: 100%;
     min-width: 0;
-    margin: 22px 0 0;
-    padding: 0 4px;
+    margin: 30px 0 0;
+    padding: 0 30px;
     color: var(--ban-ink);
     background: none;
     border: 0;
     box-shadow: none;
     clip-path: none;
-    font-size: 1.3rem;
+    font-size: clamp(1.35rem, 2vw, 1.65rem);
     font-weight: 800;
-    letter-spacing: -0.03em;
-    line-height: 1.3;
+    letter-spacing: -0.045em;
+    line-height: 1.2;
     text-align: left;
+}
+
+.what-we-do-card:nth-child(2) .what-we-do-badge {
+    color: white;
 }
 
 .what-we-do-card figure {
     order: 1;
+    position: relative;
+    height: 224px;
     margin: 0;
     border: 0;
-    border-radius: 19px;
+    border-radius: 0;
     overflow: hidden;
-    background: #0a5c45;
+    background: #0a5546;
+}
+
+.what-we-do-card figure::after {
+    position: absolute;
+    inset: auto 0 0;
+    height: 34%;
+    content: '';
+    background: linear-gradient(transparent, rgba(4, 43, 37, 0.2));
+    pointer-events: none;
 }
 
 .what-we-do-card figure img {
     width: 100%;
-    height: 186px;
+    height: 100%;
     object-fit: contain;
     object-position: center;
     background: #0a5c45;
@@ -730,7 +835,7 @@ html {
 }
 
 .what-we-do-card:hover figure img {
-    transform: scale(1.025);
+    transform: scale(1.045);
 }
 
 .what-we-do-card-body {
@@ -739,16 +844,16 @@ html {
     min-height: 0;
     flex: 1;
     flex-direction: column;
-    margin-top: 14px;
-    padding: 0 4px 4px;
+    margin-top: 16px;
+    padding: 0 30px 30px;
     border: 0;
 }
 
 .what-we-do-card-body p {
     margin: 0;
     padding: 0;
-    color: #567069;
-    font-size: 0.91rem;
+    color: #59716b;
+    font-size: 0.9rem;
     font-weight: 500;
     letter-spacing: 0;
     line-height: 1.72;
@@ -756,13 +861,17 @@ html {
     text-shadow: none;
 }
 
+.what-we-do-card:nth-child(2) .what-we-do-card-body p {
+    color: rgba(238, 250, 244, 0.74);
+}
+
 .what-we-do-card__actions {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 8px;
+    gap: 9px;
     width: 100%;
     margin-top: auto;
-    padding-top: 24px;
+    padding-top: 26px;
 }
 
 .what-we-do-card__actions a {
@@ -772,9 +881,9 @@ html {
     justify-content: center;
     padding: 9px 13px;
     border: 1px solid rgba(9, 47, 41, 0.12);
-    border-radius: 13px;
+    border-radius: 12px;
     color: var(--ban-ink);
-    background: #eff8f3;
+    background: #edf7f1;
     font-size: 0.8rem;
     font-weight: 800;
     text-align: center;
@@ -787,6 +896,18 @@ html {
     color: white;
     border-color: var(--ban-ink);
     background: var(--ban-ink);
+}
+
+.what-we-do-card:nth-child(2) .what-we-do-card__actions a {
+    color: white;
+    border-color: rgba(255, 255, 255, 0.14);
+    background: rgba(255, 255, 255, 0.075);
+}
+
+.what-we-do-card:nth-child(2) .what-we-do-card__actions .what-we-do-card__action--primary {
+    color: var(--ban-ink);
+    border-color: var(--ban-mint);
+    background: var(--ban-mint);
 }
 
 .what-we-do-card__spacer {
@@ -1606,6 +1727,20 @@ html {
         grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
+    .what-we-do-card,
+    .what-we-do-card:nth-child(odd),
+    .what-we-do-card:hover,
+    .what-we-do-card:nth-child(odd):hover,
+    .what-we-do-card:nth-child(2):hover {
+        transform: none;
+    }
+
+    .what-we-do-card:nth-child(3) {
+        grid-column: 1 / -1;
+        width: min(520px, 100%);
+        justify-self: center;
+    }
+
     .ban-pitch__inner {
         grid-template-columns: 1fr;
     }
@@ -1708,12 +1843,44 @@ html {
 
     .ban-what-we-do__grid {
         grid-template-columns: 1fr;
-        gap: 16px;
-        margin-top: 38px;
+        gap: 18px;
+        margin-top: 42px;
+    }
+
+    .ban-what-we-do .ban-section-heading {
+        display: block;
+        text-align: center;
+    }
+
+    .ban-what-we-do .ban-section-heading::after {
+        display: none;
+    }
+
+    .what-we-do-card,
+    .what-we-do-card:nth-child(3) {
+        grid-column: auto;
+        width: 100%;
+        min-height: 0;
+    }
+
+    .what-we-do-card figure {
+        height: 220px;
     }
 
     .what-we-do-card figure img {
-        height: 210px;
+        height: 100%;
+    }
+
+    .what-we-do-badge {
+        margin-top: 25px;
+        padding-right: 23px;
+        padding-left: 23px;
+    }
+
+    .what-we-do-card-body {
+        padding-right: 23px;
+        padding-bottom: 24px;
+        padding-left: 23px;
     }
 
     .ban-pitch__inner {
