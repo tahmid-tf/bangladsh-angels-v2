@@ -1323,17 +1323,17 @@ html {
     display: flex;
     align-items: center;
     justify-content: flex-start;
-    gap: 10px;
+    gap: 12px;
     margin-top: 26px;
 }
 
 .ban-footer__socials a {
     display: grid;
-    width: 44px;
-    height: 44px;
+    width: 54px;
+    height: 54px;
     place-items: center;
     border: 1px solid rgba(255, 255, 255, 0.12);
-    border-radius: 13px;
+    border-radius: 16px;
     background: rgba(255, 255, 255, 0.055);
     transition:
         transform 180ms ease,
@@ -1348,8 +1348,8 @@ html {
 }
 
 .ban-footer__socials img {
-    width: 19px;
-    height: 19px;
+    width: 27px;
+    height: 27px;
     object-fit: contain;
 }
 
