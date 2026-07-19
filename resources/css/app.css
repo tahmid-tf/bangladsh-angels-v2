@@ -39,7 +39,9 @@ html {
     border: 1px solid rgba(255, 255, 255, 0.76);
     border-radius: 22px;
     background: rgba(255, 255, 255, 0.9);
-    box-shadow: 0 18px 55px rgba(5, 46, 39, 0.13), 0 2px 8px rgba(5, 46, 39, 0.05);
+    box-shadow:
+        0 18px 55px rgba(5, 46, 39, 0.13),
+        0 2px 8px rgba(5, 46, 39, 0.05);
     -webkit-backdrop-filter: blur(18px) saturate(150%);
     backdrop-filter: blur(18px) saturate(150%);
     pointer-events: auto;
@@ -87,7 +89,9 @@ html {
     font-weight: 700;
     line-height: 1;
     white-space: nowrap;
-    transition: color 180ms ease, background-color 180ms ease;
+    transition:
+        color 180ms ease,
+        background-color 180ms ease;
 }
 
 .ban-site-nav__link:hover,
@@ -107,7 +111,7 @@ html {
     right: 0;
     left: 0;
     height: 12px;
-    content: '';
+    content: "";
 }
 
 .ban-site-nav__chevron {
@@ -133,7 +137,10 @@ html {
     opacity: 0;
     visibility: hidden;
     transform: translate(-50%, -6px);
-    transition: opacity 180ms ease, transform 180ms ease, visibility 180ms ease;
+    transition:
+        opacity 180ms ease,
+        transform 180ms ease,
+        visibility 180ms ease;
 }
 
 .ban-site-nav__dropdown:hover .ban-site-nav__dropdown-panel,
@@ -151,7 +158,9 @@ html {
     font-size: 0.875rem;
     font-weight: 700;
     text-align: left;
-    transition: background-color 180ms ease, color 180ms ease;
+    transition:
+        background-color 180ms ease,
+        color 180ms ease;
 }
 
 .ban-site-nav__dropdown-panel a:hover {
@@ -176,7 +185,10 @@ html {
     font-size: 0.875rem;
     font-weight: 800;
     white-space: nowrap;
-    transition: transform 180ms ease, box-shadow 180ms ease, background-color 180ms ease;
+    transition:
+        transform 180ms ease,
+        box-shadow 180ms ease,
+        background-color 180ms ease;
 }
 
 .ban-site-nav__login {
@@ -282,7 +294,7 @@ html {
     overflow-x: hidden;
     color: var(--ban-ink);
     background: var(--ban-ivory);
-    font-family: 'Manrope', 'Figtree', ui-sans-serif, system-ui, sans-serif;
+    font-family: "Manrope", "Figtree", ui-sans-serif, system-ui, sans-serif;
     -webkit-font-smoothing: antialiased;
 }
 
@@ -299,7 +311,11 @@ html {
     overflow: hidden;
     isolation: isolate;
     background:
-        radial-gradient(circle at 78% 20%, rgba(188, 241, 212, 0.68), transparent 24%),
+        radial-gradient(
+            circle at 78% 20%,
+            rgba(188, 241, 212, 0.68),
+            transparent 24%
+        ),
         linear-gradient(145deg, #fbfbf7 0%, #f1f5ed 54%, #e8f1e9 100%);
 }
 
@@ -311,8 +327,12 @@ html {
     width: min(760px, 68vw);
     aspect-ratio: 1;
     border-radius: 50%;
-    content: '';
-    background: radial-gradient(circle, rgba(21, 150, 111, 0.14), rgba(21, 150, 111, 0) 67%);
+    content: "";
+    background: radial-gradient(
+        circle,
+        rgba(21, 150, 111, 0.14),
+        rgba(21, 150, 111, 0) 67%
+    );
 }
 
 .ban-hero::after {
@@ -320,7 +340,7 @@ html {
     inset: 5% -5% auto 18%;
     z-index: -3;
     height: 88%;
-    content: '';
+    content: "";
     background-image: var(--ban-map-image);
     background-repeat: no-repeat;
     background-position: center;
@@ -332,7 +352,7 @@ html {
 .ban-hero__inner {
     display: grid;
     grid-template-columns: minmax(0, 0.92fr) minmax(440px, 1.08fr);
-    grid-template-areas: 'copy visual';
+    grid-template-areas: "copy visual";
     align-items: center;
     gap: clamp(48px, 6vw, 96px);
     width: min(1280px, 100%);
@@ -349,11 +369,13 @@ html {
     border: 1px solid rgba(255, 255, 255, 0.58);
     border-radius: 40px;
     overflow: hidden;
-    background:
+    /* background:
         radial-gradient(circle at 35% 22%, rgba(188, 241, 212, 0.34), transparent 28%),
-        linear-gradient(145deg, #0a4a3d, #06382f 70%, #052e27);
-    box-shadow: 0 38px 90px -36px rgba(4, 43, 37, 0.56), inset 0 1px 0 rgba(255, 255, 255, 0.16);
-    animation: ban-rise 750ms 140ms both cubic-bezier(.2,.7,.2,1);
+        linear-gradient(145deg, #0a4a3d, #06382f 70%, #052e27); */
+    box-shadow:
+        0 38px 90px -36px rgba(4, 43, 37, 0.56),
+        inset 0 1px 0 rgba(255, 255, 255, 0.16);
+    animation: ban-rise 750ms 140ms both cubic-bezier(0.2, 0.7, 0.2, 1);
 }
 
 .ban-hero__visual::before,
@@ -361,7 +383,7 @@ html {
     position: absolute;
     border: 1px solid rgba(188, 241, 212, 0.18);
     border-radius: 50%;
-    content: '';
+    content: "";
 }
 
 .ban-hero__visual::before {
@@ -390,7 +412,7 @@ html {
 .ban-hero__copy {
     grid-area: copy;
     max-width: 610px;
-    animation: ban-rise 700ms 50ms both cubic-bezier(.2,.7,.2,1);
+    animation: ban-rise 700ms 50ms both cubic-bezier(0.2, 0.7, 0.2, 1);
 }
 
 .ban-hero__copy h1 {
@@ -432,7 +454,10 @@ html {
     box-shadow: 0 16px 34px rgba(9, 47, 41, 0.24);
     font-size: 0.96rem;
     font-weight: 800;
-    transition: transform 180ms ease, background-color 180ms ease, box-shadow 180ms ease;
+    transition:
+        transform 180ms ease,
+        background-color 180ms ease,
+        box-shadow 180ms ease;
 }
 
 .ban-primary-cta:hover {
@@ -473,7 +498,9 @@ html {
     border-radius: 13px;
     font-size: 0.875rem;
     font-weight: 800;
-    transition: transform 180ms ease, background-color 180ms ease;
+    transition:
+        transform 180ms ease,
+        background-color 180ms ease;
 }
 
 .ban-intent__options a:first-child {
@@ -497,8 +524,16 @@ html {
     overflow: hidden;
     color: white;
     background:
-        radial-gradient(circle at 8% 100%, rgba(42, 187, 137, 0.2), transparent 30%),
-        radial-gradient(circle at 95% 0%, rgba(188, 241, 212, 0.12), transparent 28%),
+        radial-gradient(
+            circle at 8% 100%,
+            rgba(42, 187, 137, 0.2),
+            transparent 30%
+        ),
+        radial-gradient(
+            circle at 95% 0%,
+            rgba(188, 241, 212, 0.12),
+            transparent 28%
+        ),
         var(--ban-forest-deep);
 }
 
@@ -544,7 +579,10 @@ html {
     border-radius: 22px;
     background: rgba(255, 255, 255, 0.055);
     text-align: center;
-    transition: transform 220ms ease, background-color 220ms ease, border-color 220ms ease;
+    transition:
+        transform 220ms ease,
+        background-color 220ms ease,
+        border-color 220ms ease;
 }
 
 .ban-stat-card:hover {
@@ -643,7 +681,10 @@ html {
     overflow: hidden;
     background: rgba(255, 255, 255, 0.91);
     box-shadow: 0 24px 65px -42px rgba(9, 47, 41, 0.42);
-    transition: transform 240ms ease, box-shadow 240ms ease, border-color 240ms ease;
+    transition:
+        transform 240ms ease,
+        box-shadow 240ms ease,
+        border-color 240ms ease;
 }
 
 .what-we-do-card:hover {
@@ -685,7 +726,7 @@ html {
     object-fit: contain;
     object-position: center;
     background: #0a5c45;
-    transition: transform 450ms cubic-bezier(.2,.7,.2,1);
+    transition: transform 450ms cubic-bezier(0.2, 0.7, 0.2, 1);
 }
 
 .what-we-do-card:hover figure img {
@@ -737,7 +778,9 @@ html {
     font-size: 0.8rem;
     font-weight: 800;
     text-align: center;
-    transition: transform 180ms ease, background-color 180ms ease;
+    transition:
+        transform 180ms ease,
+        background-color 180ms ease;
 }
 
 .what-we-do-card__actions .what-we-do-card__action--primary {
@@ -770,7 +813,11 @@ html {
     border-radius: 34px;
     overflow: hidden;
     background:
-        radial-gradient(circle at 20% 100%, rgba(21, 150, 111, 0.28), transparent 36%),
+        radial-gradient(
+            circle at 20% 100%,
+            rgba(21, 150, 111, 0.28),
+            transparent 36%
+        ),
         var(--ban-forest-deep);
     box-shadow: 0 36px 80px -42px rgba(4, 43, 37, 0.62);
 }
@@ -813,7 +860,9 @@ html {
     box-shadow: 0 14px 28px rgba(0, 0, 0, 0.14);
     font-size: 0.9rem;
     font-weight: 800;
-    transition: transform 180ms ease, background-color 180ms ease;
+    transition:
+        transform 180ms ease,
+        background-color 180ms ease;
 }
 
 .ban-pitch__copy a:hover {
@@ -858,7 +907,10 @@ html {
     overflow: hidden;
     background: white;
     box-shadow: 0 28px 68px -46px rgba(9, 47, 41, 0.5);
-    transition: transform 220ms ease, border-color 220ms ease, box-shadow 220ms ease;
+    transition:
+        transform 220ms ease,
+        border-color 220ms ease,
+        box-shadow 220ms ease;
 }
 
 .ban-event-card:hover {
@@ -879,7 +931,7 @@ html {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform 450ms cubic-bezier(.2,.7,.2,1);
+    transition: transform 450ms cubic-bezier(0.2, 0.7, 0.2, 1);
 }
 
 .ban-event-card:hover .ban-event-card__image img {
@@ -958,7 +1010,9 @@ html {
     background: var(--ban-ink);
     font-size: 0.8rem;
     font-weight: 800;
-    transition: transform 180ms ease, background-color 180ms ease;
+    transition:
+        transform 180ms ease,
+        background-color 180ms ease;
 }
 
 .ban-event-card__register:hover {
@@ -1007,7 +1061,9 @@ html {
     box-shadow: 0 12px 28px rgba(9, 47, 41, 0.08);
     font-size: 0.87rem;
     font-weight: 800;
-    transition: transform 180ms ease, background-color 180ms ease;
+    transition:
+        transform 180ms ease,
+        background-color 180ms ease;
 }
 
 .ban-section-cta a:hover {
@@ -1017,7 +1073,11 @@ html {
 
 .ban-partners {
     background:
-        radial-gradient(circle at 50% 0%, rgba(188, 241, 212, 0.34), transparent 27%),
+        radial-gradient(
+            circle at 50% 0%,
+            rgba(188, 241, 212, 0.34),
+            transparent 27%
+        ),
         var(--ban-ivory);
 }
 
@@ -1074,7 +1134,10 @@ html {
     border: 1px solid rgba(9, 47, 41, 0.08);
     border-radius: 18px;
     background: white;
-    transition: transform 200ms ease, border-color 200ms ease, box-shadow 200ms ease;
+    transition:
+        transform 200ms ease,
+        border-color 200ms ease,
+        box-shadow 200ms ease;
 }
 
 .ban-partner-card:hover {
@@ -1104,8 +1167,16 @@ html {
     overflow: hidden;
     color: white;
     background:
-        radial-gradient(circle at 85% 20%, rgba(21, 150, 111, 0.2), transparent 29%),
-        radial-gradient(circle at 10% 110%, rgba(188, 241, 212, 0.09), transparent 30%),
+        radial-gradient(
+            circle at 85% 20%,
+            rgba(21, 150, 111, 0.2),
+            transparent 29%
+        ),
+        radial-gradient(
+            circle at 10% 110%,
+            rgba(188, 241, 212, 0.09),
+            transparent 30%
+        ),
         #031f1a;
 }
 
@@ -1117,7 +1188,7 @@ html {
     display: block;
     width: 100%;
     height: 5px;
-    content: '';
+    content: "";
     background: linear-gradient(90deg, #15966f, #bcf1d4 52%, #15966f);
 }
 
@@ -1129,7 +1200,10 @@ html {
 
 .ban-footer__top {
     display: grid;
-    grid-template-columns: minmax(280px, 1.4fr) minmax(170px, 0.55fr) minmax(220px, 0.7fr);
+    grid-template-columns: minmax(280px, 1.4fr) minmax(170px, 0.55fr) minmax(
+            220px,
+            0.7fr
+        );
     gap: clamp(36px, 7vw, 90px);
     align-items: start;
 }
@@ -1195,7 +1269,9 @@ html {
     border-radius: 15px;
     background: rgba(255, 255, 255, 0.08);
     cursor: pointer;
-    transition: transform 180ms ease, background-color 180ms ease;
+    transition:
+        transform 180ms ease,
+        background-color 180ms ease;
 }
 
 .ban-footer__to-top:hover {
@@ -1224,7 +1300,10 @@ html {
     border: 1px solid rgba(255, 255, 255, 0.12);
     border-radius: 13px;
     background: rgba(255, 255, 255, 0.055);
-    transition: transform 180ms ease, background-color 180ms ease, border-color 180ms ease;
+    transition:
+        transform 180ms ease,
+        background-color 180ms ease,
+        border-color 180ms ease;
 }
 
 .ban-footer__socials a:hover {
@@ -1447,8 +1526,8 @@ html {
     .ban-hero__inner {
         grid-template-columns: 1fr;
         grid-template-areas:
-            'copy'
-            'visual';
+            "copy"
+            "visual";
         gap: 52px;
     }
 
