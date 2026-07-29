@@ -4,7 +4,7 @@
 @push('head_meta')
     <x-seo-meta
         title="Startups | Bangladesh Angels Network Limited"
-        description="Explore BAN portfolio companies, member-only active deals, founder pitch submissions, tailored services, and how Bangladesh Angels backs early-stage startups."
+        description="Explore BAN member-only active deals, founder pitch submissions, tailored services, and how Bangladesh Angels backs early-stage startups."
         :canonical="route('startups')"
         :image="asset('icon.webp')"
     />
@@ -28,7 +28,7 @@
     <header class="mb-10 md:mb-12 text-center md:text-left">
         <h1 class="text-3xl md:text-4xl font-bold text-[#0f3d34]">Startups</h1>
         <p class="mt-3 text-gray-600 text-[0.95em] md:text-lg max-w-3xl mx-auto md:mx-0 leading-relaxed">
-            Discover member-only active deals, send your pitch, explore BAN services for founders, and browse companies we have backed.
+            Discover member-only active deals, send your pitch, and explore BAN services for founders.
         </p>
     </header>
 
@@ -193,29 +193,5 @@
         @endif
     </section>
 
-    {{-- Portfolio (public) --}}
-    <section id="portfolio-companies" class="scroll-mt-32 bg-white" aria-labelledby="portfolio-heading">
-        <div class="mb-10 md:mb-12 text-center">
-            <p class="inline-flex items-center justify-center gap-2 text-base md:text-lg font-semibold text-[#0f6a4b] mb-3">
-                <span aria-hidden="true">✽</span>
-                <span>What we do</span>
-            </p>
-            <h2 id="portfolio-heading" class="text-3xl md:text-4xl font-bold text-[#0f3d34] tracking-tight">Our Portfolio</h2>
-            <p class="mt-3 text-gray-600 max-w-2xl mx-auto leading-relaxed">Companies BAN has backed.</p>
-        </div>
-
-        @if ($portfolioDeals->isEmpty())
-            <div class="mx-auto max-w-lg rounded-2xl border border-green-100/80 bg-white px-8 py-10 text-center shadow-sm" role="status">
-                <p class="text-lg font-semibold text-[#0f3d34]">No portfolio companies yet</p>
-                <p class="mt-3 text-gray-600 leading-relaxed text-sm">We have not published portfolio listings here yet. Please check back later.</p>
-            </div>
-        @else
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-                @foreach ($portfolioDeals as $deal)
-                    <x-portfolio-showcase-card :deal="$deal" :hide-amount-seeking="true" />
-                @endforeach
-            </div>
-        @endif
-    </section>
 </div>
 @endsection

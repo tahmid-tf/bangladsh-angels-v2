@@ -63,10 +63,9 @@ class PrimaryController extends Controller
         return view('upgrade');
     }
 
-    // Startups hub: active deals (paywalled in the view), pitch, services, portfolio (public)
+    // Startups hub: active deals (paywalled in the view), pitch, and services
     public function viewStartups()
     {
-        $portfolioDeals = Deal::with('media')->where('type', 'portfolio')->get();
         $activeDeals = Deal::with('media')
             ->where('type', '!=', 'portfolio')
             ->where('status', 'active')
@@ -76,7 +75,17 @@ class PrimaryController extends Controller
 
         $startupServices = StartupService::query()->with('media')->ordered()->get();
 
-        return view('startups', compact('portfolioDeals', 'activeDeals', 'canViewActiveDeals', 'startupServices'));
+        return view('startups', compact('activeDeals', 'canViewActiveDeals', 'startupServices'));
+    }
+
+    // Portfolio page: public showcase of BAN-backed companies
+    public function viewPortfolio()
+    {
+        $portfolioDeals = Deal::with('media')
+            ->where('type', 'portfolio')
+            ->get();
+
+        return view('portfolio', compact('portfolioDeals'));
     }
 
     // Subscription Plans Page

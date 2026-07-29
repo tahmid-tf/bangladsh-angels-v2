@@ -47,9 +47,7 @@ Route::post('/startups/pitch', [FounderPitchController::class, 'store'])
     ->middleware('throttle:10,1')
     ->name('startups.pitch');
 
-Route::get('/portfolio', function () {
-    return redirect()->to(route('startups').'#portfolio-companies');
-})->name('portfolio');
+Route::get('/portfolio', [PrimaryController::class, 'viewPortfolio'])->name('portfolio');
 Route::get('/approval/pending', function () {
     return view('approval.pending');
 })->name('approval.pending');
