@@ -23,7 +23,7 @@
                         <span class="ban-site-nav__chevron" aria-hidden="true">▾</span>
                     </button>
                     <div class="ban-site-nav__dropdown-panel">
-                        <a href="{{ route('resources') }}#bwin">BWIN</a>
+                        {{-- <a href="{{ route('resources') }}#bwin">BWIN</a> --}}
                         <a href="{{ route('investor.signup') }}">BAN</a>
                     </div>
                 </li>
@@ -91,7 +91,7 @@
                 <li>
                     <span>Investors</span>
                     <div class="ban-site-nav__mobile-subnav">
-                        <a href="{{ route('resources') }}#bwin">BWIN</a>
+                        {{-- <a href="{{ route('resources') }}#bwin">BWIN</a> --}}
                         <a href="{{ route('investor.signup') }}">BAN</a>
                     </div>
                 </li>
