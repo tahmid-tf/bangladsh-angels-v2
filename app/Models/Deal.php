@@ -12,7 +12,9 @@ class Deal extends Model implements HasMedia
 {
     use HasFactory, InteractsWithMedia;
 
-    /** Routes beginning with /deals/{slug} — cannot collide with these path segments */
+    /**
+     * Routes beginning with /deals/{slug} cannot collide with these path segments.
+     */
     public static function reservedSlugSegments(): array
     {
         return ['invest', 'commit', 'review'];
@@ -26,7 +28,7 @@ class Deal extends Model implements HasMedia
     }
 
     /**
-     * Unique slug for deals table (append -2, -3 on collision; avoid reserved segments).
+     * Unique slug for the deals table (append -2, -3 on collision; avoid reserved segments).
      */
     public static function makeUniqueSlug(string $base, ?int $ignoreId = null): string
     {
@@ -46,6 +48,7 @@ class Deal extends Model implements HasMedia
 
         $original = $slug;
         $n = 2;
+
         while (static::query()
             ->where('slug', $slug)
             ->when($ignoreId !== null, fn ($q) => $q->where('id', '!=', $ignoreId))
@@ -91,7 +94,6 @@ class Deal extends Model implements HasMedia
     {
         $media = $this->getFirstMedia('company_logo');
 
-        // Return the URL if media exists, otherwise return a default placeholder
         return $media ? $media->getUrl() : asset('default_pfp.jpg');
     }
 
@@ -104,7 +106,6 @@ class Deal extends Model implements HasMedia
     {
         $media = $this->getFirstMedia('company_cover');
 
-        // Return the URL if media exists, otherwise return a default placeholder
         return $media ? $media->getUrl() : asset('default_pfp.jpg');
     }
 
@@ -115,62 +116,47 @@ class Deal extends Model implements HasMedia
 
     public function hasKeyMetric(): bool
     {
-        // Decode the JSON value from the key_metrics column
         $keyMetrics = json_decode($this->key_metrics, true);
 
-        // Check if key_metrics is not a valid array or empty
         if (! is_array($keyMetrics) || empty($keyMetrics)) {
-            return false; // Invalid key metrics
+            return false;
         }
 
-        // Check if the key_metrics contains only one item with null values
         foreach ($keyMetrics as $metric) {
             if (isset($metric['name'], $metric['value'])) {
                 if ($metric['name'] !== null || $metric['value'] !== null) {
-                    return true; // Valid key metric found
+                    return true;
                 }
             }
         }
 
-        return false; // No valid key metrics found
+        return false;
     }
 
     public function getKeyMetrics()
     {
-        // Decode the JSON key_metrics field
         $keyMetrics = json_decode($this->key_metrics, true);
 
-        // Ensure it returns an array, even if the field is empty or null
         return $keyMetrics ?? [];
     }
 
     public function getOtherDeals($limit = 5)
     {
-        if (auth()->user()) {
-            if (auth()->user()->isFree()) {
-                return self::where('id', '!=', $this->id)
-                    ->where('type', 'portfolio')
-                    ->orderBy('created_at', 'desc') // Order by the most recently created
-                    ->take($limit) // Limit the number of deals fetched
-                    ->get();
-            } else {
-                // Paid members: only active “live” deals—exclude portfolio companies from this list.
-                return self::where('id', '!=', $this->id)
-                    ->where('type', '!=', 'portfolio')
-                    ->where('status', 'active')
-                    ->orderBy('created_at', 'desc')
-                    ->take($limit)
-                    ->get();
-            }
+        $query = self::query()
+            ->with('media')
+            ->where('id', '!=', $this->id);
 
+        if ($this->type === 'portfolio') {
+            $query->where('type', 'portfolio');
         } else {
-            return self::where('id', '!=', $this->id)
-                ->where('type', 'portfolio')
-                ->orderBy('created_at', 'desc') // Order by the most recently created
-                ->take($limit) // Limit the number of deals fetched
-                ->get();
+            $query->where('type', '!=', 'portfolio')
+                ->where('status', 'active');
         }
 
+        return $query
+            ->orderByDesc('created_at')
+            ->take($limit)
+            ->get();
     }
 
     public function getExcerpt(): string
@@ -211,20 +197,16 @@ class Deal extends Model implements HasMedia
 
     public function updateLogo($file)
     {
-        // Remove the old logo if exists
         $this->clearMediaCollection('company_logo');
 
-        // Add new logo to media library
         $this->addMedia($file)
             ->toMediaCollection('company_logo');
     }
 
     public function updateCover($file)
     {
-        // Remove the old cover if exists
         $this->clearMediaCollection('company_cover');
 
-        // Add new cover to media library
         $this->addMedia($file)
             ->toMediaCollection('company_cover');
     }

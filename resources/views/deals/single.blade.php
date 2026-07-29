@@ -3,6 +3,7 @@
 @section('page_content')
 @php
     $memberDealLinks = auth()->check() && auth()->user() && !auth()->user()->isFree();
+    $relatedDealsHeading = $deal->type === 'portfolio' ? 'More Portfolios' : 'More Active Deals';
 @endphp
 <section class="bg-[#0a5554] py-12 rounded-3xl border-box w-[95%]">
     @if ($errors->any())
@@ -121,13 +122,9 @@
 
 
 @if (count($otherDeals)>0)
-    <!-- More Live Deals Section -->
+    <!-- Related Deals Section -->
     <section class="container mx-auto px-6 py-12">
-        @if (auth()->check() && auth()->user() && auth()->user()->isFree())
-            <h2 class="text-2xl md:text-3xl font-bold mb-8 text-[#0f3d34]">More Portfolios</h2>
-        @else
-            <h2 class="text-2xl md:text-3xl font-bold mb-8 text-[#0f3d34]">More Live Deals</h2>
-        @endif
+        <h2 class="text-2xl md:text-3xl font-bold mb-8 text-[#0f3d34]">{{ $relatedDealsHeading }}</h2>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
             @forelse ($otherDeals as $otherDeal)
                 <livewire:deal-card :deal="$otherDeal"></livewire:deal-card>

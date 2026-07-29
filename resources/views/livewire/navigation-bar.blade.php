@@ -18,7 +18,7 @@
                     <a href="{{ route('startups') }}" class="ban-site-nav__link" title="Startups — active deals, pitch, and founder services">Startups</a>
                 </li>
                 <li>
-                    <a href="{{ route('portfolio') }}" class="ban-site-nav__link" title="Portfolio — companies BAN has backed">Portfolio</a>
+                    <a href="{{ route('portfolio') }}" class="ban-site-nav__link" title="Portfolio — companies BAN has backed">Portfolios</a>
                 </li>
                 <li class="ban-site-nav__dropdown">
                     <button type="button" class="ban-site-nav__dropdown-button" aria-haspopup="true">
@@ -91,7 +91,7 @@
                 @endguest
                 <li><a href="{{ route('angel-academy') }}" title="BAN Angel Academy — programme for angel investors">Angel Academy</a></li>
                 <li><a href="{{ route('startups') }}" title="Startups — active deals, pitch, and founder services">Startups</a></li>
-                <li><a href="{{ route('portfolio') }}" title="Portfolio — companies BAN has backed">Portfolio</a></li>
+                <li><a href="{{ route('portfolio') }}" title="Portfolio — companies BAN has backed">Portfolios</a></li>
                 <li>
                     <span>Investors</span>
                     <div class="ban-site-nav__mobile-subnav">
