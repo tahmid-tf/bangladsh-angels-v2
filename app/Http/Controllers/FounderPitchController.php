@@ -6,16 +6,30 @@ use App\Models\FounderPitchSubmission;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 
 class FounderPitchController extends Controller
 {
     public function store(Request $request): RedirectResponse
     {
-        $validated = $request->validate([
+        $redirectUrl = $request->routeIs('home.pitch')
+            ? route('home').'#pitch-form'
+            : route('startups').'#send-pitch';
+
+        $validator = Validator::make($request->all(), [
             'contact_email' => ['required', 'email', 'max:255'],
             'one_line' => ['required', 'string', 'max:280'],
             'pitch_deck' => ['required', 'file', 'mimes:pdf', 'max:12288'],
         ]);
+
+        if ($validator->fails()) {
+            return redirect()
+                ->to($redirectUrl)
+                ->withErrors($validator)
+                ->withInput();
+        }
+
+        $validated = $validator->validated();
 
         DB::transaction(function () use ($request, $validated) {
             $submission = FounderPitchSubmission::create([
@@ -29,7 +43,7 @@ class FounderPitchController extends Controller
         });
 
         return redirect()
-            ->to(route('startups').'#send-pitch')
+            ->to($redirectUrl)
             ->with('pitch_submitted', true);
     }
 }

@@ -46,6 +46,9 @@ Route::get('/startups', [PrimaryController::class, 'viewStartups'])->name('start
 Route::post('/startups/pitch', [FounderPitchController::class, 'store'])
     ->middleware('throttle:10,1')
     ->name('startups.pitch');
+Route::post('/pitch', [FounderPitchController::class, 'store'])
+    ->middleware('throttle:10,1')
+    ->name('home.pitch');
 
 Route::get('/portfolio', [PrimaryController::class, 'viewPortfolio'])->name('portfolio');
 Route::get('/approval/pending', function () {

@@ -36,6 +36,9 @@
                 <li>
                     <a href="{{ route('team') }}" class="ban-site-nav__link" title="About Bangladesh Angels Network and our team">Our Team</a>
                 </li>
+                <li>
+                    <a href="{{ request()->routeIs('home') ? '#pitch-form' : route('home').'#pitch-form' }}" class="ban-site-nav__pitch" title="Send your startup pitch to Bangladesh Angels Network">Pitch</a>
+                </li>
             </ul>
         </nav>
 
@@ -101,6 +104,7 @@
                 </li>
                 <li><a href="{{ route('resources') }}" title="DeckVue — events, webinars, and programs">DeckVue</a></li>
                 <li><a href="{{ route('team') }}" title="About Bangladesh Angels Network and our team">Our Team</a></li>
+                <li><a href="{{ request()->routeIs('home') ? '#pitch-form' : route('home').'#pitch-form' }}" class="ban-mobile-pitch" title="Send your startup pitch to Bangladesh Angels Network">Pitch</a></li>
                 @auth
                     <li>
                         <form method="POST" action="{{ route('logout') }}">

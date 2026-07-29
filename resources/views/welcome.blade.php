@@ -243,6 +243,104 @@
     </div>
   </section>
 
+  {{-- Founder pitch form --}}
+  <section id="pitch-form" class="ban-content-section ban-pitch-form" aria-labelledby="pitch-form-heading">
+    <div class="ban-pitch-form__inner">
+      <div class="ban-pitch-form__intro">
+        <span class="ban-pitch-form__eyebrow">For founders</span>
+        <h2 id="pitch-form-heading">Send us your pitch</h2>
+        <p>
+          Share a one-line summary and your deck in PDF format. Our team will review submissions and follow up where there is a fit.
+        </p>
+
+        <div class="ban-pitch-form__notes" aria-label="What happens after you submit">
+          <div class="ban-pitch-form__note">
+            <span aria-hidden="true">01</span>
+            <p><strong>Submit your essentials</strong>A clear summary and a focused pitch deck are all we need.</p>
+          </div>
+          <div class="ban-pitch-form__note">
+            <span aria-hidden="true">02</span>
+            <p><strong>Reviewed by our team</strong>We assess every submission for fit with the BAN investor network.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="ban-pitch-form__card">
+        @if (session('pitch_submitted'))
+          <div class="ban-pitch-form__success" role="status">
+            <span aria-hidden="true">✓</span>
+            <p><strong>Pitch received</strong>Thank you—your pitch was submitted successfully.</p>
+          </div>
+        @endif
+
+        <form method="post" action="{{ route('home.pitch') }}" enctype="multipart/form-data">
+          @csrf
+
+          <div class="ban-pitch-form__field">
+            <label for="home_contact_email">Contact email</label>
+            <input
+              type="email"
+              name="contact_email"
+              id="home_contact_email"
+              required
+              value="{{ old('contact_email', auth()->user()->email ?? '') }}"
+              autocomplete="email"
+              placeholder="founder@startup.com"
+              @error('contact_email') aria-invalid="true" aria-describedby="home-contact-email-error" @enderror
+            >
+            @error('contact_email')
+              <p id="home-contact-email-error" class="ban-pitch-form__error">{{ $message }}</p>
+            @enderror
+          </div>
+
+          <div class="ban-pitch-form__field">
+            <label for="home_one_line">One-line description of your startup</label>
+            <input
+              type="text"
+              name="one_line"
+              id="home_one_line"
+              required
+              maxlength="280"
+              value="{{ old('one_line') }}"
+              placeholder="e.g. AI-powered logistics visibility for SMEs in South Asia"
+              @error('one_line') aria-invalid="true" aria-describedby="home-one-line-error" @enderror
+            >
+            @error('one_line')
+              <p id="home-one-line-error" class="ban-pitch-form__error">{{ $message }}</p>
+            @enderror
+          </div>
+
+          <div class="ban-pitch-form__field">
+            <label for="home_pitch_deck">Pitch deck <span>(PDF only, max 12&nbsp;MB)</span></label>
+            <div class="ban-pitch-form__file">
+              <span class="ban-pitch-form__file-mark" aria-hidden="true">PDF</span>
+              <div>
+                <strong>Choose your pitch deck</strong>
+                <span id="home_pitch_deck_name" aria-live="polite">A concise, investor-ready deck works best.</span>
+              </div>
+              <input
+                type="file"
+                name="pitch_deck"
+                id="home_pitch_deck"
+                required
+                accept="application/pdf,.pdf"
+                @error('pitch_deck') aria-invalid="true" aria-describedby="home-pitch-deck-error" @enderror
+              >
+            </div>
+            @error('pitch_deck')
+              <p id="home-pitch-deck-error" class="ban-pitch-form__error">{{ $message }}</p>
+            @enderror
+          </div>
+
+          <button type="submit" class="ban-pitch-form__submit">
+            <span>Submit pitch</span>
+            <span aria-hidden="true">→</span>
+          </button>
+        </form>
+      </div>
+    </div>
+  </section>
+
   <section id="ban-resources" class="ban-content-section ban-resources" aria-labelledby="ban-events-heading">
     <div class="ban-content-section__inner">
       <h3 id="ban-events-heading" class="ban-section-heading ban-section-heading--center">
@@ -389,6 +487,21 @@
           { threshold: 0.2, rootMargin: '0px 0px -24px 0px' }
         );
         io.observe(root);
+      })();
+
+      (function initPitchDeckInput() {
+        const input = document.getElementById('home_pitch_deck');
+        const fileName = document.getElementById('home_pitch_deck_name');
+        const fileBox = input?.closest('.ban-pitch-form__file');
+        if (!input || !fileName || !fileBox) return;
+
+        input.addEventListener('change', function() {
+          const selectedFile = input.files && input.files[0];
+          fileName.textContent = selectedFile
+            ? selectedFile.name
+            : 'A concise, investor-ready deck works best.';
+          fileBox.classList.toggle('is-selected', Boolean(selectedFile));
+        });
       })();
     });
     
