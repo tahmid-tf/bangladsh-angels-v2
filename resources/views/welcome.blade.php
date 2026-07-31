@@ -151,15 +151,16 @@
   </section>
 
   <section id="what-we-do" class="ban-content-section ban-what-we-do" aria-labelledby="what-we-do-heading">
-    <div class="ban-content-section__inner">
-      <h2 id="what-we-do-heading" class="ban-section-heading ban-section-heading--center">
-        <span class="ban-section-heading__ornament">
-          <span aria-hidden="true">✽</span>
-          <span>What We Do</span>
-        </span>
-      </h2>
+    <div class="ban-content-section__inner ban-what-we-do__layout">
+      <header class="ban-what-we-do__intro">
+        <span class="ban-what-we-do__eyebrow">How we create value</span>
+        <h2 id="what-we-do-heading">What We Do</h2>
+        <p>
+          Focused platforms that turn investor knowledge, founder access, and meaningful connections into real opportunities.
+        </p>
+      </header>
 
-      <div class="ban-what-we-do__grid">
+      <div class="ban-what-we-do__index">
         @forelse ($whatWeDoCards as $card)
           @php
             $learnMoreLabel = filled($card->learn_more_label) ? $card->learn_more_label : 'Learn more';
@@ -180,47 +181,39 @@
             $learnMoreExternal = $hasLearnMore && str_starts_with(strtolower(trim((string) $learnMoreLink)), 'http');
             $actionExternal = $hasAction && str_starts_with(strtolower(trim((string) $actionLink)), 'http');
           @endphp
-          <article class="what-we-do-card">
-            <h3 class="what-we-do-badge">
-              {{ $card->title }}
-            </h3>
+          <article class="ban-service-row">
+            <span class="ban-service-row__number" aria-hidden="true">{{ str_pad((string) $loop->iteration, 2, '0', STR_PAD_LEFT) }}</span>
 
-            <figure>
-              <img src="{{ $card->coverImageUrl() }}" alt="{{ $card->title }} — cover image" width="480" height="260" loading="lazy" decoding="async">
+            <figure class="ban-service-row__visual">
+              <img src="{{ $card->coverImageUrl() }}" alt="" width="180" height="120" loading="lazy" decoding="async">
             </figure>
 
-            <div class="what-we-do-card-body">
-              <div class="flex-1">
-                <p>{{ $card->description }}</p>
-              </div>
+            <div class="ban-service-row__content">
+              <h3>{{ $card->title }}</h3>
+              <p>{{ $card->description }}</p>
+
               @if ($hasLearnMore || $hasAction)
-                <div class="what-we-do-card__actions">
+                <div class="ban-service-row__actions">
                   @if ($hasLearnMore)
                     <a href="{{ $learnMoreLink }}"
-                       @if ($learnMoreExternal) target="_blank" rel="noopener noreferrer" @endif
-                       class="what-we-do-card__action--secondary">
-                      {{ $learnMoreLabel }}
+                       @if ($learnMoreExternal) target="_blank" rel="noopener noreferrer" @endif>
+                      <span>{{ $learnMoreLabel }}</span>
+                      <span aria-hidden="true">↗</span>
                     </a>
-                  @endif
-                  @if (!$hasLearnMore)
-                    <span class="what-we-do-card__spacer"></span>
                   @endif
                   @if ($hasAction)
                     <a href="{{ $actionLink }}"
-                       @if ($actionExternal) target="_blank" rel="noopener noreferrer" @endif
-                       class="what-we-do-card__action--primary">
-                      {{ $actionLabel }}
+                       @if ($actionExternal) target="_blank" rel="noopener noreferrer" @endif>
+                      <span>{{ $actionLabel }}</span>
+                      <span aria-hidden="true">↗</span>
                     </a>
-                  @endif
-                  @if (!$hasAction)
-                    <span class="what-we-do-card__spacer"></span>
                   @endif
                 </div>
               @endif
             </div>
           </article>
         @empty
-          <p class="col-span-full text-center text-gray-600 text-sm">What We Do content is not configured yet.</p>
+          <p class="ban-what-we-do__empty">What We Do content is not configured yet.</p>
         @endforelse
       </div>
     </div>
