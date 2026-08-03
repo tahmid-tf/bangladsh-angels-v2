@@ -162,7 +162,7 @@
                 @else
                     <div class="ban2-startups__grid">
                         @foreach ($featuredStartups as $startup)
-                            <x-ban-startup-card :startup="$startup" :href="route('startups')" />
+                            <x-ban-startup-card :startup="$startup" :show-link="false" />
                         @endforeach
                     </div>
                 @endif
