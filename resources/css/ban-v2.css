@@ -313,6 +313,15 @@
     line-height: 1.04;
 }
 
+#ban2-programs-heading,
+#ban2-startups-heading,
+#ban2-portfolio-heading,
+#ban2-events-heading,
+#ban2-partners-heading,
+#ban2-faq-heading {
+    font-size: clamp(2.25rem, 4.6vw, 3.35rem);
+}
+
 .ban2-section-heading > p:not(.ban2-kicker),
 .ban2-section-heading > div > p:not(.ban2-kicker),
 .ban-page-heading > p:not(.ban-page-kicker) {
@@ -352,6 +361,7 @@
 
 .ban2-functions .ban2-section-heading h2 {
     color: #fff;
+    font-size: clamp(2.25rem, 4.6vw, 3.35rem);
 }
 
 .ban2-functions .ban2-section-heading > p {
