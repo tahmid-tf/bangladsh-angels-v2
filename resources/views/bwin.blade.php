@@ -12,20 +12,33 @@
 
 @section('page_content')
 <main class="ban-subpage ban-bwin-page">
-    <section class="ban-program-hero ban-program-hero--bwin" aria-labelledby="bwin-heading">
-        <div class="ban-page-shell ban-program-hero__grid">
-            <div>
-                <a href="{{ route('home').'#programs' }}" class="ban-program-back"><span aria-hidden="true">←</span> Our programs</a>
-                <img src="{{ asset('bwin.png') }}" class="ban-bwin-logo" alt="BWIN — Bangladesh Women Investors Network" width="570" height="181">
+    <section class="ban2-hero ban2-bwin-hero" aria-labelledby="bwin-heading">
+        <div class="ban2-shell ban2-hero__grid">
+            <div class="ban2-hero__copy">
+                <a href="{{ route('home').'#programs' }}" class="ban-program-back ban2-bwin-hero__back"><span aria-hidden="true">&larr;</span> Our programs</a>
+                <img src="{{ asset('bwin.png') }}" class="ban2-bwin-hero__logo" alt="BWIN - Bangladesh Women Investors Network" width="570" height="181">
                 <h1 id="bwin-heading">More women shaping where capital goes.</h1>
-                <p>BWIN is Bangladesh's first women-led angel-investing network and a sister chapter of BAN, built to grow a confident community of women investors while backing high-potential early-stage founders.</p>
-                <div class="ban-page-actions">
-                    <a href="mailto:hello@bdangels.co?subject=BWIN%20membership%20enquiry" class="ban-page-button ban-page-button--bwin">Join the BWIN community <span aria-hidden="true">→</span></a>
-                    <a href="#bwin-model" class="ban-page-button ban-page-button--ghost-light">How BWIN works</a>
+                <p class="ban2-hero__lede">BWIN is Bangladesh's first women-led angel-investing network and a sister chapter of BAN, built to grow a confident community of women investors while backing high-potential early-stage founders.</p>
+                <div class="ban2-actions">
+                    <a href="mailto:hello@bdangels.co?subject=BWIN%20membership%20enquiry" class="ban2-button ban2-button--primary">Join the BWIN community</a>
+                    <a href="#bwin-model" class="ban2-button ban2-button--secondary">How BWIN works</a>
+                </div>
+                <div class="ban2-hero__proof ban2-bwin-hero__proof" aria-label="The BWIN approach">
+                    <div><strong>Learn</strong><span>Build investor confidence</span></div>
+                    <div><strong>Connect</strong><span>Join a trusted community</span></div>
+                    <div><strong>Invest</strong><span>Access curated opportunities</span></div>
                 </div>
             </div>
-            <div class="ban-bwin-photo">
-                <img src="{{ asset('bwin2.png') }}" alt="Members and guests at a Bangladesh Women Investors Network event" width="330" height="379" loading="eager">
+
+            <div class="ban2-hero__visual ban2-bwin-hero__visual" aria-label="Bangladesh Women Investors Network community">
+                <div class="ban2-hero__visual-frame">
+                    <div class="ban2-hero__visual-topline" aria-hidden="true">
+                        <span>The BWIN community</span>
+                        <span>A BAN initiative</span>
+                    </div>
+                    <img src="{{ asset('bwin2.png') }}" alt="Members and guests at a Bangladesh Women Investors Network event" width="330" height="379" loading="eager">
+                </div>
+                <p><span aria-hidden="true"></span> Women shaping the future of capital</p>
             </div>
         </div>
     </section>

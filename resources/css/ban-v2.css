@@ -1572,6 +1572,85 @@
 }
 
 /* BWIN */
+.ban2-bwin-hero {
+    background:
+        radial-gradient(circle at 92% 14%, rgba(255, 207, 229, 0.5), transparent 25%),
+        linear-gradient(180deg, #fff 0%, #fcf8fa 100%);
+}
+
+.ban2-bwin-hero::after {
+    border-color: rgba(155, 43, 98, 0.14);
+}
+
+.ban2-bwin-hero__back {
+    margin-bottom: 30px;
+    color: #7c2851;
+}
+
+.ban2-bwin-hero__logo {
+    display: block;
+    width: min(310px, 76%);
+    height: auto;
+    margin-bottom: 29px;
+}
+
+.ban2-bwin-hero .ban2-hero__copy h1 {
+    max-width: 650px;
+    font-size: clamp(3.25rem, 5.4vw, 5rem);
+    letter-spacing: -0.06em;
+    line-height: 0.98;
+}
+
+.ban2-bwin-hero .ban2-hero__lede {
+    max-width: 650px;
+}
+
+.ban2-bwin-hero .ban2-button--primary {
+    background: #531534;
+}
+
+.ban2-bwin-hero .ban2-button--primary:hover {
+    background: var(--ban2-pink);
+}
+
+.ban2-bwin-hero .ban2-button--secondary:hover {
+    border-color: var(--ban2-pink);
+}
+
+.ban2-bwin-hero__proof strong {
+    color: #531534;
+    font-size: clamp(1.22rem, 2vw, 1.55rem);
+}
+
+.ban2-bwin-hero__visual .ban2-hero__visual-frame {
+    background:
+        linear-gradient(rgba(255, 255, 255, 0.58), rgba(255, 255, 255, 0.12)),
+        radial-gradient(circle at 72% 18%, rgba(255, 255, 255, 0.9), transparent 25%),
+        #f1dce6;
+    box-shadow:
+        0 34px 80px rgba(83, 21, 52, 0.16),
+        0 8px 24px rgba(83, 21, 52, 0.08);
+}
+
+.ban2-bwin-hero__visual .ban2-hero__visual-frame::before {
+    background-image: radial-gradient(rgba(155, 43, 98, 0.14) 1px, transparent 1px);
+}
+
+.ban2-bwin-hero__visual .ban2-hero__visual-topline {
+    border-bottom-color: rgba(83, 21, 52, 0.14);
+    color: #79435d;
+}
+
+.ban2-bwin-hero__visual .ban2-hero__visual-frame > img {
+    width: min(390px, 82%);
+    filter: drop-shadow(0 22px 30px rgba(83, 21, 52, 0.22));
+}
+
+.ban2-bwin-hero__visual > p span {
+    background: var(--ban2-pink);
+    box-shadow: 0 0 0 4px rgba(155, 43, 98, 0.14);
+}
+
 .ban-program-hero--bwin {
     color: #fff;
     background:
@@ -1967,6 +2046,11 @@
     .ban-program-hero h1,
     .ban-faq-hero h1 {
         font-size: clamp(2.7rem, 13vw, 4.15rem);
+    }
+
+    .ban2-bwin-hero .ban2-hero__copy h1 {
+        font-size: clamp(2.45rem, 11.5vw, 3.35rem);
+        line-height: 1;
     }
 
     .ban2-hero__proof {
