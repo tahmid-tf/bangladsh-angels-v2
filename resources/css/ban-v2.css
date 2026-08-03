@@ -2672,6 +2672,689 @@
     justify-self: end;
 }
 
+/* Team page */
+.ban-team-page {
+    background: #fff;
+}
+
+.ban-team-hero {
+    position: relative;
+    overflow: hidden;
+    padding: clamp(4.5rem, 7vw, 7.25rem) 0 clamp(5.5rem, 9vw, 8.5rem);
+    background:
+        radial-gradient(circle at 86% 12%, rgba(201, 243, 220, 0.72), transparent 24%),
+        linear-gradient(145deg, #fbfaf6 0%, #f3f0e6 100%);
+}
+
+.ban-team-hero::before {
+    position: absolute;
+    top: 7%;
+    right: -11rem;
+    width: 32rem;
+    height: 32rem;
+    border: 1px solid rgba(15, 115, 89, 0.12);
+    border-radius: 50%;
+    content: "";
+}
+
+.ban-team-back {
+    position: relative;
+    z-index: 2;
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    margin-bottom: clamp(2.75rem, 5vw, 4.75rem);
+    color: #557169;
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.02em;
+}
+
+.ban-team-back:hover {
+    color: var(--ban2-green);
+}
+
+.ban-team-hero__grid {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: minmax(0, 0.92fr) minmax(460px, 1.08fr);
+    align-items: center;
+    gap: clamp(56px, 8vw, 112px);
+}
+
+.ban-team-hero__copy h1 {
+    max-width: 650px;
+    margin: 0;
+    color: var(--ban2-ink);
+    font-size: clamp(3.6rem, 6.5vw, 6.45rem);
+    font-weight: 600;
+    letter-spacing: -0.072em;
+    line-height: 0.94;
+}
+
+.ban-team-hero__copy > p:not(.ban-page-kicker) {
+    max-width: 610px;
+    margin: 28px 0 0;
+    color: #4f6d65;
+    font-size: clamp(1rem, 1.45vw, 1.13rem);
+    font-weight: 500;
+    line-height: 1.76;
+}
+
+.ban-team-hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 14px 24px;
+    margin-top: 32px;
+}
+
+.ban-team-hero__text-link,
+.ban-team-cta__secondary {
+    display: inline-flex;
+    min-height: 48px;
+    align-items: center;
+    gap: 9px;
+    color: var(--ban2-ink);
+    font-size: 0.8rem;
+    font-weight: 800;
+}
+
+.ban-team-hero__text-link span,
+.ban-team-cta__secondary span {
+    transition: transform 180ms ease;
+}
+
+.ban-team-hero__text-link:hover span,
+.ban-team-cta__secondary:hover span {
+    transform: translateX(3px);
+}
+
+.ban-team-hero__facts {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    margin: clamp(3.25rem, 6vw, 5rem) 0 0;
+    border-top: 1px solid var(--ban2-line);
+}
+
+.ban-team-hero__facts div {
+    padding: 20px 18px 0 0;
+}
+
+.ban-team-hero__facts div + div {
+    padding-left: 18px;
+    border-left: 1px solid var(--ban2-line);
+}
+
+.ban-team-hero__facts dt {
+    color: #718a83;
+    font-size: 0.6rem;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+
+.ban-team-hero__facts dd {
+    margin: 8px 0 0;
+    color: var(--ban2-ink);
+    font-size: clamp(1rem, 1.7vw, 1.35rem);
+    font-weight: 750;
+    letter-spacing: -0.035em;
+    line-height: 1.25;
+}
+
+.ban-team-hero__visual {
+    position: relative;
+    min-height: 620px;
+}
+
+.ban-team-hero__primary-image,
+.ban-team-hero__secondary-image {
+    position: absolute;
+    margin: 0;
+}
+
+.ban-team-hero__primary-image {
+    inset: 0 74px 96px 0;
+    overflow: hidden;
+    border: 1px solid rgba(9, 47, 41, 0.1);
+    border-radius: 28px;
+    background: #dcefe5;
+    box-shadow: 0 30px 72px rgba(9, 47, 41, 0.14);
+}
+
+.ban-team-hero__primary-image > img,
+.ban-team-hero__secondary-image > img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.ban-team-hero__primary-image > img {
+    object-position: 46% center;
+}
+
+.ban-team-hero__primary-image figcaption {
+    position: absolute;
+    bottom: 22px;
+    left: 22px;
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    margin: 0;
+    padding: 11px 14px;
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    border-radius: 999px;
+    color: var(--ban2-ink);
+    background: rgba(255, 255, 255, 0.9);
+    box-shadow: 0 10px 30px rgba(9, 47, 41, 0.12);
+    font-size: 0.67rem;
+    font-weight: 800;
+    backdrop-filter: blur(12px);
+}
+
+.ban-team-hero__primary-image figcaption span {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--ban2-bright);
+    box-shadow: 0 0 0 4px rgba(24, 168, 120, 0.14);
+}
+
+.ban-team-hero__secondary-image {
+    right: 0;
+    bottom: 0;
+    width: 50%;
+    overflow: hidden;
+    padding: 9px;
+    border-radius: 20px;
+    background: #fff;
+    box-shadow: 0 22px 52px rgba(9, 47, 41, 0.2);
+}
+
+.ban-team-hero__secondary-image > img {
+    aspect-ratio: 1.42;
+    border-radius: 13px;
+}
+
+.ban-team-hero__secondary-image figcaption {
+    margin: 12px 5px 5px;
+    color: #5a746d;
+    font-size: 0.64rem;
+    font-weight: 700;
+    line-height: 1.45;
+}
+
+.ban-team-story {
+    padding: clamp(5rem, 8vw, 8rem) 0;
+    background: #fff;
+}
+
+.ban-team-story__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 0.88fr) minmax(360px, 0.72fr);
+    align-items: start;
+    gap: clamp(58px, 11vw, 160px);
+}
+
+.ban-team-story h2,
+.ban-team-roster__heading h2,
+.ban-team-cta h2 {
+    margin: 0;
+    color: var(--ban2-ink);
+    font-size: clamp(2.25rem, 4.6vw, 3.35rem);
+    font-weight: 600;
+    letter-spacing: -0.055em;
+    line-height: 1.04;
+}
+
+.ban-team-story__copy {
+    padding-top: 5px;
+}
+
+.ban-team-story__copy p {
+    margin: 0;
+    color: #536f67;
+    font-size: 0.95rem;
+    line-height: 1.82;
+}
+
+.ban-team-story__copy p + p {
+    margin-top: 20px;
+}
+
+.ban-team-roster {
+    padding: clamp(5rem, 8vw, 8rem) 0;
+}
+
+.ban-team-roster--management {
+    background: var(--ban2-cream);
+}
+
+.ban-team-roster--board {
+    color: #fff;
+    background:
+        radial-gradient(circle at 88% 12%, rgba(201, 243, 220, 0.1), transparent 24%),
+        var(--ban2-deep);
+}
+
+.ban-team-roster__heading {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(300px, 0.7fr);
+    align-items: end;
+    gap: clamp(42px, 9vw, 126px);
+    margin-bottom: clamp(3rem, 6vw, 5rem);
+}
+
+.ban-team-roster__heading > p {
+    max-width: 490px;
+    margin: 0;
+    color: #5a746d;
+    font-size: 0.92rem;
+    line-height: 1.75;
+}
+
+.ban-team-roster--board .ban-page-kicker {
+    color: var(--ban2-mint);
+}
+
+.ban-team-roster--board .ban-team-roster__heading h2 {
+    color: #fff;
+}
+
+.ban-team-roster--board .ban-team-roster__heading > p {
+    color: rgba(255, 255, 255, 0.66);
+}
+
+.ban-team-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: clamp(18px, 2.5vw, 30px);
+}
+
+.ban-team-card {
+    min-width: 0;
+    overflow: hidden;
+    border: 1px solid rgba(9, 47, 41, 0.11);
+    border-radius: 22px;
+    background: rgba(255, 255, 255, 0.88);
+    box-shadow: 0 18px 50px rgba(9, 47, 41, 0.06);
+    transition: transform 220ms ease, box-shadow 220ms ease;
+}
+
+.ban-team-card:hover {
+    box-shadow: 0 28px 64px rgba(9, 47, 41, 0.13);
+    transform: translateY(-6px);
+}
+
+.ban-team-card__photo {
+    display: grid;
+    aspect-ratio: 1 / 1.04;
+    place-items: center;
+    overflow: hidden;
+    margin: 9px 9px 0;
+    border-radius: 15px;
+    color: var(--ban2-ink);
+    background:
+        radial-gradient(circle at 70% 20%, rgba(255, 255, 255, 0.9), transparent 28%),
+        #dcefe5;
+    font-size: clamp(2.25rem, 5vw, 4rem);
+    font-weight: 700;
+    letter-spacing: -0.06em;
+}
+
+.ban-team-card__photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    transition: transform 420ms ease;
+}
+
+.ban-team-card:hover .ban-team-card__photo img {
+    transform: scale(1.025);
+}
+
+.ban-team-card__body {
+    display: flex;
+    min-height: 176px;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 24px;
+}
+
+.ban-team-card__body > div {
+    min-width: 0;
+}
+
+.ban-team-card__body p {
+    margin: 0 0 10px;
+    color: var(--ban2-green);
+    font-size: 0.59rem;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+
+.ban-team-card__body h3 {
+    margin: 0 0 7px;
+    color: var(--ban2-ink);
+    font-size: clamp(1.18rem, 2vw, 1.55rem);
+    font-weight: 700;
+    letter-spacing: -0.04em;
+    line-height: 1.15;
+}
+
+.ban-team-card__body > div > span {
+    display: block;
+    color: #607871;
+    font-size: 0.75rem;
+    line-height: 1.5;
+}
+
+.ban-team-card__body > a {
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    gap: 5px;
+    padding-bottom: 2px;
+    border-bottom: 1px solid rgba(15, 115, 89, 0.3);
+    color: var(--ban2-green);
+    font-size: 0.68rem;
+    font-weight: 800;
+}
+
+.ban-team-roster--board .ban-team-card {
+    border-color: rgba(255, 255, 255, 0.14);
+    background: rgba(255, 255, 255, 0.07);
+    box-shadow: none;
+}
+
+.ban-team-roster--board .ban-team-card:hover {
+    border-color: rgba(201, 243, 220, 0.28);
+    box-shadow: 0 28px 60px rgba(0, 0, 0, 0.18);
+}
+
+.ban-team-roster--board .ban-team-card__photo {
+    color: var(--ban2-mint);
+    background: rgba(201, 243, 220, 0.11);
+}
+
+.ban-team-roster--board .ban-team-card__body p,
+.ban-team-roster--board .ban-team-card__body > a {
+    color: var(--ban2-mint);
+}
+
+.ban-team-roster--board .ban-team-card__body h3 {
+    color: #fff;
+}
+
+.ban-team-roster--board .ban-team-card__body > div > span {
+    color: rgba(255, 255, 255, 0.62);
+}
+
+.ban-team-roster--board .ban-team-card__body > a {
+    border-bottom-color: rgba(201, 243, 220, 0.28);
+}
+
+.ban-team-empty {
+    padding: 40px;
+    border: 1px solid var(--ban2-line);
+    border-radius: 18px;
+    color: #607871;
+    background: rgba(255, 255, 255, 0.54);
+    text-align: center;
+}
+
+.ban-team-roster--board .ban-team-empty {
+    border-color: rgba(255, 255, 255, 0.14);
+    color: rgba(255, 255, 255, 0.66);
+    background: rgba(255, 255, 255, 0.06);
+}
+
+.ban-team-cta {
+    padding: clamp(5rem, 8vw, 8rem) 0;
+    background: #dff4eb;
+}
+
+.ban-team-cta__inner {
+    display: grid;
+    grid-template-columns: minmax(0, 0.95fr) minmax(340px, 0.72fr);
+    align-items: center;
+    gap: clamp(50px, 10vw, 150px);
+}
+
+.ban-team-cta__inner > div:last-child > p {
+    margin: 0;
+    color: #526f67;
+    font-size: 0.92rem;
+    line-height: 1.75;
+}
+
+/* Compact, people-first team layout */
+.ban-team-hero {
+    padding: clamp(2.75rem, 4.5vw, 4.25rem) 0 clamp(3.75rem, 6vw, 5.5rem);
+    color: #fff;
+    background:
+        radial-gradient(circle at 88% 8%, rgba(201, 243, 220, 0.13), transparent 25%),
+        var(--ban2-deep);
+}
+
+.ban-team-hero::before {
+    top: -18rem;
+    right: -8rem;
+    border-color: rgba(201, 243, 220, 0.12);
+}
+
+.ban-team-back {
+    margin-bottom: clamp(2rem, 3vw, 3rem);
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.ban-team-back:hover {
+    color: var(--ban2-mint);
+}
+
+.ban-team-hero__grid {
+    grid-template-columns: minmax(0, 1.08fr) minmax(360px, 0.72fr);
+    align-items: end;
+    gap: clamp(54px, 10vw, 150px);
+}
+
+.ban-team-hero .ban-page-kicker {
+    color: var(--ban2-mint);
+}
+
+.ban-team-hero__copy h1 {
+    max-width: 720px;
+    color: #fff;
+    font-size: clamp(3.1rem, 5.7vw, 5.65rem);
+    line-height: 0.96;
+}
+
+.ban-team-hero__summary {
+    padding-left: clamp(24px, 3vw, 40px);
+    border-left: 1px solid rgba(255, 255, 255, 0.16);
+}
+
+.ban-team-hero__summary > p {
+    max-width: 520px;
+    margin: 0;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.91rem;
+    line-height: 1.75;
+}
+
+.ban-team-hero__nav {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 8px;
+    margin-top: clamp(2rem, 3.5vw, 3rem);
+}
+
+.ban-team-hero__nav a {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 13px;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: 999px;
+    color: #fff;
+    font-size: 0.68rem;
+    font-weight: 800;
+    transition: border-color 180ms ease, background-color 180ms ease;
+}
+
+.ban-team-hero__nav a:hover {
+    border-color: rgba(201, 243, 220, 0.56);
+    background: rgba(201, 243, 220, 0.08);
+}
+
+.ban-team-roster {
+    padding: clamp(4.25rem, 7vw, 6.75rem) 0;
+}
+
+.ban-team-roster__heading {
+    margin-bottom: clamp(2.5rem, 4vw, 3.75rem);
+}
+
+.ban-team-card {
+    display: grid;
+    min-height: 164px;
+    grid-template-columns: 104px minmax(0, 1fr);
+    align-items: stretch;
+    padding: 12px;
+    border-radius: 18px;
+}
+
+.ban-team-card__photo {
+    width: 104px;
+    height: 140px;
+    aspect-ratio: auto;
+    align-self: center;
+    margin: 0;
+    border-radius: 13px;
+    font-size: 1.7rem;
+}
+
+.ban-team-card__body {
+    min-height: 0;
+    align-items: flex-start;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0;
+    padding: 8px 6px 8px 17px;
+}
+
+.ban-team-card__body p {
+    margin-bottom: 7px;
+    font-size: 0.52rem;
+}
+
+.ban-team-card__body h3 {
+    margin-bottom: 5px;
+    font-size: clamp(1rem, 1.45vw, 1.23rem);
+}
+
+.ban-team-card__body > div > span {
+    font-size: 0.69rem;
+    line-height: 1.42;
+}
+
+.ban-team-card__body > a {
+    margin-top: 12px;
+    font-size: 0.62rem;
+}
+
+.ban-team-about {
+    padding: clamp(4.75rem, 8vw, 7.5rem) 0;
+    background: #fff;
+}
+
+.ban-team-about__grid {
+    display: grid;
+    grid-template-columns: minmax(360px, 0.82fr) minmax(0, 1fr);
+    align-items: center;
+    gap: clamp(54px, 9vw, 126px);
+}
+
+.ban-team-about__image {
+    position: relative;
+    height: clamp(300px, 31vw, 410px);
+    overflow: hidden;
+    margin: 0;
+    border: 1px solid rgba(9, 47, 41, 0.1);
+    border-radius: 24px;
+    background: #dcefe5;
+    box-shadow: 0 24px 60px rgba(9, 47, 41, 0.1);
+}
+
+.ban-team-about__image::after {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, transparent 58%, rgba(5, 37, 31, 0.42));
+    content: "";
+    pointer-events: none;
+}
+
+.ban-team-about__image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.ban-team-about__image figcaption {
+    position: absolute;
+    bottom: 18px;
+    left: 18px;
+    z-index: 1;
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    padding: 10px 13px;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    border-radius: 999px;
+    color: var(--ban2-ink);
+    background: rgba(255, 255, 255, 0.9);
+    font-size: 0.64rem;
+    font-weight: 800;
+    backdrop-filter: blur(10px);
+}
+
+.ban-team-about__image figcaption span {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--ban2-bright);
+}
+
+.ban-team-about__copy h2 {
+    max-width: 650px;
+    margin: 0 0 27px;
+    color: var(--ban2-ink);
+    font-size: clamp(2.25rem, 4.6vw, 3.35rem);
+    font-weight: 600;
+    letter-spacing: -0.055em;
+    line-height: 1.04;
+}
+
+.ban-team-about__copy > p:not(.ban-page-kicker) {
+    max-width: 650px;
+    margin: 0;
+    color: #536f67;
+    font-size: 0.9rem;
+    line-height: 1.78;
+}
+
+.ban-team-about__copy > p:not(.ban-page-kicker) + p {
+    margin-top: 17px;
+}
+
 /* Focus and motion */
 .ban-home-v2 a:focus-visible,
 .ban-home-v2 button:focus-visible,
@@ -2686,7 +3369,8 @@
 @media (max-width: 1050px) {
     .ban2-hero__grid,
     .ban-program-hero__grid,
-    .ban-deal-hero__grid {
+    .ban-deal-hero__grid,
+    .ban-team-hero__grid {
         grid-template-columns: 1fr;
     }
 
@@ -2696,6 +3380,31 @@
 
     .ban2-hero__visual {
         width: min(720px, 100%);
+        margin-inline: auto;
+    }
+
+    .ban-team-hero__copy {
+        max-width: 820px;
+    }
+
+    .ban-team-hero__grid {
+        gap: 32px;
+    }
+
+    .ban-team-hero__summary {
+        padding-top: 28px;
+        padding-left: 0;
+        border-top: 1px solid rgba(255, 255, 255, 0.16);
+        border-left: 0;
+    }
+
+    .ban-team-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .ban-team-hero__visual {
+        width: min(780px, 100%);
+        min-height: 650px;
         margin-inline: auto;
     }
 
@@ -2772,6 +3481,39 @@
         grid-template-columns: 1fr;
     }
 
+    .ban-team-story__grid,
+    .ban-team-roster__heading,
+    .ban-team-cta__inner,
+    .ban-team-about__grid {
+        grid-template-columns: 1fr;
+    }
+
+    .ban-team-roster__heading,
+    .ban-team-cta__inner {
+        gap: 28px;
+    }
+
+    .ban-team-story__grid {
+        gap: 34px;
+    }
+
+    .ban-team-about__grid {
+        gap: 40px;
+    }
+
+    .ban-team-about__image {
+        width: min(620px, 100%);
+        height: 340px;
+    }
+
+    .ban-team-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .ban-team-hero__visual {
+        min-height: 560px;
+    }
+
     .ban2-faq .ban2-section-heading,
     .ban-faq-content aside {
         position: static;
@@ -2833,6 +3575,130 @@
     .ban2-bwin-hero .ban2-hero__copy h1 {
         font-size: clamp(2.45rem, 11.5vw, 3.35rem);
         line-height: 1;
+    }
+
+    .ban-team-hero {
+        padding-top: 3.25rem;
+        padding-bottom: 4.5rem;
+    }
+
+    .ban-team-back {
+        margin-bottom: 2.5rem;
+    }
+
+    .ban-team-hero__copy h1 {
+        font-size: clamp(2.8rem, 13.5vw, 4.2rem);
+        line-height: 0.96;
+    }
+
+    .ban-team-hero__nav {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .ban-team-hero__nav a {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .ban-team-hero__actions {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .ban-team-hero__actions .ban-page-button,
+    .ban-team-hero__text-link {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .ban-team-hero__facts {
+        grid-template-columns: 1fr;
+    }
+
+    .ban-team-hero__facts div,
+    .ban-team-hero__facts div + div {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: 18px;
+        padding: 15px 0;
+        border-top: 1px solid var(--ban2-line);
+        border-left: 0;
+    }
+
+    .ban-team-hero__facts div:first-child {
+        border-top: 0;
+    }
+
+    .ban-team-hero__facts dd {
+        text-align: right;
+    }
+
+    .ban-team-hero__visual {
+        min-height: 430px;
+    }
+
+    .ban-team-hero__primary-image {
+        inset: 0 28px 72px 0;
+        border-radius: 20px;
+    }
+
+    .ban-team-hero__primary-image figcaption {
+        bottom: 14px;
+        left: 14px;
+        max-width: calc(100% - 28px);
+    }
+
+    .ban-team-hero__secondary-image {
+        width: 58%;
+        padding: 6px;
+        border-radius: 14px;
+    }
+
+    .ban-team-hero__secondary-image > img {
+        border-radius: 9px;
+    }
+
+    .ban-team-hero__secondary-image figcaption {
+        display: none;
+    }
+
+    .ban-team-story,
+    .ban-team-roster,
+    .ban-team-cta,
+    .ban-team-about {
+        padding: 4.25rem 0;
+    }
+
+    .ban-team-about__image {
+        height: 250px;
+        border-radius: 18px;
+    }
+
+    .ban-team-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .ban-team-card__body {
+        min-height: 0;
+        padding: 7px 5px 7px 14px;
+    }
+
+    .ban-team-card {
+        min-height: 148px;
+        grid-template-columns: 92px minmax(0, 1fr);
+        padding: 10px;
+    }
+
+    .ban-team-card__photo {
+        width: 92px;
+        height: 124px;
+    }
+
+    .ban-team-cta__secondary {
+        width: 100%;
+        justify-content: center;
     }
 
     .ban-deal-hero {

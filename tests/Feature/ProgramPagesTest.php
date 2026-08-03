@@ -63,6 +63,21 @@ class ProgramPagesTest extends TestCase
             ->assertSee('action="'.route('member.apply').'"', false);
     }
 
+    public function test_team_page_uses_the_editorial_leadership_layout(): void
+    {
+        $this->get(route('team'))
+            ->assertOk()
+            ->assertSee('Meet the people behind BAN.')
+            ->assertSee('id="management"', false)
+            ->assertSee('Team &amp; Management', false)
+            ->assertSee('id="governing-board"', false)
+            ->assertSee('Governing Board')
+            ->assertSee('<a href="#about-us">About Us', false)
+            ->assertSee('id="about-us"', false)
+            ->assertSee('What is Bangladesh Angels Network?')
+            ->assertSee('Bring your perspective to the table.');
+    }
+
     public function test_faq_includes_the_contact_prompt(): void
     {
         $this->get(route('faq'))

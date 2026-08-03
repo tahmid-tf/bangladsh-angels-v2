@@ -1,73 +1,115 @@
 @extends('layouts.guest')
-@section('page_title', 'Our Team | Bangladesh Angels Network Limited')
+@section('page_title', 'Our Team | Bangladesh Angels Network')
 
 @push('head_meta')
     <x-seo-meta
-        title="Our Team | Bangladesh Angels Network Limited"
-        description="Meet Bangladesh Angels Network (BAN) — Bangladesh’s first and largest angel investing platform connecting founders with investors, mentorship, and capital."
+        title="Our Team | Bangladesh Angels Network"
+        description="Meet the team and governing board behind Bangladesh Angels Network, the country’s first and largest angel-investing platform."
         :canonical="route('team')"
         :image="asset('DI4A6345.jpg')"
     />
 @endpush
 
 @section('page_content')
-<!-- Section: Header -->
-<section class="container mx-auto mt-16 px-6 lg:flex lg:space-x-12">
-    <!-- Left: Images -->
-    <div class="lg:w-1/2 grid grid-cols-1 lg:grid-cols-2 gap-6 items-center justify-center">
-        <img src="{{asset('DI4A6345.jpg')}}" alt="Handshake" class="rounded-xl w-full h-auto object-cover">
-        <img src="{{asset('DSC00467.jpg')}}" alt="Team Photo" class="rounded-xl w-full h-auto object-cover shadow-lg">
-    </div>
+<main class="ban-subpage ban-team-page">
+    <section class="ban-team-hero" aria-labelledby="ban-team-title">
+        <div class="ban-page-shell">
+            <a href="{{ route('home') }}#team" class="ban-team-back"><span aria-hidden="true">←</span> Back to homepage</a>
 
-    <!-- Right: Text Content -->
-    <div class="mt-12 lg:mt-0 lg:w-1/2 flex items-center">
-        <div>
-            <h2 class="text-4xl font-extrabold text-gray-800 mb-6 leading-tight">
-                What is Bangladesh Angels Network?
-            </h2>
-            <p class="text-lg leading-relaxed text-gray-600">
-                Bangladesh Angels Network (BAN) is the country’s first and largest angel investing platform, connecting visionary entrepreneurs with seasoned investors, fostering an ecosystem that drives innovation and economic growth.
-                <br><br>With $21.7M+ USD invested across 50+ startups, we provide capital, mentorship, and strategic backing to early-stage companies that are solving real problems and scaling fast. Our network is a mix of local and global investors, business leaders, and founders who collaborate to unlock market-changing opportunities. We don’t just invest, we build, nurture, and accelerate ventures that have the potential to reshape industries. Whether you're looking to back or build the next industry-defining company, BAN is where it happens.
+            <div class="ban-team-hero__grid">
+                <div class="ban-team-hero__copy">
+                    <p class="ban-page-kicker">The people of BAN</p>
+                    <h1 id="ban-team-title">Meet the people behind BAN.</h1>
+                </div>
 
-            </p>
+                <div class="ban-team-hero__summary">
+                    <p>Operators, investors, and ecosystem leaders working together to help exceptional founders build enduring companies.</p>
+                </div>
+            </div>
+
+            <nav class="ban-team-hero__nav" aria-label="Team page sections">
+                <a href="#management">Team &amp; Management <span aria-hidden="true">↓</span></a>
+                <a href="#governing-board">Governing Board <span aria-hidden="true">↓</span></a>
+                <a href="#about-us">About Us <span aria-hidden="true">↓</span></a>
+            </nav>
         </div>
-    </div>
-</section>
+    </section>
 
+    <section id="management" class="ban-team-roster ban-team-roster--management" aria-labelledby="management-heading">
+        <div class="ban-page-shell">
+            <header class="ban-team-roster__heading">
+                <div>
+                    <p class="ban-page-kicker">Day-to-day leadership</p>
+                    <h2 id="management-heading">Team &amp; Management</h2>
+                </div>
+                <p>The people shaping BAN’s programs, partnerships, founder support, and network operations.</p>
+            </header>
 
+            @if ($management->isEmpty())
+                <div class="ban-team-empty" role="status">Team profiles will appear here soon.</div>
+            @else
+                <div class="ban-team-grid">
+                    @foreach ($management as $member)
+                        <x-team-member-card :member="$member" />
+                    @endforeach
+                </div>
+            @endif
+        </div>
+    </section>
 
-<!-- Section: Team and Management -->
-<section class="container mx-auto mt-20 px-6">
-    <h2 class="text-center text-3xl md:text-4xl font-extrabold text-[#0f3d34] mb-4">Team &amp; Management</h2>
-    <p class="text-center text-gray-600 max-w-2xl mx-auto mb-12 leading-relaxed">
-        The people running day-to-day programs, partnerships, and operations at Bangladesh Angels Network.
-    </p>
+    <section id="governing-board" class="ban-team-roster ban-team-roster--board" aria-labelledby="governing-board-heading">
+        <div class="ban-page-shell">
+            <header class="ban-team-roster__heading">
+                <div>
+                    <p class="ban-page-kicker">Governance &amp; direction</p>
+                    <h2 id="governing-board-heading">Governing Board</h2>
+                </div>
+                <p>Experienced leaders who help steward the network’s governance, standards, and long-term direction.</p>
+            </header>
 
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10 max-w-5xl mx-auto">
-        @forelse ($management as $member)
-            <x-team-member-card :member="$member" />
-        @empty
-            <p class="col-span-full text-center text-gray-600 py-8">No team members are listed yet.</p>
-        @endforelse
-    </div>
-</section>
+            @if ($governingBoard->isEmpty())
+                <div class="ban-team-empty" role="status">Governing board profiles will appear here soon.</div>
+            @else
+                <div class="ban-team-grid">
+                    @foreach ($governingBoard as $member)
+                        <x-team-member-card :member="$member" />
+                    @endforeach
+                </div>
+            @endif
+        </div>
+    </section>
 
+    <section id="about-us" class="ban-team-about" aria-labelledby="ban-team-about-heading">
+        <div class="ban-page-shell ban-team-about__grid">
+            <figure class="ban-team-about__image">
+                <img src="{{ asset('DSC00467.jpg') }}" alt="Founders and investors sharing experience at a BAN ecosystem event" width="1920" height="1280" loading="lazy">
+                <figcaption><span></span> Capital. Community. Conviction.</figcaption>
+            </figure>
 
+            <div class="ban-team-about__copy">
+                <p class="ban-page-kicker">About Bangladesh Angels Network</p>
+                <h2 id="ban-team-about-heading">What is Bangladesh Angels Network?</h2>
+                <p>BAN is the country’s first and largest angel-investing platform, connecting visionary entrepreneurs with seasoned investors and fostering an ecosystem that drives innovation and economic growth.</p>
+                <p>With more than $21.7 million invested across 50+ startups, we combine capital with mentorship, strategic guidance, and meaningful connections. Our local and global members work alongside founders to help promising ventures solve real problems and scale with purpose.</p>
+                <p>We do more than invest—we help build, nurture, and accelerate companies with the potential to reshape industries.</p>
+            </div>
+        </div>
+    </section>
 
-<!-- Section: Governing Board -->
-<section class="container mx-auto mt-20 px-6 mb-16">
-    <h2 class="text-center text-3xl md:text-4xl font-extrabold text-[#0f3d34] mb-4">Governing Board</h2>
-    <p class="text-center text-gray-600 max-w-2xl mx-auto mb-12 leading-relaxed">
-        Advisors and leaders who help steer the network’s governance and long-term direction.
-    </p>
-
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10 max-w-5xl mx-auto">
-        @forelse ($governingBoard as $member)
-            <x-team-member-card :member="$member" />
-        @empty
-            <p class="col-span-full text-center text-gray-600 py-8">No governing board members are listed yet.</p>
-        @endforelse
-    </div>
-</section>
-
+    <section class="ban-team-cta" aria-labelledby="ban-team-cta-heading">
+        <div class="ban-page-shell ban-team-cta__inner">
+            <div>
+                <p class="ban-page-kicker">Build with the network</p>
+                <h2 id="ban-team-cta-heading">Bring your perspective to the table.</h2>
+            </div>
+            <div>
+                <p>Whether you invest, operate, or build, there is a place to contribute to Bangladesh’s next generation of enduring companies.</p>
+                <div class="ban-page-actions">
+                    <a href="{{ route('investor.signup') }}" class="ban-page-button ban-page-button--primary">Become an investor <span aria-hidden="true">→</span></a>
+                    <a href="{{ route('home') }}#pitch-form" class="ban-team-cta__secondary">Pitch your startup <span aria-hidden="true">↗</span></a>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
 @endsection
