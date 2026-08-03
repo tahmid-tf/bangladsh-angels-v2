@@ -3,58 +3,42 @@
 namespace App\Http\Controllers;
 
 use App\Models\Deal;
-use App\Models\Resource;
 use App\Models\StartupService;
 use App\Models\SubscriptionTier;
 use App\Models\TeamMember;
 use App\Models\User;
-use App\Models\WhatWeDoCard;
+use App\Support\BanFaqs;
 use Illuminate\Http\Request;
-use Illuminate\Support\Collection;
 
 class PrimaryController extends Controller
 {
     // Landing Page
     public function __invoke()
     {
-        // if(!auth()->user() || !auth()->user()->isAdmin() ){
-        //     return view('soon');
-        // }
-
-        $whatWeDoCards = WhatWeDoCard::query()
+        $featuredStartups = Deal::query()
             ->with('media')
-            ->ordered()
-            ->get();
-
-        $whatWeDoCards = $this->orderWhatWeDoCardsForLanding($whatWeDoCards);
-
-        // Same pool as /deckvue BAN Events (event + webinar); homepage shows the six most recent, with "featured" first.
-        $landingResourceEvents = Resource::query()
-            ->with('media')
-            ->whereIn('type', ['event', 'webinar'])
-            ->orderByDesc('show_on_landing')
-            ->orderByRaw('CASE WHEN date IS NULL THEN 1 ELSE 0 END')
-            ->orderByDesc('date')
-            ->orderByDesc('id')
+            ->where('type', '!=', 'portfolio')
+            ->where('status', 'active')
+            ->latest()
             ->limit(6)
             ->get();
 
-        return view('welcome', compact('whatWeDoCards', 'landingResourceEvents'));
-    }
+        $portfolioDeals = Deal::query()
+            ->with('media')
+            ->where('type', 'portfolio')
+            ->latest()
+            ->limit(8)
+            ->get();
 
-    /**
-     * On the landing “What We Do” grid (three cards), place Showcases in the center column.
-     */
-    private function orderWhatWeDoCardsForLanding(Collection $cards): Collection
-    {
-        $showcases = $cards->firstWhere('slug', WhatWeDoCard::SLUG_SHOWCASES);
-        $others = $cards->where('slug', '!=', WhatWeDoCard::SLUG_SHOWCASES)->values();
+        $teamMembers = TeamMember::query()
+            ->forSection(TeamMember::SECTION_MANAGEMENT)
+            ->ordered()
+            ->limit(4)
+            ->get();
 
-        if ($showcases !== null && $others->count() === 2) {
-            return collect([$others[0], $showcases, $others[1]]);
-        }
+        $faqs = collect(BanFaqs::all())->take(6);
 
-        return $cards;
+        return view('welcome', compact('featuredStartups', 'portfolioDeals', 'teamMembers', 'faqs'));
     }
 
     // Upgrade Page
@@ -161,13 +145,19 @@ class PrimaryController extends Controller
     // View FAQ Page
     public function viewFAQ()
     {
-        return view('faq');
+        return view('faq', ['faqs' => BanFaqs::all()]);
     }
 
     /** Public marketing page for the BAN Angel Academy programme. */
     public function viewAngelAcademy()
     {
         return view('angel-academy');
+    }
+
+    /** Public marketing page for Bangladesh Women Investors Network. */
+    public function viewBwin()
+    {
+        return view('bwin');
     }
 
     // View Team Page

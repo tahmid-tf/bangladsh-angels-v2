@@ -4,427 +4,306 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <meta name="description"
-        content="Bangladesh's first and largest angel investment platform connecting early-stage startups with investors.">
+    <meta name="description" content="Bangladesh Angels Network connects exceptional early-stage founders with investors, expertise, and a global community.">
     <link rel="canonical" href="{{ route('home') }}">
     <meta name="robots" content="index, follow">
     <meta property="og:type" content="website">
-    <meta property="og:site_name" content="Bangladesh Angels Network Limited">
-    <meta property="og:title" content="Bangladesh Angels Network Limited">
-    <meta property="og:description"
-        content="Bangladesh's first and largest angel investment platform connecting early-stage startups with investors.">
+    <meta property="og:site_name" content="Bangladesh Angels Network">
+    <meta property="og:title" content="Bangladesh Angels Network | Capital, community and conviction">
+    <meta property="og:description" content="Bangladesh's leading angel-investor network, backing ambitious founders with capital, expertise, and long-term support.">
     <meta property="og:url" content="{{ route('home') }}">
-    <meta property="og:image" content="{{ url(asset('landing.png')) }}">
+    <meta property="og:image" content="{{ url(asset('og.png')) }}">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Bangladesh Angels Network Limited">
-    <meta name="twitter:description"
-        content="Bangladesh's first and largest angel investment platform connecting early-stage startups with investors.">
-    <meta name="twitter:image" content="{{ url(asset('landing.png')) }}">
-    <title>Bangladesh Angels Network Limited</title>
+    <meta name="twitter:title" content="Bangladesh Angels Network | Capital, community and conviction">
+    <meta name="twitter:description" content="Where ambitious founders meet committed capital.">
+    <meta name="twitter:image" content="{{ url(asset('og.png')) }}">
+    <title>Bangladesh Angels Network | Capital, community and conviction</title>
     <link rel="icon" type="image/webp" href="{{ asset('icon.webp') }}">
-    <!-- Preload critical resources -->
-    <link rel="preload" href="{{ asset('world_map_4x.webp') }}" as="image">
     <link rel="preload" href="{{ asset('landing.png') }}" as="image">
-    <link href="https://fonts.bunny.net/css?family=manrope:400,500,600,700,800&display=swap" rel="stylesheet">
-
-    <!-- Preconnect to external domains -->
     <link rel="preconnect" href="https://fonts.bunny.net" crossorigin>
-
-    @vite('resources/css/app.css')
+    <link href="https://fonts.bunny.net/css?family=manrope:400,500,600,700,800&display=swap" rel="stylesheet">
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
     <livewire:styles />
-
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-        }
-
-        #loading-screen {
-            position: fixed;
-            inset: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: #f5f4ed;
-            transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
-            z-index: 9999;
-        }
-
-        #loading-screen.fade-out {
-            opacity: 0;
-            visibility: hidden;
-            pointer-events: none;
-        }
-
-        .loading-icon {
-            height: clamp(4rem, 9vw, 7rem);
-            width: auto;
-            object-fit: contain;
-            animation: loading-pulse 1.25s ease-in-out infinite alternate;
-        }
-
-        @keyframes loading-pulse {
-            to {
-                opacity: 0.58;
-                transform: scale(0.96);
-            }
-        }
-    </style>
 </head>
 
-<body class="ban-home">
-    <!-- Loading Screen -->
-    <div id="loading-screen">
-        <img src="{{ asset('icon.webp') }}" alt="Bangladesh Angels Logo" class="loading-icon">
-    </div>
-
-    {{-- Navigation --}}
+<body class="ban-home ban-home-v2">
     <livewire:navigation-bar></livewire:navigation-bar>
 
-    <main class="w-full">
-        <section class="ban-hero" style="--ban-map-image: url('{{ asset('world_map_4x.webp') }}');">
-            <div class="ban-hero__inner">
-                <div class="ban-hero__visual">
-                    <img src="{{ asset('landing.png') }}" alt="coverphoto" draggable="false" width="620"
-                        height="465" loading="eager">
-                </div>
-                <div class="ban-hero__copy">
-                    <h1>
-                        Join BAN
-                    </h1>
-                    <p>
-                        Bangladesh's first and largest angel investment platform, BAN connects early-stage startups with
-                        investors who bring capital, expertise, and a global network. We back founders solving real
-                        challenges, turning ambition into action.
+    <main>
+        <section id="join" class="ban2-hero" aria-labelledby="ban2-hero-heading">
+            <div class="ban2-shell ban2-hero__grid">
+                <div class="ban2-hero__copy">
+                    <p class="ban2-kicker">Bangladesh Angels Network</p>
+                    <h1 id="ban2-hero-heading">Where ambitious founders meet committed capital.</h1>
+                    <p class="ban2-hero__lede">
+                        Bangladesh's first and largest angel-investment platform brings together investors, operators,
+                        and entrepreneurs to build the country's next generation of enduring companies.
                     </p>
-                    <div class="ban-hero__actions">
-                        <a href="{{ route('investor.signup') }}" class="ban-primary-cta"
-                            title="Apply to become an angel investor with Bangladesh Angels Network">
-                            Become an Investor
-                        </a>
-                        <div class="ban-intent" aria-label="I'm looking to fundraise or invest">
-                            <p>I'm looking to</p>
-                            <div class="ban-intent__options">
-                                <a href="{{ route('startups') . '#send-pitch' }}">
-                                    Fundraise
-                                </a>
-                                <a href="{{ route('investor.signup') }}"
-                                    title="Apply to invest with Bangladesh Angels Network">
-                                    Invest
-                                </a>
-                            </div>
-                        </div>
+                    <div class="ban2-actions">
+                        <a href="{{ route('investor.signup') }}" class="ban2-button ban2-button--primary">Join BAN</a>
+                        <a href="#pitch-form" class="ban2-button ban2-button--secondary">Pitch your startup</a>
+                    </div>
+                    <div class="ban2-hero__proof" aria-label="BAN at a glance">
+                        <div><strong>500+</strong><span>angel investors</span></div>
+                        <div><strong>$12M+</strong><span>capital facilitated</span></div>
+                        <div><strong>51</strong><span>portfolio companies</span></div>
                     </div>
                 </div>
-            </div>
-        </section>
 
-        <section id="ban-impact" class="ban-impact" aria-labelledby="ban-impact-heading">
-            <div class="ban-impact__intro">
-                <h2 id="ban-impact-heading">
-                    From 2019 to today
-                </h2>
-                <p>
-                    Bangladesh Angels Network (BAN), since its inception in 2019, has facilitated investments amounting
-                    to $12M across 51 portfolio companies, including Pathao, Chaldal, Shajgoj, Chhaya, PulseTech, etc.
-                    BAN has a global investor network with 500+ angel investors.
-                </p>
-            </div>
-
-            <div id="ban-stats" class="ban-stats-grid">
-                <div class="ban-stat-card">
-                    <p>
-                        <span class="ban-stat-value" data-ban-stat="500">0</span><span class="ban-stat-suffix"
-                            aria-hidden="true">+</span>
-                    </p>
-                    <p>Angel Investors</p>
-                </div>
-                <div class="ban-stat-card">
-                    <p>
-                        <span class="ban-stat-prefix" aria-hidden="true">$</span><span class="ban-stat-value"
-                            data-ban-stat="12">0</span><span class="ban-stat-suffix" aria-hidden="true">m+</span>
-                    </p>
-                    <p>Invested</p>
-                </div>
-                <div class="ban-stat-card">
-                    <p>
-                        <span class="ban-stat-value" data-ban-stat="51">0</span>
-                    </p>
-                    <p>Startups Funded</p>
-                </div>
-                <div class="ban-stat-card">
-                    <p>
-                        <span class="ban-stat-value" data-ban-stat="84">0</span>
-                    </p>
-                    <p>Deals executed</p>
-                </div>
-                <div class="ban-stat-card">
-                    <p>
-                        <span class="ban-stat-value" data-ban-stat="6">0</span>
-                    </p>
-                    <p>Years of investing</p>
+                <div class="ban2-hero__visual" aria-label="Bangladesh Angels investor community">
+                    <div class="ban2-hero__visual-frame">
+                        <img src="{{ asset('landing.png') }}" alt="Members of the Bangladesh Angels investor community" width="620" height="465" loading="eager">
+                    </div>
+                    <p><span aria-hidden="true"></span> Investing across Bangladesh and beyond</p>
                 </div>
             </div>
         </section>
 
-        <section id="what-we-do" class="ban-content-section ban-what-we-do" aria-labelledby="what-we-do-heading">
-            <div class="ban-content-section__inner ban-what-we-do__layout">
-                <header class="ban-what-we-do__intro">
-                    <span class="ban-what-we-do__eyebrow">How we create value</span>
-                    <h2 id="what-we-do-heading">What We Do</h2>
+        <section id="core-functions" class="ban2-section ban2-functions" aria-labelledby="ban2-functions-heading">
+            <div class="ban2-shell">
+                <header class="ban2-section-heading ban2-section-heading--split">
+                    <div>
+                        <p class="ban2-kicker">Core BAN functions</p>
+                        <h2 id="ban2-functions-heading">From first conversation to long-term partnership.</h2>
+                    </div>
                     <p>
-                        Focused platforms that turn investor knowledge, founder access, and meaningful connections into
-                        real opportunities.
+                        BAN builds the connective tissue around early-stage investment. We prepare promising founders,
+                        equip investors to make informed decisions, coordinate the transaction, and stay engaged after
+                        the cheque is written.
                     </p>
                 </header>
 
-                <div class="ban-what-we-do__index">
-                    @forelse ($whatWeDoCards as $card)
-                        @php
-                            $learnMoreLabel = filled($card->learn_more_label) ? $card->learn_more_label : 'Learn more';
-                            $learnMoreLink = filled($card->learn_more_link) ? $card->learn_more_link : $card->cta_link;
-                            if (!filled($learnMoreLink) && $card->slug === 'angel-academy') {
-                                $learnMoreLink = '/angel-academy';
-                            } elseif (!filled($learnMoreLink) && $card->slug === 'bwin') {
-                                $learnMoreLink = '/deckvue#bwin';
-                            }
-                            $fallbackActionLabel =
-                                $card->slug === 'angel-academy'
-                                    ? 'Book a demo'
-                                    : ($card->slug === 'bwin'
-                                        ? 'Book a call'
-                                        : null);
-                            $fallbackActionLink = in_array($card->slug, ['angel-academy', 'bwin'], true)
-                                ? 'https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ1oFoHy0m9As4PtSfm4Ee-nVyoZRNNyZ38doHCWpVwDfo5u3qxnesRT_LqD_Fv5nUlbE3EvxyYN'
-                                : null;
-                            $actionLabel = filled($card->action_label) ? $card->action_label : $fallbackActionLabel;
-                            $actionLink = filled($card->action_link) ? $card->action_link : $fallbackActionLink;
-                            $hasLearnMore = filled($learnMoreLink);
-                            $hasAction = filled($actionLabel) && filled($actionLink);
-                            $learnMoreExternal =
-                                $hasLearnMore && str_starts_with(strtolower(trim((string) $learnMoreLink)), 'http');
-                            $actionExternal =
-                                $hasAction && str_starts_with(strtolower(trim((string) $actionLink)), 'http');
-                        @endphp
-                        <article class="ban-service-row">
-                            <span class="ban-service-row__number"
-                                aria-hidden="true">{{ str_pad((string) $loop->iteration, 2, '0', STR_PAD_LEFT) }}</span>
+                <div class="ban2-functions__grid">
+                    <article>
+                        <span>01</span>
+                        <h3>Source &amp; screen</h3>
+                        <p>We identify technology-enabled startups with committed teams, early traction, and the potential to scale.</p>
+                    </article>
+                    <article>
+                        <span>02</span>
+                        <h3>Prepare founders</h3>
+                        <p>We sharpen the narrative, pitch deck, data room, and fundraising strategy before a company meets members.</p>
+                    </article>
+                    <article>
+                        <span>03</span>
+                        <h3>Coordinate investment</h3>
+                        <p>We convene interested angels, organise diligence, align terms, and support the documentation process.</p>
+                    </article>
+                    <article>
+                        <span>04</span>
+                        <h3>Support growth</h3>
+                        <p>Our network contributes operating experience, introductions, governance support, and follow-on perspective.</p>
+                    </article>
+                </div>
+            </div>
+        </section>
 
-                            <figure class="ban-service-row__visual">
-                                <img src="{{ $card->coverImageUrl() }}" alt="" width="180"
-                                    height="120" loading="lazy" decoding="async">
-                            </figure>
+        <section id="programs" class="ban2-section ban2-programs" aria-labelledby="ban2-programs-heading">
+            <div class="ban2-shell">
+                <header class="ban2-section-heading">
+                    <p class="ban2-kicker">Our programs</p>
+                    <h2 id="ban2-programs-heading">Three focused platforms. One stronger ecosystem.</h2>
+                    <p>Explore the initiatives BAN has built to broaden participation, strengthen investment practice, and make startup evaluation more effective.</p>
+                </header>
 
-                            <div class="ban-service-row__content">
-                                <h3>{{ $card->title }}</h3>
-                                <p>{{ $card->description }}</p>
-
-                                @if ($hasLearnMore || $hasAction)
-                                    <div class="ban-service-row__actions">
-                  @if ($hasLearnMore)
-                    <a href="{{ $learnMoreLink }}"
-                       class="ban-service-row__action--secondary"
-                       @if ($learnMoreExternal) target="_blank" rel="noopener noreferrer" @endif>
-                      <span>{{ $learnMoreLabel }}</span>
-                      <span aria-hidden="true">↗</span>
+                <div class="ban2-programs__grid">
+                    <a href="{{ route('bwin') }}" class="ban2-program-card ban2-program-card--bwin" aria-label="Learn more about BWIN">
+                        <div class="ban2-program-card__mark">
+                            <img src="{{ asset('bwin.png') }}" alt="BWIN — Bangladesh Women Investors Network" width="570" height="181" loading="lazy">
+                        </div>
+                        <div>
+                            <p>Women-led investment</p>
+                            <h3>BWIN</h3>
+                            <span>Building a more diverse pipeline of investors and entrepreneurs across Bangladesh.</span>
+                        </div>
+                        <strong>Explore BWIN <span aria-hidden="true">↗</span></strong>
                     </a>
-                  @endif
-                  @if ($hasAction)
-                    <a href="{{ $actionLink }}"
-                       class="ban-service-row__action--primary"
-                       @if ($actionExternal) target="_blank" rel="noopener noreferrer" @endif>
-                      <span>{{ $actionLabel }}</span>
-                      <span aria-hidden="true">↗</span>
+
+                    <a href="{{ route('angel-academy') }}" class="ban2-program-card ban2-program-card--academy" aria-label="Learn more about Angel Academy">
+                        <div class="ban2-program-card__monogram" aria-hidden="true">AA</div>
+                        <div>
+                            <p>Investor education</p>
+                            <h3>Angel Academy</h3>
+                            <span>Practical learning for aspiring and active angels—from first principles to investment committee.</span>
+                        </div>
+                        <strong>Visit Angel Academy <span aria-hidden="true">↗</span></strong>
                     </a>
-                                        @endif
-                                    </div>
+
+                    <a href="{{ route('resources') }}" class="ban2-program-card ban2-program-card--deckvue" aria-label="Learn more about DeckVue">
+                        <div class="ban2-program-card__monogram" aria-hidden="true">DV</div>
+                        <div>
+                            <p>AI-powered diligence</p>
+                            <h3>DeckVue</h3>
+                            <span>Turn pitch decks into structured, verified investment intelligence in minutes.</span>
+                        </div>
+                        <strong>Open DeckVue <span aria-hidden="true">↗</span></strong>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <section id="featured-startups" class="ban2-section ban2-startups" aria-labelledby="ban2-startups-heading">
+            <div class="ban2-shell">
+                <header class="ban2-section-heading ban2-section-heading--action">
+                    <div>
+                        <p class="ban2-kicker">Featured startups</p>
+                        <h2 id="ban2-startups-heading">The companies in the room right now.</h2>
+                        <p>Meet a selection of founders currently engaging the BAN network.</p>
+                    </div>
+                    <a href="{{ route('startups') }}" class="ban2-text-link">View all startups <span aria-hidden="true">→</span></a>
+                </header>
+
+                @if ($featuredStartups->isEmpty())
+                    <div class="ban2-empty" role="status">New startup opportunities will be featured here soon.</div>
+                @else
+                    <div class="ban2-startups__grid">
+                        @foreach ($featuredStartups as $startup)
+                            <article class="ban2-startup-card">
+                                <div class="ban2-startup-card__logo">
+                                    <img src="{{ $startup->getLogoUrl() }}" alt="{{ $startup->title }} logo" loading="lazy">
+                                </div>
+                                <div class="ban2-startup-card__meta">
+                                    <span>{{ $startup->investment_stage ?: 'Early stage' }}</span>
+                                    <span>{{ $startup->sector ?: 'Technology' }}</span>
+                                </div>
+                                <h3>{{ $startup->title }}</h3>
+                                <p>{{ \Illuminate\Support\Str::limit(strip_tags((string) $startup->description), 120, '…') }}</p>
+                                <a href="{{ route('startups') }}">Explore opportunity <span aria-hidden="true">→</span></a>
+                            </article>
+                        @endforeach
+                    </div>
+                @endif
+
+                <div id="pitch-form" class="ban2-pitch" aria-labelledby="ban2-pitch-heading">
+                    <div class="ban2-pitch__copy">
+                        <p class="ban2-kicker">For founders</p>
+                        <h2 id="ban2-pitch-heading">Think your startup belongs here?</h2>
+                        <p>Send a concise one-line summary and an investor-ready PDF deck. We review each submission and follow up when there is a potential fit.</p>
+                        <ul>
+                            <li><span>01</span>Tell us what you are building</li>
+                            <li><span>02</span>Share your pitch deck</li>
+                            <li><span>03</span>Our team reviews for fit</li>
+                        </ul>
+                    </div>
+
+                    <div class="ban2-pitch__form-card">
+                        @if (session('pitch_submitted'))
+                            <div class="ban2-form-success" role="status"><strong>Pitch received.</strong> Thank you—our team will review your submission.</div>
+                        @endif
+
+                        <form method="post" action="{{ route('home.pitch') }}" enctype="multipart/form-data">
+                            @csrf
+                            <div class="ban2-field">
+                                <label for="home_contact_email">Contact email</label>
+                                <input type="email" name="contact_email" id="home_contact_email" required value="{{ old('contact_email', auth()->user()->email ?? '') }}" autocomplete="email" placeholder="founder@startup.com" @error('contact_email') aria-invalid="true" aria-describedby="home-contact-email-error" @enderror>
+                                @error('contact_email')<p id="home-contact-email-error" class="ban2-field__error">{{ $message }}</p>@enderror
+                            </div>
+                            <div class="ban2-field">
+                                <label for="home_one_line">One-line description of your startup</label>
+                                <input type="text" name="one_line" id="home_one_line" required maxlength="280" value="{{ old('one_line') }}" placeholder="What do you build, and for whom?" @error('one_line') aria-invalid="true" aria-describedby="home-one-line-error" @enderror>
+                                @error('one_line')<p id="home-one-line-error" class="ban2-field__error">{{ $message }}</p>@enderror
+                            </div>
+                            <div class="ban2-field">
+                                <label for="home_pitch_deck">Pitch deck <span>PDF, maximum 12 MB</span></label>
+                                <label for="home_pitch_deck" class="ban2-file-field">
+                                    <strong>Choose PDF</strong>
+                                    <span id="home_pitch_deck_name" aria-live="polite">No file selected</span>
+                                </label>
+                                <input class="ban2-file-input" type="file" name="pitch_deck" id="home_pitch_deck" required accept="application/pdf,.pdf" @error('pitch_deck') aria-invalid="true" aria-describedby="home-pitch-deck-error" @enderror>
+                                @error('pitch_deck')<p id="home-pitch-deck-error" class="ban2-field__error">{{ $message }}</p>@enderror
+                            </div>
+                            <button type="submit" class="ban2-button ban2-button--light">Submit pitch <span aria-hidden="true">→</span></button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="portfolio" class="ban2-section ban2-portfolio" aria-labelledby="ban2-portfolio-heading">
+            <div class="ban2-shell">
+                <header class="ban2-section-heading ban2-section-heading--action">
+                    <div>
+                        <p class="ban2-kicker">Portfolio</p>
+                        <h2 id="ban2-portfolio-heading">Backed by BAN. Built to endure.</h2>
+                        <p>A selection of the companies our investor community has supported.</p>
+                    </div>
+                    <a href="{{ route('portfolio') }}" class="ban2-text-link">See the full portfolio <span aria-hidden="true">→</span></a>
+                </header>
+
+                @if ($portfolioDeals->isEmpty())
+                    <div class="ban2-empty" role="status">Published portfolio companies will appear here soon.</div>
+                @else
+                    <div class="ban2-portfolio__grid">
+                        @foreach ($portfolioDeals as $company)
+                            <a href="{{ route('portfolio') }}" class="ban2-portfolio-card" aria-label="View {{ $company->title }} in the BAN portfolio">
+                                <img src="{{ $company->getLogoUrl() }}" alt="{{ $company->title }} logo" loading="lazy">
+                                <div>
+                                    <h3>{{ $company->title }}</h3>
+                                    <p>{{ $company->sector ?: 'Portfolio company' }}</p>
+                                </div>
+                            </a>
+                        @endforeach
+                    </div>
+                @endif
+            </div>
+        </section>
+
+        <section id="team" class="ban2-section ban2-team" aria-labelledby="ban2-team-heading">
+            <div class="ban2-shell ban2-team__layout">
+                <header class="ban2-section-heading">
+                    <p class="ban2-kicker">Team</p>
+                    <h2 id="ban2-team-heading">Operators building an investor community.</h2>
+                    <p>Our management team connects founders, investors, partners, and advisers across the full investment journey.</p>
+                    <a href="{{ route('team') }}" class="ban2-button ban2-button--secondary">Meet the full team</a>
+                </header>
+
+                <div class="ban2-team__grid">
+                    @foreach ($teamMembers as $member)
+                        <article class="ban2-team-card">
+                            <div class="ban2-team-card__photo">
+                                @if ($member->photoUrl())
+                                    <img src="{{ $member->photoUrl() }}" alt="{{ $member->name }}" loading="lazy">
+                                @else
+                                    <span aria-hidden="true">{{ collect(explode(' ', $member->name))->map(fn ($part) => mb_substr($part, 0, 1))->take(2)->implode('') }}</span>
                                 @endif
                             </div>
+                            <h3>{{ $member->name }}</h3>
+                            <p>{{ $member->title }}</p>
                         </article>
-                    @empty
-                        <p class="ban-what-we-do__empty">What We Do content is not configured yet.</p>
-                    @endforelse
+                    @endforeach
                 </div>
             </div>
         </section>
 
-        {{-- Pitch your Startup --}}
-        <section id="pitch-startup" class="ban-content-section ban-pitch" aria-labelledby="pitch-heading">
-            <div class="ban-pitch__inner">
-                <div class="ban-pitch__copy">
-                    <h2 id="pitch-heading">Pitch your Startup</h2>
-                    <p>
-                        Qualify for our monthly showcase to pitch in front of prospective investors.<br>
-                        We are a network of 500+ members always looking for startups to invest in.
-                    </p>
-                    <a target="_blank" rel="noopener noreferrer" href="https://forms.gle/Pr5KdwuZyeiTbq6P7">Send Your
-                        Pitch</a>
-                </div>
-                <div class="ban-pitch__visual">
-                    <img src="{{ asset('IMG_0944.jpg') }}" alt="Bangladesh Angels team" width="700"
-                        height="520" loading="lazy">
-                </div>
-            </div>
-        </section>
+        <section id="faq" class="ban2-section ban2-faq" aria-labelledby="ban2-faq-heading">
+            <div class="ban2-shell ban2-faq__layout">
+                <header class="ban2-section-heading">
+                    <p class="ban2-kicker">FAQ</p>
+                    <h2 id="ban2-faq-heading">Questions, answered clearly.</h2>
+                    <p>Start with the essentials about BAN, early-stage investing, and how transactions are coordinated.</p>
+                    <a href="{{ route('faq') }}" class="ban2-text-link">Browse every question <span aria-hidden="true">→</span></a>
+                </header>
 
-        {{-- Founder pitch form --}}
-        <section id="pitch-form" class="ban-content-section ban-pitch-form" aria-labelledby="pitch-form-heading">
-            <div class="ban-pitch-form__inner">
-                <div class="ban-pitch-form__intro">
-                    <span class="ban-pitch-form__eyebrow">For founders</span>
-                    <h2 id="pitch-form-heading">Send us your pitch</h2>
-                    <p>
-                        Share a one-line summary and your deck in PDF format. Our team will review submissions and
-                        follow up where there is a fit.
-                    </p>
-
-                    <div class="ban-pitch-form__notes" aria-label="What happens after you submit">
-                        <div class="ban-pitch-form__note">
-                            <span aria-hidden="true">01</span>
-                            <p><strong>Submit your essentials</strong>A clear summary and a focused pitch deck are all
-                                we need.</p>
-                        </div>
-                        <div class="ban-pitch-form__note">
-                            <span aria-hidden="true">02</span>
-                            <p><strong>Reviewed by our team</strong>We assess every submission for fit with the BAN
-                                investor network.</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="ban-pitch-form__card">
-                    @if (session('pitch_submitted'))
-                        <div class="ban-pitch-form__success" role="status">
-                            <span aria-hidden="true">✓</span>
-                            <p><strong>Pitch received</strong>Thank you—your pitch was submitted successfully.</p>
-                        </div>
-                    @endif
-
-                    <form method="post" action="{{ route('home.pitch') }}" enctype="multipart/form-data">
-                        @csrf
-
-                        <div class="ban-pitch-form__field">
-                            <label for="home_contact_email">Contact email</label>
-                            <input type="email" name="contact_email" id="home_contact_email" required
-                                value="{{ old('contact_email', auth()->user()->email ?? '') }}" autocomplete="email"
-                                placeholder="founder@startup.com"
-                                @error('contact_email') aria-invalid="true" aria-describedby="home-contact-email-error" @enderror>
-                            @error('contact_email')
-                                <p id="home-contact-email-error" class="ban-pitch-form__error">{{ $message }}</p>
-                            @enderror
-                        </div>
-
-                        <div class="ban-pitch-form__field">
-                            <label for="home_one_line">One-line description of your startup</label>
-                            <input type="text" name="one_line" id="home_one_line" required maxlength="280"
-                                value="{{ old('one_line') }}"
-                                placeholder="e.g. AI-powered logistics visibility for SMEs in South Asia"
-                                @error('one_line') aria-invalid="true" aria-describedby="home-one-line-error" @enderror>
-                            @error('one_line')
-                                <p id="home-one-line-error" class="ban-pitch-form__error">{{ $message }}</p>
-                            @enderror
-                        </div>
-
-                        <div class="ban-pitch-form__field">
-                            <label for="home_pitch_deck">Pitch deck <span>(PDF only, max 12&nbsp;MB)</span></label>
-                            <div class="ban-pitch-form__file">
-                                <span class="ban-pitch-form__file-mark" aria-hidden="true">PDF</span>
-                                <div>
-                                    <strong>Choose your pitch deck</strong>
-                                    <span id="home_pitch_deck_name" aria-live="polite">A concise, investor-ready deck
-                                        works best.</span>
-                                </div>
-                                <input type="file" name="pitch_deck" id="home_pitch_deck" required
-                                    accept="application/pdf,.pdf"
-                                    @error('pitch_deck') aria-invalid="true" aria-describedby="home-pitch-deck-error" @enderror>
+                <div class="ban2-faq__list">
+                    @foreach ($faqs as $faq)
+                        <details class="ban2-faq-item">
+                            <summary><span>{{ str_pad((string) $loop->iteration, 2, '0', STR_PAD_LEFT) }}</span>{{ $faq['question'] }}<i aria-hidden="true"></i></summary>
+                            <div class="ban2-faq-item__answer">
+                                @foreach ($faq['paragraphs'] as $paragraph)<p>{{ $paragraph }}</p>@endforeach
+                                @isset($faq['bullets'])
+                                    <ul>@foreach ($faq['bullets'] as $bullet)<li>{{ $bullet }}</li>@endforeach</ul>
+                                @endisset
+                                @isset($faq['note'])<p class="ban2-faq-item__note">{{ $faq['note'] }}</p>@endisset
                             </div>
-                            @error('pitch_deck')
-                                <p id="home-pitch-deck-error" class="ban-pitch-form__error">{{ $message }}</p>
-                            @enderror
-                        </div>
-
-                        <button type="submit" class="ban-pitch-form__submit">
-                            <span>Submit pitch</span>
-                            <span aria-hidden="true">→</span>
-                        </button>
-                    </form>
+                        </details>
+                    @endforeach
                 </div>
             </div>
-        </section>
 
-        <section id="ban-resources" class="ban-content-section ban-resources" aria-labelledby="ban-events-heading">
-            <div class="ban-content-section__inner">
-                <h3 id="ban-events-heading" class="ban-section-heading ban-section-heading--center">
-                    <span class="ban-section-heading__ornament">
-                        <span aria-hidden="true">✽</span>
-                        <span>BAN Events</span>
-                    </span>
-                </h3>
-
-                <div class="ban-resources__list">
-                    @forelse ($landingResourceEvents as $event)
-                        <x-ban-event-card :resource="$event" />
-                    @empty
-                        <p
-                            class="rounded-2xl border border-emerald-950/10 bg-white px-5 py-8 text-center text-sm text-gray-600 shadow-sm">
-                            New events will be announced here soon. Please check back shortly.
-                        </p>
-                    @endforelse
-                </div>
-
-                <div class="ban-section-cta">
-                    <a href="{{ route('resources') }}">Discover BAN Resources</a>
-                </div>
-            </div>
-        </section>
-
-        <section id="our-partners" class="ban-content-section ban-partners" aria-labelledby="partners-heading">
-            <div class="ban-content-section__inner">
-                <h2 id="partners-heading" class="ban-section-heading ban-section-heading--center">Our Partners</h2>
-                <p class="ban-partners__intro">
-                    We collaborate with leading investment firms and accelerator programs across the region,<br
-                        class="hidden md:block">
-                    co-investing in high-potential startups and guiding founders with industry expertise. Some of our
-                    key partners are showcased here.
-                </p>
-                <div class="ban-partners__groups">
-                    <div class="ban-partner-group">
-                        <h3>Founding Partners</h3>
-                        <div class="ban-partner-grid">
-                            <a href="https://www.government.nl/ministries/ministry-of-foreign-affairs" target="_blank"
-                                rel="noopener noreferrer" class="ban-partner-card">
-                                <img src="{{ asset('foreignaffairsnetherland.webp') }}"
-                                    alt="Netherlands Ministry of Foreign Affairs" width="150" height="80"
-                                    loading="lazy">
-                            </a>
-                            <a href="https://aavishkaarcapital.in/" target="_blank" rel="noopener noreferrer"
-                                class="ban-partner-card">
-                                <img src="{{ asset('capital logo.webp') }}" alt="Aavishkaar Capital" width="150"
-                                    height="80" loading="lazy">
-                            </a>
-                        </div>
-                    </div>
-                    <div class="ban-partner-group">
-                        <h3>Industry Partners</h3>
-                        <div class="ban-partner-grid">
-                            <a href="https://bida.gov.bd/" target="_blank" rel="noopener noreferrer"
-                                class="ban-partner-card">
-                                <img src="{{ asset('bidalogo.webp') }}" alt="BIDA" width="150"
-                                    height="80" loading="lazy">
-                            </a>
-                            <a target="_blank" rel="noopener noreferrer" href="https://venture.com.bd/"
-                                class="ban-partner-card">
-                                <img src="{{ asset('bangladesh venture capital.webp') }}"
-                                    alt="Bangladesh Venture Capital" width="150" height="80" loading="lazy">
-                            </a>
-                            <a target="_blank" rel="noopener noreferrer" href="https://lightcastlepartners.com/"
-                                class="ban-partner-card">
-                                <img src="{{ asset('lcp.svg') }}" alt="LightCastle Partners" width="150"
-                                    height="80" loading="lazy">
-                            </a>
-                        </div>
-                    </div>
+            <div class="ban2-shell">
+                <div class="ban2-contact-prompt">
+                    <p>Can’t find what you’re looking for?</p>
+                    <a href="mailto:hello@bdangels.co">Contact us <span aria-hidden="true">→</span></a>
                 </div>
             </div>
         </section>
@@ -434,123 +313,19 @@
     <livewire:scripts />
 
     <script>
-        // Loading screen handler
-        document.addEventListener('DOMContentLoaded', function() {
-            // Handle loading screen
-            setTimeout(() => {
-                document.getElementById("loading-screen").classList.add("fade-out");
-                setTimeout(() => {
-                    document.getElementById("loading-screen").style.display = "none";
-                }, 300);
-            }, 300);
+        document.addEventListener('DOMContentLoaded', function () {
+            const input = document.getElementById('home_pitch_deck');
+            const fileName = document.getElementById('home_pitch_deck_name');
+            if (input && fileName) {
+                input.addEventListener('change', function () {
+                    fileName.textContent = input.files && input.files[0] ? input.files[0].name : 'No file selected';
+                });
+            }
 
-            // Check for payment status in URL parameters
-            const urlParams = new URLSearchParams(window.location.search);
-            const statusCode = urlParams.get('status_code');
-
-            // Legacy: some gateways once landed on home with ?status_code=2. Receipts now use signed /payment/complete URLs.
+            const statusCode = new URLSearchParams(window.location.search).get('status_code');
             if (statusCode === '2') {
                 window.location.replace('{{ auth()->check() ? route('dashboard') : route('login') }}');
             }
-
-            // BAN stats — count up when section enters view
-            (function initBanStats() {
-                const root = document.getElementById('ban-stats');
-                if (!root) return;
-                const valueEls = root.querySelectorAll('.ban-stat-value');
-                const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-                function setFinalValues() {
-                    valueEls.forEach((el) => {
-                        el.textContent = el.getAttribute('data-ban-stat') || '0';
-                    });
-                }
-
-                if (reduceMotion) {
-                    setFinalValues();
-                    return;
-                }
-
-                let started = false;
-
-                function runCountUp() {
-                    if (started) return;
-                    started = true;
-                    const duration = 2000;
-                    const start = performance.now();
-                    const targets = Array.from(valueEls).map((el) => ({
-                        el,
-                        end: parseInt(el.getAttribute('data-ban-stat'), 10) || 0,
-                    }));
-
-                    function easeOutCubic(t) {
-                        return 1 - Math.pow(1 - t, 3);
-                    }
-
-                    function tick(now) {
-                        const t = Math.min(1, (now - start) / duration);
-                        const e = easeOutCubic(t);
-                        targets.forEach(({
-                            el,
-                            end
-                        }) => {
-                            el.textContent = String(Math.round(e * end));
-                        });
-                        if (t < 1) {
-                            requestAnimationFrame(tick);
-                        } else {
-                            setFinalValues();
-                        }
-                    }
-                    requestAnimationFrame(tick);
-                }
-
-                const io = new IntersectionObserver(
-                    (entries) => {
-                        entries.forEach((entry) => {
-                            if (entry.isIntersecting) {
-                                runCountUp();
-                                io.disconnect();
-                            }
-                        });
-                    }, {
-                        threshold: 0.2,
-                        rootMargin: '0px 0px -24px 0px'
-                    }
-                );
-                io.observe(root);
-            })();
-
-            (function initPitchDeckInput() {
-                const input = document.getElementById('home_pitch_deck');
-                const fileName = document.getElementById('home_pitch_deck_name');
-                const fileBox = input?.closest('.ban-pitch-form__file');
-                if (!input || !fileName || !fileBox) return;
-
-                input.addEventListener('change', function() {
-                    const selectedFile = input.files && input.files[0];
-                    fileName.textContent = selectedFile ?
-                        selectedFile.name :
-                        'A concise, investor-ready deck works best.';
-                    fileBox.classList.toggle('is-selected', Boolean(selectedFile));
-                });
-            })();
-        });
-
-        // Lazy load images that are far below the fold
-        document.addEventListener('scroll', function() {
-            if ('loading' in HTMLImageElement.prototype) {
-                const images = document.querySelectorAll('img[loading="lazy"]');
-                images.forEach(img => {
-                    // If image is in viewport or about to be, load it
-                    const rect = img.getBoundingClientRect();
-                    if (rect.top <= window.innerHeight + 500) {
-                        img.setAttribute('loading', 'eager');
-                    }
-                });
-            }
-        }, {
-            passive: true
         });
     </script>
 </body>
