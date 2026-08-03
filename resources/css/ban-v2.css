@@ -2046,20 +2046,23 @@
 
 /* FAQ page */
 .ban-faq-hero {
-    padding: clamp(5rem, 9vw, 8.5rem) 0 clamp(4.5rem, 8vw, 7rem);
+    padding: clamp(3.75rem, 6vw, 5.75rem) 0 clamp(3.75rem, 6vw, 5.5rem);
     background:
         radial-gradient(circle at 78% 20%, rgba(201, 243, 220, 0.55), transparent 24%),
         var(--ban2-cream);
 }
 
 .ban-faq-hero h1 {
-    max-width: 860px;
+    max-width: 760px;
     color: var(--ban2-ink);
+    font-size: clamp(2.65rem, 4.8vw, 4.35rem);
+    letter-spacing: -0.055em;
+    line-height: 1.02;
 }
 
 .ban-faq-search {
     max-width: 640px;
-    margin-top: 44px;
+    margin-top: 34px;
 }
 
 .ban-faq-search > label {
@@ -3570,6 +3573,11 @@
     .ban-program-hero h1,
     .ban-faq-hero h1 {
         font-size: clamp(2.7rem, 13vw, 4.15rem);
+    }
+
+    .ban-faq-hero h1 {
+        font-size: clamp(2.4rem, 10.5vw, 3.4rem);
+        line-height: 1.03;
     }
 
     .ban2-bwin-hero .ban2-hero__copy h1 {
