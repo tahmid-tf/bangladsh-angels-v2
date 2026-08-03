@@ -336,8 +336,14 @@
 }
 
 .ban2-functions {
+    padding-top: clamp(4.25rem, 7vw, 6.5rem);
+    padding-bottom: clamp(4.25rem, 7vw, 6.5rem);
     color: #fff;
     background: var(--ban2-deep);
+}
+
+.ban2-functions .ban2-section-heading {
+    margin-bottom: clamp(2.25rem, 4vw, 3.25rem);
 }
 
 .ban2-functions .ban2-kicker {
@@ -359,8 +365,8 @@
 }
 
 .ban2-functions__grid article {
-    min-height: 300px;
-    padding: 30px 25px 20px 0;
+    min-height: 220px;
+    padding: 24px 25px 16px 0;
 }
 
 .ban2-functions__grid article + article {
@@ -376,7 +382,7 @@
 }
 
 .ban2-functions__grid h3 {
-    margin: 78px 0 14px;
+    margin: 38px 0 11px;
     font-size: 1.25rem;
     font-weight: 700;
     letter-spacing: -0.02em;
@@ -386,7 +392,7 @@
     margin: 0;
     color: rgba(255, 255, 255, 0.6);
     font-size: 0.9rem;
-    line-height: 1.7;
+    line-height: 1.58;
 }
 
 .ban2-programs {
@@ -2015,6 +2021,15 @@
     .ban2-functions__grid h3,
     .ban-bwin-model h3 {
         margin-top: 44px;
+    }
+
+    .ban2-functions__grid article,
+    .ban2-functions__grid article + article {
+        min-height: 210px;
+    }
+
+    .ban2-functions__grid h3 {
+        margin-top: 32px;
     }
 
     .ban2-program-card,
