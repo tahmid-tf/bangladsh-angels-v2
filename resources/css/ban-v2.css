@@ -627,6 +627,35 @@
     font-weight: 800;
 }
 
+.ban2-startup-card--listing > a {
+    width: fit-content;
+    min-height: 42px;
+    justify-content: center;
+    gap: 9px;
+    margin-top: auto;
+    padding: 0 14px;
+    border: 1px solid rgba(15, 115, 89, 0.24);
+    border-radius: 8px;
+    color: #0b654e;
+    background: #edf7f2;
+    transition: border-color 180ms ease, color 180ms ease, background-color 180ms ease, transform 180ms ease;
+}
+
+.ban2-startup-card--listing > a span {
+    transition: transform 180ms ease;
+}
+
+.ban2-startup-card--listing > a:hover {
+    border-color: var(--ban2-green);
+    color: #fff;
+    background: var(--ban2-green);
+    transform: translateY(-1px);
+}
+
+.ban2-startup-card--listing > a:hover span {
+    transform: translateX(3px);
+}
+
 .ban2-empty {
     padding: 42px;
     border: 1px dashed rgba(9, 47, 41, 0.25);
@@ -1572,7 +1601,14 @@
 }
 
 /* BWIN */
+.ban-bwin-page #bwin-heading,
+.ban-bwin-page #bwin-mission-heading,
+.ban-bwin-page #bwin-model-heading {
+    color: #531534;
+}
+
 .ban2-bwin-hero {
+    padding: 0;
     background:
         radial-gradient(circle at 92% 14%, rgba(255, 207, 229, 0.5), transparent 25%),
         linear-gradient(180deg, #fff 0%, #fcf8fa 100%);
@@ -1713,8 +1749,12 @@
 }
 
 .ban-bwin-model {
-    padding: clamp(5.5rem, 9vw, 9rem) 0;
+    padding: clamp(3.5rem, 5vw, 5.25rem) 0;
     background: #fff5fa;
+}
+
+.ban-bwin-model .ban-page-heading {
+    margin-bottom: 36px;
 }
 
 .ban-bwin-model__grid {
@@ -1724,8 +1764,8 @@
 }
 
 .ban-bwin-model article {
-    min-height: 300px;
-    padding: 28px 24px 0 0;
+    min-height: 230px;
+    padding: 22px 24px 24px 0;
 }
 
 .ban-bwin-model article + article {
@@ -1738,7 +1778,7 @@
 }
 
 .ban-bwin-model h3 {
-    margin: 72px 0 14px;
+    margin: 38px 0 12px;
     color: #531534;
     font-size: 1.45rem;
     font-weight: 750;
@@ -2042,6 +2082,10 @@
         padding-top: 8.75rem;
     }
 
+    .ban2-bwin-hero {
+        padding: 0;
+    }
+
     .ban2-hero__copy h1,
     .ban-program-hero h1,
     .ban-faq-hero h1 {
@@ -2099,12 +2143,18 @@
 
     .ban-bwin-model article,
     .ban-bwin-model article + article {
+        min-height: 0;
+        padding: 22px 0 24px;
         border-top-color: rgba(83, 21, 52, 0.14);
     }
 
     .ban2-functions__grid h3,
     .ban-bwin-model h3 {
         margin-top: 44px;
+    }
+
+    .ban-bwin-model h3 {
+        margin-top: 30px;
     }
 
     .ban2-functions__grid article,

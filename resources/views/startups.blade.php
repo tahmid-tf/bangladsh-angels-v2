@@ -54,7 +54,7 @@
                                 ? $deal->groupchat_invite_link
                                 : route('deal.view', $deal);
                         @endphp
-                        <x-ban-startup-card :startup="$deal" :href="$dealHref" />
+                        <x-ban-startup-card :startup="$deal" :href="$dealHref" class="ban2-startup-card--listing" />
                     @endforeach
                 </div>
             @endif

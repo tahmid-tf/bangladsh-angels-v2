@@ -41,6 +41,7 @@
                         :startup="$deal"
                         :href="route('deal.view', $deal)"
                         link-label="View company"
+                        class="ban2-startup-card--listing"
                     />
                 @endforeach
             </div>
