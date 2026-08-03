@@ -2514,7 +2514,7 @@ html {
     border-bottom: 1px solid rgba(0, 0, 0, 0.055);
     box-shadow: none;
     pointer-events: auto;
-    font-family: Roboto, Arial, sans-serif;
+    font-family: "Manrope", "Figtree", ui-sans-serif, system-ui, sans-serif;
 }
 
 .ban-site-nav__shell {
@@ -2560,9 +2560,10 @@ html {
     border-radius: 8px;
     color: #000;
     background: transparent;
-    font-size: 1rem;
-    font-weight: 600;
-    letter-spacing: 0;
+    font-family: "Manrope", "Figtree", ui-sans-serif, system-ui, sans-serif;
+    font-size: 0.89rem;
+    font-weight: 700;
+    letter-spacing: -0.018em;
 }
 
 .ban-site-nav__link:hover,
@@ -2591,8 +2592,10 @@ html {
     padding: 10px 12px;
     border-radius: 7px;
     color: #111;
-    font-size: 0.86rem;
-    font-weight: 600;
+    font-family: "Manrope", "Figtree", ui-sans-serif, system-ui, sans-serif;
+    font-size: 0.82rem;
+    font-weight: 700;
+    letter-spacing: -0.012em;
 }
 
 .ban-site-nav__dropdown-panel a:hover {
@@ -2612,8 +2615,10 @@ html {
     border-radius: 8px;
     color: #ef4044;
     background: #fff;
-    font-size: 0.875rem;
-    font-weight: 600;
+    font-family: "Manrope", "Figtree", ui-sans-serif, system-ui, sans-serif;
+    font-size: 0.8rem;
+    font-weight: 750;
+    letter-spacing: 0.025em;
 }
 
 .ban-site-nav__login:hover {
