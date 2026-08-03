@@ -47,9 +47,14 @@
                     There are no active deals listed right now. Check back soon.
                 </div>
             @else
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+                <div class="ban2-startups__grid">
                     @foreach ($activeDeals as $deal)
-                        <x-portfolio-showcase-card :deal="$deal" />
+                        @php
+                            $dealHref = $deal->type === 'review' && filled($deal->groupchat_invite_link)
+                                ? $deal->groupchat_invite_link
+                                : route('deal.view', $deal);
+                        @endphp
+                        <x-ban-startup-card :startup="$deal" :href="$dealHref" />
                     @endforeach
                 </div>
             @endif

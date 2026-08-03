@@ -162,18 +162,7 @@
                 @else
                     <div class="ban2-startups__grid">
                         @foreach ($featuredStartups as $startup)
-                            <article class="ban2-startup-card">
-                                <div class="ban2-startup-card__logo">
-                                    <img src="{{ $startup->getLogoUrl() }}" alt="{{ $startup->title }} logo" loading="lazy">
-                                </div>
-                                <div class="ban2-startup-card__meta">
-                                    <span>{{ $startup->investment_stage ?: 'Early stage' }}</span>
-                                    <span>{{ $startup->sector ?: 'Technology' }}</span>
-                                </div>
-                                <h3>{{ $startup->title }}</h3>
-                                <p>{{ \Illuminate\Support\Str::limit(strip_tags((string) $startup->description), 120, '…') }}</p>
-                                <a href="{{ route('startups') }}">Explore opportunity <span aria-hidden="true">→</span></a>
-                            </article>
+                            <x-ban-startup-card :startup="$startup" :href="route('startups')" />
                         @endforeach
                     </div>
                 @endif
@@ -239,13 +228,7 @@
                 @else
                     <div class="ban2-portfolio__grid">
                         @foreach ($portfolioDeals as $company)
-                            <a href="{{ route('portfolio') }}" class="ban2-portfolio-card" aria-label="View {{ $company->title }} in the BAN portfolio">
-                                <img src="{{ $company->getLogoUrl() }}" alt="{{ $company->title }} logo" loading="lazy">
-                                <div>
-                                    <h3>{{ $company->title }}</h3>
-                                    <p>{{ $company->sector ?: 'Portfolio company' }}</p>
-                                </div>
-                            </a>
+                            <x-ban-portfolio-card :company="$company" :href="route('portfolio')" />
                         @endforeach
                     </div>
                 @endif
