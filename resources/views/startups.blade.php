@@ -11,19 +11,7 @@
 @endpush
 
 @section('page_content')
-@php
-    $shadowClasses = [
-        'bg-[#36b37e]/22',
-        'bg-[#18736a]/18',
-        'bg-[#0f3d34]/14',
-    ];
-    $surfaceClasses = [
-        'from-white via-[#f7fdf9] to-[#eefaf4] border-green-100/90',
-        'from-white via-[#f3faf8] to-[#e6f4f0] border-[#18736a]/25',
-        'from-white via-[#f4faf7] to-[#e8f5ef] border-[#0f3d34]/18',
-    ];
-@endphp
-<div class="w-full max-w-6xl mx-auto px-4 sm:px-6 py-10 md:py-14">
+<div class="ban-startups-page w-full max-w-6xl mx-auto px-4 sm:px-6 py-10 md:py-14">
 
     <header class="mb-10 md:mb-12 text-center md:text-left">
         <h1 class="text-3xl md:text-4xl font-bold text-[#0f3d34]">Startups</h1>
@@ -92,112 +80,112 @@
     </section>
 
     {{-- Send us your pitch --}}
-    <section id="send-pitch" class="scroll-mt-32 mb-16 md:mb-20 pb-16 border-b border-green-100/80" aria-labelledby="pitch-heading">
-        <h2 id="pitch-heading" class="text-xl md:text-2xl font-bold text-[#0f3d34] mb-2">Send us your pitch</h2>
-        <p class="text-gray-600 mb-8 max-w-2xl">Share a one-line summary and your deck in PDF format. Our team will review submissions and follow up where there is a fit.</p>
+    <section id="send-pitch" class="ban-startup-pitch scroll-mt-32" aria-labelledby="pitch-heading">
+        <div class="ban-startup-pitch__copy">
+            <p class="ban-page-kicker">For founders</p>
+            <h2 id="pitch-heading">Send us your pitch</h2>
+            <p>Share a sharp one-line summary and an investor-ready PDF deck. Our team reviews every submission and follows up when there is a potential fit.</p>
 
-        @if (session('pitch_submitted'))
-            <div class="mb-8 rounded-xl border border-green-200 bg-green-50 px-4 py-3 text-green-900 text-sm font-medium" role="status">
-                Thank you—your pitch was submitted successfully.
-            </div>
-        @endif
+            <ol class="ban-startup-pitch__steps" aria-label="Pitch review process">
+                <li><span>01</span><strong>Make the opportunity clear</strong></li>
+                <li><span>02</span><strong>Attach your investor deck</strong></li>
+                <li><span>03</span><strong>Our team reviews for fit</strong></li>
+            </ol>
+        </div>
 
-        <form method="post" action="{{ route('startups.pitch') }}" enctype="multipart/form-data" class="max-w-xl rounded-2xl border border-green-100/80 bg-white/90 p-6 md:p-8 shadow-sm space-y-6">
-            @csrf
-            <div>
-                <label for="contact_email" class="block text-sm font-semibold text-[#0f3d34] mb-1">Contact email</label>
-                <input type="email" name="contact_email" id="contact_email" required value="{{ old('contact_email', auth()->user()->email ?? '') }}"
-                    class="w-full rounded-lg border border-gray-200 px-3 py-2 text-gray-900 shadow-sm focus:border-[#36b37e] focus:ring-[#36b37e]"
-                    autocomplete="email">
-                @error('contact_email')
-                    <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                @enderror
-            </div>
-            <div>
-                <label for="one_line" class="block text-sm font-semibold text-[#0f3d34] mb-1">One-line description of your startup</label>
-                <input type="text" name="one_line" id="one_line" required maxlength="280" value="{{ old('one_line') }}"
-                    placeholder="e.g. AI-powered logistics visibility for SMEs in South Asia"
-                    class="w-full rounded-lg border border-gray-200 px-3 py-2 text-gray-900 shadow-sm focus:border-[#36b37e] focus:ring-[#36b37e]">
-                @error('one_line')
-                    <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                @enderror
-            </div>
-            <div>
-                <label for="pitch_deck" class="block text-sm font-semibold text-[#0f3d34] mb-1">Pitch deck (PDF only, max 12&nbsp;MB)</label>
-                <input type="file" name="pitch_deck" id="pitch_deck" required accept="application/pdf,.pdf"
-                    class="block w-full text-sm text-gray-600 file:mr-4 file:rounded-lg file:border-0 file:bg-[#eefff1] file:px-4 file:py-2 file:font-semibold file:text-[#36b37e] hover:file:bg-[#dff7e8]">
-                @error('pitch_deck')
-                    <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                @enderror
-            </div>
-            <button type="submit" class="w-full sm:w-auto inline-flex justify-center px-8 py-3 rounded-full bg-[#36b37e] font-bold text-white hover:opacity-90 transition-opacity">
-                Submit pitch
-            </button>
-        </form>
+        <div class="ban-startup-pitch__form-wrap">
+            @if (session('pitch_submitted'))
+                <div class="ban-startup-pitch__success" role="status">
+                    Thank you—your pitch was submitted successfully.
+                </div>
+            @endif
+
+            <form method="post" action="{{ route('startups.pitch') }}" enctype="multipart/form-data" class="ban-startup-pitch__form">
+                @csrf
+                <div class="ban-startup-pitch__field">
+                    <label for="contact_email">Contact email</label>
+                    <input type="email" name="contact_email" id="contact_email" required value="{{ old('contact_email', auth()->user()->email ?? '') }}" autocomplete="email" placeholder="founder@company.com">
+                    @error('contact_email')
+                        <p class="ban-startup-pitch__error">{{ $message }}</p>
+                    @enderror
+                </div>
+                <div class="ban-startup-pitch__field">
+                    <label for="one_line">One-line description of your startup</label>
+                    <input type="text" name="one_line" id="one_line" required maxlength="280" value="{{ old('one_line') }}" placeholder="e.g. AI-powered logistics visibility for SMEs in South Asia">
+                    @error('one_line')
+                        <p class="ban-startup-pitch__error">{{ $message }}</p>
+                    @enderror
+                </div>
+                <div class="ban-startup-pitch__field">
+                    <label for="pitch_deck">Pitch deck <span>PDF only · Maximum 12 MB</span></label>
+                    <input type="file" name="pitch_deck" id="pitch_deck" required accept="application/pdf,.pdf">
+                    @error('pitch_deck')
+                        <p class="ban-startup-pitch__error">{{ $message }}</p>
+                    @enderror
+                </div>
+                <button type="submit" class="ban-startup-pitch__submit">Submit pitch <span aria-hidden="true">→</span></button>
+            </form>
+        </div>
     </section>
 
     {{-- Our services (admin-managed, resources-style cards) --}}
-    <section id="our-services" class="scroll-mt-32 mb-16 md:mb-20 pb-16 border-b border-green-100/80" aria-labelledby="services-heading">
-        <h2 id="services-heading" class="text-xl md:text-2xl font-bold text-[#0f3d34] mb-2">Our services</h2>
-        <p class="text-gray-600 mb-8 max-w-2xl">BAN offers structured support for founders through dedicated service lines. Packages and scope can be tailored after an initial conversation.</p>
+    <section id="our-services" class="ban-startup-services scroll-mt-32" aria-labelledby="services-heading">
+        <header class="ban-startup-services__heading">
+            <div>
+                <p class="ban-page-kicker">Founder support</p>
+                <h2 id="services-heading">Our services</h2>
+            </div>
+            <p>BAN offers structured support through dedicated service lines. Packages and scope are tailored after an initial conversation.</p>
+        </header>
 
         @if ($startupServices->isEmpty())
-            <p class="rounded-xl border border-green-100/80 bg-white px-5 py-6 text-sm text-gray-600 shadow-sm max-w-2xl" role="status">
+            <p class="ban-startup-services__empty" role="status">
                 Service listings are not configured yet. Please check back later.
             </p>
         @else
-            <div class="flex flex-col gap-10 md:gap-12">
+            <div class="ban-startup-services__grid">
                 @foreach ($startupServices as $svc)
                     @php
-                        $i = $loop->index % 3;
                         $isExternal = str_starts_with(strtolower(trim($svc->link)), 'http');
                     @endphp
-                    <div class="relative">
-                        <div class="absolute inset-0 translate-x-2 translate-y-2 rounded-3xl {{ $shadowClasses[$i] }}" aria-hidden="true"></div>
-                        <article class="relative overflow-hidden rounded-3xl border bg-gradient-to-br {{ $surfaceClasses[$i] }} shadow-md">
-                            <div class="flex flex-col lg:flex-row lg:items-center gap-8 lg:gap-10 p-8 md:p-10">
-                                <div class="lg:flex-1 text-center lg:text-left min-w-0">
-                                    <h3 class="text-2xl md:text-3xl font-bold text-[#0f3d34]">{{ $svc->title }}</h3>
-                                    <p class="mt-2 text-sm md:text-base text-gray-600 leading-relaxed">{{ $svc->intro }}</p>
-                                    @if ($svc->bulletList() !== [])
-                                        <ul class="mt-5 space-y-2 text-sm text-gray-700 list-disc list-inside text-left max-w-xl mx-auto lg:mx-0">
-                                            @foreach ($svc->bulletList() as $bullet)
-                                                <li>{{ $bullet }}</li>
-                                            @endforeach
-                                        </ul>
-                                    @endif
-                                    @if (filled($svc->footer_note))
-                                        <p class="mt-5 text-xs text-gray-500">{{ $svc->footer_note }}</p>
-                                    @endif
-                                </div>
-                                <div class="flex justify-center shrink-0">
-                                    <div class="h-28 w-28 md:h-32 md:w-32 shrink-0 overflow-hidden rounded-full border-2 border-white shadow-md ring-2 ring-[#36b37e]/20 bg-gray-50">
-                                        @if ($svc->logoUrl())
-                                            <img src="{{ $svc->logoUrl() }}" alt="" class="h-full w-full object-cover object-center">
-                                        @else
-                                            <div class="flex h-full w-full items-center justify-center bg-gradient-to-br from-[#36b37e]/15 to-[#0f3d34]/10 text-lg font-bold text-[#0f3d34]/60 tracking-wide" aria-hidden="true">
-                                                {{ \Illuminate\Support\Str::upper(\Illuminate\Support\Str::substr(preg_replace('/\s+/', '', $svc->title), 0, 2)) }}
-                                            </div>
-                                        @endif
-                                    </div>
-                                </div>
-                                <div class="flex flex-col items-center lg:items-end shrink-0 w-full lg:w-auto">
-                                    <a href="{{ $svc->link }}"
-                                       @if ($isExternal) target="_blank" rel="noopener noreferrer" @endif
-                                       class="inline-flex items-center justify-center gap-2 rounded-full bg-[#0f3d34] px-6 py-3 text-sm md:text-base font-semibold text-white shadow-sm hover:bg-[#156755] transition-colors w-full sm:w-auto">
-                                        <span>{{ $svc->cta_label }}</span>
-                                    </a>
-                                </div>
+                    <article class="ban-startup-service-card">
+                        <div class="ban-startup-service-card__topline">
+                            <span>{{ str_pad((string) $loop->iteration, 2, '0', STR_PAD_LEFT) }}</span>
+                            <div class="ban-startup-service-card__logo">
+                                @if ($svc->logoUrl())
+                                    <img src="{{ $svc->logoUrl() }}" alt="" loading="lazy">
+                                @else
+                                    <span aria-hidden="true">{{ \Illuminate\Support\Str::upper(\Illuminate\Support\Str::substr(preg_replace('/\s+/', '', $svc->title), 0, 2)) }}</span>
+                                @endif
                             </div>
-                        </article>
-                        @if ($svc->show_brochure_link)
-                            <p class="mt-4 text-center">
-                                <a href="{{ $svc->brochurePublicHref() }}" target="_blank" rel="noopener noreferrer" class="text-sm font-semibold text-[#36b37e] hover:text-[#18736a] underline underline-offset-4">
-                                    Click here to see our brochure
+                        </div>
+
+                        <div class="ban-startup-service-card__content">
+                            <h3>{{ $svc->title }}</h3>
+                            <p>{{ $svc->intro }}</p>
+                            @if ($svc->bulletList() !== [])
+                                <ul>
+                                    @foreach ($svc->bulletList() as $bullet)
+                                        <li><span aria-hidden="true"></span>{{ $bullet }}</li>
+                                    @endforeach
+                                </ul>
+                            @endif
+                            @if (filled($svc->footer_note))
+                                <p class="ban-startup-service-card__note">{{ $svc->footer_note }}</p>
+                            @endif
+                        </div>
+
+                        <footer class="ban-startup-service-card__footer">
+                            <a href="{{ $svc->link }}" @if ($isExternal) target="_blank" rel="noopener noreferrer" @endif>
+                                {{ $svc->cta_label }} <span aria-hidden="true">→</span>
+                            </a>
+                            @if ($svc->show_brochure_link)
+                                <a href="{{ $svc->brochurePublicHref() }}" target="_blank" rel="noopener noreferrer" class="ban-startup-service-card__brochure">
+                                    View brochure <span aria-hidden="true">↗</span>
                                 </a>
-                            </p>
-                        @endif
-                    </div>
+                            @endif
+                        </footer>
+                    </article>
                 @endforeach
             </div>
         @endif

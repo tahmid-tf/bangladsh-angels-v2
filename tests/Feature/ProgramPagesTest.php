@@ -82,6 +82,17 @@ class ProgramPagesTest extends TestCase
             ->assertSee('Bring your perspective to the table.');
     }
 
+    public function test_startups_page_uses_the_updated_pitch_and_services_sections(): void
+    {
+        $this->get(route('startups'))
+            ->assertOk()
+            ->assertSee('class="ban-startup-pitch scroll-mt-32"', false)
+            ->assertSee('action="'.route('startups.pitch').'"', false)
+            ->assertSee('Make the opportunity clear')
+            ->assertSee('class="ban-startup-services scroll-mt-32"', false)
+            ->assertSee('Founder support');
+    }
+
     public function test_faq_includes_the_contact_prompt(): void
     {
         $this->get(route('faq'))
