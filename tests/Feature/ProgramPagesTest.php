@@ -23,6 +23,9 @@ class ProgramPagesTest extends TestCase
             ->assertSee('id="our-partners"', false)
             ->assertSee('id="ban2-partners-heading">A stronger ecosystem is built together.</h2>', false)
             ->assertSee('id="faq"', false)
+            ->assertSee('What sort of returns are you seeing or expecting?')
+            ->assertSee('Are startups registered in the US, and do syndicates issue K-1 tax forms for US investors?')
+            ->assertSee('<a href="'.route('faq').'" class="ban-site-nav__link">FAQ</a>', false)
             ->assertSee(route('bwin'), false)
             ->assertSee(route('angel-academy'), false)
             ->assertSee(route('resources'), false);
@@ -58,6 +61,10 @@ class ProgramPagesTest extends TestCase
     {
         $this->get(route('faq'))
             ->assertOk()
+            ->assertSee('Frequently Asked Questions about BAN')
+            ->assertSee('20 essential answers')
+            ->assertSee('What sort of returns are you seeing or expecting?')
+            ->assertSee('Will BAN manage post-investment communications?')
             ->assertSee('Can’t find what you’re looking for?')
             ->assertSee('mailto:hello@bdangels.co', false);
     }

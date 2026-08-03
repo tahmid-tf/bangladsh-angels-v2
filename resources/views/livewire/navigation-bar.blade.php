@@ -15,7 +15,7 @@
                 <li><a href="{{ $homeSection('featured-startups') }}" class="ban-site-nav__link">Featured Startups</a></li>
                 <li><a href="{{ $homeSection('portfolio') }}" class="ban-site-nav__link">Portfolio</a></li>
                 <li><a href="{{ $homeSection('team') }}" class="ban-site-nav__link">Team</a></li>
-                <li><a href="{{ $homeSection('faq') }}" class="ban-site-nav__link">FAQ</a></li>
+                <li><a href="{{ route('faq') }}" class="ban-site-nav__link">FAQ</a></li>
                 <li class="ban-site-nav__dropdown">
                     <button type="button" class="ban-site-nav__dropdown-button" aria-haspopup="true">
                         <span>Programs</span><span class="ban-site-nav__chevron" aria-hidden="true">▾</span>
@@ -75,7 +75,7 @@
                 <li><a href="{{ $homeSection('featured-startups') }}">Featured Startups</a></li>
                 <li><a href="{{ $homeSection('portfolio') }}">Portfolio</a></li>
                 <li><a href="{{ $homeSection('team') }}">Team</a></li>
-                <li><a href="{{ $homeSection('faq') }}">FAQ</a></li>
+                <li><a href="{{ route('faq') }}">FAQ</a></li>
                 <li>
                     <span>Our Programs</span>
                     <div class="ban-site-nav__mobile-subnav">

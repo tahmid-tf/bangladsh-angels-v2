@@ -4,7 +4,7 @@
 @push('head_meta')
     <x-seo-meta
         title="FAQ | Bangladesh Angels Network"
-        description="Clear answers about BAN, angel investing, startup evaluation, transactions, SPVs, and how investment capital is handled."
+        description="Answers to 20 frequently asked questions about BAN, angel-investing returns, regulations, exits, SPVs, taxes, diligence, documentation, and portfolio support."
         :canonical="route('faq')"
         :image="asset('og.png')"
     />
@@ -14,15 +14,15 @@
 <main class="ban-subpage ban-faq-page">
     <section class="ban-faq-hero" aria-labelledby="faq-page-heading">
         <div class="ban-page-shell">
-            <p class="ban-page-kicker">Frequently asked questions</p>
-            <h1 id="faq-page-heading">Angel investing, explained plainly.</h1>
-            <p>Explore BAN's most frequently asked questions about our role, startup evaluation, investment structures, documentation, and exits.</p>
+            <p class="ban-page-kicker">BAN knowledge base</p>
+            <h1 id="faq-page-heading">Frequently Asked Questions about BAN</h1>
+            <p>Clear answers about returns, regulation, exits, investor protection, foreign investment, SPVs, documentation, diligence, and portfolio support.</p>
 
             <div class="ban-faq-search">
                 <label for="faq-search">Search the FAQ</label>
                 <div>
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg>
-                    <input id="faq-search" type="search" placeholder="Try “SPV”, “documents”, or “exits”" autocomplete="off">
+                    <input id="faq-search" type="search" placeholder="Try &quot;SPV&quot;, &quot;tax&quot;, or &quot;exits&quot;" autocomplete="off">
                 </div>
             </div>
         </div>
@@ -33,7 +33,7 @@
             <aside>
                 <p class="ban-page-kicker">BAN knowledge base</p>
                 <h2 id="faq-list-heading">{{ count($faqs) }} essential answers</h2>
-                <p>The information here is general and does not replace independent legal, tax, or investment advice.</p>
+                <p>Adapted from BAN's supplied FAQ document. This general information does not replace independent legal, tax, banking, or investment advice.</p>
             </aside>
 
             <div>
