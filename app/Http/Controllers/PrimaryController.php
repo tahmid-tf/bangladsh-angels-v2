@@ -33,7 +33,6 @@ class PrimaryController extends Controller
         $teamMembers = TeamMember::query()
             ->forSection(TeamMember::SECTION_MANAGEMENT)
             ->ordered()
-            ->limit(4)
             ->get();
 
         $faqs = collect(BanFaqs::all())->take(6);

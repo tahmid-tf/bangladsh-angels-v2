@@ -19,6 +19,7 @@ class ProgramPagesTest extends TestCase
             ->assertSee('id="featured-startups"', false)
             ->assertSee('id="portfolio"', false)
             ->assertSee('id="team"', false)
+            ->assertSee('id="ban2-team-heading">Our Team</h2>', false)
             ->assertSee('id="faq"', false)
             ->assertSee(route('bwin'), false)
             ->assertSee(route('angel-academy'), false)

@@ -253,28 +253,43 @@
         </section>
 
         <section id="team" class="ban2-section ban2-team" aria-labelledby="ban2-team-heading">
-            <div class="ban2-shell ban2-team__layout">
-                <header class="ban2-section-heading">
-                    <p class="ban2-kicker">Team</p>
-                    <h2 id="ban2-team-heading">Operators building an investor community.</h2>
-                    <p>Our management team connects founders, investors, partners, and advisers across the full investment journey.</p>
-                    <a href="{{ route('team') }}" class="ban2-button ban2-button--secondary">Meet the full team</a>
+            <div class="ban2-shell">
+                <header class="ban2-team__heading">
+                    <h2 id="ban2-team-heading">Our Team</h2>
+                    <p>Meet the team behind Bangladesh Angels Network, connecting founders, investors, and partners across the entrepreneurial ecosystem.</p>
                 </header>
 
-                <div class="ban2-team__grid">
-                    @foreach ($teamMembers as $member)
-                        <article class="ban2-team-card">
-                            <div class="ban2-team-card__photo">
-                                @if ($member->photoUrl())
-                                    <img src="{{ $member->photoUrl() }}" alt="{{ $member->name }}" loading="lazy">
-                                @else
-                                    <span aria-hidden="true">{{ collect(explode(' ', $member->name))->map(fn ($part) => mb_substr($part, 0, 1))->take(2)->implode('') }}</span>
-                                @endif
-                            </div>
-                            <h3>{{ $member->name }}</h3>
-                            <p>{{ $member->title }}</p>
-                        </article>
-                    @endforeach
+                @if ($teamMembers->isEmpty())
+                    <div class="ban2-empty" role="status">Team profiles will appear here soon.</div>
+                @else
+                    <div class="ban2-team__marquee" aria-label="Bangladesh Angels Network team members">
+                        <div class="ban2-team__track">
+                            @foreach ([false, true] as $duplicate)
+                                <div class="ban2-team__group" @if ($duplicate) aria-hidden="true" @endif>
+                                    @foreach ($teamMembers as $member)
+                                        <article class="ban2-team-profile">
+                                            <div class="ban2-team-profile__photo">
+                                                @if ($member->photoUrl())
+                                                    <img src="{{ $member->photoUrl() }}" alt="{{ $duplicate ? '' : $member->name }}" loading="lazy">
+                                                @else
+                                                    <span aria-hidden="true">{{ collect(explode(' ', $member->name))->map(fn ($part) => mb_substr($part, 0, 1))->take(2)->implode('') }}</span>
+                                                @endif
+                                            </div>
+                                            <div class="ban2-team-profile__copy">
+                                                <h3>{{ $member->name }}</h3>
+                                                <p>{{ $member->title }}</p>
+                                                <span>Bangladesh Angels Network</span>
+                                            </div>
+                                        </article>
+                                    @endforeach
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
+                @endif
+
+                <div class="ban2-team__link-wrap">
+                    <a href="{{ route('team') }}" class="ban2-text-link">Meet the full team <span aria-hidden="true">→</span></a>
                 </div>
             </div>
         </section>
