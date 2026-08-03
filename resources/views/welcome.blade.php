@@ -15,7 +15,7 @@
     <meta property="og:image" content="{{ url(asset('og.png')) }}">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Bangladesh Angels Network | Capital, community and conviction">
-    <meta name="twitter:description" content="Where ambitious founders meet committed capital.">
+    <meta name="twitter:description" content="Join Bangladesh's leading angel-investor community.">
     <meta name="twitter:image" content="{{ url(asset('og.png')) }}">
     <title>Bangladesh Angels Network | Capital, community and conviction</title>
     <link rel="icon" type="image/webp" href="{{ asset('icon.webp') }}">
@@ -34,7 +34,7 @@
             <div class="ban2-shell ban2-hero__grid">
                 <div class="ban2-hero__copy">
                     <p class="ban2-kicker">Bangladesh Angels Network</p>
-                    <h1 id="ban2-hero-heading">Where ambitious founders meet committed capital.</h1>
+                    <h1 id="ban2-hero-heading">Join BAN</h1>
                     <p class="ban2-hero__lede">
                         Bangladesh's first and largest angel-investment platform brings together investors, operators,
                         and entrepreneurs to build the country's next generation of enduring companies.
@@ -52,6 +52,10 @@
 
                 <div class="ban2-hero__visual" aria-label="Bangladesh Angels investor community">
                     <div class="ban2-hero__visual-frame">
+                        <div class="ban2-hero__visual-topline" aria-hidden="true">
+                            <span>The BAN network</span>
+                            <span>Established 2019</span>
+                        </div>
                         <img src="{{ asset('landing.png') }}" alt="Members of the Bangladesh Angels investor community" width="620" height="465" loading="eager">
                     </div>
                     <p><span aria-hidden="true"></span> Investing across Bangladesh and beyond</p>

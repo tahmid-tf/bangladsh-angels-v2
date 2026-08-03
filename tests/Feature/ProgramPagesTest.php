@@ -12,6 +12,9 @@ class ProgramPagesTest extends TestCase
 
         $response
             ->assertOk()
+            ->assertSee('<h1 id="ban2-hero-heading">Join BAN</h1>', false)
+            ->assertSee('<a href="'.route('investor.signup').'" class="ban-site-nav__link">Investor Signup</a>', false)
+            ->assertSee('<a href="'.route('investor.signup').'">Investor Signup</a>', false)
             ->assertSee('id="join"', false)
             ->assertSee('id="featured-startups"', false)
             ->assertSee('id="portfolio"', false)
@@ -30,14 +33,22 @@ class ProgramPagesTest extends TestCase
             ->assertSee('Join the BWIN community');
     }
 
-    public function test_angel_academy_has_booking_and_clickable_glossary_links(): void
+    public function test_angel_academy_uses_the_original_program_page(): void
     {
         $this->get(route('angel-academy'))
             ->assertOk()
-            ->assertSee('Book a Meeting')
-            ->assertSee('id="academy-glossary"', false)
-            ->assertSee('href="#glossary-cap-table"', false)
-            ->assertSee('id="glossary-term-sheet"', false);
+            ->assertSee('Book a Meet')
+            ->assertSee('CURRICULUM (15 SESSIONS)');
+    }
+
+    public function test_investor_signup_uses_the_original_application_page(): void
+    {
+        $this->get(route('investor.signup'))
+            ->assertOk()
+            ->assertSee('Become an Angel investor')
+            ->assertSee('Investor Application')
+            ->assertSee('Choose your tier')
+            ->assertSee('action="'.route('member.apply').'"', false);
     }
 
     public function test_faq_includes_the_contact_prompt(): void

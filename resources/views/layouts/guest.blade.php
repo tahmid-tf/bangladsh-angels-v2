@@ -78,7 +78,7 @@
     </script>
 </head>
 
-<body class="flex flex-col items-center w-full font-sans text-gray-900 antialiased pt-[calc(6.5rem+env(safe-area-inset-top,0px))] md:pt-[calc(8rem+env(safe-area-inset-top,0px))] lg:pt-[calc(9.375rem+env(safe-area-inset-top,0px))]">
+<body class="flex flex-col items-center w-full font-sans text-gray-900 antialiased pt-[calc(4rem+env(safe-area-inset-top,0px))]">
     
     <!-- Loading Screen -->
     <div id="loading-screen">

@@ -11,6 +11,7 @@
         <nav class="ban-site-nav__desktop" aria-label="Primary navigation">
             <ul class="ban-site-nav__list">
                 <li><a href="{{ $homeSection('join') }}" class="ban-site-nav__link">Join</a></li>
+                <li><a href="{{ route('investor.signup') }}" class="ban-site-nav__link">Investor Signup</a></li>
                 <li><a href="{{ $homeSection('featured-startups') }}" class="ban-site-nav__link">Featured Startups</a></li>
                 <li><a href="{{ $homeSection('portfolio') }}" class="ban-site-nav__link">Portfolio</a></li>
                 <li><a href="{{ $homeSection('team') }}" class="ban-site-nav__link">Team</a></li>
@@ -48,8 +49,7 @@
             @endauth
 
             @guest
-                <a href="{{ route('login') }}" class="ban-site-nav__login">Login</a>
-                <a href="{{ route('investor.signup') }}" class="ban-site-nav__investor">Join BAN</a>
+                <a href="{{ route('login') }}" class="ban-site-nav__login">SIGN IN</a>
             @endguest
         </div>
 
@@ -68,10 +68,10 @@
                     <li><a href="{{ route('profile.edit') }}">Profile</a></li>
                 @endauth
                 @guest
-                    <li><a href="{{ route('investor.signup') }}" class="ban-mobile-primary">Join BAN</a></li>
                     <li><a href="{{ route('login') }}" class="ban-mobile-secondary">Login</a></li>
                 @endguest
                 <li><a href="{{ $homeSection('join') }}">Join</a></li>
+                <li><a href="{{ route('investor.signup') }}">Investor Signup</a></li>
                 <li><a href="{{ $homeSection('featured-startups') }}">Featured Startups</a></li>
                 <li><a href="{{ $homeSection('portfolio') }}">Portfolio</a></li>
                 <li><a href="{{ $homeSection('team') }}">Team</a></li>
