@@ -11,14 +11,29 @@
 @endpush
 
 @section('page_content')
-<div class="ban-startups-page w-full max-w-6xl mx-auto px-4 sm:px-6 py-10 md:py-14">
+<main class="ban-subpage ban-startups-page">
+    <section class="ban-listing-hero ban-listing-hero--startups" aria-labelledby="ban-startups-title">
+        <div class="ban-page-shell">
+            <div class="ban-listing-hero__grid">
+                <div class="ban-listing-hero__copy">
+                    <p class="ban-page-kicker">For founders</p>
+                    <h1 id="ban-startups-title">Built for founders ready to move.</h1>
+                </div>
 
-    <header class="mb-10 md:mb-12 text-center md:text-left">
-        <h1 class="text-3xl md:text-4xl font-bold text-[#0f3d34]">Startups</h1>
-        <p class="mt-3 text-gray-600 text-[0.95em] md:text-lg max-w-3xl mx-auto md:mx-0 leading-relaxed">
-            Discover member-only active deals, send your pitch, and explore BAN services for founders.
-        </p>
-    </header>
+                <div class="ban-listing-hero__summary">
+                    <p>Discover live investment opportunities, share your pitch, and access focused support designed to help promising companies become investment-ready.</p>
+                </div>
+            </div>
+
+            <nav class="ban-listing-hero__nav" aria-label="Startups page sections">
+                <a href="#active-deals">Active deals <span aria-hidden="true">&darr;</span></a>
+                <a href="#send-pitch">Send your pitch <span aria-hidden="true">&darr;</span></a>
+                <a href="#our-services">Our services <span aria-hidden="true">&darr;</span></a>
+            </nav>
+        </div>
+    </section>
+
+    <div class="ban-page-shell ban-startups-page__content">
 
     {{-- Active deals (paywalled) --}}
     <section id="active-deals" class="scroll-mt-32 mb-16 md:mb-20 pb-16 border-b border-green-100/80" aria-labelledby="active-deals-heading">
@@ -191,5 +206,6 @@
         @endif
     </section>
 
-</div>
+    </div>
+</main>
 @endsection

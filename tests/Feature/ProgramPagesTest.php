@@ -89,11 +89,25 @@ class ProgramPagesTest extends TestCase
     {
         $this->get(route('startups'))
             ->assertOk()
+            ->assertSee('class="ban-listing-hero ban-listing-hero--startups"', false)
+            ->assertSee('Built for founders ready to move.')
+            ->assertSee('href="#active-deals"', false)
             ->assertSee('class="ban-startup-pitch scroll-mt-32"', false)
             ->assertSee('action="'.route('startups.pitch').'"', false)
             ->assertSee('Make the opportunity clear')
             ->assertSee('class="ban-startup-services scroll-mt-32"', false)
             ->assertSee('Founder support');
+    }
+
+    public function test_portfolio_page_uses_the_editorial_listing_header(): void
+    {
+        $this->get(route('portfolio'))
+            ->assertOk()
+            ->assertSee('class="ban-listing-hero ban-listing-hero--portfolio"', false)
+            ->assertSee('Backed by BAN. Built to endure.')
+            ->assertSee('href="#portfolio-companies"', false)
+            ->assertSee('id="portfolio-companies"', false)
+            ->assertSee('Our portfolio');
     }
 
     public function test_faq_includes_the_contact_prompt(): void
