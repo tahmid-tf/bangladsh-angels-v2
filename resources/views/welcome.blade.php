@@ -44,7 +44,7 @@
                         <a href="#pitch-form" class="ban2-button ban2-button--secondary">Pitch your startup</a>
                     </div>
                     <div class="ban2-hero__proof" aria-label="BAN at a glance">
-                        <div><strong>500+</strong><span>angel investors</span></div>
+                        <div><strong>500+</strong><span>angel <br>investors</span></div>
                         <div><strong>$12M+</strong><span>capital facilitated</span></div>
                         <div><strong>51</strong><span>portfolio companies</span></div>
                     </div>
@@ -162,7 +162,7 @@
                 @else
                     <div class="ban2-startups__grid">
                         @foreach ($featuredStartups as $startup)
-                            <x-ban-startup-card :startup="$startup" :show-link="false" />
+                            <x-ban-startup-card :startup="$startup" :href="route('deal.view', $startup)" />
                         @endforeach
                     </div>
                 @endif

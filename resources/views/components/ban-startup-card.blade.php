@@ -3,7 +3,6 @@
     'href' => null,
     'linkLabel' => 'Explore opportunity',
     'showInvestmentDetails' => false,
-    'showLink' => true,
 ])
 
 @php
@@ -37,7 +36,5 @@
             </div>
         </dl>
     @endif
-    @if ($showLink)
-        <a href="{{ $cardHref }}">{{ $linkLabel }} <span aria-hidden="true">&rarr;</span></a>
-    @endif
+    <a href="{{ $cardHref }}">{{ $linkLabel }} <span aria-hidden="true">&rarr;</span></a>
 </article>
