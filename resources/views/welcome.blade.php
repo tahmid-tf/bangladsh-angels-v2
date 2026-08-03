@@ -294,6 +294,58 @@
             </div>
         </section>
 
+        <section id="our-partners" class="ban2-section ban2-partners" aria-labelledby="ban2-partners-heading">
+            <div class="ban2-shell">
+                <header class="ban2-section-heading ban2-section-heading--split">
+                    <div>
+                        <p class="ban2-kicker">Our partners</p>
+                        <h2 id="ban2-partners-heading">A stronger ecosystem is built together.</h2>
+                    </div>
+                    <p>We collaborate with leading institutions, investment firms, and ecosystem builders to co-invest in high-potential startups and guide founders with meaningful industry expertise.</p>
+                </header>
+
+                <div class="ban2-partners__groups">
+                    <section class="ban2-partner-group" aria-labelledby="ban2-founding-partners-heading">
+                        <header class="ban2-partner-group__heading">
+                            <span>01</span>
+                            <h3 id="ban2-founding-partners-heading">Founding Partners</h3>
+                        </header>
+                        <div class="ban2-partner-grid ban2-partner-grid--founding">
+                            <a href="https://www.government.nl/ministries/ministry-of-foreign-affairs" target="_blank" rel="noopener noreferrer" class="ban2-partner-card" aria-label="Visit the Netherlands Ministry of Foreign Affairs website">
+                                <img src="{{ asset('foreignaffairsnetherland.webp') }}" alt="Netherlands Ministry of Foreign Affairs" width="500" height="203" loading="lazy">
+                                <span aria-hidden="true">↗</span>
+                            </a>
+                            <a href="https://aavishkaarcapital.in/" target="_blank" rel="noopener noreferrer" class="ban2-partner-card" aria-label="Visit the Aavishkaar Capital website">
+                                <img src="{{ asset('capital logo.webp') }}" alt="Aavishkaar Capital" width="455" height="192" loading="lazy">
+                                <span aria-hidden="true">↗</span>
+                            </a>
+                        </div>
+                    </section>
+
+                    <section class="ban2-partner-group" aria-labelledby="ban2-industry-partners-heading">
+                        <header class="ban2-partner-group__heading">
+                            <span>02</span>
+                            <h3 id="ban2-industry-partners-heading">Industry Partners</h3>
+                        </header>
+                        <div class="ban2-partner-grid ban2-partner-grid--industry">
+                            <a href="https://bida.gov.bd/" target="_blank" rel="noopener noreferrer" class="ban2-partner-card" aria-label="Visit the BIDA website">
+                                <img src="{{ asset('bidalogo.webp') }}" alt="Bangladesh Investment Development Authority (BIDA)" width="310" height="255" loading="lazy">
+                                <span aria-hidden="true">↗</span>
+                            </a>
+                            <a href="https://venture.com.bd/" target="_blank" rel="noopener noreferrer" class="ban2-partner-card" aria-label="Visit the Bangladesh Venture Capital website">
+                                <img src="{{ asset('bangladesh venture capital.webp') }}" alt="Bangladesh Venture Capital" width="624" height="190" loading="lazy">
+                                <span aria-hidden="true">↗</span>
+                            </a>
+                            <a href="https://lightcastlepartners.com/" target="_blank" rel="noopener noreferrer" class="ban2-partner-card" aria-label="Visit the LightCastle Partners website">
+                                <img src="{{ asset('lcp.svg') }}" alt="LightCastle Partners" width="150" height="80" loading="lazy">
+                                <span aria-hidden="true">↗</span>
+                            </a>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </section>
+
         <section id="faq" class="ban2-section ban2-faq" aria-labelledby="ban2-faq-heading">
             <div class="ban2-shell ban2-faq__layout">
                 <header class="ban2-section-heading">
