@@ -13,8 +13,10 @@ class ProgramPagesTest extends TestCase
         $response
             ->assertOk()
             ->assertSee('<h1 id="ban2-hero-heading">Join BAN</h1>', false)
-            ->assertSee('<a href="'.route('investor.signup').'" class="ban-site-nav__link">Investor Signup</a>', false)
-            ->assertSee('<a href="'.route('investor.signup').'">Investor Signup</a>', false)
+            ->assertDontSee('<a href="#join" class="ban-site-nav__link">Join</a>', false)
+            ->assertSee('<a href="#ban-events" class="ban-site-nav__link">Events</a>', false)
+            ->assertDontSee('<a href="'.route('investor.signup').'" class="ban-site-nav__link">Investor Signup</a>', false)
+            ->assertSee('<a href="'.route('investor.signup').'">Become an Investor</a>', false)
             ->assertSee('id="join"', false)
             ->assertSee('id="featured-startups"', false)
             ->assertSee('id="portfolio"', false)

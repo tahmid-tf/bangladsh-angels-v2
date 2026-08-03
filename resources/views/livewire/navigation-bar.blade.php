@@ -10,8 +10,7 @@
 
         <nav class="ban-site-nav__desktop" aria-label="Primary navigation">
             <ul class="ban-site-nav__list">
-                <li><a href="{{ $homeSection('join') }}" class="ban-site-nav__link">Join</a></li>
-                <li><a href="{{ route('investor.signup') }}" class="ban-site-nav__link">Investor Signup</a></li>
+                <li><a href="{{ $homeSection('ban-events') }}" class="ban-site-nav__link">Events</a></li>
                 <li><a href="{{ $homeSection('featured-startups') }}" class="ban-site-nav__link">Featured Startups</a></li>
                 <li><a href="{{ $homeSection('portfolio') }}" class="ban-site-nav__link">Portfolio</a></li>
                 <li><a href="{{ $homeSection('team') }}" class="ban-site-nav__link">Team</a></li>
@@ -70,8 +69,7 @@
                 @guest
                     <li><a href="{{ route('login') }}" class="ban-mobile-secondary">Login</a></li>
                 @endguest
-                <li><a href="{{ $homeSection('join') }}">Join</a></li>
-                <li><a href="{{ route('investor.signup') }}">Investor Signup</a></li>
+                <li><a href="{{ $homeSection('ban-events') }}">Events</a></li>
                 <li><a href="{{ $homeSection('featured-startups') }}">Featured Startups</a></li>
                 <li><a href="{{ $homeSection('portfolio') }}">Portfolio</a></li>
                 <li><a href="{{ $homeSection('team') }}">Team</a></li>
