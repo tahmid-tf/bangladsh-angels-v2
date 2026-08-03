@@ -112,10 +112,7 @@
 
                 <div class="ban2-programs__grid">
                     <article class="ban2-program-card ban2-program-card--bwin">
-                        <div class="ban2-program-card__mark">
-                            <img src="{{ asset('bwin.png') }}" alt="BWIN — Bangladesh Women Investors Network" width="570" height="181" loading="lazy">
-                        </div>
-                        <div>
+                        <div class="ban2-program-card__copy">
                             <p>Women-led investment</p>
                             <h3>BWIN</h3>
                             <span>Building a more diverse pipeline of investors and entrepreneurs across Bangladesh.</span>
@@ -127,8 +124,7 @@
                     </article>
 
                     <article class="ban2-program-card ban2-program-card--academy">
-                        <div class="ban2-program-card__monogram" aria-hidden="true">AA</div>
-                        <div>
+                        <div class="ban2-program-card__copy">
                             <p>Investor education</p>
                             <h3>Angel Academy</h3>
                             <span>Practical learning for aspiring and active angels—from first principles to investment committee.</span>
@@ -140,8 +136,7 @@
                     </article>
 
                     <article class="ban2-program-card ban2-program-card--deckvue">
-                        <div class="ban2-program-card__monogram" aria-hidden="true">DV</div>
-                        <div>
+                        <div class="ban2-program-card__copy">
                             <p>AI-powered diligence</p>
                             <h3>DeckVue</h3>
                             <span>Turn pitch decks into structured, verified investment intelligence in minutes.</span>
