@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Deal;
+use App\Models\Resource;
 use App\Models\StartupService;
 use App\Models\SubscriptionTier;
 use App\Models\TeamMember;
@@ -37,7 +38,17 @@ class PrimaryController extends Controller
 
         $faqs = collect(BanFaqs::all())->take(6);
 
-        return view('welcome', compact('featuredStartups', 'portfolioDeals', 'teamMembers', 'faqs'));
+        $landingResourceEvents = Resource::query()
+            ->with('media')
+            ->whereIn('type', ['event', 'webinar'])
+            ->orderByDesc('show_on_landing')
+            ->orderByRaw('CASE WHEN date IS NULL THEN 1 ELSE 0 END')
+            ->orderByDesc('date')
+            ->orderByDesc('id')
+            ->limit(6)
+            ->get();
+
+        return view('welcome', compact('featuredStartups', 'portfolioDeals', 'teamMembers', 'faqs', 'landingResourceEvents'));
     }
 
     // Upgrade Page

@@ -1050,6 +1050,120 @@
     }
 }
 
+.ban2-events {
+    background:
+        radial-gradient(circle at 8% 92%, rgba(201, 243, 220, 0.32), transparent 24%),
+        var(--ban2-paper);
+}
+
+.ban2-events__list {
+    display: grid;
+    width: min(1060px, 100%);
+    gap: 18px;
+    margin-inline: auto;
+}
+
+.ban2-events .ban-event-card {
+    min-height: 280px;
+    border-color: var(--ban2-line);
+    border-radius: 20px;
+    box-shadow: 0 18px 46px rgba(9, 47, 41, 0.07);
+}
+
+.ban2-events .ban-event-card:hover {
+    border-color: rgba(15, 115, 89, 0.34);
+    box-shadow: 0 24px 58px rgba(9, 47, 41, 0.12);
+}
+
+.ban2-events .ban-event-card__image {
+    min-height: 280px;
+}
+
+.ban2-events .ban-event-card__body {
+    padding: clamp(26px, 4vw, 40px);
+}
+
+.ban2-events .ban-event-card__type {
+    color: var(--ban2-green);
+}
+
+.ban2-events .ban-event-card__title,
+.ban2-events .ban-event-card__register,
+.ban2-events .ban-event-card__details {
+    font-family: "Manrope", "Figtree", ui-sans-serif, system-ui, sans-serif;
+}
+
+.ban2-events .ban-event-card__register {
+    border-radius: 9px;
+    background: var(--ban2-ink);
+}
+
+.ban2-events__empty {
+    display: flex;
+    min-height: 260px;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    padding: 42px 24px;
+    border: 1px solid var(--ban2-line);
+    border-radius: 20px;
+    text-align: center;
+    background: rgba(255, 255, 255, 0.84);
+    box-shadow: 0 18px 50px rgba(9, 47, 41, 0.06);
+}
+
+.ban2-events__empty > span {
+    color: var(--ban2-green);
+    font-size: 0.65rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+
+.ban2-events__empty h3 {
+    margin: 17px 0 0;
+    color: var(--ban2-ink);
+    font-size: clamp(1.35rem, 2.6vw, 2rem);
+    font-weight: 700;
+    letter-spacing: -0.035em;
+}
+
+.ban2-events__empty p {
+    margin: 10px 0 0;
+    color: #667d76;
+    font-size: 0.85rem;
+    line-height: 1.65;
+}
+
+.ban2-events__empty a {
+    display: inline-flex;
+    min-height: 46px;
+    align-items: center;
+    gap: 9px;
+    margin-top: 24px;
+    padding: 0 17px;
+    border: 1px solid rgba(15, 115, 89, 0.2);
+    border-radius: 9px;
+    color: var(--ban2-green);
+    background: #eaf6f0;
+    font-size: 0.78rem;
+    font-weight: 800;
+    transition: border-color 180ms ease, color 180ms ease, background-color 180ms ease, transform 180ms ease;
+}
+
+.ban2-events__empty a:hover {
+    border-color: var(--ban2-green);
+    color: #fff;
+    background: var(--ban2-green);
+    transform: translateY(-2px);
+}
+
+.ban2-events__footer {
+    display: flex;
+    justify-content: center;
+    margin-top: 34px;
+}
+
 .ban2-partners {
     color: #fff;
     background:

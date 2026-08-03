@@ -277,6 +277,36 @@
             </div>
         </section>
 
+        <section id="ban-events" class="ban2-section ban2-events" aria-labelledby="ban2-events-heading">
+            <div class="ban2-shell">
+                <header class="ban2-section-heading ban2-section-heading--split">
+                    <div>
+                        <p class="ban2-kicker">Community calendar</p>
+                        <h2 id="ban2-events-heading">BAN Events</h2>
+                    </div>
+                    <p>Meet founders, investors, and ecosystem leaders through BAN showcases, learning sessions, and community gatherings.</p>
+                </header>
+
+                @if ($landingResourceEvents->isEmpty())
+                    <div class="ban2-events__empty" role="status">
+                        <span>Upcoming events</span>
+                        <h3>New events will be announced here soon.</h3>
+                        <p>Please check back shortly or explore BAN’s resources in the meantime.</p>
+                        <a href="{{ route('resources') }}">Discover BAN Resources <span aria-hidden="true">&rarr;</span></a>
+                    </div>
+                @else
+                    <div class="ban2-events__list">
+                        @foreach ($landingResourceEvents as $event)
+                            <x-ban-event-card :resource="$event" />
+                        @endforeach
+                    </div>
+                    <div class="ban2-events__footer">
+                        <a href="{{ route('resources') }}" class="ban2-text-link">Discover BAN Resources <span aria-hidden="true">&rarr;</span></a>
+                    </div>
+                @endif
+            </div>
+        </section>
+
         <section id="our-partners" class="ban2-section ban2-partners" aria-labelledby="ban2-partners-heading">
             <div class="ban2-shell">
                 <header class="ban2-section-heading ban2-section-heading--split">
