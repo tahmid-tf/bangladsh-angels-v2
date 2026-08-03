@@ -24,6 +24,8 @@ class ProgramPagesTest extends TestCase
             ->assertSee('id="ban2-team-heading">Our Team</h2>', false)
             ->assertSee('id="ban-events"', false)
             ->assertSee('id="ban2-events-heading">BAN Events</h2>', false)
+            ->assertSee('Book a call')
+            ->assertSee('Book a demo')
             ->assertSee('id="our-partners"', false)
             ->assertSee('id="ban2-partners-heading">A stronger ecosystem is built together.</h2>', false)
             ->assertSee('id="faq"', false)

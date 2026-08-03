@@ -512,11 +512,47 @@
     color: rgba(255, 255, 255, 0.64);
 }
 
-.ban2-program-card > strong {
+.ban2-program-card__actions {
     position: relative;
     z-index: 1;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px 18px;
+}
+
+.ban2-program-card__actions a {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    color: inherit;
     font-size: 0.82rem;
     font-weight: 800;
+    text-decoration: none;
+}
+
+.ban2-program-card__actions a span {
+    transition: transform 180ms ease;
+}
+
+.ban2-program-card__actions a:hover span,
+.ban2-program-card__actions a:focus-visible span {
+    transform: translate(2px, -2px);
+}
+
+.ban2-program-card__actions a:focus-visible {
+    border-radius: 4px;
+    outline: 2px solid currentColor;
+    outline-offset: 4px;
+}
+
+.ban2-program-card__actions .ban2-program-card__action {
+    padding-left: 18px;
+    border-left: 1px solid rgba(9, 47, 41, 0.2);
+}
+
+.ban2-program-card--academy .ban2-program-card__actions .ban2-program-card__action {
+    border-left-color: rgba(255, 255, 255, 0.28);
 }
 
 .ban2-startups {
