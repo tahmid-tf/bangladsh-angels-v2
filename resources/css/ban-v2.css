@@ -2700,23 +2700,6 @@
     content: "";
 }
 
-.ban-team-back {
-    position: relative;
-    z-index: 2;
-    display: inline-flex;
-    align-items: center;
-    gap: 9px;
-    margin-bottom: clamp(2.75rem, 5vw, 4.75rem);
-    color: #557169;
-    font-size: 0.72rem;
-    font-weight: 800;
-    letter-spacing: 0.02em;
-}
-
-.ban-team-back:hover {
-    color: var(--ban2-green);
-}
-
 .ban-team-hero__grid {
     position: relative;
     z-index: 1;
@@ -3151,15 +3134,6 @@
     border-color: rgba(201, 243, 220, 0.12);
 }
 
-.ban-team-back {
-    margin-bottom: clamp(2rem, 3vw, 3rem);
-    color: rgba(255, 255, 255, 0.6);
-}
-
-.ban-team-back:hover {
-    color: var(--ban2-mint);
-}
-
 .ban-team-hero__grid {
     grid-template-columns: minmax(0, 1.08fr) minmax(360px, 0.72fr);
     align-items: end;
@@ -3588,10 +3562,6 @@
     .ban-team-hero {
         padding-top: 3.25rem;
         padding-bottom: 4.5rem;
-    }
-
-    .ban-team-back {
-        margin-bottom: 2.5rem;
     }
 
     .ban-team-hero__copy h1 {

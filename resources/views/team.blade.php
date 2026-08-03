@@ -14,8 +14,6 @@
 <main class="ban-subpage ban-team-page">
     <section class="ban-team-hero" aria-labelledby="ban-team-title">
         <div class="ban-page-shell">
-            <a href="{{ route('home') }}#team" class="ban-team-back"><span aria-hidden="true">←</span> Back to homepage</a>
-
             <div class="ban-team-hero__grid">
                 <div class="ban-team-hero__copy">
                     <p class="ban-page-kicker">The people of BAN</p>
