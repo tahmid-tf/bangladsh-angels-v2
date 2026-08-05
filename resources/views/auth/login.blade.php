@@ -35,7 +35,7 @@
             </div>
 
             <figure class="ban-auth-visual__figure">
-                <img src="{{ asset('investor_cover.webp') }}" alt="BAN investors and ecosystem leaders" width="1500" height="783">
+                {{-- <img src="{{ asset('investor_cover.webp') }}" alt="BAN investors and ecosystem leaders" width="1500" height="783"> --}}
                 <figcaption><span aria-hidden="true"></span> Capital. Community. Conviction.</figcaption>
             </figure>
         </section>
