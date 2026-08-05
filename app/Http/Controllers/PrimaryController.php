@@ -16,14 +16,6 @@ class PrimaryController extends Controller
     // Landing Page
     public function __invoke()
     {
-        $featuredStartups = Deal::query()
-            ->with('media')
-            ->where('type', '!=', 'portfolio')
-            ->where('status', 'active')
-            ->latest()
-            ->limit(6)
-            ->get();
-
         $portfolioDeals = Deal::query()
             ->with('media')
             ->where('type', 'portfolio')
@@ -48,7 +40,7 @@ class PrimaryController extends Controller
             ->limit(6)
             ->get();
 
-        return view('welcome', compact('featuredStartups', 'portfolioDeals', 'teamMembers', 'faqs', 'landingResourceEvents'));
+        return view('welcome', compact('portfolioDeals', 'teamMembers', 'faqs', 'landingResourceEvents'));
     }
 
     // Upgrade Page

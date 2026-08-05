@@ -21,7 +21,8 @@ class ProgramPagesTest extends TestCase
             ->assertDontSee('<a href="'.route('investor.signup').'" class="ban-site-nav__link">Investor Signup</a>', false)
             ->assertSee('<a href="'.route('investor.signup').'">Become an Investor</a>', false)
             ->assertSee('id="join"', false)
-            ->assertSee('id="featured-startups"', false)
+            ->assertDontSee('id="featured-startups"', false)
+            ->assertDontSee('The companies in the room right now.')
             ->assertSee('id="portfolio"', false)
             ->assertSee('id="team"', false)
             ->assertSee('id="ban2-team-heading">Our Team</h2>', false)
@@ -109,6 +110,8 @@ class ProgramPagesTest extends TestCase
             ->assertSee('Backed by BAN. Built to endure.')
             ->assertSee('href="#portfolio-companies"', false)
             ->assertSee('id="portfolio-companies"', false)
+            ->assertSee('class="ban2-portfolio__grid"', false)
+            ->assertSee('ban2-portfolio-card')
             ->assertSee('Our portfolio');
     }
 

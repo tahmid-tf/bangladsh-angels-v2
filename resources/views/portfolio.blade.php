@@ -48,15 +48,9 @@
                     <p class="mt-3 text-gray-600 leading-relaxed text-sm">We have not published portfolio listings here yet. Please check back later.</p>
                 </div>
             @else
-                <div class="ban2-startups__grid">
-                    @foreach ($portfolioDeals as $deal)
-                        <x-ban-startup-card
-                            :startup="$deal"
-                            :href="route('deal.view', $deal)"
-                            link-label="View company"
-                            :show-investment-details="true"
-                            class="ban2-startup-card--listing"
-                        />
+                <div class="ban2-portfolio__grid">
+                    @foreach ($portfolioDeals as $company)
+                        <x-ban-portfolio-card :company="$company" :href="route('deal.view', $company)" />
                     @endforeach
                 </div>
             @endif

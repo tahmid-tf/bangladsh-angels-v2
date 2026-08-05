@@ -149,28 +149,9 @@
             </div>
         </section>
 
-        <section id="featured-startups" class="ban2-section ban2-startups" aria-labelledby="ban2-startups-heading">
+        <section id="pitch-form" class="ban2-section ban2-startups ban2-founder-pitch" aria-labelledby="ban2-pitch-heading">
             <div class="ban2-shell">
-                <header class="ban2-section-heading ban2-section-heading--action">
-                    <div>
-                        <p class="ban2-kicker">Featured startups</p>
-                        <h2 id="ban2-startups-heading">The companies in the room right now.</h2>
-                        <p>Meet a selection of founders currently engaging the BAN network.</p>
-                    </div>
-                    <a href="{{ route('startups') }}" class="ban2-text-link">View all startups <span aria-hidden="true">→</span></a>
-                </header>
-
-                @if ($featuredStartups->isEmpty())
-                    <div class="ban2-empty" role="status">New startup opportunities will be featured here soon.</div>
-                @else
-                    <div class="ban2-startups__grid">
-                        @foreach ($featuredStartups as $startup)
-                            <x-ban-startup-card :startup="$startup" :href="route('deal.view', $startup)" />
-                        @endforeach
-                    </div>
-                @endif
-
-                <div id="pitch-form" class="ban2-pitch" aria-labelledby="ban2-pitch-heading">
+                <div class="ban2-pitch">
                     <div class="ban2-pitch__copy">
                         <p class="ban2-kicker">For founders</p>
                         <h2 id="ban2-pitch-heading">Think your startup belongs here?</h2>
