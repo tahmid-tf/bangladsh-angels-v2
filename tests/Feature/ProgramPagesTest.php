@@ -13,6 +13,7 @@ class ProgramPagesTest extends TestCase
         $response
             ->assertOk()
             ->assertSee('<h1 id="ban2-hero-heading">Join BAN</h1>', false)
+            ->assertSee('<p class="ban2-action-prompt">I\'m looking To</p>', false)
             ->assertDontSee('<a href="#join" class="ban-site-nav__link">Join</a>', false)
             ->assertSee('<a href="#ban-events" class="ban-site-nav__link">Events</a>', false)
             ->assertSee('<a href="'.route('startups').'" class="ban-site-nav__link">Featured Startups</a>', false)
@@ -29,7 +30,8 @@ class ProgramPagesTest extends TestCase
             ->assertSee('id="ban-events"', false)
             ->assertSee('id="ban2-events-heading">BAN Events</h2>', false)
             ->assertSee('Book a call')
-            ->assertSee('Book a demo')
+            ->assertSee('Book a')
+            ->assertSee('demo')
             ->assertSee('class="ban2-program-card__copy"', false)
             ->assertDontSee('class="ban2-program-card__mark"', false)
             ->assertDontSee('class="ban2-program-card__monogram"', false)

@@ -115,6 +115,31 @@
     margin-top: 34px;
 }
 
+.ban2-action-prompt {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 30px 0 0;
+    color: #617a73;
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    line-height: 1.4;
+    text-transform: uppercase;
+}
+
+.ban2-action-prompt::before {
+    width: 22px;
+    height: 2px;
+    flex: none;
+    background: var(--ban2-green);
+    content: "";
+}
+
+.ban2-action-prompt + .ban2-actions {
+    margin-top: 12px;
+}
+
 .ban2-button,
 .ban-page-button {
     display: inline-flex;
