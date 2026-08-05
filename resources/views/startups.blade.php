@@ -164,17 +164,6 @@
                         $isExternal = str_starts_with(strtolower(trim($svc->link)), 'http');
                     @endphp
                     <article class="ban-startup-service-card">
-                        <div class="ban-startup-service-card__topline">
-                            <span>{{ str_pad((string) $loop->iteration, 2, '0', STR_PAD_LEFT) }}</span>
-                            <div class="ban-startup-service-card__logo">
-                                @if ($svc->logoUrl())
-                                    <img src="{{ $svc->logoUrl() }}" alt="" loading="lazy">
-                                @else
-                                    <span aria-hidden="true">{{ \Illuminate\Support\Str::upper(\Illuminate\Support\Str::substr(preg_replace('/\s+/', '', $svc->title), 0, 2)) }}</span>
-                                @endif
-                            </div>
-                        </div>
-
                         <div class="ban-startup-service-card__content">
                             <h3>{{ $svc->title }}</h3>
                             <p>{{ $svc->intro }}</p>
@@ -194,11 +183,9 @@
                             <a href="{{ $svc->link }}" @if ($isExternal) target="_blank" rel="noopener noreferrer" @endif>
                                 {{ $svc->cta_label }} <span aria-hidden="true">→</span>
                             </a>
-                            @if ($svc->show_brochure_link)
-                                <a href="{{ $svc->brochurePublicHref() }}" target="_blank" rel="noopener noreferrer" class="ban-startup-service-card__brochure">
-                                    View brochure <span aria-hidden="true">↗</span>
-                                </a>
-                            @endif
+                            <a href="{{ $svc->brochurePublicHref() }}" target="_blank" rel="noopener noreferrer" class="ban-startup-service-card__brochure">
+                                View brochure <span aria-hidden="true">↗</span>
+                            </a>
                         </footer>
                     </article>
                 @endforeach

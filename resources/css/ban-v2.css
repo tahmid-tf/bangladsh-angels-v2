@@ -3703,43 +3703,6 @@
     transform: translateY(-5px);
 }
 
-.ban-startup-service-card__topline {
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    gap: 20px;
-    padding-bottom: 22px;
-    border-bottom: 1px solid var(--ban2-line);
-}
-
-.ban-startup-service-card__topline > span {
-    color: var(--ban2-green);
-    font-size: 0.63rem;
-    font-weight: 800;
-    letter-spacing: 0.1em;
-}
-
-.ban-startup-service-card__logo {
-    display: grid;
-    width: 62px;
-    height: 62px;
-    place-items: center;
-    overflow: hidden;
-    border: 1px solid rgba(9, 47, 41, 0.1);
-    border-radius: 14px;
-    color: var(--ban2-green);
-    background: #fff;
-    font-size: 0.82rem;
-    font-weight: 800;
-}
-
-.ban-startup-service-card__logo img {
-    width: 100%;
-    height: 100%;
-    padding: 8px;
-    object-fit: contain;
-}
-
 .ban-startup-service-card__content {
     padding: 28px 0 26px;
 }
@@ -3844,48 +3807,37 @@
 /* Editorial service rows */
 .ban-startup-services__grid {
     grid-template-columns: 1fr;
-    gap: 0;
-    border-top: 1px solid var(--ban2-line);
+    gap: clamp(16px, 2vw, 22px);
+    border-top: 0;
 }
 
 .ban-startup-service-card {
     display: grid;
     min-height: 0;
-    grid-template-columns: 112px minmax(0, 1fr) minmax(170px, 0.32fr);
+    grid-template-columns: minmax(0, 1fr) minmax(190px, 0.3fr);
     align-items: stretch;
-    padding: 30px 0;
-    border: 0;
-    border-bottom: 1px solid var(--ban2-line);
-    border-radius: 0;
-    background: transparent;
-    box-shadow: none;
-    transition: background-color 200ms ease, box-shadow 200ms ease;
+    padding: clamp(30px, 4vw, 46px);
+    border: 1px solid rgba(15, 115, 89, 0.13);
+    border-radius: 22px;
+    background: #f1f8f4;
+    box-shadow: 0 16px 42px rgba(9, 47, 41, 0.045);
+    transition: border-color 200ms ease, box-shadow 200ms ease, transform 200ms ease;
 }
 
 .ban-startup-service-card:nth-child(even) {
-    background: transparent;
+    border-color: rgba(126, 88, 41, 0.13);
+    background: #fbf6ee;
 }
 
 .ban-startup-service-card:hover {
-    border-color: var(--ban2-line);
-    background: rgba(223, 244, 235, 0.28);
-    box-shadow: inset 4px 0 0 var(--ban2-bright);
-    transform: none;
-}
-
-.ban-startup-service-card__topline {
-    align-items: flex-start;
-    flex-direction: column;
-    justify-content: space-between;
-    gap: 24px;
-    padding: 0 28px 0 18px;
-    border-right: 1px solid var(--ban2-line);
-    border-bottom: 0;
+    border-color: rgba(15, 115, 89, 0.28);
+    box-shadow: 0 24px 54px rgba(9, 47, 41, 0.09);
+    transform: translateY(-3px);
 }
 
 .ban-startup-service-card__content {
     min-width: 0;
-    padding: 0 clamp(28px, 4vw, 52px);
+    padding: 0 clamp(26px, 4vw, 52px) 0 0;
 }
 
 .ban-startup-service-card__content h3 {
@@ -3908,7 +3860,7 @@
     justify-content: center;
     gap: 12px;
     margin: 0;
-    padding: 0 0 0 clamp(24px, 3vw, 36px);
+    padding: 0 0 0 clamp(24px, 3vw, 38px);
     border-top: 0;
     border-left: 1px solid var(--ban2-line);
 }
@@ -5213,25 +5165,20 @@
 
 @media (max-width: 1050px) {
     .ban-startup-service-card {
-        grid-template-columns: 92px minmax(0, 1fr);
-    }
-
-    .ban-startup-service-card__topline {
-        grid-row: 1 / span 2;
-        padding-right: 22px;
+        grid-template-columns: 1fr;
     }
 
     .ban-startup-service-card__content {
-        padding: 0 0 0 30px;
+        padding: 0;
     }
 
     .ban-startup-service-card__footer {
-        grid-row: 2;
-        grid-column: 2;
+        grid-row: auto;
+        grid-column: 1;
         align-items: center;
         flex-direction: row;
         justify-content: flex-start;
-        margin: 22px 0 0 30px;
+        margin: 26px 0 0;
         padding: 20px 0 0;
         border-top: 1px solid var(--ban2-line);
         border-left: 0;
@@ -5241,25 +5188,12 @@
 @media (max-width: 620px) {
     .ban-startup-service-card {
         grid-template-columns: 1fr;
-        padding: 24px 0;
-    }
-
-    .ban-startup-service-card__topline {
-        grid-row: auto;
-        align-items: center;
-        flex-direction: row;
-        padding: 0 0 18px;
-        border-right: 0;
-        border-bottom: 1px solid var(--ban2-line);
-    }
-
-    .ban-startup-service-card__logo {
-        width: 54px;
-        height: 54px;
+        padding: 26px 20px;
+        border-radius: 18px;
     }
 
     .ban-startup-service-card__content {
-        padding: 23px 0;
+        padding: 0;
     }
 
     .ban-startup-service-card__content ul {

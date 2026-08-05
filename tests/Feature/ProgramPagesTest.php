@@ -96,6 +96,8 @@ class ProgramPagesTest extends TestCase
             ->assertSee('action="'.route('startups.pitch').'"', false)
             ->assertSee('Make the opportunity clear')
             ->assertSee('class="ban-startup-services scroll-mt-32"', false)
+            ->assertDontSee('ban-startup-service-card__topline')
+            ->assertSee('View brochure')
             ->assertSee('Founder support');
     }
 
