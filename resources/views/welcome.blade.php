@@ -54,7 +54,7 @@
                     <div class="ban2-hero__visual-frame">
                         <div class="ban2-hero__visual-topline" aria-hidden="true">
                             <span>The BAN network</span>
-                            <span>Established 2019</span>
+                            {{-- <span>Established 2019</span> --}}
                         </div>
                         <img src="{{ asset('landing.png') }}" alt="Members of the Bangladesh Angels investor community" width="620" height="465" loading="eager">
                     </div>
