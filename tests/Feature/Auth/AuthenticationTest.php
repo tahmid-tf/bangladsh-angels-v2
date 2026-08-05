@@ -14,7 +14,14 @@ class AuthenticationTest extends TestCase
     {
         $response = $this->get('/login');
 
-        $response->assertStatus(200);
+        $response
+            ->assertStatus(200)
+            ->assertSee('class="ban-auth-shell"', false)
+            ->assertSee('Invest with perspective.')
+            ->assertSee('Welcome back.')
+            ->assertSee('Continue with Google')
+            ->assertSee('autocomplete="current-password"', false)
+            ->assertSee('Keep me signed in on this device');
     }
 
     public function test_users_can_authenticate_using_the_login_screen(): void

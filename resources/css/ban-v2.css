@@ -3922,6 +3922,545 @@
     padding: 8px 2px;
 }
 
+/* Member login */
+.ban-auth-page {
+    min-width: 320px;
+    margin: 0;
+    color: var(--ban2-ink);
+    background: var(--ban2-paper);
+    font-family: "Manrope", "Figtree", ui-sans-serif, system-ui, sans-serif;
+}
+
+.ban-auth-shell {
+    display: grid;
+    min-height: 100svh;
+    grid-template-columns: minmax(430px, 0.92fr) minmax(520px, 1.08fr);
+}
+
+.ban-auth-visual {
+    position: relative;
+    display: grid;
+    min-height: 100svh;
+    grid-template-rows: auto 1fr auto;
+    overflow: hidden;
+    padding: clamp(30px, 4vw, 58px);
+    color: #fff;
+    background:
+        radial-gradient(circle at 88% 10%, rgba(201, 243, 220, 0.14), transparent 24%),
+        linear-gradient(145deg, #0a3d35 0%, var(--ban2-deep) 72%);
+}
+
+.ban-auth-visual::before {
+    position: absolute;
+    top: -15rem;
+    right: -12rem;
+    width: 34rem;
+    height: 34rem;
+    border: 1px solid rgba(201, 243, 220, 0.12);
+    border-radius: 50%;
+    content: "";
+}
+
+.ban-auth-visual::after {
+    position: absolute;
+    bottom: -20rem;
+    left: -15rem;
+    width: 38rem;
+    height: 38rem;
+    border: 1px solid rgba(201, 243, 220, 0.09);
+    border-radius: 50%;
+    content: "";
+}
+
+.ban-auth-brand {
+    position: relative;
+    z-index: 2;
+    display: inline-flex;
+    width: fit-content;
+    align-items: center;
+    padding: 10px 14px;
+    border: 1px solid rgba(255, 255, 255, 0.82);
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.94);
+    box-shadow: 0 14px 34px rgba(0, 0, 0, 0.13);
+}
+
+.ban-auth-brand img {
+    width: auto;
+    height: 38px;
+    object-fit: contain;
+}
+
+.ban-auth-visual__copy {
+    position: relative;
+    z-index: 1;
+    align-self: center;
+    max-width: 650px;
+    padding: clamp(42px, 8vh, 92px) 0 28px;
+}
+
+.ban-auth-kicker {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 0 0 17px;
+    color: var(--ban2-green);
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    line-height: 1.4;
+    text-transform: uppercase;
+}
+
+.ban-auth-kicker::before {
+    width: 22px;
+    height: 2px;
+    background: currentColor;
+    content: "";
+}
+
+.ban-auth-visual .ban-auth-kicker {
+    color: var(--ban2-mint);
+}
+
+.ban-auth-visual__copy h1 {
+    max-width: 620px;
+    margin: 0;
+    color: #fff;
+    font-size: clamp(3.2rem, 5.2vw, 5.5rem);
+    font-weight: 600;
+    letter-spacing: -0.072em;
+    line-height: 0.94;
+}
+
+.ban-auth-visual__copy > p:not(.ban-auth-kicker) {
+    max-width: 580px;
+    margin: 24px 0 0;
+    color: rgba(255, 255, 255, 0.68);
+    font-size: 0.91rem;
+    line-height: 1.75;
+}
+
+.ban-auth-benefits {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    margin: clamp(32px, 5vh, 52px) 0 0;
+    padding: 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.14);
+    list-style: none;
+}
+
+.ban-auth-benefits li {
+    display: grid;
+    gap: 10px;
+    padding: 18px 14px 0 0;
+    color: rgba(255, 255, 255, 0.78);
+    font-size: 0.7rem;
+    font-weight: 700;
+}
+
+.ban-auth-benefits li + li {
+    padding-left: 14px;
+    border-left: 1px solid rgba(255, 255, 255, 0.14);
+}
+
+.ban-auth-benefits span {
+    color: var(--ban2-mint);
+    font-size: 0.56rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+}
+
+.ban-auth-visual__figure {
+    position: relative;
+    z-index: 1;
+    width: min(620px, 94%);
+    margin: 0 auto -3px;
+}
+
+.ban-auth-visual__figure img {
+    display: block;
+    width: 100%;
+    max-height: 310px;
+    object-fit: contain;
+    object-position: bottom center;
+}
+
+.ban-auth-visual__figure figcaption {
+    position: absolute;
+    right: 0;
+    bottom: 18px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 9px 12px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 999px;
+    color: rgba(255, 255, 255, 0.76);
+    background: rgba(9, 47, 41, 0.78);
+    font-size: 0.6rem;
+    font-weight: 750;
+    backdrop-filter: blur(10px);
+}
+
+.ban-auth-visual__figure figcaption span {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--ban2-mint);
+}
+
+.ban-auth-panel {
+    display: grid;
+    min-height: 100svh;
+    grid-template-rows: auto 1fr auto;
+    padding: clamp(30px, 4vw, 58px) clamp(32px, 7vw, 110px);
+    background:
+        radial-gradient(circle at 102% -3%, rgba(201, 243, 220, 0.5), transparent 24%),
+        var(--ban2-paper);
+}
+
+.ban-auth-back {
+    display: inline-flex;
+    width: fit-content;
+    align-items: center;
+    gap: 8px;
+    color: #5b746d;
+    font-size: 0.72rem;
+    font-weight: 750;
+    transition: color 180ms ease;
+}
+
+.ban-auth-back:hover {
+    color: var(--ban2-green);
+}
+
+.ban-auth-form-wrap {
+    width: min(100%, 500px);
+    align-self: center;
+    justify-self: center;
+    padding: clamp(38px, 6vh, 64px) 0;
+}
+
+.ban-auth-status {
+    margin-bottom: 22px;
+    padding: 12px 14px;
+    border: 1px solid rgba(15, 115, 89, 0.18);
+    border-radius: 9px;
+    color: #0b5f4b;
+    background: #eaf8f0;
+    font-size: 0.74rem;
+    line-height: 1.55;
+}
+
+.ban-auth-form-heading h2 {
+    margin: 0;
+    color: var(--ban2-ink);
+    font-size: clamp(2.8rem, 5vw, 4.45rem);
+    font-weight: 600;
+    letter-spacing: -0.065em;
+    line-height: 0.98;
+}
+
+.ban-auth-form-heading > p:not(.ban-auth-kicker) {
+    margin: 17px 0 0;
+    color: #617a73;
+    font-size: 0.84rem;
+    line-height: 1.65;
+}
+
+.ban-auth-form-heading a,
+.ban-auth-field__heading a {
+    color: var(--ban2-green);
+    font-weight: 800;
+}
+
+.ban-auth-form-heading a:hover,
+.ban-auth-field__heading a:hover {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+.ban-auth-google {
+    margin-top: 30px;
+}
+
+.ban-auth-google > a {
+    min-height: 52px;
+    border-color: rgba(9, 47, 41, 0.16);
+    border-radius: 10px;
+    color: var(--ban2-ink);
+    background: #fff;
+    box-shadow: 0 8px 22px rgba(9, 47, 41, 0.05);
+    font-family: inherit;
+    font-size: 0.76rem;
+    font-weight: 800;
+}
+
+.ban-auth-google > a:hover {
+    border-color: rgba(15, 115, 89, 0.3);
+    background: #fff;
+    box-shadow: 0 12px 28px rgba(9, 47, 41, 0.09);
+}
+
+.ban-auth-divider {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin: 25px 0;
+    color: #7b918b;
+    font-size: 0.63rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+.ban-auth-divider::before,
+.ban-auth-divider::after {
+    height: 1px;
+    flex: 1;
+    background: var(--ban2-line);
+    content: "";
+}
+
+.ban-auth-divider span {
+    flex: none;
+}
+
+.ban-auth-form {
+    display: grid;
+    gap: 20px;
+}
+
+.ban-auth-field > label,
+.ban-auth-field__heading label {
+    display: block;
+    margin: 0 0 8px;
+    color: var(--ban2-ink);
+    font-size: 0.72rem;
+    font-weight: 800;
+}
+
+.ban-auth-field__heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 8px;
+}
+
+.ban-auth-field__heading label {
+    margin: 0;
+}
+
+.ban-auth-field__heading a {
+    font-size: 0.67rem;
+}
+
+.ban-auth-field input[type="email"],
+.ban-auth-field input[type="password"],
+.ban-auth-field input[type="text"] {
+    width: 100%;
+    min-height: 52px;
+    padding: 0 15px;
+    border: 1px solid rgba(9, 47, 41, 0.16);
+    border-radius: 10px;
+    color: var(--ban2-ink);
+    background: rgba(255, 255, 255, 0.92);
+    box-shadow: 0 6px 18px rgba(9, 47, 41, 0.035);
+    font-family: inherit;
+    font-size: 0.8rem;
+    outline: none;
+    transition: border-color 180ms ease, box-shadow 180ms ease, background-color 180ms ease;
+}
+
+.ban-auth-field input::placeholder {
+    color: #91a39e;
+}
+
+.ban-auth-field input:focus {
+    border-color: var(--ban2-green);
+    background: #fff;
+    box-shadow: 0 0 0 4px rgba(15, 115, 89, 0.09);
+}
+
+.ban-auth-field input[aria-invalid="true"] {
+    border-color: rgba(180, 35, 24, 0.52);
+}
+
+.ban-auth-password {
+    position: relative;
+}
+
+.ban-auth-password input {
+    padding-right: 52px !important;
+}
+
+.ban-auth-password button {
+    position: absolute;
+    inset: 0 0 0 auto;
+    display: grid;
+    width: 50px;
+    cursor: pointer;
+    place-items: center;
+    border: 0;
+    color: #718982;
+    background: transparent;
+}
+
+.ban-auth-password button:hover {
+    color: var(--ban2-green);
+}
+
+.ban-auth-password svg {
+    width: 19px;
+    height: 19px;
+}
+
+.ban-auth-error {
+    margin-top: 7px;
+    color: #b42318;
+    font-size: 0.68rem;
+    line-height: 1.5;
+}
+
+.ban-auth-remember {
+    display: inline-flex;
+    width: fit-content;
+    cursor: pointer;
+    align-items: center;
+    gap: 9px;
+    color: #617a73;
+    font-size: 0.71rem;
+    font-weight: 650;
+}
+
+.ban-auth-remember input {
+    width: 17px;
+    height: 17px;
+    border: 1px solid rgba(9, 47, 41, 0.22);
+    border-radius: 5px;
+    accent-color: var(--ban2-green);
+}
+
+.ban-auth-submit {
+    display: inline-flex;
+    width: 100%;
+    min-height: 53px;
+    cursor: pointer;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+    padding: 0 18px;
+    border: 1px solid var(--ban2-ink);
+    border-radius: 10px;
+    color: #fff;
+    background: var(--ban2-ink);
+    box-shadow: 0 14px 30px rgba(9, 47, 41, 0.16);
+    font-family: inherit;
+    font-size: 0.78rem;
+    font-weight: 800;
+    transition: background-color 180ms ease, border-color 180ms ease, transform 180ms ease;
+}
+
+.ban-auth-submit:hover {
+    border-color: var(--ban2-green);
+    background: var(--ban2-green);
+    transform: translateY(-1px);
+}
+
+.ban-auth-panel__note {
+    align-self: end;
+    justify-self: center;
+    margin: 0;
+    color: #80938e;
+    font-size: 0.61rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+.ban-auth-page a:focus-visible,
+.ban-auth-page button:focus-visible,
+.ban-auth-page input:focus-visible {
+    outline: 3px solid #55d3a2;
+    outline-offset: 3px;
+}
+
+@media (max-width: 980px) {
+    .ban-auth-shell {
+        grid-template-columns: minmax(310px, 0.8fr) minmax(430px, 1.2fr);
+    }
+
+    .ban-auth-visual__figure {
+        width: 108%;
+        margin-left: -4%;
+    }
+
+    .ban-auth-benefits {
+        grid-template-columns: 1fr;
+    }
+
+    .ban-auth-benefits li,
+    .ban-auth-benefits li + li {
+        grid-template-columns: 30px 1fr;
+        gap: 8px;
+        padding: 12px 0;
+        border-left: 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.11);
+    }
+}
+
+@media (max-width: 760px) {
+    .ban-auth-shell {
+        grid-template-columns: 1fr;
+    }
+
+    .ban-auth-visual {
+        min-height: auto;
+        grid-template-rows: auto;
+        padding: 20px 24px;
+    }
+
+    .ban-auth-brand img {
+        height: 32px;
+    }
+
+    .ban-auth-visual__copy,
+    .ban-auth-visual__figure {
+        display: none;
+    }
+
+    .ban-auth-panel {
+        min-height: calc(100svh - 93px);
+        padding: 28px 22px;
+    }
+
+    .ban-auth-form-wrap {
+        padding: 42px 0;
+    }
+
+    .ban-auth-form-heading h2 {
+        font-size: clamp(2.75rem, 14vw, 3.8rem);
+    }
+}
+
+@media (max-width: 420px) {
+    .ban-auth-panel {
+        padding-right: 18px;
+        padding-left: 18px;
+    }
+
+    .ban-auth-divider {
+        gap: 10px;
+        font-size: 0.58rem;
+    }
+
+    .ban-auth-panel__note {
+        font-size: 0.54rem;
+    }
+}
+
 /* Focus and motion */
 .ban-home-v2 a:focus-visible,
 .ban-home-v2 button:focus-visible,
