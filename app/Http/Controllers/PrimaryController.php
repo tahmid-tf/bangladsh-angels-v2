@@ -40,7 +40,19 @@ class PrimaryController extends Controller
             ->limit(6)
             ->get();
 
-        return view('welcome', compact('portfolioDeals', 'teamMembers', 'faqs', 'landingResourceEvents'));
+        $tiers = SubscriptionTier::query()->active()->ordered()->get();
+        $showFreeTierOption = auth()->check()
+            && auth()->user()->hasVerifiedEmail()
+            && auth()->user()->account_status === 'free';
+
+        return view('welcome', compact(
+            'portfolioDeals',
+            'teamMembers',
+            'faqs',
+            'landingResourceEvents',
+            'tiers',
+            'showFreeTierOption'
+        ));
     }
 
     // Upgrade Page

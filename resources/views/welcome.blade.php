@@ -165,6 +165,17 @@
             </div>
         </section>
 
+        <section id="membership-plans" class="ban2-section ban2-membership" aria-labelledby="ban2-membership-heading">
+            <div class="ban2-shell">
+                @include('partials.subscription-plans', [
+                    'tiers' => $tiers,
+                    'showFreeTierOption' => $showFreeTierOption,
+                    'tierSectionKicker' => 'Membership plans',
+                    'tierSectionHeadingId' => 'ban2-membership-heading',
+                ])
+            </div>
+        </section>
+
         <section id="pitch-form" class="ban2-section ban2-startups ban2-founder-pitch"
             aria-labelledby="ban2-pitch-heading">
             <div class="ban2-shell">
