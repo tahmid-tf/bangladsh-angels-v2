@@ -16,6 +16,7 @@ class ProgramPagesTest extends TestCase
             ->assertSee('<p class="ban2-action-prompt">I\'m looking To</p>', false)
             ->assertDontSee('<a href="#join" class="ban-site-nav__link">Join</a>', false)
             ->assertSee('<a href="#ban-events" class="ban-site-nav__link">Events</a>', false)
+            ->assertSee('<a href="#membership-plans" class="ban-site-nav__link">Plans</a>', false)
             ->assertSee('<a href="'.route('startups').'" class="ban-site-nav__link">Featured Startups</a>', false)
             ->assertSee('<a href="'.route('portfolio').'" class="ban-site-nav__link">Portfolio</a>', false)
             ->assertSee('<a href="'.route('team').'" class="ban-site-nav__link">Team</a>', false)
@@ -48,6 +49,15 @@ class ProgramPagesTest extends TestCase
             ->assertSee(route('bwin'), false)
             ->assertSee(route('angel-academy'), false)
             ->assertSee(route('resources'), false);
+
+        $this->assertSame(2, substr_count($response->getContent(), 'href="#membership-plans"'));
+    }
+
+    public function test_plans_navigation_returns_to_the_homepage_section_from_other_pages(): void
+    {
+        $this->get(route('faq'))
+            ->assertOk()
+            ->assertSee('href="'.route('home').'#membership-plans" class="ban-site-nav__link">Plans</a>', false);
     }
 
     public function test_bwin_has_a_dedicated_public_page(): void
