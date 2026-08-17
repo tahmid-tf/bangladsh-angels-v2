@@ -145,15 +145,15 @@
                                 @endphp
                                 {{ $latest ? \Carbon\Carbon::parse($latest)->diffForHumans() : 'No activity yet' }}
                             </td>
-                            <td class="px-4 py-3 text-right whitespace-nowrap">
-                                <div class="inline-flex flex-wrap items-center justify-end gap-2">
-                                    <a href="{{ route('deal.view', $deal) }}" class="px-3 py-1.5 rounded-lg bg-[#0a5554] text-white text-xs font-semibold hover:bg-[#084646]" title="Public deal page">
+                            <td class="px-4 py-3 text-right whitespace-nowrap min-w-[220px]">
+                                <div class="admin-investment-actions">
+                                    <a href="{{ route('deal.view', $deal) }}" class="admin-investment-action admin-investment-action--primary" title="Public deal page">
                                         View
                                     </a>
-                                    <a href="{{ route('admin.deals.member-activity', $deal) }}" class="px-3 py-1.5 rounded-lg bg-[#0f3d34] text-white text-xs font-semibold hover:bg-[#156755]" title="Admin-only member breakdown (interested, invest, review, commits)">
-                                        Member activity
+                                    <a href="{{ route('admin.deals.member-activity', $deal) }}" class="admin-investment-action admin-investment-action--activity" title="Admin-only member breakdown (interested, invest, review, commits)" aria-label="View member activity for {{ $deal->title }}">
+                                        Activity
                                     </a>
-                                    <a href="{{ route('edit.deal', $deal->id) }}" class="px-3 py-1.5 rounded-lg bg-gray-100 text-gray-700 text-xs font-semibold hover:bg-gray-200">
+                                    <a href="{{ route('edit.deal', $deal->id) }}" class="admin-investment-action admin-investment-action--edit">
                                         Edit
                                     </a>
                                 </div>
