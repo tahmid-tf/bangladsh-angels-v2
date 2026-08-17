@@ -6,6 +6,7 @@
     <title>@yield('page_title')</title>
     <link rel="icon" type="image/webp" href="{{ asset('icon.webp') }}">
     <link rel="preconnect" href="https://fonts.bunny.net" crossorigin>
+    <link href="https://fonts.bunny.net/css?family=manrope:400,500,600,700,800&display=swap" rel="stylesheet">
     @vite('resources/css/app.css')
     <livewire:styles />
 
@@ -69,14 +70,18 @@
     </script>
 </head>
 
-<body class="h-full flex flex-col md:flex-row bg-gray-100">
+<body class="admin-shell h-full flex flex-col md:flex-row bg-gray-100">
     <!-- Loading Screen -->
-    <div id="loading-screen">
-        <img src="{{ asset('icon.webp') }}" alt="Bangladesh Angels Logo" class="loading-icon">
+    <div id="loading-screen" role="status" aria-label="Loading admin workspace">
+        <div class="admin-loader">
+            <img src="{{ asset('icon.webp') }}" alt="" class="loading-icon">
+            <span class="admin-loader__line" aria-hidden="true"></span>
+            <p>Loading workspace</p>
+        </div>
     </div>
 
     <!-- Mobile Menu Button -->
-    <button id="mobileMenuButton" class="md:hidden fixed top-4 right-4 z-50 p-2 bg-[#0a5554] rounded-lg text-white shadow-lg">
+    <button id="mobileMenuButton" type="button" aria-controls="sidebar" aria-expanded="false" class="md:hidden fixed top-4 right-4 z-50 p-2 bg-[#0a5554] rounded-lg text-white shadow-lg">
         <span class="sr-only">Toggle menu</span>
         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
@@ -89,19 +94,22 @@
             <img src="{{ asset('bdangels_white.png') }}" alt="Bangladesh Angels Logo" class="h-[50px] w-auto">
         </a>
 
-        <nav class="flex-1 flex flex-col pb-6 mt-4">
+        <nav class="flex-1 flex flex-col pb-6 mt-4" aria-label="Admin navigation">
+            <p class="admin-nav-label">Overview</p>
             <a href="{{ route('admin.dashboard') }}" class="py-3 px-6 hover:bg-green-600 transition-colors flex items-center space-x-2 {{ request()->routeIs('admin.dashboard') ? 'bg-green-600' : '' }}">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                     <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
                 </svg>
                 <span>Dashboard</span>
             </a>
-            <a href="{{ route('admin.members') }}" class="py-3 px-6 hover:bg-green-600 transition-colors flex items-center space-x-2 {{ request()->routeIs('admin.members*') ? 'bg-green-600' : '' }}">
+            <p class="admin-nav-label">Network</p>
+            <a href="{{ route('admin.members') }}" class="py-3 px-6 hover:bg-green-600 transition-colors flex items-center space-x-2 {{ request()->routeIs('admin.members*', 'admin.*.members', 'member.*', 'update.account.status') ? 'bg-green-600' : '' }}">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                     <path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3zM6 8a2 2 0 11-4 0 2 2 0 014 0zM16 18v-3a5.972 5.972 0 00-.75-2.906A3.005 3.005 0 0119 15v3h-3zM4.75 12.094A5.973 5.973 0 004 15v3H1v-3a3 3 0 013.75-2.906z" />
                 </svg>
                 <span>Members</span>
             </a>
+            <p class="admin-nav-label">Content</p>
             <a href="{{ route('admin.events') }}" class="py-3 px-6 hover:bg-green-600 transition-colors flex items-center space-x-2 {{ request()->routeIs('admin.events*') ? 'bg-green-600' : '' }}">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                     <path d="M7 3a1 1 0 000 2h6a1 1 0 100-2H7zM4 7a1 1 0 011-1h10a1 1 0 110 2H5a1 1 0 01-1-1zM2 11a2 2 0 002-2h12a2 2 0 002 2v4a2 2 0 01-2 2H4a2 2 0 01-2-2v-4z" />
@@ -132,7 +140,8 @@
                 </svg>
                 <span>Team Directory</span>
             </a>
-            <a href="{{ route('admin.deals') }}" class="py-3 px-6 hover:bg-green-600 transition-colors flex items-center space-x-2 {{ request()->routeIs('admin.deals*') ? 'bg-green-600' : '' }}">
+            <p class="admin-nav-label">Pipeline</p>
+            <a href="{{ route('admin.deals') }}" class="py-3 px-6 hover:bg-green-600 transition-colors flex items-center space-x-2 {{ request()->routeIs('admin.deals*', 'deal.add', 'edit.deal', 'update.deal', 'delete.deal') ? 'bg-green-600' : '' }}">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                     <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4z" clip-rule="evenodd" />
                 </svg>
@@ -157,12 +166,13 @@
                 </svg>
                 <span>Subscriptions</span>
             </a>
-            <a href="{{ route('admin.investments') }}" class="py-3 px-6 hover:bg-green-600 transition-colors flex items-center space-x-2 {{ request()->routeIs('admin.investments*') ? 'bg-green-600' : '' }}">
+            <a href="{{ route('admin.investments') }}" class="py-3 px-6 hover:bg-green-600 transition-colors flex items-center space-x-2 {{ request()->routeIs('admin.investments*', 'investment.type.*') ? 'bg-green-600' : '' }}">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                     <path fill-rule="evenodd" d="M12 7a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0V8.414l-4.293 4.293a1 1 0 01-1.414 0L8 10.414l-4.293 4.293a1 1 0 01-1.414-1.414l5-5a1 1 0 011.414 0L11 10.586 14.586 7H12z" clip-rule="evenodd" />
                 </svg>
                 <span>Investments</span>
             </a>
+            <p class="admin-nav-label">Communication</p>
             <a href="{{ route('admin.mail') }}" class="py-3 px-6 hover:bg-green-600 transition-colors flex items-center space-x-2 {{ request()->routeIs('admin.mail*') ? 'bg-green-600' : '' }}">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                     <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
@@ -176,13 +186,13 @@
     <!-- Main Content Container -->
     <div class="flex-1 flex flex-col min-w-0 h-screen md:h-auto overflow-hidden">
         <!-- Navbar -->
-        <header class="flex flex-col md:flex-row justify-between items-center p-4 bg-white shadow sticky top-0 z-30">
+        <header class="admin-topbar flex flex-col md:flex-row justify-between items-center p-4 bg-white shadow sticky top-0 z-30">
             <h1 class="text-lg font-bold mb-2 md:mb-0 text-center md:text-left">
                 <strong>Hi {{ auth()->user()->name }},</strong>
                 <span class="block md:inline">Welcome back!</span>
             </h1>
             <div class="relative">
-                <button onclick="toggleDropdown()" class="focus:outline-none flex items-center space-x-2 p-1 rounded-full hover:bg-gray-100">
+                <button type="button" onclick="toggleDropdown()" aria-controls="dropdown-menu" aria-expanded="false" class="focus:outline-none flex items-center space-x-2 p-1 rounded-full hover:bg-gray-100">
                     <span class="hidden md:inline text-sm text-gray-700">{{ auth()->user()->email }}</span>
                     <img src="{{ auth()->user()->getProfilePhotoUrl() }}" 
                          alt="User Avatar" 
@@ -215,7 +225,9 @@
 
         <!-- Content Area -->
         <main class="flex-1 overflow-y-auto p-4 bg-gray-50">
-            @yield('page_content')
+            <div class="admin-page {{ request()->routeIs('admin.dashboard') ? 'admin-page--dashboard' : '' }}">
+                @yield('page_content')
+            </div>
         </main>
     </div>
 
@@ -227,6 +239,7 @@
         function initSidebar() {
             if (window.innerWidth < 768) {
                 sidebar.classList.add('-translate-x-full');
+                mobileMenuButton.setAttribute('aria-expanded', 'false');
             } else {
                 sidebar.classList.remove('-translate-x-full');
             }
@@ -236,6 +249,7 @@
 
         mobileMenuButton.addEventListener('click', () => {
             sidebar.classList.toggle('-translate-x-full');
+            mobileMenuButton.setAttribute('aria-expanded', String(!sidebar.classList.contains('-translate-x-full')));
         });
 
         document.querySelectorAll('#sidebar a').forEach(link => {
@@ -248,15 +262,19 @@
 
         // Dropdown Toggle
         function toggleDropdown() {
-            document.getElementById('dropdown-menu').classList.toggle('hidden');
+            const dropdown = document.getElementById('dropdown-menu');
+            const trigger = document.querySelector('[aria-controls="dropdown-menu"]');
+            dropdown.classList.toggle('hidden');
+            trigger.setAttribute('aria-expanded', String(!dropdown.classList.contains('hidden')));
         }
 
         document.addEventListener('click', (event) => {
             const dropdownMenu = document.getElementById('dropdown-menu');
-            const isDropdownClick = event.target.closest('#dropdown-menu') || event.target.closest('header button');
+            const isDropdownClick = event.target.closest('#dropdown-menu') || event.target.closest('.admin-topbar button');
             
             if (!isDropdownClick) {
                 dropdownMenu.classList.add('hidden');
+                document.querySelector('[aria-controls="dropdown-menu"]').setAttribute('aria-expanded', 'false');
             }
 
             if (window.innerWidth < 768 && !sidebar.contains(event.target) && !mobileMenuButton.contains(event.target)) {
@@ -264,9 +282,21 @@
             }
         });
 
+        document.addEventListener('keydown', (event) => {
+            if (event.key !== 'Escape') return;
+
+            if (window.innerWidth < 768) {
+                sidebar.classList.add('-translate-x-full');
+            }
+            mobileMenuButton.setAttribute('aria-expanded', 'false');
+            document.getElementById('dropdown-menu').classList.add('hidden');
+            document.querySelector('[aria-controls="dropdown-menu"]').setAttribute('aria-expanded', 'false');
+        });
+
         window.addEventListener('resize', () => {
             initSidebar();
             document.getElementById('dropdown-menu').classList.add('hidden');
+            document.querySelector('[aria-controls="dropdown-menu"]').setAttribute('aria-expanded', 'false');
         });
 
         // Dismiss Email Verification Banner

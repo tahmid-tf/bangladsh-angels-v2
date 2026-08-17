@@ -1,4 +1,5 @@
 @import "./ban-v2.css";
+@import "./admin-dashboard.css";
 
 @tailwind base;
 @tailwind components;
