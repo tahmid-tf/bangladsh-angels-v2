@@ -464,14 +464,17 @@ a.admin-metric:hover {
 
 .admin-metric__mark {
     display: grid;
-    width: 31px;
-    height: 31px;
+    width: 34px;
+    height: 34px;
     place-items: center;
-    border-radius: 10px;
+    border-radius: 11px;
     color: var(--metric-accent, var(--admin-green));
     background: var(--metric-tint, #e9f5ef);
-    font-size: 0.72rem;
-    font-weight: 850;
+}
+
+.admin-metric__mark svg {
+    width: 18px;
+    height: 18px;
 }
 
 .admin-metric__value {
