@@ -44,7 +44,7 @@
                     <p class="ban2-action-prompt">I'm looking To</p>
                     <div class="ban2-actions">
                         <a href="{{ route('investor.signup') }}" class="ban2-button ban2-button--primary">Invest</a>
-                        <a href="#pitch-form" class="ban2-button ban2-button--secondary">Fundrise</a>
+                        <a href="#pitch-form" class="ban2-button ban2-button--secondary">Fundraise</a>
                     </div>
                     <div class="ban2-hero__proof" aria-label="BAN at a glance">
                         <div><strong>500+</strong><span>angel <br>investors</span></div>
@@ -165,7 +165,8 @@
             </div>
         </section>
 
-        <section id="membership-plans" class="ban2-section ban2-membership" aria-labelledby="ban2-membership-heading">
+        <section id="membership-plans" class="ban2-section ban2-membership"
+            aria-labelledby="ban2-membership-heading">
             <div class="ban2-shell">
                 @include('partials.subscription-plans', [
                     'tiers' => $tiers,
@@ -426,7 +427,8 @@
                         <details class="ban2-faq-item">
                             <summary>
                                 <span>{{ str_pad((string) $loop->iteration, 2, '0', STR_PAD_LEFT) }}</span>{{ $faq['question'] }}<i
-                                    aria-hidden="true"></i></summary>
+                                    aria-hidden="true"></i>
+                            </summary>
                             <div class="ban2-faq-item__answer">
                                 @foreach ($faq['paragraphs'] as $paragraph)
                                     <p>{{ $paragraph }}</p>
