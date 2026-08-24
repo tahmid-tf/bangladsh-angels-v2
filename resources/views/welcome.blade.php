@@ -114,53 +114,27 @@
             <div class="ban2-shell">
                 <header class="ban2-section-heading">
                     <p class="ban2-kicker">Our programs</p>
-                    <h2 id="ban2-programs-heading">Three focused platforms. One stronger ecosystem.</h2>
+                    <h2 id="ban2-programs-heading">{{ $landingProgramHeading }}</h2>
                     <p>Explore the initiatives BAN has built to broaden participation, strengthen investment practice,
                         and make startup evaluation more effective.</p>
                 </header>
 
-                <div class="ban2-programs__grid">
-                    <article class="ban2-program-card ban2-program-card--bwin">
-                        <div class="ban2-program-card__copy">
-                            <p>Women-led investment</p>
-                            <h3>BWIN</h3>
-                            <span>Building a more diverse pipeline of investors and entrepreneurs across
-                                Bangladesh.</span>
-                        </div>
-                        <div class="ban2-program-card__actions">
-                            <a href="{{ route('bwin') }}">Explore BWIN <span aria-hidden="true">↗</span></a>
-                            <a href="https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ1oFoHy0m9As4PtSfm4Ee-nVyoZRNNyZ38doHCWpVwDfo5u3qxnesRT_LqD_Fv5nUlbE3EvxyYN"
-                                class="ban2-program-card__action" target="_blank" rel="noopener noreferrer">Book a call
-                                <span aria-hidden="true">↗</span></a>
-                        </div>
-                    </article>
-
-                    <article class="ban2-program-card ban2-program-card--academy">
-                        <div class="ban2-program-card__copy">
-                            <p>Investor education</p>
-                            <h3>Angel Academy</h3>
-                            <span>Practical learning for aspiring and active angels—from first principles to investment
-                                committee.</span>
-                        </div>
-                        <div class="ban2-program-card__actions">
-                            <a href="{{ route('angel-academy') }}">Visit Angel Academy <span
-                                    aria-hidden="true">↗</span></a>
-                            <a href="https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ1oFoHy0m9As4PtSfm4Ee-nVyoZRNNyZ38doHCWpVwDfo5u3qxnesRT_LqD_Fv5nUlbE3EvxyYN"
-                                class="ban2-program-card__action" target="_blank" rel="noopener noreferrer">Book a
-                                demo <span aria-hidden="true">↗</span></a>
-                        </div>
-                    </article>
-
-                    <article class="ban2-program-card ban2-program-card--deckvue">
-                        <div class="ban2-program-card__copy">
-                            <p>AI-powered diligence</p>
-                            <h3>DeckVue</h3>
-                            <span>Turn pitch decks into structured, verified investment intelligence in minutes.</span>
-                        </div>
-                        <div class="ban2-program-card__actions">
-                            <a href="{{ route('resources') }}">Open DeckVue <span aria-hidden="true">↗</span></a>
-                        </div>
-                    </article>
+                <div class="ban2-programs__grid ban2-programs__grid--count-{{ $landingProgramCards->count() }}">
+                    @foreach ($landingProgramCards as $card)
+                        <article class="ban2-program-card ban2-program-card--{{ $card->themeClass() }}">
+                            <div class="ban2-program-card__copy">
+                                <p>{{ $card->eyebrow }}</p>
+                                <h3>{{ $card->title }}</h3>
+                                <span>{{ $card->description }}</span>
+                            </div>
+                            <div class="ban2-program-card__actions">
+                                <a href="{{ $card->primary_link }}" @if (str_starts_with($card->primary_link, 'http')) target="_blank" rel="noopener noreferrer" @endif>{{ $card->primary_label }} <span aria-hidden="true">↗</span></a>
+                                @if (filled($card->secondary_label) && filled($card->secondary_link))
+                                    <a href="{{ $card->secondary_link }}" class="ban2-program-card__action" @if (str_starts_with($card->secondary_link, 'http')) target="_blank" rel="noopener noreferrer" @endif>{{ $card->secondary_label }} <span aria-hidden="true">↗</span></a>
+                                @endif
+                            </div>
+                        </article>
+                    @endforeach
                 </div>
             </div>
         </section>

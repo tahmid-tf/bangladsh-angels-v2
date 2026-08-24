@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\AngelAcademyNetworkApplicationController as AdminAngelAcademyNetworkApplicationController;
 use App\Http\Controllers\Admin\FounderPitchSubmissionController;
 use App\Http\Controllers\Admin\LandingPageStatController;
+use App\Http\Controllers\Admin\LandingProgramCardController;
 use App\Http\Controllers\Admin\ResourceHubCardController;
 use App\Http\Controllers\Admin\StartupServiceController;
 use App\Http\Controllers\Admin\TeamMemberController;
@@ -223,6 +224,13 @@ Route::middleware('auth')->group(function () {
 
         Route::get('/landing-page-stats', [LandingPageStatController::class, 'index'])->name('admin.landing-page-stats');
         Route::put('/landing-page-stats', [LandingPageStatController::class, 'update'])->name('admin.landing-page-stats.update');
+
+        Route::get('/landing-program-cards', [LandingProgramCardController::class, 'index'])->name('admin.landing-program-cards');
+        Route::get('/landing-program-cards/create', [LandingProgramCardController::class, 'create'])->name('admin.landing-program-cards.create');
+        Route::post('/landing-program-cards', [LandingProgramCardController::class, 'store'])->name('admin.landing-program-cards.store');
+        Route::get('/landing-program-cards/{landingProgramCard}/edit', [LandingProgramCardController::class, 'edit'])->name('admin.landing-program-cards.edit');
+        Route::put('/landing-program-cards/{landingProgramCard}', [LandingProgramCardController::class, 'update'])->name('admin.landing-program-cards.update');
+        Route::delete('/landing-program-cards/{landingProgramCard}', [LandingProgramCardController::class, 'destroy'])->name('admin.landing-program-cards.destroy');
 
         Route::get('/team-members', [TeamMemberController::class, 'index'])->name('admin.team-members');
         Route::get('/team-members/create', [TeamMemberController::class, 'create'])->name('admin.team-members.create');

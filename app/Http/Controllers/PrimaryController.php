@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Deal;
 use App\Models\LandingPageStat;
+use App\Models\LandingProgramCard;
 use App\Models\Resource;
 use App\Models\StartupService;
 use App\Models\SubscriptionTier;
@@ -33,6 +34,16 @@ class PrimaryController extends Controller
 
         $landingPageStats = LandingPageStat::query()->ordered()->get();
 
+        $landingProgramCards = LandingProgramCard::query()
+            ->ordered()
+            ->limit(LandingProgramCard::MAX_CARDS)
+            ->get();
+
+        $programCountWord = [1 => 'One', 2 => 'Two', 3 => 'Three', 4 => 'Four', 5 => 'Five'][$landingProgramCards->count()] ?? null;
+        $landingProgramHeading = $programCountWord
+            ? $programCountWord.' focused '.($landingProgramCards->count() === 1 ? 'platform' : 'platforms').'. One stronger ecosystem.'
+            : 'Focused platforms. One stronger ecosystem.';
+
         $landingResourceEvents = Resource::query()
             ->with('media')
             ->whereIn('type', ['event', 'webinar'])
@@ -53,6 +64,8 @@ class PrimaryController extends Controller
             'teamMembers',
             'faqs',
             'landingPageStats',
+            'landingProgramCards',
+            'landingProgramHeading',
             'landingResourceEvents',
             'tiers',
             'showFreeTierOption'

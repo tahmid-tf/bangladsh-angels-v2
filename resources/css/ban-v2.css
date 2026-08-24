@@ -435,8 +435,25 @@
 
 .ban2-programs__grid {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(6, minmax(0, 1fr));
     gap: 18px;
+}
+
+.ban2-programs__grid .ban2-program-card {
+    grid-column: span 2;
+}
+
+.ban2-programs__grid--count-1 .ban2-program-card {
+    grid-column: 2 / span 4;
+}
+
+.ban2-programs__grid--count-2 .ban2-program-card,
+.ban2-programs__grid--count-4 .ban2-program-card {
+    grid-column: span 3;
+}
+
+.ban2-programs__grid--count-5 .ban2-program-card:nth-child(4) {
+    grid-column: 2 / span 2;
 }
 
 .ban2-program-card {
@@ -483,6 +500,23 @@
     background: #fff8fb;
 }
 
+.ban2-program-card--dark {
+    color: #fff;
+    background: var(--ban2-ink);
+}
+
+.ban2-program-card--mint {
+    background: #dff4eb;
+}
+
+.ban2-program-card--blush {
+    background: #fff8fb;
+}
+
+.ban2-program-card--sand {
+    background: #f4ecd9;
+}
+
 .ban2-program-card__copy p {
     margin: 0 0 12px;
     color: var(--ban2-green);
@@ -493,6 +527,10 @@
 }
 
 .ban2-program-card--academy .ban2-program-card__copy p {
+    color: var(--ban2-mint);
+}
+
+.ban2-program-card--dark .ban2-program-card__copy p {
     color: var(--ban2-mint);
 }
 
@@ -510,6 +548,10 @@
 }
 
 .ban2-program-card--academy .ban2-program-card__copy > span {
+    color: rgba(255, 255, 255, 0.64);
+}
+
+.ban2-program-card--dark .ban2-program-card__copy > span {
     color: rgba(255, 255, 255, 0.64);
 }
 
@@ -553,6 +595,10 @@
 }
 
 .ban2-program-card--academy .ban2-program-card__actions .ban2-program-card__action {
+    border-left-color: rgba(255, 255, 255, 0.28);
+}
+
+.ban2-program-card--dark .ban2-program-card__actions .ban2-program-card__action {
     border-left-color: rgba(255, 255, 255, 0.28);
 }
 
@@ -4849,12 +4895,23 @@
         grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
+    .ban2-programs__grid .ban2-program-card {
+        grid-column: auto;
+    }
+
+    .ban2-programs__grid--count-1 .ban2-program-card,
+    .ban2-programs__grid--count-2 .ban2-program-card,
+    .ban2-programs__grid--count-4 .ban2-program-card,
+    .ban2-programs__grid--count-5 .ban2-program-card:nth-child(4) {
+        grid-column: auto;
+    }
+
     .ban2-membership .ban-subscription-plans__grid--three,
     .ban2-membership .ban-subscription-plans__grid--four {
         grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
-    .ban2-program-card:last-child {
+    .ban2-programs__grid .ban2-program-card:last-child:nth-child(odd) {
         grid-column: 1 / -1;
         min-height: 330px;
     }
@@ -5367,10 +5424,17 @@
         margin-top: 32px;
     }
 
-    .ban2-program-card,
-    .ban2-program-card:last-child {
+    .ban2-programs__grid .ban2-program-card,
+    .ban2-programs__grid .ban2-program-card:last-child {
         grid-column: auto;
         min-height: 340px;
+    }
+
+    .ban2-programs__grid--count-1 .ban2-program-card,
+    .ban2-programs__grid--count-2 .ban2-program-card,
+    .ban2-programs__grid--count-4 .ban2-program-card,
+    .ban2-programs__grid--count-5 .ban2-program-card:nth-child(4) {
+        grid-column: auto;
     }
 
     .ban2-pitch {
