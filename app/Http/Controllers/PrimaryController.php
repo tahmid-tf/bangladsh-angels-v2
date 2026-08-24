@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Deal;
+use App\Models\LandingPageStat;
 use App\Models\Resource;
 use App\Models\StartupService;
 use App\Models\SubscriptionTier;
@@ -30,6 +31,8 @@ class PrimaryController extends Controller
 
         $faqs = collect(BanFaqs::all())->take(6);
 
+        $landingPageStats = LandingPageStat::query()->ordered()->get();
+
         $landingResourceEvents = Resource::query()
             ->with('media')
             ->whereIn('type', ['event', 'webinar'])
@@ -49,6 +52,7 @@ class PrimaryController extends Controller
             'portfolioDeals',
             'teamMembers',
             'faqs',
+            'landingPageStats',
             'landingResourceEvents',
             'tiers',
             'showFreeTierOption'

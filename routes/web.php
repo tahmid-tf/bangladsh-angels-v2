@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\AngelAcademyNetworkApplicationController as AdminAngelAcademyNetworkApplicationController;
 use App\Http\Controllers\Admin\FounderPitchSubmissionController;
+use App\Http\Controllers\Admin\LandingPageStatController;
 use App\Http\Controllers\Admin\ResourceHubCardController;
 use App\Http\Controllers\Admin\StartupServiceController;
 use App\Http\Controllers\Admin\TeamMemberController;
@@ -219,6 +220,9 @@ Route::middleware('auth')->group(function () {
         Route::get('/what-we-do-cards', [WhatWeDoCardController::class, 'index'])->name('admin.what-we-do-cards');
         Route::get('/what-we-do-cards/{whatWeDoCard}/edit', [WhatWeDoCardController::class, 'edit'])->name('admin.what-we-do-cards.edit');
         Route::put('/what-we-do-cards/{whatWeDoCard}', [WhatWeDoCardController::class, 'update'])->name('admin.what-we-do-cards.update');
+
+        Route::get('/landing-page-stats', [LandingPageStatController::class, 'index'])->name('admin.landing-page-stats');
+        Route::put('/landing-page-stats', [LandingPageStatController::class, 'update'])->name('admin.landing-page-stats.update');
 
         Route::get('/team-members', [TeamMemberController::class, 'index'])->name('admin.team-members');
         Route::get('/team-members/create', [TeamMemberController::class, 'create'])->name('admin.team-members.create');

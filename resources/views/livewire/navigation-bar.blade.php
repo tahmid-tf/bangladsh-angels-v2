@@ -39,7 +39,7 @@
                         <ul>
                             <li><a href="{{ route('profile.edit') }}">Profile</a></li>
                             @if (auth()->user()->isAdmin())<li><a href="{{ route('admin.dashboard') }}">Admin Panel</a></li>@endif
-                            <li><a href="{{ route('dashboard') }}">Dashboard</a></li>
+                            {{-- <li><a href="{{ route('dashboard') }}">Dashboard</a></li> --}}
                             <li>
                                 <form method="POST" action="{{ route('logout') }}">@csrf<button type="submit">Logout</button></form>
                             </li>

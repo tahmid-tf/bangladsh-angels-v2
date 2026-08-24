@@ -110,6 +110,12 @@
                 <span>Members</span>
             </a>
             <p class="admin-nav-label">Content</p>
+            <a href="{{ route('admin.landing-page-stats') }}" class="py-3 px-6 hover:bg-green-600 transition-colors flex items-center space-x-2 {{ request()->routeIs('admin.landing-page-stats*') ? 'bg-green-600' : '' }}">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                    <path d="M3 3a1 1 0 000 2h10a1 1 0 100-2H3zM3 7a1 1 0 000 2h6a1 1 0 100-2H3zM3 11a1 1 0 100 2h4a1 1 0 100-2H3zM13 8a1 1 0 011 1v5h2a1 1 0 110 2h-6a1 1 0 110-2h2V9a1 1 0 011-1z" />
+                </svg>
+                <span>Homepage Statistics</span>
+            </a>
             <a href="{{ route('admin.events') }}" class="py-3 px-6 hover:bg-green-600 transition-colors flex items-center space-x-2 {{ request()->routeIs('admin.events*') ? 'bg-green-600' : '' }}">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                     <path d="M7 3a1 1 0 000 2h6a1 1 0 100-2H7zM4 7a1 1 0 011-1h10a1 1 0 110 2H5a1 1 0 01-1-1zM2 11a2 2 0 002-2h12a2 2 0 002 2v4a2 2 0 01-2 2H4a2 2 0 01-2-2v-4z" />
