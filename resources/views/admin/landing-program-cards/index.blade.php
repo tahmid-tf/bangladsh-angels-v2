@@ -34,6 +34,7 @@
                         <th class="px-4 py-3 font-semibold text-gray-700">Program</th>
                         <th class="px-4 py-3 font-semibold text-gray-700">Appearance</th>
                         <th class="px-4 py-3 font-semibold text-gray-700">Primary action</th>
+                        <th class="px-4 py-3 font-semibold text-gray-700">Sort Order</th>
                         <th class="px-4 py-3 font-semibold text-gray-700"></th>
                     </tr>
                 </thead>
@@ -47,6 +48,7 @@
                             </td>
                             <td class="px-4 py-3 text-gray-600">{{ \App\Models\LandingProgramCard::THEMES[$card->theme] ?? 'White' }}</td>
                             <td class="px-4 py-3 text-gray-600">{{ $card->primary_label }}</td>
+                            <td class="px-4 py-3 text-gray-600">{{ $card->sort_order }}</td>
                             <td class="px-4 py-3 whitespace-nowrap text-right">
                                 <a href="{{ route('admin.landing-program-cards.edit', $card) }}" class="text-[#0a5554] font-semibold hover:underline mr-4">Edit</a>
                                 <form method="post" action="{{ route('admin.landing-program-cards.destroy', $card) }}" class="inline" onsubmit="return confirm('Remove this program card from the homepage?')">
