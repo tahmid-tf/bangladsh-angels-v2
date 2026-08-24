@@ -80,22 +80,18 @@
         <section id="about-us" class="ban-team-about" aria-labelledby="ban-team-about-heading">
             <div class="ban-page-shell ban-team-about__grid">
                 <figure class="ban-team-about__image">
-                    <img src="{{ asset('DSC00467.jpg') }}"
-                        alt="Founders and investors sharing experience at a BAN ecosystem event" width="1920"
+                    <img src="{{ $teamAboutSection->imageUrl() }}"
+                        alt="{{ $teamAboutSection->image_alt }}" width="1920"
                         height="1280" loading="lazy">
-                    <figcaption><span></span> Capital. Community. Conviction.</figcaption>
+                    <figcaption><span></span> {{ $teamAboutSection->image_badge }}</figcaption>
                 </figure>
 
                 <div class="ban-team-about__copy">
-                    <p class="ban-page-kicker">About Bangladesh Angels Network</p>
-                    <h2 id="ban-team-about-heading">What is Bangladesh Angels Network?</h2>
-                    <p>BAN is the country’s first and largest angel-investing platform, connecting visionary entrepreneurs
-                        with seasoned investors and fostering an ecosystem that drives innovation and economic growth.</p>
-                    <p>With more than $12 million invested across 50+ startups, we combine capital with mentorship,
-                        strategic guidance, and meaningful connections. Our local and global members work alongside founders
-                        to help promising ventures solve real problems and scale with purpose.</p>
-                    <p>We do more than invest—we help build, nurture, and accelerate companies with the potential to reshape
-                        industries.</p>
+                    <p class="ban-page-kicker">{{ $teamAboutSection->kicker }}</p>
+                    <h2 id="ban-team-about-heading">{{ $teamAboutSection->heading }}</h2>
+                    @foreach ($teamAboutSection->paragraphs() as $paragraph)
+                        <p>{{ $paragraph }}</p>
+                    @endforeach
                 </div>
             </div>
         </section>

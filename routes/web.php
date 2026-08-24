@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\LandingProgramCardController;
 use App\Http\Controllers\Admin\ResourceHubCardController;
 use App\Http\Controllers\Admin\StartupServiceController;
 use App\Http\Controllers\Admin\TeamMemberController;
+use App\Http\Controllers\Admin\TeamAboutSectionController;
 use App\Http\Controllers\Admin\WhatWeDoCardController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AngelAcademyNetworkApplicationController;
@@ -231,6 +232,9 @@ Route::middleware('auth')->group(function () {
         Route::get('/landing-program-cards/{landingProgramCard}/edit', [LandingProgramCardController::class, 'edit'])->name('admin.landing-program-cards.edit');
         Route::put('/landing-program-cards/{landingProgramCard}', [LandingProgramCardController::class, 'update'])->name('admin.landing-program-cards.update');
         Route::delete('/landing-program-cards/{landingProgramCard}', [LandingProgramCardController::class, 'destroy'])->name('admin.landing-program-cards.destroy');
+
+        Route::get('/team-about-section', [TeamAboutSectionController::class, 'edit'])->name('admin.team-about-section.edit');
+        Route::put('/team-about-section', [TeamAboutSectionController::class, 'update'])->name('admin.team-about-section.update');
 
         Route::get('/team-members', [TeamMemberController::class, 'index'])->name('admin.team-members');
         Route::get('/team-members/create', [TeamMemberController::class, 'create'])->name('admin.team-members.create');

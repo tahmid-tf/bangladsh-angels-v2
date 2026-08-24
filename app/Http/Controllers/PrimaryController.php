@@ -9,6 +9,7 @@ use App\Models\Resource;
 use App\Models\StartupService;
 use App\Models\SubscriptionTier;
 use App\Models\TeamMember;
+use App\Models\TeamAboutSection;
 use App\Models\User;
 use App\Support\BanFaqs;
 use Illuminate\Http\Request;
@@ -204,7 +205,9 @@ class PrimaryController extends Controller
             ->ordered()
             ->get();
 
-        return view('team', compact('management', 'governingBoard'));
+        $teamAboutSection = TeamAboutSection::query()->firstOrFail();
+
+        return view('team', compact('management', 'governingBoard', 'teamAboutSection'));
     }
 
     // View Sign up Page

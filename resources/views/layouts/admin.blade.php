@@ -122,6 +122,12 @@
                 </svg>
                 <span>Homepage Programs</span>
             </a>
+            <a href="{{ route('admin.team-about-section.edit') }}" class="py-3 px-6 hover:bg-green-600 transition-colors flex items-center space-x-2 {{ request()->routeIs('admin.team-about-section*') ? 'bg-green-600' : '' }}">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M18 10A8 8 0 11 2 10a8 8 0 0116 0zM9 7a1 1 0 112 0 1 1 0 01-2 0zm0 3a1 1 0 011-1h.01a1 1 0 011 1v3a1 1 0 11-2 0v-3z" clip-rule="evenodd" />
+                </svg>
+                <span>Team About Section</span>
+            </a>
             <a href="{{ route('admin.events') }}" class="py-3 px-6 hover:bg-green-600 transition-colors flex items-center space-x-2 {{ request()->routeIs('admin.events*') ? 'bg-green-600' : '' }}">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                     <path d="M7 3a1 1 0 000 2h6a1 1 0 100-2H7zM4 7a1 1 0 011-1h10a1 1 0 110 2H5a1 1 0 01-1-1zM2 11a2 2 0 002-2h12a2 2 0 002 2v4a2 2 0 01-2 2H4a2 2 0 01-2-2v-4z" />
