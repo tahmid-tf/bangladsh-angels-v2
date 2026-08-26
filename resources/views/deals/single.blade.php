@@ -100,7 +100,7 @@
                         <a href="{{ $memberDealLinks ? $deal->commit_link : route('plans') }}"
                            @if ($memberDealLinks) target="_blank" rel="noopener noreferrer" @endif
                            class="ban-deal-button ban-deal-button--secondary">
-                            {{ $memberDealLinks ? 'Commit externally' : 'Unlock commitment access' }} <span aria-hidden="true">&nearr;</span>
+                            {{ $memberDealLinks ? 'Commit' : 'Unlock commitment access' }} <span aria-hidden="true">&nearr;</span>
                         </a>
                     @endif
 

@@ -3,12 +3,13 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Models\User;
-use App\Models\Payment;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Subscription extends Model
 {
-    protected $fillable =[
+    use SoftDeletes;
+
+    protected $fillable = [
         'user_id',
         'plan',
         'price',
@@ -20,9 +21,9 @@ class Subscription extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class,'user_id');
+        return $this->belongsTo(User::class, 'user_id');
     }
-    
+
     public function payment()
     {
         return $this->belongsTo(Payment::class, 'payment_id');
