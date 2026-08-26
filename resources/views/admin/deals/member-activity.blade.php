@@ -174,6 +174,45 @@
                 </div>
             @endif
         </div>
+
+        <div class="bg-white rounded-xl shadow overflow-hidden">
+            <div class="px-4 py-3 border-b border-gray-100 bg-gray-50 flex items-center justify-between">
+                <h2 class="text-sm font-bold text-gray-900 uppercase tracking-wide">Commit Submissions</h2>
+                <span class="text-xs font-semibold text-gray-500">{{ $deal->commitSubmissions->count() }} {{ \Illuminate\Support\Str::plural('submission', $deal->commitSubmissions->count()) }}</span>
+            </div>
+            @if ($deal->commitSubmissions->isEmpty())
+                <p class="px-4 py-8 text-center text-sm text-gray-500">No commit form submissions for this deal yet.</p>
+            @else
+                <div class="overflow-x-auto">
+                    <table class="min-w-full text-sm text-left">
+                        <thead class="bg-gray-50 text-xs font-semibold text-gray-600 uppercase border-b border-gray-100">
+                            <tr>
+                                <th class="px-4 py-2">Name</th>
+                                <th class="px-4 py-2">Email</th>
+                                <th class="px-4 py-2 whitespace-nowrap">WhatsApp</th>
+                                <th class="px-4 py-2">Company</th>
+                                <th class="px-4 py-2 whitespace-nowrap">Proposed amount</th>
+                                <th class="px-4 py-2 whitespace-nowrap">Submitted</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-100">
+                            @foreach ($deal->commitSubmissions as $submission)
+                                <tr class="hover:bg-gray-50/80">
+                                    <td class="px-4 py-2 font-medium text-gray-900">{{ $submission->name }}</td>
+                                    <td class="px-4 py-2 text-gray-600 break-all">
+                                        <a href="mailto:{{ $submission->email }}" class="hover:underline">{{ $submission->email }}</a>
+                                    </td>
+                                    <td class="px-4 py-2 text-gray-600 whitespace-nowrap">{{ $submission->whatsapp_number }}</td>
+                                    <td class="px-4 py-2 text-gray-600">{{ $submission->company_name }}</td>
+                                    <td class="px-4 py-2 text-gray-800 whitespace-nowrap">{{ $submission->currency }} {{ number_format((float) $submission->amount, 2) }}</td>
+                                    <td class="px-4 py-2 text-gray-600 whitespace-nowrap">{{ $submission->updated_at?->format('M j, Y g:i A') }}</td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            @endif
+        </div>
     </div>
 </section>
 @endsection

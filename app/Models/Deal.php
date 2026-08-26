@@ -180,6 +180,11 @@ class Deal extends Model implements HasMedia
         return $this->hasMany(Commit::class);
     }
 
+    public function commitSubmissions()
+    {
+        return $this->hasMany(CommitSubmission::class);
+    }
+
     public function investorsCount()
     {
         return $this->investments()->whereIn('type', ['interested', 'invest'])->count();

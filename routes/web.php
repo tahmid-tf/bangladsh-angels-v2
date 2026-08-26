@@ -12,6 +12,7 @@ use App\Http\Controllers\Admin\WhatWeDoCardController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AngelAcademyNetworkApplicationController;
 use App\Http\Controllers\CheckoutController;
+use App\Http\Controllers\CommitSubmissionController;
 use App\Http\Controllers\FounderPitchController;
 use App\Http\Controllers\InvestmentController;
 use App\Http\Controllers\MailController;
@@ -293,6 +294,10 @@ Route::middleware('auth')->group(function () {
         Route::get('/{deal:id}/commit', [InvestmentController::class, 'commitForm'])->name('deal.commit.form');
         Route::post('/{deal:id}/commit', [InvestmentController::class, 'commit'])->name('deal.commit');
     });
+
+    Route::post('/deals/{deal:id}/commit-submission', [CommitSubmissionController::class, 'store'])
+        ->middleware('throttle:10,1')
+        ->name('deal.commit-submission.store');
 });
 
 /**

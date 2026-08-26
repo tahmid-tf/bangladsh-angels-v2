@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Exports\MembersExport;
 use App\Mail\AccountApproved;
 use App\Models\Deal;
+use App\Models\CommitSubmission;
 use App\Models\Payment;
 use App\Models\Subscription;
 use App\Models\SubscriptionTier;
@@ -919,8 +920,14 @@ class AdminController extends Controller
     public function showDeal(Deal $deal)
     {
         $otherDeals = $deal->getOtherDeals(5); // Fetch 5 other deals
+        $commitSubmission = auth()->check()
+            ? CommitSubmission::query()
+                ->where('deal_id', $deal->id)
+                ->where('user_id', auth()->id())
+                ->first()
+            : null;
 
-        return view('deals.single', compact('deal', 'otherDeals'));
+        return view('deals.single', compact('deal', 'otherDeals', 'commitSubmission'));
     }
 
     /**
@@ -928,9 +935,12 @@ class AdminController extends Controller
      */
     public function dealMemberActivity(Deal $deal)
     {
+        abort_unless(auth()->user()?->isAdmin(), 403);
+
         $deal->load([
             'investments' => fn ($q) => $q->with('user')->orderByDesc('created_at'),
             'commits' => fn ($q) => $q->with('user')->orderByDesc('created_at'),
+            'commitSubmissions' => fn ($q) => $q->with('user')->orderByDesc('updated_at'),
         ]);
 
         $interested = $deal->investments->where('type', 'interested')->values();

@@ -48,7 +48,15 @@
         @endif
 
         @if (session('success'))
-            <div class="ban-deal-alert ban-deal-alert--success">{{ session('success') }}</div>
+            <div class="ban-deal-alert ban-deal-alert--success" role="status">
+                <span class="ban-deal-alert__icon" aria-hidden="true">
+                    <svg viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M16.704 5.293a1 1 0 010 1.414l-7.25 7.25a1 1 0 01-1.414 0l-3.25-3.25a1 1 0 011.414-1.414l2.543 2.543 6.543-6.543a1 1 0 011.414 0z" clip-rule="evenodd" />
+                    </svg>
+                </span>
+                <span>{{ session('success') }}</span>
+                <button type="button" class="ban-deal-alert__dismiss" aria-label="Dismiss notification" onclick="this.closest('.ban-deal-alert').remove()">&times;</button>
+            </div>
         @endif
     </div>
 
@@ -97,11 +105,15 @@
                     @endif
 
                     @if (filled($deal->commit_link))
-                        <a href="{{ $memberDealLinks ? $deal->commit_link : route('plans') }}"
-                           @if ($memberDealLinks) target="_blank" rel="noopener noreferrer" @endif
-                           class="ban-deal-button ban-deal-button--secondary">
-                            {{ $memberDealLinks ? 'Commit' : 'Unlock commitment access' }} <span aria-hidden="true">&nearr;</span>
-                        </a>
+                        @if ($memberDealLinks)
+                            <button type="button" id="open-commit-submission" class="ban-deal-button ban-deal-button--secondary" aria-haspopup="dialog" aria-controls="commit-submission-dialog">
+                                Commit <span aria-hidden="true">&rarr;</span>
+                            </button>
+                        @else
+                            <a href="{{ route('plans') }}" class="ban-deal-button ban-deal-button--secondary">
+                                Unlock commitment access <span aria-hidden="true">&rarr;</span>
+                            </a>
+                        @endif
                     @endif
 
                     @if (filled($deal->substack_link))
@@ -228,4 +240,97 @@
         </section>
     @endif
 </main>
+
+@if ($memberDealLinks && filled($deal->commit_link))
+    <dialog id="commit-submission-dialog" class="ban-commit-dialog" aria-labelledby="commit-submission-title" aria-describedby="commit-submission-description">
+        <div class="ban-commit-dialog__panel">
+            <header class="ban-commit-dialog__header">
+                <div>
+                    <p class="ban-page-kicker">Commit interest</p>
+                    <h2 id="commit-submission-title">Invest in {{ $deal->title }}</h2>
+                    <p id="commit-submission-description">Share your proposed investment details with the BAN team.</p>
+                </div>
+                <button type="button" class="ban-commit-dialog__close" data-close-commit-dialog aria-label="Close commit form">&times;</button>
+            </header>
+
+            <form method="POST" action="{{ route('deal.commit-submission.store', $deal) }}" class="ban-commit-form">
+                @csrf
+
+                <div class="ban-commit-form__grid">
+                    <div class="ban-commit-form__field">
+                        <label for="commit-email">Email</label>
+                        <input type="email" id="commit-email" name="email" value="{{ old('email', $commitSubmission?->email ?? auth()->user()->email) }}" required maxlength="255" autocomplete="email">
+                        @error('email', 'commitSubmission')<span class="ban-commit-form__error">{{ $message }}</span>@enderror
+                    </div>
+
+                    <div class="ban-commit-form__field">
+                        <label for="commit-name">What is your name?</label>
+                        <input type="text" id="commit-name" name="name" value="{{ old('name', $commitSubmission?->name ?? auth()->user()->name) }}" required maxlength="255" autocomplete="name">
+                        @error('name', 'commitSubmission')<span class="ban-commit-form__error">{{ $message }}</span>@enderror
+                    </div>
+
+                    <div class="ban-commit-form__field">
+                        <label for="commit-whatsapp">What is your WhatsApp number?</label>
+                        <input type="tel" id="commit-whatsapp" name="whatsapp_number" value="{{ old('whatsapp_number', $commitSubmission?->whatsapp_number ?? auth()->user()->phone) }}" required maxlength="50" autocomplete="tel" placeholder="+880 1XXX-XXXXXX">
+                        @error('whatsapp_number', 'commitSubmission')<span class="ban-commit-form__error">{{ $message }}</span>@enderror
+                    </div>
+
+                    <div class="ban-commit-form__field">
+                        <label for="commit-company">Which company are you interested to invest in?</label>
+                        <input type="text" id="commit-company" value="{{ $deal->title }}" readonly aria-readonly="true">
+                    </div>
+
+                    <div class="ban-commit-form__field ban-commit-form__field--amount">
+                        <label for="commit-amount">How much are you willing to invest?</label>
+                        <div class="ban-commit-form__amount">
+                            <input type="number" id="commit-amount" name="amount" value="{{ old('amount', $commitSubmission?->amount) }}" required min="1" max="999999999999.99" step="0.01" inputmode="decimal" placeholder="Amount">
+                            <select name="currency" aria-label="Investment currency" required>
+                                @foreach (['USD', 'BDT', 'GBP', 'EUR', 'SGD', 'AED'] as $currency)
+                                    <option value="{{ $currency }}" @selected(old('currency', $commitSubmission?->currency ?? 'USD') === $currency)>{{ $currency }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        @error('amount', 'commitSubmission')<span class="ban-commit-form__error">{{ $message }}</span>@enderror
+                        @error('currency', 'commitSubmission')<span class="ban-commit-form__error">{{ $message }}</span>@enderror
+                    </div>
+                </div>
+
+                <div class="ban-commit-form__footer">
+                    <p>Your submission will be visible only to BAN administrators.</p>
+                    <div>
+                        <button type="button" class="ban-commit-form__cancel" data-close-commit-dialog>Cancel</button>
+                        <button type="submit" class="ban-commit-form__submit">{{ $commitSubmission ? 'Update submission' : 'Submit commitment' }}</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </dialog>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const dialog = document.getElementById('commit-submission-dialog');
+            const openButton = document.getElementById('open-commit-submission');
+            const closeButtons = dialog?.querySelectorAll('[data-close-commit-dialog]') ?? [];
+
+            const openDialog = function () {
+                if (dialog && !dialog.open) {
+                    dialog.showModal();
+                    document.getElementById('commit-email')?.focus();
+                }
+            };
+
+            openButton?.addEventListener('click', openDialog);
+            closeButtons.forEach(button => button.addEventListener('click', () => dialog.close()));
+            dialog?.addEventListener('click', function (event) {
+                if (event.target === dialog) {
+                    dialog.close();
+                }
+            });
+
+            @if ($errors->commitSubmission->any())
+                openDialog();
+            @endif
+        });
+    </script>
+@endif
 @endsection
