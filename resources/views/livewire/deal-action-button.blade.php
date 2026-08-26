@@ -8,7 +8,7 @@
         } else if($deal->type == "portfolio") {
             echo "View Portfolio";
         } else if ($deal->type === 'invest') {
-            echo "Express interest to invest";
+            echo "Ask for due diligence documents";
         } else if ($deal->type === 'commit') {
             echo "Enter commitment (amount & deadline)";
         } else {

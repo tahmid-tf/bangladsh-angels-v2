@@ -447,9 +447,41 @@
     grid-column: 2 / span 4;
 }
 
-.ban2-programs__grid--count-2 .ban2-program-card,
-.ban2-programs__grid--count-4 .ban2-program-card {
+.ban2-programs__grid--count-2 .ban2-program-card {
     grid-column: span 3;
+}
+
+@media (min-width: 1051px) {
+    .ban2-programs__grid--count-4 {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    .ban2-programs__grid--count-4 .ban2-program-card {
+        grid-column: auto;
+        min-height: 390px;
+        padding: 26px 22px;
+    }
+
+    .ban2-programs__grid--count-4 .ban2-program-card h3 {
+        font-size: clamp(1.65rem, 2.1vw, 2.15rem);
+    }
+
+    .ban2-programs__grid--count-4 .ban2-program-card__copy > span {
+        font-size: 0.84rem;
+    }
+
+    .ban2-programs__grid--count-4 .ban2-program-card__actions {
+        gap: 9px 12px;
+    }
+
+    .ban2-programs__grid--count-4 .ban2-program-card__actions a {
+        gap: 5px;
+        font-size: 0.75rem;
+    }
+
+    .ban2-programs__grid--count-4 .ban2-program-card__actions .ban2-program-card__action {
+        padding-left: 12px;
+    }
 }
 
 .ban2-programs__grid--count-5 .ban2-program-card:nth-child(4) {
