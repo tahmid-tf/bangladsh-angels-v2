@@ -91,6 +91,53 @@ class DealPortfolioListingTest extends TestCase
         $this->assertFalse($deal->fresh()->is_portfolio);
     }
 
+    public function test_filtered_admin_deal_tabs_render_working_search_and_edit_actions(): void
+    {
+        $admin = User::factory()->create(['role' => 'admin']);
+
+        $deals = [
+            'invest' => $this->createDeal($admin, [
+                'title' => 'Invest tab deal',
+                'type' => 'invest',
+            ]),
+            'commit' => $this->createDeal($admin, [
+                'title' => 'Commit tab deal',
+                'type' => 'commit',
+            ]),
+            'review' => $this->createDeal($admin, [
+                'title' => 'Review tab deal',
+                'type' => 'review',
+            ]),
+            'portfolio' => $this->createDeal($admin, [
+                'title' => 'Portfolio tab deal',
+                'type' => 'portfolio',
+            ]),
+            'invest-portfolio' => $this->createDeal($admin, [
+                'title' => 'Invest portfolio tab deal',
+                'type' => 'invest',
+                'is_portfolio' => true,
+            ]),
+        ];
+
+        foreach ($deals as $tab => $deal) {
+            $response = $this->actingAs($admin)->get(route("admin.deals.{$tab}"));
+
+            $response->assertOk()
+                ->assertSee('wire:model.defer="search"', false)
+                ->assertSee(route('edit.deal', $deal), false)
+                ->assertSee($deal->title);
+
+            foreach ($deals as $otherTab => $otherDeal) {
+                $isIncludedInCurrentTab = ($tab === 'invest' && $otherTab === 'invest-portfolio')
+                    || ($tab === 'portfolio' && $otherTab === 'invest-portfolio');
+
+                if ($otherTab !== $tab && ! $isIncludedInCurrentTab) {
+                    $response->assertDontSee($otherDeal->title);
+                }
+            }
+        }
+    }
+
     private function createDeal(User $creator, array $attributes = []): Deal
     {
         return Deal::create(array_merge([
