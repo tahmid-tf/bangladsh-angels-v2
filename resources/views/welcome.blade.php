@@ -128,9 +128,13 @@
                                 <span>{{ $card->description }}</span>
                             </div>
                             <div class="ban2-program-card__actions">
-                                <a href="{{ $card->primary_link }}" @if (str_starts_with($card->primary_link, 'http')) target="_blank" rel="noopener noreferrer" @endif>{{ $card->primary_label }} <span aria-hidden="true">↗</span></a>
+                                <a href="{{ $card->primary_link }}"
+                                    @if (str_starts_with($card->primary_link, 'http')) target="_blank" rel="noopener noreferrer" @endif>{{ $card->primary_label }}
+                                    <span aria-hidden="true">↗</span></a>
                                 @if (filled($card->secondary_label) && filled($card->secondary_link))
-                                    <a href="{{ $card->secondary_link }}" class="ban2-program-card__action" @if (str_starts_with($card->secondary_link, 'http')) target="_blank" rel="noopener noreferrer" @endif>{{ $card->secondary_label }} <span aria-hidden="true">↗</span></a>
+                                    <a href="{{ $card->secondary_link }}" class="ban2-program-card__action"
+                                        @if (str_starts_with($card->secondary_link, 'http')) target="_blank" rel="noopener noreferrer" @endif>{{ $card->secondary_label }}
+                                        <span aria-hidden="true">↗</span></a>
                                 @endif
                             </div>
                         </article>
@@ -139,8 +143,7 @@
             </div>
         </section>
 
-        <section id="membership-plans" class="ban2-section ban2-membership"
-            aria-labelledby="ban2-membership-heading">
+        <section id="membership-plans" class="ban2-section ban2-membership" aria-labelledby="ban2-membership-heading">
             <div class="ban2-shell">
                 @include('partials.subscription-plans', [
                     'tiers' => $tiers,
@@ -302,7 +305,7 @@
                         <span>Upcoming events</span>
                         <h3>New events will be announced here soon.</h3>
                         <p>Please check back shortly or explore BAN’s resources in the meantime.</p>
-                        <a href="{{ route('resources') }}">Discover BAN Resources <span
+                        <a href="{{ route('faq') }}">Frequently Asked Questions <span
                                 aria-hidden="true">&rarr;</span></a>
                     </div>
                 @else

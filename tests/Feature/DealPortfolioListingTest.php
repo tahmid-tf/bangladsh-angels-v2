@@ -33,7 +33,7 @@ class DealPortfolioListingTest extends TestCase
         $this->actingAs($admin)
             ->get(route('admin.deals.invest-portfolio'))
             ->assertOk()
-            ->assertSee('Invest &amp; Portfolio', false)
+            ->assertSee('Investment &amp; Portfolio', false)
             ->assertSee($deal->title);
 
         $this->actingAs($admin)
