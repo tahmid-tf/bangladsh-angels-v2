@@ -8,9 +8,14 @@
                 <h1 class="text-lg md:text-xl font-bold text-gray-900">Investments Index</h1>
                 <p class="text-sm text-gray-600 mt-1">Search and filter deal-level investment activity without overwhelming long lists.</p>
             </div>
-            <div class="text-sm text-gray-600">
-                Showing <span class="font-semibold text-gray-900">{{ $deals->count() }}</span> of
-                <span class="font-semibold text-gray-900">{{ $deals->total() }}</span> deals
+            <div class="flex flex-wrap items-center gap-3">
+                <div class="text-sm text-gray-600">
+                    Showing <span class="font-semibold text-gray-900">{{ $deals->count() }}</span> of
+                    <span class="font-semibold text-gray-900">{{ $deals->total() }}</span> deals
+                </div>
+                <a href="{{ route('deal.add') }}" class="bg-green-600 text-white px-4 py-2 rounded-lg shadow hover:bg-green-700 whitespace-nowrap">
+                    + Add New Deal
+                </a>
             </div>
         </div>
     </div>

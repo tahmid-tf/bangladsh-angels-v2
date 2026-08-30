@@ -41,5 +41,9 @@ class AdminUiSmokeTest extends TestCase
                 ->assertSee('class="admin-shell', false)
                 ->assertSee('class="admin-page', false);
         }
+
+        $this->get(route('admin.investments'))
+            ->assertSee('+ Add New Deal')
+            ->assertSee(route('deal.add'), false);
     }
 }
