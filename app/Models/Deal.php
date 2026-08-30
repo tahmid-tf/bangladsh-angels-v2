@@ -65,6 +65,7 @@ class Deal extends Model implements HasMedia
         'description',
         'sector',
         'type',
+        'is_portfolio',
         'key_metrics',
         'investment_stage',
         'amount_seeking',
@@ -89,6 +90,29 @@ class Deal extends Model implements HasMedia
         'views',
         'investor_commits',
     ];
+
+    protected function casts(): array
+    {
+        return [
+            'is_portfolio' => 'boolean',
+        ];
+    }
+
+    /**
+     * Include legacy portfolio-only records and deals listed in both sections.
+     */
+    public function scopeInPortfolio($query)
+    {
+        return $query->where(function ($query) {
+            $query->where('type', 'portfolio')
+                ->orWhere('is_portfolio', true);
+        });
+    }
+
+    public function isListedInPortfolio(): bool
+    {
+        return $this->type === 'portfolio' || $this->is_portfolio;
+    }
 
     public function getLogoUrl(): string
     {
@@ -147,7 +171,7 @@ class Deal extends Model implements HasMedia
             ->where('id', '!=', $this->id);
 
         if ($this->type === 'portfolio') {
-            $query->where('type', 'portfolio');
+            $query->inPortfolio();
         } else {
             $query->where('type', '!=', 'portfolio')
                 ->where('status', 'active');

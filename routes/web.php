@@ -254,6 +254,7 @@ Route::middleware('auth')->group(function () {
             Route::get('/commit', [AdminController::class, 'viewDeals_commit'])->name('admin.deals.commit');
             Route::get('/review', [AdminController::class, 'viewDeals_review'])->name('admin.deals.review');
             Route::get('/portfolio', [AdminController::class, 'viewDeals_portfolio'])->name('admin.deals.portfolio');
+            Route::get('/invest-portfolio', [AdminController::class, 'viewDeals_investPortfolio'])->name('admin.deals.invest-portfolio');
             Route::get('/{deal:id}/member-activity', [AdminController::class, 'dealMemberActivity'])->name('admin.deals.member-activity');
             Route::post('/{deal:id}/invest', [InvestmentController::class, 'invest'])->name('deal.invest');
 

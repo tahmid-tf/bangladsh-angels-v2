@@ -607,9 +607,26 @@ class AdminController extends Controller
     public function viewDeals_portfolio()
     {
         if (auth()->user()->isAdmin()) {
-            $deals = Deal::with('media')->where('type', 'portfolio')->get(); // Fetch all deals
+            $deals = Deal::with('media')->inPortfolio()->get();
 
             return view('admin.deals.portfolio_index', compact('deals'));
+        } else {
+            return redirect()->route('home');
+        }
+    }
+
+    public function viewDeals_investPortfolio()
+    {
+        if (auth()->user()->isAdmin()) {
+            $deals = Deal::with('media')
+                ->where('type', 'invest')
+                ->where('is_portfolio', true)
+                ->get();
+
+            return view('admin.deals.portfolio_index', [
+                'deals' => $deals,
+                'isDualListing' => true,
+            ]);
         } else {
             return redirect()->route('home');
         }
@@ -631,7 +648,8 @@ class AdminController extends Controller
             $validatedData = $request->validate([
                 'title' => 'required|string|max:255',
                 'sector' => 'required|string|max:255',
-                'type' => 'required',
+                'type' => 'required|in:commit,invest,review,portfolio',
+                'is_portfolio' => 'nullable|boolean',
                 'investment_stage' => 'nullable|in:Pre Seed,Seed,Series A,Series B,Series C,Series D',
                 'amount_seeking' => 'nullable|numeric|min:0',
                 'description' => 'required|string',
@@ -669,6 +687,7 @@ class AdminController extends Controller
                 'slug' => $slug,
                 'sector' => $validatedData['sector'],
                 'type' => $validatedData['type'],
+                'is_portfolio' => $request->boolean('is_portfolio'),
                 'investment_stage' => $validatedData['investment_stage'],
                 'amount_seeking' => $validatedData['amount_seeking'],
                 'description' => $validatedData['description'],
@@ -741,6 +760,7 @@ class AdminController extends Controller
             'title' => 'required|string|max:255',
             'sector' => 'required|string',
             'type' => 'required|in:commit,invest,review,portfolio',
+            'is_portfolio' => 'nullable|boolean',
             'investment_stage' => 'nullable|in:Pre Seed,Seed,Series A,Series B,Series C,Series D',
             'amount_seeking' => 'nullable|numeric|min:0',
             'description' => 'required|string',
@@ -759,6 +779,8 @@ class AdminController extends Controller
                 $deal->id
             );
         }
+
+        $validatedData['is_portfolio'] = $request->boolean('is_portfolio');
 
         $deal->update($validatedData);
 

@@ -21,7 +21,7 @@ class PrimaryController extends Controller
     {
         $portfolioDeals = Deal::query()
             ->with('media')
-            ->where('type', 'portfolio')
+            ->inPortfolio()
             ->latest()
             ->limit(8)
             ->get();
@@ -98,7 +98,7 @@ class PrimaryController extends Controller
     public function viewPortfolio()
     {
         $portfolioDeals = Deal::with('media')
-            ->where('type', 'portfolio')
+            ->inPortfolio()
             ->get();
 
         return view('portfolio', compact('portfolioDeals'));

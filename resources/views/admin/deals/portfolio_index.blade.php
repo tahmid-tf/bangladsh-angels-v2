@@ -4,7 +4,7 @@
 <section class="container mx-auto p-6">
     <!-- Header Section -->
     <div class="flex flex-col md:flex-row justify-between items-start md:items-center p-4 bg-white shadow">
-        <h1 class="text-lg md:text-xl font-bold mb-2 md:mb-0">Portfolios ({{count($deals)}})</h1>
+        <h1 class="text-lg md:text-xl font-bold mb-2 md:mb-0">{{ ($isDualListing ?? false) ? 'Invest & Portfolio' : 'Portfolios' }} ({{count($deals)}})</h1>
 
         <a href="{{route('deal.add')}}" class="bg-green-600 text-white px-4 py-2 rounded-lg shadow hover:bg-green-700 whitespace-nowrap">
             + Add New Deal
@@ -20,7 +20,8 @@
                 <a href="{{route('admin.deals.invest')}}" class="px-4 py-2 text-gray-600 hover:bg-gray-200 rounded-full">Invest</a>
                 <a href="{{route('admin.deals.commit')}}" class="px-4 py-2 text-gray-600 hover:bg-gray-200 rounded-full">Commit</a>
                 <a href="{{route('admin.deals.review')}}" class="px-4 py-2 text-gray-600 hover:bg-gray-200 rounded-full">Review</a>
-                <a href="{{route('admin.deals.portfolio')}}" class="px-4 py-2 bg-green-100 text-green-700 rounded-full">Portfolio</a>
+                <a href="{{route('admin.deals.portfolio')}}" class="px-4 py-2 {{ ($isDualListing ?? false) ? 'text-gray-600 hover:bg-gray-200' : 'bg-green-100 text-green-700' }} rounded-full">Portfolio</a>
+                <a href="{{route('admin.deals.invest-portfolio')}}" class="px-4 py-2 {{ ($isDualListing ?? false) ? 'bg-green-100 text-green-700' : 'text-gray-600 hover:bg-gray-200' }} rounded-full">Invest &amp; Portfolio</a>
                 
             </div>
 

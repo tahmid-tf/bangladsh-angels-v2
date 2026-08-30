@@ -21,6 +21,7 @@
                 <a href="{{route('admin.deals.commit')}}" class="px-4 py-2 text-gray-600 hover:bg-gray-200 rounded-full">Commit</a>
                 <a href="{{route('admin.deals.review')}}" class="px-4 py-2 text-gray-600 hover:bg-gray-200 rounded-full">Review</a>
                 <a href="{{route('admin.deals.portfolio')}}" class="px-4 py-2 text-gray-600 hover:bg-gray-200 rounded-full">Portfolio</a>
+                <a href="{{route('admin.deals.invest-portfolio')}}" class="px-4 py-2 text-gray-600 hover:bg-gray-200 rounded-full">Invest &amp; Portfolio</a>
             </div>
         </div>
     </div>

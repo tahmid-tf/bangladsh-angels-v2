@@ -3,6 +3,7 @@
 @php
     $memberDealLinks = auth()->check() && auth()->user() && ! auth()->user()->isFree();
     $isPortfolio = $deal->type === 'portfolio';
+    $isDualListed = $deal->type !== 'portfolio' && $deal->isListedInPortfolio();
     $listingUrl = $isPortfolio ? route('portfolio') : route('startups');
     $listingLabel = $isPortfolio ? 'Back to portfolio' : 'Back to startups';
     $relatedDealsHeading = $isPortfolio ? 'More portfolio companies' : 'More active opportunities';
@@ -72,6 +73,9 @@
                     <div class="ban-deal-identity__tags" aria-label="Company classification">
                         <span>{{ $sector }}</span>
                         <span>{{ $isPortfolio ? 'BAN portfolio' : 'Active opportunity' }}</span>
+                        @if ($isDualListed)
+                            <span>BAN portfolio</span>
+                        @endif
                     </div>
                 </div>
 
@@ -129,7 +133,7 @@
             <figure class="ban-deal-visual">
                 <div class="ban-deal-visual__frame">
                     <div class="ban-deal-visual__topline" aria-hidden="true">
-                        <span>{{ $isPortfolio ? 'BAN portfolio company' : 'BAN investment opportunity' }}</span>
+                        <span>{{ $isPortfolio ? 'BAN portfolio company' : ($isDualListed ? 'BAN portfolio · Investment opportunity' : 'BAN investment opportunity') }}</span>
                         <span>{{ $investmentStage }}</span>
                     </div>
                     <img src="{{ $deal->getCoverUrl() }}" alt="{{ $deal->title }} company cover" width="720" height="540" loading="eager">

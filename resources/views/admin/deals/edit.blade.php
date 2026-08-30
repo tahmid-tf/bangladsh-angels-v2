@@ -99,7 +99,7 @@
                         <option value="commit" {{ old('type', $deal->type) == 'commit' ? 'selected' : '' }}>Commit</option>
                         <option value="invest" {{ old('type', $deal->type) == 'invest' ? 'selected' : '' }}>Invest</option>
                         <option value="review" {{ old('type', $deal->type) == 'review' ? 'selected' : '' }}>Review</option>
-                        <option value="portfolio" {{ old('type', $deal->type) == 'portfolio' ? 'selected' : '' }}>Portfolio</option>
+                        <option value="portfolio" {{ old('type', $deal->type) == 'portfolio' ? 'selected' : '' }}>Portfolio only</option>
                     </select>
                 </div>
                 <!-- Deal Status -->
@@ -110,6 +110,17 @@
                         <option value="closed" {{ old('status', $deal->status) == 'closed' ? 'selected' : '' }}>Closed</option>
                         <option value="draft" {{ old('status', $deal->status) == 'draft' ? 'selected' : '' }}>Draft</option>
                     </select>
+                </div>
+
+                <div class="md:col-span-2 rounded-lg border border-gray-200 bg-gray-50 px-4 py-3">
+                    <input type="hidden" name="is_portfolio" value="0">
+                    <label for="is_portfolio" class="flex cursor-pointer items-start gap-3">
+                        <input type="checkbox" id="is_portfolio" name="is_portfolio" value="1" class="mt-1 rounded border-gray-300 text-green-600 focus:ring-green-500" {{ old('is_portfolio', $deal->is_portfolio) ? 'checked' : '' }}>
+                        <span>
+                            <span class="block font-semibold text-gray-700">Also show in Portfolio</span>
+                            <span class="block text-sm text-gray-500">Keep the deal type as Invest and check this option to show the company in both Invest and Portfolio.</span>
+                        </span>
+                    </label>
                 </div>
 
                 <!-- Investment Stage -->
