@@ -83,13 +83,13 @@ class InvestorInvestmentController extends Controller
         $investor = User::query()->findOrFail($request->integer('investor_id'));
         $startup = Deal::query()->findOrFail($request->integer('deal_id'));
 
-        $investment = InvestorInvestment::create($this->payload($request, $investor, $startup) + [
+        InvestorInvestment::create($this->payload($request, $investor, $startup) + [
             'created_by' => $request->user()->id,
             'updated_by' => $request->user()->id,
         ]);
 
         return redirect()
-            ->route('admin.investor-investments.show', $investment)
+            ->route('admin.investor-investments.index')
             ->with('success', 'Investor investment recorded successfully.');
     }
 

@@ -27,7 +27,7 @@ class InvestorInvestmentFeatureTest extends TestCase
         ]);
 
         $investment = InvestorInvestment::firstOrFail();
-        $createResponse->assertRedirect(route('admin.investor-investments.show', $investment));
+        $createResponse->assertRedirect(route('admin.investor-investments.index'));
         $this->assertDatabaseHas('investor_investments', [
             'investor_id' => $investor->id,
             'deal_id' => $startup->id,
