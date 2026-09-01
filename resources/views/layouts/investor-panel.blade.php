@@ -38,10 +38,10 @@
                 My investments
             </a>
             <p>Account</p>
-            <a href="{{ route('profile.edit') }}">
+            {{-- <a href="{{ route('profile.edit') }}">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 12a4 4 0 100-8 4 4 0 000 8zm7 8a7 7 0 00-14 0" /></svg>
                 Profile settings
-            </a>
+            </a> --}}
             <a href="{{ route('home') }}">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M3 11l9-8 9 8v9H3v-9z" /></svg>
                 Back to website

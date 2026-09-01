@@ -19,7 +19,7 @@
 }
 
 .investor-sidebar__brand { display: flex; min-height: 104px; align-items: center; padding: 24px 28px; border-bottom: 1px solid rgba(255,255,255,.08); }
-.investor-sidebar__brand img { width: 164px; height: auto; }
+.investor-sidebar__brand img { width: 76px; height: 42px; object-fit: contain; object-position: left center; }
 .investor-sidebar__identity { display: grid; grid-template-columns: 44px minmax(0,1fr); gap: 12px; align-items: center; margin: 22px 18px 10px; padding: 14px; border: 1px solid rgba(255,255,255,.09); border-radius: 16px; background: rgba(255,255,255,.05); }
 .investor-sidebar__avatar { width: 44px; height: 44px; object-fit: cover; border: 2px solid rgba(174,235,204,.55); border-radius: 50%; }
 .investor-sidebar__identity strong, .investor-sidebar__identity span { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
