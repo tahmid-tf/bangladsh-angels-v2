@@ -8,8 +8,8 @@ use App\Models\LandingProgramCard;
 use App\Models\Resource;
 use App\Models\StartupService;
 use App\Models\SubscriptionTier;
-use App\Models\TeamMember;
 use App\Models\TeamAboutSection;
+use App\Models\TeamMember;
 use App\Models\User;
 use App\Support\BanFaqs;
 use Illuminate\Http\Request;
@@ -55,10 +55,16 @@ class PrimaryController extends Controller
             ->limit(6)
             ->get();
 
-        $tiers = SubscriptionTier::query()->active()->ordered()->get();
+        $showMembershipPlans = ! auth()->check() || ! auth()->user()->hasPaidMembership();
+        $tiers = $showMembershipPlans
+            ? SubscriptionTier::query()->active()->ordered()->get()
+            : collect();
         $showFreeTierOption = auth()->check()
             && auth()->user()->hasVerifiedEmail()
             && auth()->user()->account_status === 'free';
+        $investCtaUrl = auth()->check() && auth()->user()->hasPaidMembership()
+            ? route('dashboard')
+            : route('investor.signup');
 
         return view('welcome', compact(
             'portfolioDeals',
@@ -69,13 +75,19 @@ class PrimaryController extends Controller
             'landingProgramHeading',
             'landingResourceEvents',
             'tiers',
-            'showFreeTierOption'
+            'showFreeTierOption',
+            'showMembershipPlans',
+            'investCtaUrl'
         ));
     }
 
     // Upgrade Page
     public function upgradePage()
     {
+        if (auth()->check() && auth()->user()->hasPaidMembership()) {
+            return redirect()->route('dashboard')->with('info', 'Your membership plan is already active.');
+        }
+
         return view('upgrade');
     }
 
@@ -107,6 +119,10 @@ class PrimaryController extends Controller
     // Subscription Plans Page
     public function viewPlans()
     {
+        if (auth()->check() && auth()->user()->hasPaidMembership()) {
+            return redirect()->route('dashboard')->with('info', 'Your membership plan is already active.');
+        }
+
         $tiers = SubscriptionTier::query()->active()->ordered()->get();
         $showFreeTierOption = auth()->check()
             && auth()->user()->hasVerifiedEmail()
@@ -213,6 +229,10 @@ class PrimaryController extends Controller
     // View Sign up Page
     public function viewInvestorSignup()
     {
+        if (auth()->check() && auth()->user()->hasPaidMembership()) {
+            return redirect()->route('dashboard')->with('info', 'Your membership plan is already active.');
+        }
+
         $tiers = SubscriptionTier::query()->active()->ordered()->get();
 
         return view('investor.signup', compact('tiers'));

@@ -43,7 +43,7 @@
                     </p>
                     <p class="ban2-action-prompt">I'm looking To</p>
                     <div class="ban2-actions">
-                        <a href="{{ route('investor.signup') }}" class="ban2-button ban2-button--primary">Invest</a>
+                        <a href="{{ $investCtaUrl }}" class="ban2-button ban2-button--primary">{{ auth()->check() && auth()->user()->hasPaidMembership() ? (auth()->user()->isInvestor() ? 'Investor Dashboard' : 'Dashboard') : 'Invest' }}</a>
                         <a href="#pitch-form" class="ban2-button ban2-button--secondary">Fundraise</a>
                     </div>
                     <div class="ban2-hero__proof" aria-label="BAN at a glance">
@@ -143,16 +143,18 @@
             </div>
         </section>
 
-        <section id="membership-plans" class="ban2-section ban2-membership" aria-labelledby="ban2-membership-heading">
-            <div class="ban2-shell">
-                @include('partials.subscription-plans', [
-                    'tiers' => $tiers,
-                    'showFreeTierOption' => $showFreeTierOption,
-                    'tierSectionKicker' => 'Membership plans',
-                    'tierSectionHeadingId' => 'ban2-membership-heading',
-                ])
-            </div>
-        </section>
+        @if ($showMembershipPlans)
+            <section id="membership-plans" class="ban2-section ban2-membership" aria-labelledby="ban2-membership-heading">
+                <div class="ban2-shell">
+                    @include('partials.subscription-plans', [
+                        'tiers' => $tiers,
+                        'showFreeTierOption' => $showFreeTierOption,
+                        'tierSectionKicker' => 'Membership plans',
+                        'tierSectionHeadingId' => 'ban2-membership-heading',
+                    ])
+                </div>
+            </section>
+        @endif
 
         <section id="pitch-form" class="ban2-section ban2-startups ban2-founder-pitch"
             aria-labelledby="ban2-pitch-heading">

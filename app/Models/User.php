@@ -159,6 +159,18 @@ class User extends Authenticatable implements HasMedia, MustVerifyEmail
     }
 
     /**
+     * Whether the account already has an active paid membership tier.
+     */
+    public function hasPaidMembership(): bool
+    {
+        return in_array(strtolower((string) $this->account_status), [
+            'core',
+            'advanced',
+            'institutional',
+        ], true);
+    }
+
+    /**
      * Whether the member may view paywalled deal listings (e.g. Active Deals on /startups).
      */
     public function canViewPaywalledDeals(): bool

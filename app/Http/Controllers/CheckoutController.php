@@ -23,6 +23,10 @@ class CheckoutController extends Controller
 
     public function checkout(Request $request)
     {
+        if ($request->user()?->hasPaidMembership()) {
+            return redirect()->route('dashboard')->with('info', 'Your membership plan is already active.');
+        }
+
         if ($request->isMethod('post')) {
             $validated = $request->validate([
                 'plan' => ['required', 'string', 'max:64'],
@@ -54,6 +58,10 @@ class CheckoutController extends Controller
 
     public function processCheckout(Request $request)
     {
+        if ($request->user()?->hasPaidMembership()) {
+            return redirect()->route('dashboard')->with('info', 'Your membership plan is already active.');
+        }
+
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email',

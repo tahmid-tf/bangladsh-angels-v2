@@ -11,7 +11,9 @@
         <nav class="ban-site-nav__desktop" aria-label="Primary navigation">
             <ul class="ban-site-nav__list">
                 <li><a href="{{ $homeSection('ban-events') }}" class="ban-site-nav__link">Events</a></li>
-                <li><a href="{{ $homeSection('membership-plans') }}" class="ban-site-nav__link">Plans</a></li>
+                @if (!auth()->check() || !auth()->user()->hasPaidMembership())
+                    <li><a href="{{ $homeSection('membership-plans') }}" class="ban-site-nav__link">Plans</a></li>
+                @endif
                 <li><a href="{{ route('startups') }}" class="ban-site-nav__link">Featured Startups</a></li>
                 <li><a href="{{ route('portfolio') }}" class="ban-site-nav__link">Portfolio</a></li>
                 <li><a href="{{ route('team') }}" class="ban-site-nav__link">Team</a></li>
@@ -72,7 +74,9 @@
                     <li><a href="{{ route('login') }}" class="ban-mobile-secondary">Login</a></li>
                 @endguest
                 <li><a href="{{ $homeSection('ban-events') }}">Events</a></li>
-                <li><a href="{{ $homeSection('membership-plans') }}">Plans</a></li>
+                @if (!auth()->check() || !auth()->user()->hasPaidMembership())
+                    <li><a href="{{ $homeSection('membership-plans') }}">Plans</a></li>
+                @endif
                 <li><a href="{{ route('startups') }}">Featured Startups</a></li>
                 <li><a href="{{ route('portfolio') }}">Portfolio</a></li>
                 <li><a href="{{ route('team') }}">Team</a></li>

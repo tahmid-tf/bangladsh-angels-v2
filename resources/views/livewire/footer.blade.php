@@ -33,7 +33,11 @@
       <section class="ban-footer__links" aria-labelledby="ban-footer-start-heading">
         <h2 id="ban-footer-start-heading">Get Started</h2>
         <ul>
-          <li><a href="{{ route('investor.signup') }}">Become an Investor</a></li>
+          @if (!auth()->check() || !auth()->user()->hasPaidMembership())
+            <li><a href="{{ route('investor.signup') }}">Become an Investor</a></li>
+          @elseif (auth()->user()->isInvestor())
+            <li><a href="{{ route('investor.dashboard') }}">Investor Dashboard</a></li>
+          @endif
           <li><a href="{{ route('startups').'#send-pitch' }}">Pitch Your Startup</a></li>
           @guest
             <li><a href="{{ route('login') }}">Member Login</a></li>

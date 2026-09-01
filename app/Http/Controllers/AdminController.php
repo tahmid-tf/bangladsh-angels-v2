@@ -417,6 +417,10 @@ class AdminController extends Controller
 
     public function memberApply(Request $request)
     {
+        if ($request->user()?->hasPaidMembership()) {
+            return redirect()->route('dashboard')->with('info', 'Your membership plan is already active.');
+        }
+
         $approval = false;
 
         $googleSignup = $request->session()->get('google_signup');
