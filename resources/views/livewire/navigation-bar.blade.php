@@ -39,7 +39,7 @@
                     </button>
                     <div id="dropdown-menu" class="ban-site-nav__account-menu hidden">
                         <ul>
-                            {{-- <li><a href="{{ route('profile.edit') }}">Profile</a></li> --}}
+                            <li><a href="{{ route('profile.edit') }}">Profile</a></li>
                             @if (auth()->user()->isAdmin())<li><a href="{{ route('admin.dashboard') }}">Admin Panel</a></li>@endif
                             @if (auth()->user()->isInvestor())<li><a href="{{ route('investor.dashboard') }}">Investor Dashboard</a></li>@endif
                             {{-- <li><a href="{{ route('dashboard') }}">Dashboard</a></li> --}}

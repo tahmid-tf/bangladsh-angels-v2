@@ -249,7 +249,7 @@
 
         <!-- Content Area -->
         <main class="flex-1 overflow-y-auto p-4 bg-gray-50">
-            <div class="admin-page {{ request()->routeIs('admin.dashboard') ? 'admin-page--dashboard' : '' }}">
+            <div class="admin-page {{ request()->routeIs('admin.dashboard') || (request()->routeIs('profile.edit') && auth()->user()->isAdmin()) ? 'admin-page--dashboard' : '' }}">
                 @yield('page_content')
             </div>
         </main>
@@ -330,5 +330,6 @@
     </script>
 
     <livewire:scripts />
+    @stack('scripts')
 </body>
 </html>
