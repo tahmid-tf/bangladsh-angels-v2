@@ -190,6 +190,12 @@
                 </svg>
                 <span>Investments</span>
             </a>
+            <a href="{{ route('admin.investor-investments.index') }}" class="py-3 px-6 hover:bg-green-600 transition-colors flex items-center space-x-2 {{ request()->routeIs('admin.investor-investments.*') ? 'bg-green-600' : '' }}">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                    <path d="M4 3a1 1 0 00-1 1v12a1 1 0 001 1h12a1 1 0 001-1V8.414A2 2 0 0016.414 7L13 3.586A2 2 0 0011.586 3H4zm2 4a1 1 0 011-1h3a1 1 0 010 2H7a1 1 0 01-1-1zm0 4a1 1 0 011-1h6a1 1 0 010 2H7a1 1 0 01-1-1zm0 3a1 1 0 011-1h4a1 1 0 010 2H7a1 1 0 01-1-1z" />
+                </svg>
+                <span>Investors Investments</span>
+            </a>
             <p class="admin-nav-label">Communication</p>
             <a href="{{ route('admin.mail') }}" class="py-3 px-6 hover:bg-green-600 transition-colors flex items-center space-x-2 {{ request()->routeIs('admin.mail*') ? 'bg-green-600' : '' }}">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">

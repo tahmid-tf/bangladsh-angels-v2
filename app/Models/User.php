@@ -262,6 +262,11 @@ class User extends Authenticatable implements HasMedia, MustVerifyEmail
         return $this->hasMany(Investment::class, 'user_id');
     }
 
+    public function completedInvestments()
+    {
+        return $this->hasMany(InvestorInvestment::class, 'investor_id');
+    }
+
     /**
      * Get the admin user who approved this user.
      */

@@ -2,12 +2,13 @@
 
 use App\Http\Controllers\Admin\AngelAcademyNetworkApplicationController as AdminAngelAcademyNetworkApplicationController;
 use App\Http\Controllers\Admin\FounderPitchSubmissionController;
+use App\Http\Controllers\Admin\InvestorInvestmentController as AdminInvestorInvestmentController;
 use App\Http\Controllers\Admin\LandingPageStatController;
 use App\Http\Controllers\Admin\LandingProgramCardController;
 use App\Http\Controllers\Admin\ResourceHubCardController;
 use App\Http\Controllers\Admin\StartupServiceController;
-use App\Http\Controllers\Admin\TeamMemberController;
 use App\Http\Controllers\Admin\TeamAboutSectionController;
+use App\Http\Controllers\Admin\TeamMemberController;
 use App\Http\Controllers\Admin\WhatWeDoCardController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AngelAcademyNetworkApplicationController;
@@ -15,6 +16,7 @@ use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\CommitSubmissionController;
 use App\Http\Controllers\FounderPitchController;
 use App\Http\Controllers\InvestmentController;
+use App\Http\Controllers\InvestorDashboardController;
 use App\Http\Controllers\MailController;
 use App\Http\Controllers\PrimaryController;
 use App\Http\Controllers\ProfileController;
@@ -112,9 +114,17 @@ Route::get('/faq', [PrimaryController::class, 'viewFAQ'])->name('faq');
 Route::get('/investor/signup', [PrimaryController::class, 'viewInvestorSignup'])->name('investor.signup');
 
 /**
- * Legacy dashboard path now redirects to the landing page.
+ * Keep the legacy dashboard path as a role-aware entry point.
  */
 Route::get('/dashboard', function () {
+    if (auth()->user()->isAdmin()) {
+        return redirect()->route('admin.dashboard');
+    }
+
+    if (auth()->user()->isInvestor()) {
+        return redirect()->route('investor.dashboard');
+    }
+
     return redirect()->route('home');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
@@ -273,7 +283,17 @@ Route::middleware('auth')->group(function () {
             Route::get('/', InvestmentController::class)->name('admin.investments');
         });
 
+        Route::get('/investor-investments/suggestions', [AdminInvestorInvestmentController::class, 'suggestions'])
+            ->name('admin.investor-investments.suggestions');
+        Route::resource('investor-investments', AdminInvestorInvestmentController::class)
+            ->parameters(['investor-investments' => 'investorInvestment'])
+            ->names('admin.investor-investments');
+
     });
+
+    Route::get('/investor/dashboard', InvestorDashboardController::class)
+        ->middleware('verified')
+        ->name('investor.dashboard');
 
     /**
      * User Profile Routes

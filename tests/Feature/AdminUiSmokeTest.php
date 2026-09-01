@@ -32,6 +32,7 @@ class AdminUiSmokeTest extends TestCase
             'admin.angel-academy-applications',
             'admin.subscriptions',
             'admin.investments',
+            'admin.investor-investments.index',
             'admin.mail',
         ];
 

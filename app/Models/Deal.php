@@ -199,6 +199,11 @@ class Deal extends Model implements HasMedia
         return $this->hasMany(Investment::class, 'deal_id');
     }
 
+    public function completedInvestments()
+    {
+        return $this->hasMany(InvestorInvestment::class, 'deal_id');
+    }
+
     public function commits()
     {
         return $this->hasMany(Commit::class);

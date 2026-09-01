@@ -31,7 +31,7 @@ class AuthenticatedSessionController extends Controller
         if (auth()->user()->isAdmin()) {
             return redirect()->route('admin.dashboard');
         } elseif (auth()->user()->isInvestor()) {
-            return redirect()->route('home');
+            return redirect()->route('investor.dashboard');
         } else {
             return redirect()->route('home'); // Default route for seekers
         }
