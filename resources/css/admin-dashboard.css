@@ -241,9 +241,10 @@
 }
 
 .admin-shell #dropdown-menu a,
-.admin-shell #dropdown-menu form {
+.admin-shell #dropdown-menu form,
+.admin-shell #dropdown-menu form button {
     font-size: 0.84rem;
-    font-weight: 600;
+    font-weight: 400;
 }
 
 .admin-shell main {
