@@ -13,13 +13,23 @@ class BanWealthFeatureTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_public_can_view_the_ban_wealth_journey(): void
+    public function test_public_can_view_the_ban_wealth_landing_page_and_journey(): void
     {
+        $this->get(route('home'))
+            ->assertOk()
+            ->assertSee('BAN Wealth')
+            ->assertSee(route('ban-wealth.index'));
+
         $this->get(route('ban-wealth.index'))
             ->assertOk()
             ->assertSee('BAN Wealth')
             ->assertSee('class="ban-site-nav"', false)
             ->assertSee('Featured Startups')
+            ->assertSee('A clearer way to invest for what comes next.')
+            ->assertSee(route('ban-wealth.invest'));
+
+        $this->get(route('ban-wealth.invest'))
+            ->assertOk()
             ->assertSee('When might you need this money back?');
     }
 
@@ -34,7 +44,7 @@ class BanWealthFeatureTest extends TestCase
         $response = $this->actingAs($investor)->post(route('ban-wealth.orders.store'), $this->validPayload());
 
         $order = BanWealthOrder::query()->firstOrFail();
-        $response->assertRedirect(route('ban-wealth.index', ['order' => $order->reference]));
+        $response->assertRedirect(route('ban-wealth.invest', ['order' => $order->reference]));
         $this->assertSame('pending', $order->status);
         $this->assertSame('bank_transfer', $order->payment_method);
         $this->assertSame($investor->id, $order->investor_id);
@@ -69,7 +79,7 @@ class BanWealthFeatureTest extends TestCase
             'reviewed_by' => $admin->id,
         ]);
 
-        $this->actingAs($investor)->get(route('ban-wealth.index'))
+        $this->actingAs($investor)->get(route('ban-wealth.invest'))
             ->assertOk()
             ->assertSee('accepted')
             ->assertSee('Transfer verified.');

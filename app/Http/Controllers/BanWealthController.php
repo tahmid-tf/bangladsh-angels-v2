@@ -12,7 +12,12 @@ use Illuminate\View\View;
 
 class BanWealthController extends Controller
 {
-    public function index(Request $request): View
+    public function landing(): View
+    {
+        return view('ban-wealth.home');
+    }
+
+    public function invest(Request $request): View
     {
         $orders = $request->user()?->isInvestor()
             ? BanWealthOrder::query()->where('investor_id', $request->user()->id)->latest()->get()
@@ -80,7 +85,7 @@ class BanWealthController extends Controller
             throw $exception;
         }
 
-        return redirect()->route('ban-wealth.index', ['order' => $order->reference])
+        return redirect()->route('ban-wealth.invest', ['order' => $order->reference])
             ->with('ban_wealth_success', $order->reference);
     }
 
