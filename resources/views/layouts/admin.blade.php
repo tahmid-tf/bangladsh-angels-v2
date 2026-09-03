@@ -196,6 +196,12 @@
                 </svg>
                 <span>Investors Investments</span>
             </a>
+            <a href="{{ route('admin.ban-wealth-orders.index') }}" class="py-3 px-6 hover:bg-green-600 transition-colors flex items-center space-x-2 {{ request()->routeIs('admin.ban-wealth-orders.*') ? 'bg-green-600' : '' }}">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                    <path d="M10 2a1 1 0 011 1v1.07A7.002 7.002 0 0117 11v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4a7.002 7.002 0 016-6.93V3a1 1 0 011-1zm0 5a4 4 0 100 8 4 4 0 000-8z" />
+                </svg>
+                <span>BAN Wealth Orders</span>
+            </a>
             <p class="admin-nav-label">Communication</p>
             <a href="{{ route('admin.mail') }}" class="py-3 px-6 hover:bg-green-600 transition-colors flex items-center space-x-2 {{ request()->routeIs('admin.mail*') ? 'bg-green-600' : '' }}">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">

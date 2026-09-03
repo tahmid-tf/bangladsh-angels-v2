@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AngelAcademyNetworkApplicationController as AdminAngelAcademyNetworkApplicationController;
+use App\Http\Controllers\Admin\BanWealthOrderController as AdminBanWealthOrderController;
 use App\Http\Controllers\Admin\FounderPitchSubmissionController;
 use App\Http\Controllers\Admin\InvestorInvestmentController as AdminInvestorInvestmentController;
 use App\Http\Controllers\Admin\LandingPageStatController;
@@ -12,6 +13,7 @@ use App\Http\Controllers\Admin\TeamMemberController;
 use App\Http\Controllers\Admin\WhatWeDoCardController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AngelAcademyNetworkApplicationController;
+use App\Http\Controllers\BanWealthController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\CommitSubmissionController;
 use App\Http\Controllers\FounderPitchController;
@@ -45,6 +47,7 @@ Route::get('/deckvue', [PrimaryController::class, 'viewResources'])->name('resou
 Route::get('/team', [PrimaryController::class, 'viewTeam'])->name('team');
 Route::get('/angel-academy', [PrimaryController::class, 'viewAngelAcademy'])->name('angel-academy');
 Route::get('/bwin', [PrimaryController::class, 'viewBwin'])->name('bwin');
+Route::get('/ban-wealth', [BanWealthController::class, 'index'])->name('ban-wealth.index');
 Route::get('/angel-academy/apply', [AngelAcademyNetworkApplicationController::class, 'create'])->name('angel-academy.apply');
 Route::post('/angel-academy/apply', [AngelAcademyNetworkApplicationController::class, 'store'])
     ->middleware('throttle:10,1')
@@ -157,6 +160,9 @@ Route::get('/resources/{resource:slug}', [ResourceController::class, 'view'])->n
  * Authenticated Routes
  */
 Route::middleware('auth')->group(function () {
+
+    Route::get('/ban-wealth/continue', fn () => redirect()->route('ban-wealth.index', ['resume' => 1]))
+        ->name('ban-wealth.continue');
 
     /**
      * Admin Dashboard Routes
@@ -289,11 +295,21 @@ Route::middleware('auth')->group(function () {
             ->parameters(['investor-investments' => 'investorInvestment'])
             ->names('admin.investor-investments');
 
+        Route::get('/ban-wealth-orders', [AdminBanWealthOrderController::class, 'index'])->name('admin.ban-wealth-orders.index');
+        Route::get('/ban-wealth-orders/{banWealthOrder}', [AdminBanWealthOrderController::class, 'show'])->name('admin.ban-wealth-orders.show');
+        Route::patch('/ban-wealth-orders/{banWealthOrder}', [AdminBanWealthOrderController::class, 'update'])->name('admin.ban-wealth-orders.update');
+
     });
 
     Route::get('/investor/dashboard', InvestorDashboardController::class)
         ->middleware('verified')
         ->name('investor.dashboard');
+
+    Route::post('/ban-wealth/orders', [BanWealthController::class, 'store'])
+        ->middleware(['verified', 'throttle:5,1'])
+        ->name('ban-wealth.orders.store');
+    Route::get('/ban-wealth/orders/{banWealthOrder}/proof', [BanWealthController::class, 'proof'])
+        ->name('ban-wealth.orders.proof');
 
     /**
      * User Profile Routes

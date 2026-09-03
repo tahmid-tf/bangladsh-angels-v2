@@ -22,6 +22,7 @@
       <section class="ban-footer__links" aria-labelledby="ban-footer-explore-heading">
         <h2 id="ban-footer-explore-heading">Explore</h2>
         <ul>
+          <li><a href="{{ route('ban-wealth.index') }}">BAN Wealth</a></li>
           <li><a href="{{ route('angel-academy') }}">Angel Academy</a></li>
           <li><a href="{{ route('startups') }}">Startups</a></li>
           <li><a href="{{ route('investors') }}">Our Investors</a></li>
