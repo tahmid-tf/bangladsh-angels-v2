@@ -36,6 +36,9 @@
                     </div>
                     @endif
                     
+                    @if($membershipOrder ?? null)
+                        <p class="mb-6"><a class="text-green-700 underline" href="{{ route('membership-orders.show', $membershipOrder) }}">View your receipt and confirm membership access</a></p>
+                    @endif
                     <div class="mt-8">
                         <a href="{{ route('startups').'#active-deals' }}" class="inline-flex items-center px-6 py-3 bg-blue-600 border border-transparent rounded-md font-semibold text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition">
                             <svg class="mr-2 -ml-1 w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -46,7 +49,7 @@
                     </div>
                     
                     <div class="mt-6 text-gray-600">
-                        <p>If you have any questions about your membership, please contact us at <a href="mailto:support@bdangels.co" class="text-blue-500 hover:underline">support@bdangels.co</a></p>
+                        <p>If you have any questions about your membership, please contact us at <a href="mailto:{{ config('business.email') }}" class="text-blue-500 hover:underline">{{ config('business.email') }}</a></p>
                     </div>
                 </div>
             </div>

@@ -43,6 +43,10 @@
                 BAN Wealth
             </a>
             <p>Account</p>
+            <a href="{{ route('membership-orders.index') }}" class="{{ request()->routeIs('membership-orders.*') ? 'is-active' : '' }}">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M6 3h12v18l-3-2-3 2-3-2-3 2V3zM9 7h6M9 11h6" /></svg>
+                Membership receipts
+            </a>
             <a href="{{ route('profile.edit') }}" class="{{ request()->routeIs('profile.edit') ? 'is-active' : '' }}">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 12a4 4 0 100-8 4 4 0 000 8zm7 8a7 7 0 00-14 0" /></svg>
                 Profile settings

@@ -20,10 +20,12 @@ use App\Http\Controllers\FounderPitchController;
 use App\Http\Controllers\InvestmentController;
 use App\Http\Controllers\InvestorDashboardController;
 use App\Http\Controllers\MailController;
+use App\Http\Controllers\MembershipOrderController;
 use App\Http\Controllers\PrimaryController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ResourceController;
 use App\Http\Controllers\SubscriptionController;
+use App\Http\Controllers\WebsitePolicyController;
 use App\Http\Middleware\ApprovedUserMiddleware;
 use App\Models\Deal;
 use App\Models\Payment;
@@ -36,6 +38,21 @@ use Illuminate\Support\Facades\Route;
  * Public Routes
  */
 Route::get('/', PrimaryController::class)->name('home');
+
+Route::get('/about-us', [WebsitePolicyController::class, 'show'])->name('about-us');
+Route::get('/services', [WebsitePolicyController::class, 'services'])->name('services');
+Route::get('/contact', [WebsitePolicyController::class, 'contact'])->name('contact');
+Route::get('/policies/{policy}', [WebsitePolicyController::class, 'show'])->name('policies.show');
+
+Route::middleware('auth')->group(function () {
+    Route::get('/membership/orders', [MembershipOrderController::class, 'index'])->name('membership-orders.index');
+    Route::get('/membership/orders/{membershipOrder}', [MembershipOrderController::class, 'show'])->name('membership-orders.show');
+    Route::get('/membership/orders/{membershipOrder}/policies', [MembershipOrderController::class, 'policies'])->name('membership-orders.policies');
+    Route::post('/membership/orders/{membershipOrder}/confirm-delivery', [MembershipOrderController::class, 'confirmDelivery'])->middleware('throttle:10,1')->name('membership-orders.confirm-delivery');
+    Route::get('/admin/membership-orders', [MembershipOrderController::class, 'adminIndex'])->name('admin.membership-orders.index');
+    Route::post('/admin/membership-orders/{membershipOrder}/records', [MembershipOrderController::class, 'storeRecord'])->middleware('throttle:20,1')->name('admin.membership-orders.records.store');
+    Route::get('/admin/membership-records/{record}/download', [MembershipOrderController::class, 'downloadRecord'])->name('admin.membership-orders.records.download');
+});
 
 Route::redirect('/our-team', '/team', 301);
 

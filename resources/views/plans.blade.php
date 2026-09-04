@@ -23,6 +23,7 @@
                     Compare access levels and choose the membership that fits how you invest.
                 @endif
             </p>
+            <p class="mt-4"><a class="underline" href="{{ route('services') }}">Service availability, delivery and purchase information</a></p>
         </div>
     </section>
 

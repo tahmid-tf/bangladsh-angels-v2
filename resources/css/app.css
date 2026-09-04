@@ -1,4 +1,5 @@
 @import "./ban-v2.css";
+@import './membership-policies.css';
 @import "./admin-dashboard.css";
 @import "./investor-dashboard.css";
 
@@ -2368,23 +2369,20 @@ html {
 .ban-footer__inner {
     width: min(1180px, calc(100% - 48px));
     margin: 0 auto;
-    padding: clamp(4.5rem, 8vw, 7.25rem) 0 30px;
+    padding: clamp(3rem, 5vw, 4.5rem) 0 30px;
 }
 
 .ban-footer__top {
     display: grid;
-    grid-template-columns: minmax(270px, 1.25fr) repeat(
-            3,
-            minmax(145px, 0.65fr)
-        );
-    gap: clamp(30px, 4vw, 58px);
+    grid-template-columns: minmax(250px, 1.3fr) minmax(130px, .7fr) minmax(180px, .9fr) minmax(205px, 1fr);
+    gap: clamp(24px, 3vw, 44px);
     align-items: start;
 }
 
 .ban-footer__brand-column > p {
     max-width: 330px;
     margin: 24px 0 0;
-    color: rgba(255, 255, 255, 0.58);
+    color: #b7cbc5;
     font-size: 0.88rem;
     font-weight: 500;
     line-height: 1.75;
@@ -2393,16 +2391,16 @@ html {
 .ban-footer__brand {
     display: inline-flex;
     width: fit-content;
-    padding: 20px 24px;
+    padding: 16px 20px;
     border: 1px solid rgba(255, 255, 255, 0.12);
-    border-radius: 20px;
+    border-radius: 12px;
     background: rgba(255, 255, 255, 0.96);
     box-shadow: 0 20px 50px rgba(0, 0, 0, 0.16);
 }
 
 .ban-footer__brand img {
     width: auto;
-    height: 52px;
+    height: 44px;
     max-width: 240px;
     object-fit: contain;
 }
@@ -2427,9 +2425,10 @@ html {
 }
 
 .ban-footer__links a {
-    color: rgba(255, 255, 255, 0.66);
+    color: #c4d6d0;
     font-size: 0.9rem;
-    font-weight: 600;
+    font-weight: 500;
+    line-height: 1.65;
     transition: color 180ms ease;
 }
 
@@ -2439,11 +2438,10 @@ html {
 
 .ban-footer__contact-heading {
     display: flex;
-    min-height: 50px;
     align-items: flex-start;
     justify-content: space-between;
     gap: 12px;
-    margin-bottom: 10px;
+    margin-bottom: 22px;
 }
 
 .ban-footer__contact-heading h2 {
@@ -2458,8 +2456,8 @@ html {
 }
 
 .ban-footer__email small {
-    color: rgba(188, 241, 212, 0.56);
-    font-size: 0.72rem;
+    color: #aed3c3;
+    font-size: 0.8rem;
     font-weight: 600;
 }
 
@@ -2472,6 +2470,7 @@ html {
 
 .ban-footer__to-top {
     display: inline-grid;
+    flex-shrink: 0;
     width: 50px;
     height: 50px;
     place-items: center;
@@ -2505,11 +2504,11 @@ html {
 
 .ban-footer__socials a {
     display: grid;
-    width: 54px;
-    height: 54px;
+    width: 44px;
+    height: 44px;
     place-items: center;
     border: 1px solid rgba(255, 255, 255, 0.12);
-    border-radius: 16px;
+    border-radius: 12px;
     background: rgba(255, 255, 255, 0.055);
     transition:
         transform 180ms ease,
@@ -2534,11 +2533,46 @@ html {
     align-items: center;
     justify-content: space-between;
     gap: 24px;
-    margin-top: clamp(3.5rem, 7vw, 6rem);
+    margin-top: 0;
     padding-top: 24px;
     border-top: 1px solid rgba(255, 255, 255, 0.1);
-    color: rgba(255, 255, 255, 0.48);
+    color: #b7cbc5;
     font-size: 0.78rem;
+}
+
+.ban-footer__business {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 24px;
+    margin-top: 40px;
+    padding: 24px 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.16);
+    color: #b7cbc5;
+    font-size: 0.82rem;
+    line-height: 1.8;
+}
+
+.ban-footer__business p {
+    margin: 4px 0;
+}
+
+.ban-footer__business strong {
+    color: #e4f1eb;
+    font-weight: 600;
+}
+
+.ban-footer__policy-links {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 10px 20px;
+    max-width: 780px;
+}
+
+.ban-footer__bottom small {
+    flex-shrink: 0;
+    font-size: inherit;
 }
 
 .ban-footer__bottom a {
@@ -3130,7 +3164,11 @@ html {
     .ban-footer__bottom {
         align-items: flex-start;
         flex-direction: column;
-        margin-top: 3.5rem;
+        gap: 16px;
+    }
+
+    .ban-footer__policy-links {
+        justify-content: flex-start;
     }
 }
 
