@@ -45,7 +45,7 @@
                     <div class="ban2-actions">
                         <a href="{{ $investCtaUrl }}" class="ban2-button ban2-button--primary">{{ auth()->check() && auth()->user()->hasPaidMembership() ? (auth()->user()->isInvestor() ? 'Investor Dashboard' : 'Dashboard') : 'Invest' }}</a>
                         <a href="#pitch-form" class="ban2-button ban2-button--secondary">Fundraise</a>
-                        <a href="{{ route('ban-wealth.index') }}" class="ban2-button ban2-button--secondary">BAN Wealth</a>
+                        {{-- <a href="{{ route('ban-wealth.index') }}" class="ban2-button ban2-button--secondary">BAN Wealth</a> --}}
                     </div>
                     <div class="ban2-hero__proof" aria-label="BAN at a glance">
                         @foreach ($landingPageStats as $stat)
