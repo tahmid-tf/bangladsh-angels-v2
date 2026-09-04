@@ -30,7 +30,13 @@ class BanWealthFeatureTest extends TestCase
 
         $this->get(route('ban-wealth.invest'))
             ->assertOk()
-            ->assertSee('When might you need this money back?');
+            ->assertSee('When might you need this money back?')
+            ->assertSee('id="fund-horizon"', false)
+            ->assertSee('id="fund-preference"', false)
+            ->assertDontSee('What we would put this money in')
+            ->assertDontSee('Every BAN Wealth fund is built to a mandate')
+            ->assertDontSee('<strong>Our take.</strong>', false)
+            ->assertDontSee('BAN Wealth is paid a selling-agent commission');
     }
 
     public function test_investor_can_submit_a_bank_transfer_with_private_proof(): void
