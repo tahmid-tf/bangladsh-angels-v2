@@ -31,3 +31,6 @@
 .ban-order-links { display: flex; flex-wrap: wrap; gap: 20px; margin: 18px 0; }
 @media (max-width: 760px) { .ban-policy-shell { padding: 38px 0 50px; } .ban-policy-layout { grid-template-columns: 1fr; gap: 32px; } .ban-policy-nav { position: static; grid-template-columns: repeat(2, minmax(0, 1fr)); } .ban-business-details > div { grid-template-columns: 1fr; gap: 3px; } }
 @media print { body { padding: 0 !important; } .ban-site-nav, .ban-footer, #loading-screen, .phpdebugbar, .ban-no-print { display: none !important; } .ban-policy-shell { width: 100%; padding: 0; } .ban-policy-shell table { font-size: 10pt; } }
+.ban-policy-page { width: 100%; }
+.ban-about-hero .ban-team-hero__copy h1 { font-size: clamp(2.75rem, 5vw, 4.5rem); line-height: 1.08; }
+.ban-policy-page #our-story, .ban-policy-page #business-details { scroll-margin-top: 100px; }

@@ -1,7 +1,8 @@
-@extends('layouts.app')
-@section('content')
+@extends(auth()->check() ? 'layouts.app' : 'layouts.guest')
+@section('page_title', 'Payment successful | Bangladesh Angels')
+@section(auth()->check() ? 'content' : 'page_content')
 
-    <div class="py-12">
+    <div class="w-full py-12">
         <div class="max-w-4xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6">
                 <div class="text-center">

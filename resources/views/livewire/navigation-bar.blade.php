@@ -17,6 +17,7 @@
                 <li><a href="{{ route('startups') }}" class="ban-site-nav__link">Featured Startups</a></li>
                 <li><a href="{{ route('portfolio') }}" class="ban-site-nav__link">Portfolio</a></li>
                 <li><a href="{{ route('team') }}" class="ban-site-nav__link">Team</a></li>
+                <li><a href="{{ route('about-us') }}" class="ban-site-nav__link" @if(request()->routeIs('about-us')) aria-current="page" @endif>About</a></li>
                 <li><a href="{{ route('faq') }}" class="ban-site-nav__link">FAQ</a></li>
                 <li class="ban-site-nav__dropdown">
                     <button type="button" class="ban-site-nav__dropdown-button" aria-haspopup="true">
@@ -81,6 +82,7 @@
                 <li><a href="{{ route('startups') }}">Featured Startups</a></li>
                 <li><a href="{{ route('portfolio') }}">Portfolio</a></li>
                 <li><a href="{{ route('team') }}">Team</a></li>
+                <li><a href="{{ route('about-us') }}" @if(request()->routeIs('about-us')) aria-current="page" @endif>About</a></li>
                 <li><a href="{{ route('faq') }}">FAQ</a></li>
                 <li>
                     <span>Our Programs</span>

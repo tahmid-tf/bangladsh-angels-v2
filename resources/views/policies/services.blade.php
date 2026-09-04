@@ -3,6 +3,8 @@
 @section('page_content')
 <main class="ban-policy-shell">
     <header class="ban-policy-header"><p class="ban-page-kicker">Annual investor memberships</p><h1>Services &amp; membership</h1><p>Digital access to BAN’s deal flow, investor community, and membership services. No physical goods are shipped.</p></header>
+    <div class="ban-policy-layout">
+    @include('policies.navigation')
     <article class="ban-policy-prose">
         <h2>Availability and purchase options</h2>
         <p>The active memberships below are available for purchase online. Choose a plan, complete your account and billing details, acknowledge the policies, and pay through aamarPay using the methods available on its secure payment page. Fees are billed annually in USD. International payment availability is subject to gateway and banking approval.</p>
@@ -16,5 +18,6 @@
         <p>For eligibility, refund timelines, and cancellation details, read the linked policies before checkout.</p>
         <ul>@foreach(\App\Support\MembershipPolicies::checkoutPages() as $slug => $page)<li><a href="{{ route('policies.show', $slug) }}">{{ $page['title'] }}</a></li>@endforeach</ul>
     </article>
+    </div>
 </main>
 @endsection

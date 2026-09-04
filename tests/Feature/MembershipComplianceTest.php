@@ -24,6 +24,22 @@ class MembershipComplianceTest extends IsolatedDatabaseTestCase
 {
     use RefreshDatabase;
 
+    public function test_company_pages_share_navigation_and_about_has_section_links(): void
+    {
+        foreach (['about-us', 'services', 'contact'] as $route) {
+            $this->get(route($route))->assertOk()
+                ->assertSee('aria-label="Company information and policies"', false)
+                ->assertSee('aria-current="page"', false)
+                ->assertSee('Services &amp; membership', false)
+                ->assertSee('>About</a>', false);
+        }
+
+        $this->get(route('about-us'))->assertOk()
+            ->assertSee('aria-label="About page sections"', false)
+            ->assertSee('id="our-story"', false)
+            ->assertSee('id="business-details"', false);
+    }
+
     protected function setUp(): void
     {
         parent::setUp();
@@ -191,6 +207,99 @@ class MembershipComplianceTest extends IsolatedDatabaseTestCase
         $this->get(route('membership-orders.show', $order))->assertOk()->assertSee('Access inquiry');
         $this->actingAs($owner)->get(route('admin.membership-orders.records.download', $record))->assertForbidden();
         $this->get(route('membership-orders.show', $order))->assertOk()->assertDontSee('Access inquiry');
+    }
+
+    public function test_missing_and_unverified_callbacks_cannot_activate_membership(): void
+    {
+        $this->mock(AamarpayGateway::class, function ($mock) {
+            $mock->shouldReceive('verifyTransaction')->once()->with('unknown-reference')->andReturn(null);
+        });
+        $this->post(route('payment.aamarpay.callback'), [])->assertSessionHas('error');
+        $this->post(route('payment.aamarpay.callback'), ['mer_txnid' => 'unknown-reference'])->assertSessionHas('error');
+        $this->assertSame(0, Payment::count());
+        $this->assertSame(0, MembershipOrderRecord::count());
+    }
+
+    public function test_declined_payment_does_not_deliver_membership_or_send_receipt(): void
+    {
+        Mail::fake();
+        [$user, $order] = $this->order();
+        $this->mockGateway($order, ['status_code' => 7]);
+        $this->post(route('payment.aamarpay.callback'), ['mer_txnid' => $order->merchant_txnid])->assertRedirect();
+        $this->assertSame('free', $user->fresh()->account_status);
+        $this->assertNull($order->fresh()->payment_id);
+        $this->assertNull($order->fresh()->delivered_at);
+        $this->assertSame(0, MembershipOrderRecord::count());
+        Mail::assertNothingSent();
+    }
+
+    public function test_wrong_transaction_reference_is_rejected(): void
+    {
+        [, $order] = $this->order();
+        $this->mockGateway($order, ['mer_txnid' => 'different-order']);
+        $this->post(route('payment.aamarpay.callback'), ['mer_txnid' => $order->merchant_txnid])->assertSessionHas('error');
+        $this->assertSame(0, Payment::count());
+    }
+
+    public function test_invalid_prices_and_unavailable_plans_do_not_create_orders(): void
+    {
+        $payload = $this->payload();
+        $payload['price'] = 1;
+        $this->post(route('checkout.process'), $payload)->assertRedirect(route('plans'));
+        $payload['price'] = 399;
+        $payload['plan'] = 'not-an-active-plan';
+        $this->post(route('checkout.process'), $payload)->assertRedirect(route('plans'));
+        $this->assertSame(0, MembershipOrder::count());
+        $this->assertSame(0, Subscription::count());
+        Http::assertNothingSent();
+    }
+
+    public function test_guests_cannot_read_order_evidence(): void
+    {
+        [, $order] = $this->order();
+        foreach (['membership-orders.index' => [], 'membership-orders.show' => [$order], 'membership-orders.policies' => [$order], 'admin.membership-orders.index' => []] as $route => $params) {
+            $this->get(route($route, $params))->assertRedirect(route('login'));
+        }
+        $this->post(route('membership-orders.confirm-delivery', $order), ['delivery_consent' => 1])->assertRedirect(route('login'));
+    }
+
+    public function test_admin_upload_rejects_disallowed_files_and_oversized_files(): void
+    {
+        Storage::fake('local');
+        [, $order] = $this->order();
+        $admin = User::factory()->create(['gender' => 'other', 'role' => 'admin']);
+        $this->actingAs($admin);
+        foreach ([UploadedFile::fake()->create('script.php', 1, 'application/x-httpd-php'), UploadedFile::fake()->create('large.pdf', 10241, 'application/pdf')] as $file) {
+            $this->post(route('admin.membership-orders.records.store', $order), ['kind' => 'delivery_document', 'subject' => 'Test', 'body' => 'Test record', 'attachment' => $file])->assertSessionHasErrors('attachment');
+        }
+        $this->assertSame(0, MembershipOrderRecord::count());
+        $this->assertSame([], Storage::disk('local')->allFiles());
+    }
+
+    public function test_payment_complete_requires_owner_or_signed_link_and_does_not_extend_membership(): void
+    {
+        Mail::fake();
+        [$owner, $order] = $this->order();
+        $this->mockGateway($order);
+        $response = $this->post(route('payment.aamarpay.callback'), ['mer_txnid' => $order->merchant_txnid]);
+        $signedUrl = $response->headers->get('Location');
+        $payment = Payment::firstOrFail();
+        $expiry = Subscription::firstOrFail()->end_date;
+        $url = route('payment.complete', ['payment' => $payment->id]);
+        config(['aamarpay.allow_legacy_payment_complete' => false]);
+        $this->get($url)->assertForbidden();
+        $other = User::factory()->create(['gender' => 'other']);
+        $this->actingAs($other)->get($url)->assertForbidden();
+        $this->travel(1)->hours();
+        $this->actingAs($owner)->get($url)->assertOk();
+        $this->assertEquals($expiry, Subscription::firstOrFail()->end_date);
+        $this->assertSame(1, Payment::count());
+        $this->assertSame(1, MembershipOrderRecord::count());
+        auth()->logout();
+        $this->get($signedUrl)->assertOk()->assertSee('Receipt Summary')->assertSee('SIGN IN');
+        $this->get($signedUrl.'&tampered=1')->assertForbidden();
+        $this->travel(49)->hours();
+        $this->get($signedUrl)->assertForbidden();
     }
 
     private function payload(): array
