@@ -18,12 +18,11 @@
                 <li><a href="{{ route('portfolio') }}" class="ban-site-nav__link">Portfolio</a></li>
                 <li class="ban-site-nav__dropdown">
                     <button type="button" class="ban-site-nav__dropdown-button" aria-haspopup="true">
-                        <span>About</span><span class="ban-site-nav__chevron" aria-hidden="true">▾</span>
+                        <span>About Us</span><span class="ban-site-nav__chevron" aria-hidden="true">▾</span>
                     </button>
                     <div class="ban-site-nav__dropdown-panel">
                         <a href="{{ route('team') }}">Team</a>
                         <a href="{{ route('about-us') }}" @if(request()->routeIs('about-us')) aria-current="page" @endif>About</a>
-                        <a href="{{ route('faq') }}">FAQ</a>
                     </div>
                 </li>
                 <li class="ban-site-nav__dropdown">
@@ -37,6 +36,7 @@
                         <a href="{{ route('resources') }}">DeckVue</a>
                     </div>
                 </li>
+                <li><a href="{{ route('faq') }}" class="ban-site-nav__link">FAQ</a></li>
             </ul>
         </nav>
 
@@ -89,11 +89,10 @@
                 <li><a href="{{ route('startups') }}">Featured Startups</a></li>
                 <li><a href="{{ route('portfolio') }}">Portfolio</a></li>
                 <li>
-                    <span>About</span>
+                    <span>About Us</span>
                     <div class="ban-site-nav__mobile-subnav">
                         <a href="{{ route('team') }}">Team</a>
                         <a href="{{ route('about-us') }}" @if(request()->routeIs('about-us')) aria-current="page" @endif>About</a>
-                        <a href="{{ route('faq') }}">FAQ</a>
                     </div>
                 </li>
                 <li>
@@ -105,6 +104,7 @@
                         <a href="{{ route('resources') }}">DeckVue</a>
                     </div>
                 </li>
+                <li><a href="{{ route('faq') }}">FAQ</a></li>
                 <li><a href="{{ $homeSection('pitch-form') }}" class="ban-mobile-pitch">Pitch your startup</a></li>
                 @auth
                     <li><form method="POST" action="{{ route('logout') }}">@csrf<button type="submit">Logout</button></form></li>
