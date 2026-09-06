@@ -3244,7 +3244,7 @@ html {
 }
 
 .ban-blog-hero {
-    padding: 76px 0 72px;
+    padding: 58px 0 54px;
     overflow: hidden;
     background:
         radial-gradient(circle at 90% 20%, rgba(72, 176, 135, .17), transparent 34%),
@@ -3267,9 +3267,9 @@ html {
 }
 
 .ban-blog-hero h1 {
-    max-width: 760px;
+    max-width: 680px;
     margin: 0;
-    font-size: clamp(2.5rem, 5vw, 4.8rem);
+    font-size: clamp(2.05rem, 3.5vw, 3.45rem);
     font-weight: 800;
     letter-spacing: -.055em;
     line-height: 1.02;
