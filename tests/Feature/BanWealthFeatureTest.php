@@ -13,12 +13,12 @@ class BanWealthFeatureTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_public_can_view_the_ban_wealth_landing_page_and_journey(): void
+    public function test_ban_wealth_is_hidden_from_public_navigation_but_pages_still_work(): void
     {
         $this->get(route('home'))
             ->assertOk()
-            ->assertSee('BAN Wealth')
-            ->assertSee(route('ban-wealth.index'));
+            ->assertDontSee('>BAN Wealth<', false)
+            ->assertDontSee(route('ban-wealth.index'));
 
         $this->get(route('ban-wealth.index'))
             ->assertOk()
