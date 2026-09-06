@@ -16,7 +16,6 @@
                 @endif
                 <li><a href="{{ route('startups') }}" class="ban-site-nav__link">Featured Startups</a></li>
                 <li><a href="{{ route('portfolio') }}" class="ban-site-nav__link">Portfolio</a></li>
-                <li><a href="{{ route('blogs.index') }}" class="ban-site-nav__link" @if(request()->routeIs('blogs.*')) aria-current="page" @endif>Blog</a></li>
                 <li class="ban-site-nav__dropdown">
                     <button type="button" class="ban-site-nav__dropdown-button" aria-haspopup="true">
                         <span>About Us</span><span class="ban-site-nav__chevron" aria-hidden="true">▾</span>
@@ -37,7 +36,15 @@
                         <a href="{{ route('resources') }}">DeckVue</a>
                     </div>
                 </li>
-                <li><a href="{{ route('faq') }}" class="ban-site-nav__link">FAQ</a></li>
+                <li class="ban-site-nav__dropdown">
+                    <button type="button" class="ban-site-nav__dropdown-button" aria-haspopup="true" @if(request()->routeIs('blogs.*', 'faq')) aria-current="page" @endif>
+                        <span>Learn</span><span class="ban-site-nav__chevron" aria-hidden="true">▾</span>
+                    </button>
+                    <div class="ban-site-nav__dropdown-panel">
+                        <a href="{{ route('blogs.index') }}" @if(request()->routeIs('blogs.*')) aria-current="page" @endif>Blogs</a>
+                        <a href="{{ route('faq') }}" @if(request()->routeIs('faq')) aria-current="page" @endif>FAQ</a>
+                    </div>
+                </li>
             </ul>
         </nav>
 
@@ -89,7 +96,6 @@
                 @endif
                 <li><a href="{{ route('startups') }}">Featured Startups</a></li>
                 <li><a href="{{ route('portfolio') }}">Portfolio</a></li>
-                <li><a href="{{ route('blogs.index') }}" @if(request()->routeIs('blogs.*')) aria-current="page" @endif>Blog</a></li>
                 <li>
                     <span>About Us</span>
                     <div class="ban-site-nav__mobile-subnav">
@@ -98,7 +104,7 @@
                     </div>
                 </li>
                 <li>
-                    <span>Our Programs</span>
+                    <span>Programs</span>
                     <div class="ban-site-nav__mobile-subnav">
                         {{-- <a href="{{ route('ban-wealth.index') }}">BAN Wealth</a> --}}
                         <a href="{{ route('bwin') }}">BWIN</a>
@@ -106,7 +112,13 @@
                         <a href="{{ route('resources') }}">DeckVue</a>
                     </div>
                 </li>
-                <li><a href="{{ route('faq') }}">FAQ</a></li>
+                <li>
+                    <span>Learn</span>
+                    <div class="ban-site-nav__mobile-subnav">
+                        <a href="{{ route('blogs.index') }}" @if(request()->routeIs('blogs.*')) aria-current="page" @endif>Blogs</a>
+                        <a href="{{ route('faq') }}" @if(request()->routeIs('faq')) aria-current="page" @endif>FAQ</a>
+                    </div>
+                </li>
                 <li><a href="{{ $homeSection('pitch-form') }}" class="ban-mobile-pitch">Pitch your startup</a></li>
                 @auth
                     <li><form method="POST" action="{{ route('logout') }}">@csrf<button type="submit">Logout</button></form></li>
