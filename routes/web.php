@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\AngelAcademyNetworkApplicationController as AdminAngelAcademyNetworkApplicationController;
 use App\Http\Controllers\Admin\BanWealthOrderController as AdminBanWealthOrderController;
+use App\Http\Controllers\Admin\BlogController as AdminBlogController;
 use App\Http\Controllers\Admin\FounderPitchSubmissionController;
 use App\Http\Controllers\Admin\InvestorInvestmentController as AdminInvestorInvestmentController;
 use App\Http\Controllers\Admin\LandingPageStatController;
@@ -14,6 +15,7 @@ use App\Http\Controllers\Admin\WhatWeDoCardController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AngelAcademyNetworkApplicationController;
 use App\Http\Controllers\BanWealthController;
+use App\Http\Controllers\BlogController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\CommitSubmissionController;
 use App\Http\Controllers\FounderPitchController;
@@ -38,6 +40,9 @@ use Illuminate\Support\Facades\Route;
  * Public Routes
  */
 Route::get('/', PrimaryController::class)->name('home');
+
+Route::get('/blogs', [BlogController::class, 'index'])->name('blogs.index');
+Route::get('/blogs/{slug}', [BlogController::class, 'show'])->name('blogs.show');
 
 Route::get('/about-us', [WebsitePolicyController::class, 'show'])->name('about-us');
 Route::get('/services', [WebsitePolicyController::class, 'services'])->name('services');
@@ -187,6 +192,14 @@ Route::middleware('auth')->group(function () {
      */
     Route::prefix('admin')->group(function () {
         Route::get('/dashboard', AdminController::class)->name('admin.dashboard');
+        Route::get('/blogs', [AdminBlogController::class, 'index'])->name('admin.blogs.index');
+        Route::get('/blogs/create', [AdminBlogController::class, 'create'])->name('admin.blogs.create');
+        Route::post('/blogs', [AdminBlogController::class, 'store'])->name('admin.blogs.store');
+        Route::get('/blogs/{blog}', [AdminBlogController::class, 'show'])->name('admin.blogs.show');
+        Route::get('/blogs/{blog}/edit', [AdminBlogController::class, 'edit'])->name('admin.blogs.edit');
+        Route::put('/blogs/{blog}', [AdminBlogController::class, 'update'])->name('admin.blogs.update');
+        Route::patch('/blogs/{blog}/status', [AdminBlogController::class, 'updateStatus'])->name('admin.blogs.status');
+        Route::delete('/blogs/{blog}', [AdminBlogController::class, 'destroy'])->name('admin.blogs.destroy');
         Route::redirect('/resources', '/admin/events', 301);
         Route::get('/events', ResourceController::class)->name('admin.events');
         Route::get('/events/create', [ResourceController::class, 'create'])->name('admin.events.create');

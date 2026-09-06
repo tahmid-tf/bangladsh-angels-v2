@@ -27,6 +27,7 @@
           <li><a href="{{ route('startups') }}">Startups</a></li>
           <li><a href="{{ route('investors') }}">Our Investors</a></li>
           <li><a href="{{ route('resources') }}">DeckVue</a></li>
+          <li><a href="{{ route('blogs.index') }}">Blog &amp; Insights</a></li>
         </ul>
       </section>
 

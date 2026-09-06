@@ -16,6 +16,7 @@
                 @endif
                 <li><a href="{{ route('startups') }}" class="ban-site-nav__link">Featured Startups</a></li>
                 <li><a href="{{ route('portfolio') }}" class="ban-site-nav__link">Portfolio</a></li>
+                <li><a href="{{ route('blogs.index') }}" class="ban-site-nav__link" @if(request()->routeIs('blogs.*')) aria-current="page" @endif>Blog</a></li>
                 <li class="ban-site-nav__dropdown">
                     <button type="button" class="ban-site-nav__dropdown-button" aria-haspopup="true">
                         <span>About Us</span><span class="ban-site-nav__chevron" aria-hidden="true">▾</span>
@@ -88,6 +89,7 @@
                 @endif
                 <li><a href="{{ route('startups') }}">Featured Startups</a></li>
                 <li><a href="{{ route('portfolio') }}">Portfolio</a></li>
+                <li><a href="{{ route('blogs.index') }}" @if(request()->routeIs('blogs.*')) aria-current="page" @endif>Blog</a></li>
                 <li>
                     <span>About Us</span>
                     <div class="ban-site-nav__mobile-subnav">
