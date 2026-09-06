@@ -7,27 +7,27 @@
 <div class="grid gap-6 md:grid-cols-2">
     <div class="md:col-span-2">
         <label for="title" class="block text-sm font-semibold text-gray-800 mb-1.5">Article title <span class="text-red-600">*</span></label>
-        <input id="title" name="title" type="text" required maxlength="255" value="{{ old('title', $blog?->title) }}" class="w-full rounded-lg border-gray-300 text-gray-950 focus:border-[#0a5554] focus:ring-[#0a5554]" placeholder="A clear, specific headline">
+        <input id="title" name="title" type="text" required maxlength="255" value="{{ old('title', $blog?->title) }}" class="w-full rounded-lg border-gray-300 px-3 py-2 text-gray-950 focus:border-[#0a5554] focus:ring-[#0a5554]" placeholder="A clear, specific headline">
         @error('title')<p class="mt-1 text-sm text-red-600">{{ $message }}</p>@enderror
     </div>
 
     <div>
         <label for="slug" class="block text-sm font-semibold text-gray-800 mb-1.5">URL slug</label>
-        <input id="slug" name="slug" type="text" maxlength="255" value="{{ old('slug', $blog?->slug) }}" class="w-full rounded-lg border-gray-300 text-gray-950 focus:border-[#0a5554] focus:ring-[#0a5554]" placeholder="generated-from-the-title">
+        <input id="slug" name="slug" type="text" maxlength="255" value="{{ old('slug', $blog?->slug) }}" class="w-full rounded-lg border-gray-300 px-3 py-2 text-gray-950 focus:border-[#0a5554] focus:ring-[#0a5554]" placeholder="generated-from-the-title">
         <p class="mt-1 text-xs text-gray-500">Lowercase letters, numbers, and hyphens only. Leave blank to generate it.</p>
         @error('slug')<p class="mt-1 text-sm text-red-600">{{ $message }}</p>@enderror
     </div>
 
     <div>
         <label for="category" class="block text-sm font-semibold text-gray-800 mb-1.5">Category <span class="text-red-600">*</span></label>
-        <input id="category" name="category" type="text" required maxlength="100" list="blog-category-options" value="{{ old('category', $blog?->category ?? 'Educational') }}" class="w-full rounded-lg border-gray-300 text-gray-950 focus:border-[#0a5554] focus:ring-[#0a5554]">
+        <input id="category" name="category" type="text" required maxlength="100" list="blog-category-options" value="{{ old('category', $blog?->category ?? 'Educational') }}" class="w-full rounded-lg border-gray-300 px-3 py-2 text-gray-950 focus:border-[#0a5554] focus:ring-[#0a5554]">
         <datalist id="blog-category-options"><option value="Announcement"><option value="Educational"><option value="Media appearances"><option value="Investment"><option value="Misc"></datalist>
         @error('category')<p class="mt-1 text-sm text-red-600">{{ $message }}</p>@enderror
     </div>
 
     <div class="md:col-span-2">
         <label for="excerpt" class="block text-sm font-semibold text-gray-800 mb-1.5">Summary</label>
-        <textarea id="excerpt" name="excerpt" rows="3" maxlength="2000" class="w-full rounded-lg border-gray-300 text-gray-950 focus:border-[#0a5554] focus:ring-[#0a5554]" placeholder="A concise introduction used on the blog listing and in search results.">{{ old('excerpt', $blog?->excerpt) }}</textarea>
+        <textarea id="excerpt" name="excerpt" rows="3" maxlength="2000" class="w-full rounded-lg border-gray-300 px-3 py-2 text-gray-950 focus:border-[#0a5554] focus:ring-[#0a5554]" placeholder="A concise introduction used on the blog listing and in search results.">{{ old('excerpt', $blog?->excerpt) }}</textarea>
         <p class="mt-1 text-xs text-gray-500">If empty, the public listing will generate a short preview from the article.</p>
         @error('excerpt')<p class="mt-1 text-sm text-red-600">{{ $message }}</p>@enderror
     </div>
@@ -55,22 +55,22 @@
 
     <div>
         <label for="author_name" class="block text-sm font-semibold text-gray-800 mb-1.5">Author name</label>
-        <input id="author_name" name="author_name" type="text" maxlength="255" value="{{ old('author_name', $blog?->author_name ?? auth()->user()->name) }}" class="w-full rounded-lg border-gray-300 text-gray-950 focus:border-[#0a5554] focus:ring-[#0a5554]">
+        <input id="author_name" name="author_name" type="text" maxlength="255" value="{{ old('author_name', $blog?->author_name ?? auth()->user()->name) }}" class="w-full rounded-lg border-gray-300 px-3 py-2 text-gray-950 focus:border-[#0a5554] focus:ring-[#0a5554]">
         @error('author_name')<p class="mt-1 text-sm text-red-600">{{ $message }}</p>@enderror
     </div>
     <div>
         <label for="author_role" class="block text-sm font-semibold text-gray-800 mb-1.5">Author title / role</label>
-        <input id="author_role" name="author_role" type="text" maxlength="255" value="{{ old('author_role', $blog?->author_role) }}" class="w-full rounded-lg border-gray-300 text-gray-950 focus:border-[#0a5554] focus:ring-[#0a5554]" placeholder="Investment Associate">
+        <input id="author_role" name="author_role" type="text" maxlength="255" value="{{ old('author_role', $blog?->author_role) }}" class="w-full rounded-lg border-gray-300 px-3 py-2 text-gray-950 focus:border-[#0a5554] focus:ring-[#0a5554]" placeholder="Investment Associate">
         @error('author_role')<p class="mt-1 text-sm text-red-600">{{ $message }}</p>@enderror
     </div>
     <div>
         <label for="author_organization" class="block text-sm font-semibold text-gray-800 mb-1.5">Author organization</label>
-        <input id="author_organization" name="author_organization" type="text" maxlength="255" value="{{ old('author_organization', $blog?->author_organization ?? 'Bangladesh Angels Network') }}" class="w-full rounded-lg border-gray-300 text-gray-950 focus:border-[#0a5554] focus:ring-[#0a5554]">
+        <input id="author_organization" name="author_organization" type="text" maxlength="255" value="{{ old('author_organization', $blog?->author_organization ?? 'Bangladesh Angels Network') }}" class="w-full rounded-lg border-gray-300 px-3 py-2 text-gray-950 focus:border-[#0a5554] focus:ring-[#0a5554]">
         @error('author_organization')<p class="mt-1 text-sm text-red-600">{{ $message }}</p>@enderror
     </div>
     <div>
         <label for="published_at" class="block text-sm font-semibold text-gray-800 mb-1.5">Publication date & time</label>
-        <input id="published_at" name="published_at" type="datetime-local" value="{{ old('published_at', $blog?->published_at?->format('Y-m-d\\TH:i')) }}" class="w-full rounded-lg border-gray-300 text-gray-950 focus:border-[#0a5554] focus:ring-[#0a5554]">
+        <input id="published_at" name="published_at" type="datetime-local" value="{{ old('published_at', $blog?->published_at?->format('Y-m-d\\TH:i')) }}" class="w-full rounded-lg border-gray-300 px-3 py-2 text-gray-950 focus:border-[#0a5554] focus:ring-[#0a5554]">
         <p class="mt-1 text-xs text-gray-500">If blank when publishing, the current time is used.</p>
         @error('published_at')<p class="mt-1 text-sm text-red-600">{{ $message }}</p>@enderror
     </div>

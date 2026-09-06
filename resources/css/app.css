@@ -3310,11 +3310,15 @@ html {
     letter-spacing: -.04em;
 }
 
-.ban-blog-feed__heading > a {
+.ban-blog-feed__heading > :is(a, button) {
+    padding: 0;
+    border: 0;
+    background: transparent;
     flex-shrink: 0;
     color: #527069;
     font-size: .82rem;
     font-weight: 700;
+    cursor: pointer;
 }
 
 .ban-blog-card {
@@ -3453,21 +3457,25 @@ html {
 
 .ban-blog-categories { display: grid; }
 
-.ban-blog-categories a {
+.ban-blog-categories :is(a, button) {
     display: flex;
     align-items: center;
     gap: 7px;
+    width: 100%;
     padding: 12px 0;
     border-bottom: 1px solid #dfe9e5;
     color: #3f5d56;
     font-size: .87rem;
     font-weight: 600;
+    text-align: left;
+    background: transparent;
+    cursor: pointer;
 }
 
-.ban-blog-categories a:last-child { border-bottom: 0; }
-.ban-blog-categories a:hover,
-.ban-blog-categories a.is-active { color: #087052; }
-.ban-blog-categories a > span { color: #087052; font-size: 1.2rem; font-weight: 900; }
+.ban-blog-categories :is(a, button):last-child { border-bottom: 0; }
+.ban-blog-categories :is(a, button):hover,
+.ban-blog-categories :is(a, button).is-active { color: #087052; }
+.ban-blog-categories :is(a, button) > span { color: #087052; font-size: 1.2rem; font-weight: 900; }
 .ban-blog-categories small { margin-left: auto; color: #82968f; font-size: .7rem; }
 
 .ban-blog-recent { display: grid; gap: 18px; }
@@ -3487,8 +3495,10 @@ html {
 .ban-blog-empty span { color: #16815f; font-size: .7rem; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; }
 .ban-blog-empty h3 { margin: 8px 0; font-size: 1.6rem; font-weight: 800; }
 .ban-blog-empty p { color: #61766f; }
-.ban-blog-empty a { display: inline-block; margin-top: 16px; color: #087052; font-weight: 800; }
+.ban-blog-empty :is(a, button) { display: inline-block; margin-top: 16px; padding: 0; border: 0; color: #087052; font: inherit; font-weight: 800; background: transparent; cursor: pointer; }
 .ban-blog-pagination { margin-top: 32px; }
+.ban-blog-loading { margin: -8px 0 18px; color: #16815f; font-size: .78rem; font-weight: 700; }
+.ban-blog-results { transition: opacity 150ms ease; }
 
 .ban-blog-article-page { background: #fff; }
 .ban-blog-layout--article { padding-top: 48px; }
