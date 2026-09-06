@@ -16,6 +16,8 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AngelAcademyNetworkApplicationController;
 use App\Http\Controllers\BanWealthController;
 use App\Http\Controllers\BlogController;
+use App\Http\Controllers\PublicationController;
+use App\Http\Controllers\Admin\PublicationController as AdminPublicationController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\CommitSubmissionController;
 use App\Http\Controllers\FounderPitchController;
@@ -43,6 +45,8 @@ Route::get('/', PrimaryController::class)->name('home');
 
 Route::get('/blogs', [BlogController::class, 'index'])->name('blogs.index');
 Route::get('/blogs/{slug}', [BlogController::class, 'show'])->name('blogs.show');
+Route::get('/publications', [PublicationController::class, 'index'])->name('publications.index');
+Route::get('/publications/{publication}/download', [PublicationController::class, 'download'])->name('publications.download');
 
 Route::get('/about-us', [WebsitePolicyController::class, 'show'])->name('about-us');
 Route::get('/services', [WebsitePolicyController::class, 'services'])->name('services');
@@ -200,6 +204,13 @@ Route::middleware('auth')->group(function () {
         Route::put('/blogs/{blog}', [AdminBlogController::class, 'update'])->name('admin.blogs.update');
         Route::patch('/blogs/{blog}/status', [AdminBlogController::class, 'updateStatus'])->name('admin.blogs.status');
         Route::delete('/blogs/{blog}', [AdminBlogController::class, 'destroy'])->name('admin.blogs.destroy');
+        Route::get('/publications', [AdminPublicationController::class, 'index'])->name('admin.publications.index');
+        Route::get('/publications/create', [AdminPublicationController::class, 'create'])->name('admin.publications.create');
+        Route::post('/publications', [AdminPublicationController::class, 'store'])->name('admin.publications.store');
+        Route::get('/publications/{publication}/edit', [AdminPublicationController::class, 'edit'])->name('admin.publications.edit');
+        Route::put('/publications/{publication}', [AdminPublicationController::class, 'update'])->name('admin.publications.update');
+        Route::patch('/publications/{publication}/status', [AdminPublicationController::class, 'updateStatus'])->name('admin.publications.status');
+        Route::delete('/publications/{publication}', [AdminPublicationController::class, 'destroy'])->name('admin.publications.destroy');
         Route::redirect('/resources', '/admin/events', 301);
         Route::get('/events', ResourceController::class)->name('admin.events');
         Route::get('/events/create', [ResourceController::class, 'create'])->name('admin.events.create');

@@ -2,12 +2,12 @@
 
 namespace App\Livewire;
 
-use App\Models\Blog;
+use App\Models\Publication;
 use Illuminate\Database\Eloquent\Builder;
 use Livewire\Component;
 use Livewire\WithPagination;
 
-class BlogSearch extends Component
+class PublicationSearch extends Component
 {
     use WithPagination;
 
@@ -30,11 +30,6 @@ class BlogSearch extends Component
         $this->resetPage();
     }
 
-    public function updatingCategory(): void
-    {
-        $this->resetPage();
-    }
-
     public function selectCategory(string $category): void
     {
         $this->category = $category;
@@ -53,13 +48,13 @@ class BlogSearch extends Component
         $search = trim($this->search);
         $category = trim($this->category);
 
-        $blogs = Blog::query()
+        $publications = Publication::query()
             ->published()
             ->when($search !== '', function (Builder $query) use ($search): void {
                 $query->where(function (Builder $query) use ($search): void {
                     $query->where('title', 'like', '%'.$search.'%')
                         ->orWhere('excerpt', 'like', '%'.$search.'%')
-                        ->orWhere('content', 'like', '%'.$search.'%');
+                        ->orWhere('category', 'like', '%'.$search.'%');
                 });
             })
             ->when($category !== '', fn (Builder $query) => $query->where('category', $category))
@@ -67,19 +62,13 @@ class BlogSearch extends Component
             ->orderByDesc('id')
             ->paginate(8);
 
-        return view('livewire.blog-search', [
-            'blogs' => $blogs,
-            'categories' => Blog::query()
+        return view('livewire.publication-search', [
+            'publications' => $publications,
+            'categories' => Publication::query()
                 ->published()
-                ->selectRaw('category, COUNT(*) as posts_count')
+                ->selectRaw('category, COUNT(*) as publications_count')
                 ->groupBy('category')
                 ->orderBy('category')
-                ->get(),
-            'recentBlogs' => Blog::query()
-                ->published()
-                ->orderByDesc('published_at')
-                ->orderByDesc('id')
-                ->limit(5)
                 ->get(),
         ]);
     }

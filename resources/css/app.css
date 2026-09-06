@@ -3500,6 +3500,38 @@ html {
 .ban-blog-loading { margin: -8px 0 18px; color: #16815f; font-size: .78rem; font-weight: 700; }
 .ban-blog-results { transition: opacity 150ms ease; }
 
+.ban-publication-card h3 {
+    max-width: 720px;
+}
+
+.ban-publication-download {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 42px;
+    margin-top: 2px;
+    padding: 0 15px;
+    border-radius: 9px;
+    color: #fff;
+    background: #0a5554;
+    font-size: .78rem;
+    font-weight: 800;
+    letter-spacing: .02em;
+    transition: background-color 180ms ease, transform 180ms ease;
+}
+
+.ban-publication-download:hover {
+    color: #fff;
+    background: #063d3c;
+    transform: translateY(-1px);
+}
+
+.ban-publication-download svg {
+    width: 17px;
+    height: 17px;
+    stroke-width: 2;
+}
+
 .ban-blog-article-page { background: #fff; }
 .ban-blog-layout--article { padding-top: 48px; }
 .ban-blog-back { display: inline-block; margin-bottom: 30px; color: #087052; font-size: .82rem; font-weight: 800; }

@@ -18,11 +18,11 @@
             @endif
         </div>
 
-        <div wire:loading.flex wire:target="search,category,selectCategory,clearFilters" class="ban-blog-loading" role="status">
+        <div wire:loading.flex wire:target="applySearch,selectCategory,clearFilters" class="ban-blog-loading" role="status">
             Updating articles…
         </div>
 
-        <div wire:loading.class="opacity-60" wire:target="search,category,selectCategory,clearFilters" class="ban-blog-results">
+        <div wire:loading.class="opacity-60" wire:target="applySearch,selectCategory,clearFilters" class="ban-blog-results">
             @forelse($blogs as $blog)
                 <article class="ban-blog-card" wire:key="blog-{{ $blog->id }}">
                     <div class="ban-blog-card__meta">
@@ -55,9 +55,9 @@
     <aside class="ban-blog-sidebar" aria-label="Blog tools">
         <section class="ban-blog-side-card">
             <h2>Search</h2>
-            <form wire:submit.prevent="resetPage" class="ban-blog-search">
+            <form wire:submit.prevent="applySearch" class="ban-blog-search">
                 <label for="blog-search" class="sr-only">Search articles</label>
-                <input id="blog-search" name="search" type="search" wire:model.live.debounce.350ms="search" placeholder="Search articles" autocomplete="off">
+                <input id="blog-search" name="search" type="search" wire:model="search" placeholder="Search articles" autocomplete="off">
                 <button type="submit" aria-label="Search">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg>
                 </button>

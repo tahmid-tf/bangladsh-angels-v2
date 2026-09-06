@@ -117,6 +117,10 @@
                 </svg>
                 <span>Blogs</span>
             </a>
+            <a href="{{ route('admin.publications.index') }}" class="py-3 px-6 hover:bg-green-600 transition-colors flex items-center space-x-2 {{ request()->routeIs('admin.publications.*') ? 'bg-green-600' : '' }}">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M5 3a2 2 0 0 0-2 2v14l7-3 7 3V5a2 2 0 0 0-2-2H5z" /></svg>
+                <span>Publications</span>
+            </a>
             <a href="{{ route('admin.landing-page-stats') }}" class="py-3 px-6 hover:bg-green-600 transition-colors flex items-center space-x-2 {{ request()->routeIs('admin.landing-page-stats*') ? 'bg-green-600' : '' }}">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                     <path d="M3 3a1 1 0 000 2h10a1 1 0 100-2H3zM3 7a1 1 0 000 2h6a1 1 0 100-2H3zM3 11a1 1 0 100 2h4a1 1 0 100-2H3zM13 8a1 1 0 011 1v5h2a1 1 0 110 2h-6a1 1 0 110-2h2V9a1 1 0 011-1z" />

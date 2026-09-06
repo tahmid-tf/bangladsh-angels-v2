@@ -37,11 +37,12 @@
                     </div>
                 </li>
                 <li class="ban-site-nav__dropdown">
-                    <button type="button" class="ban-site-nav__dropdown-button" aria-haspopup="true" @if(request()->routeIs('blogs.*', 'faq')) aria-current="page" @endif>
+                    <button type="button" class="ban-site-nav__dropdown-button" aria-haspopup="true" @if(request()->routeIs('blogs.*', 'faq', 'publications.*')) aria-current="page" @endif>
                         <span>Learn</span><span class="ban-site-nav__chevron" aria-hidden="true">▾</span>
                     </button>
                     <div class="ban-site-nav__dropdown-panel">
                         <a href="{{ route('blogs.index') }}" @if(request()->routeIs('blogs.*')) aria-current="page" @endif>Blogs</a>
+                        <a href="{{ route('publications.index') }}" @if(request()->routeIs('publications.*')) aria-current="page" @endif>Publications</a>
                         <a href="{{ route('faq') }}" @if(request()->routeIs('faq')) aria-current="page" @endif>FAQ</a>
                     </div>
                 </li>
@@ -116,6 +117,7 @@
                     <span>Learn</span>
                     <div class="ban-site-nav__mobile-subnav">
                         <a href="{{ route('blogs.index') }}" @if(request()->routeIs('blogs.*')) aria-current="page" @endif>Blogs</a>
+                        <a href="{{ route('publications.index') }}" @if(request()->routeIs('publications.*')) aria-current="page" @endif>Publications</a>
                         <a href="{{ route('faq') }}" @if(request()->routeIs('faq')) aria-current="page" @endif>FAQ</a>
                     </div>
                 </li>
