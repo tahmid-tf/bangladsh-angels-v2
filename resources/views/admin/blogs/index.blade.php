@@ -21,11 +21,11 @@
     <form method="get" class="flex flex-col md:flex-row gap-3 mb-5 bg-white rounded-xl border border-gray-100 p-4 shadow-sm">
         <label class="flex-1">
             <span class="sr-only">Search blogs</span>
-            <input type="search" name="search" value="{{ $search }}" placeholder="Search by title…" class="w-full rounded-lg border-gray-300 focus:border-[#0a5554] focus:ring-[#0a5554]">
+            <input type="search" name="search" value="{{ $search }}" placeholder="Search by title…" class="w-full rounded-lg border-gray-300 px-3 py-2 text-gray-950 focus:border-[#0a5554] focus:ring-[#0a5554]">
         </label>
         <label>
             <span class="sr-only">Filter by status</span>
-            <select name="status" class="w-full md:w-44 rounded-lg border-gray-300 focus:border-[#0a5554] focus:ring-[#0a5554]">
+            <select name="status" class="w-full rounded-lg border-gray-300 px-3 py-2 text-gray-950 focus:border-[#0a5554] focus:ring-[#0a5554] md:w-44">
                 <option value="all" @selected($status === 'all')>All statuses</option>
                 <option value="published" @selected($status === 'published')>Published</option>
                 <option value="archived" @selected($status === 'archived')>Archived</option>
