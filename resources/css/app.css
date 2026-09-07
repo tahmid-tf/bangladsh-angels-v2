@@ -3689,22 +3689,44 @@ html {
     margin-left: 40px;
 }
 
-.ban-site-nav__login {
+.ban-site-nav__login,
+.ban-site-nav__register {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     min-height: 28px;
     padding: 4px 9px;
-    border: 1px solid #ef4044;
     border-radius: 8px;
-    color: #ef4044;
-    background: #fff;
     font-family: "Manrope", "Figtree", ui-sans-serif, system-ui, sans-serif;
     font-size: 0.8rem;
     font-weight: 750;
     letter-spacing: 0.025em;
+    white-space: nowrap;
+    transition: background-color 180ms ease, border-color 180ms ease, color 180ms ease;
+}
+
+.ban-site-nav__login {
+    border: 1px solid #ef4044;
+    color: #ef4044;
+    background: #fff;
 }
 
 .ban-site-nav__login:hover {
     color: #fff;
     background: #ef4044;
+    transform: none;
+}
+
+.ban-site-nav__register {
+    border: 1px solid #ef4044;
+    color: #fff;
+    background: #ef4044;
+}
+
+.ban-site-nav__register:hover {
+    color: #fff;
+    background: #d83539;
+    border-color: #d83539;
     transform: none;
 }
 
