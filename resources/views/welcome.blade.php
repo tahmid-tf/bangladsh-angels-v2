@@ -43,8 +43,13 @@
                     </p>
                     <p class="ban2-action-prompt">I'm looking To</p>
                     <div class="ban2-actions">
-                        <a href="{{ $investCtaUrl }}" class="ban2-button ban2-button--primary">{{ auth()->check() && auth()->user()->hasPaidMembership() ? (auth()->user()->isInvestor() ? 'Investor Dashboard' : 'Dashboard') : 'Invest' }}</a>
-                        <a href="#pitch-form" class="ban2-button ban2-button--secondary">Fundraise</a>
+                        @if (auth()->check() && auth()->user()->hasPaidMembership())
+                            <a href="{{ route('startups') }}" class="ban2-button ban2-button--primary">Active Deals</a>
+                            <a href="{{ route('portfolio') }}" class="ban2-button ban2-button--secondary">Portfolio</a>
+                        @else
+                            <a href="{{ route('investor.signup') }}" class="ban2-button ban2-button--primary">Invest</a>
+                            <a href="#pitch-form" class="ban2-button ban2-button--secondary">Fundraise</a>
+                        @endif
                         {{-- <a href="{{ route('ban-wealth.index') }}" class="ban2-button ban2-button--secondary">BAN Wealth</a> --}}
                     </div>
                     <div class="ban2-hero__proof" aria-label="BAN at a glance">

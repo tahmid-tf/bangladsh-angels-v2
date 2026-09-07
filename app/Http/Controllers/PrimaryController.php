@@ -62,10 +62,6 @@ class PrimaryController extends Controller
         $showFreeTierOption = auth()->check()
             && auth()->user()->hasVerifiedEmail()
             && auth()->user()->account_status === 'free';
-        $investCtaUrl = auth()->check() && auth()->user()->hasPaidMembership()
-            ? route('dashboard')
-            : route('investor.signup');
-
         return view('welcome', compact(
             'portfolioDeals',
             'teamMembers',
@@ -76,8 +72,7 @@ class PrimaryController extends Controller
             'landingResourceEvents',
             'tiers',
             'showFreeTierOption',
-            'showMembershipPlans',
-            'investCtaUrl'
+            'showMembershipPlans'
         ));
     }
 
