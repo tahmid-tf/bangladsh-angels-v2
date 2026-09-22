@@ -142,6 +142,28 @@
                                         @if (str_starts_with($card->secondary_link, 'http')) target="_blank" rel="noopener noreferrer" @endif>{{ $card->secondary_label }}
                                         <span aria-hidden="true">↗</span></a>
                                 @endif
+                                @if ($card->hasDropdown())
+                                    <div class="ban2-program-card__dropdown ban2-program-card__action">
+                                        <button type="button" class="ban2-program-card__dropdown-trigger" aria-haspopup="true" aria-expanded="false">
+                                            <span>{{ $card->dropdown_items['label'] }}</span>
+                                            <svg class="ban2-program-card__dropdown-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+                                        </button>
+                                        @if (! empty($card->dropdown_items['items']))
+                                            <div class="ban2-program-card__dropdown-menu" role="menu">
+                                                @foreach ($card->dropdown_items['items'] as $item)
+                                                    @php($isExternal = str_starts_with($item['link'] ?? '', 'http'))
+                                                    <a href="{{ $item['link'] ?? '#' }}" role="menuitem" class="ban2-program-card__dropdown-item"
+                                                        @if ($isExternal) target="_blank" rel="noopener noreferrer" @endif>
+                                                        <span>{{ $item['title'] }}</span>
+                                                        @if ($isExternal)
+                                                            <span class="ban2-program-card__dropdown-ext" aria-hidden="true">↗</span>
+                                                        @endif
+                                                    </a>
+                                                @endforeach
+                                            </div>
+                                        @endif
+                                    </div>
+                                @endif
                             </div>
                         </article>
                     @endforeach
@@ -461,6 +483,49 @@
             if (statusCode === '2') {
                 window.location.replace('{{ auth()->check() ? route('dashboard') : route('login') }}');
             }
+
+            // Program card dropdown handling
+            document.querySelectorAll('.ban2-program-card__dropdown-trigger').forEach(trigger => {
+                trigger.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    const dropdown = this.closest('.ban2-program-card__dropdown');
+                    const card = this.closest('.ban2-program-card');
+                    const wasOpen = dropdown.classList.contains('is-open');
+
+                    document.querySelectorAll('.ban2-program-card__dropdown.is-open').forEach(d => {
+                        d.classList.remove('is-open');
+                        d.querySelector('.ban2-program-card__dropdown-trigger')?.setAttribute('aria-expanded', 'false');
+                        d.closest('.ban2-program-card')?.classList.remove('has-open-dropdown');
+                    });
+
+                    if (!wasOpen) {
+                        dropdown.classList.add('is-open');
+                        this.setAttribute('aria-expanded', 'true');
+                        card?.classList.add('has-open-dropdown');
+                    }
+                });
+            });
+
+            document.addEventListener('click', function(e) {
+                if (!e.target.closest('.ban2-program-card__dropdown')) {
+                    document.querySelectorAll('.ban2-program-card__dropdown.is-open').forEach(d => {
+                        d.classList.remove('is-open');
+                        d.querySelector('.ban2-program-card__dropdown-trigger')?.setAttribute('aria-expanded', 'false');
+                        d.closest('.ban2-program-card')?.classList.remove('has-open-dropdown');
+                    });
+                }
+            });
+
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    document.querySelectorAll('.ban2-program-card__dropdown.is-open').forEach(d => {
+                        d.classList.remove('is-open');
+                        d.querySelector('.ban2-program-card__dropdown-trigger')?.setAttribute('aria-expanded', 'false');
+                        d.closest('.ban2-program-card')?.classList.remove('has-open-dropdown');
+                    });
+                }
+            });
         });
     </script>
 </body>
