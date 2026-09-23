@@ -344,10 +344,10 @@
                             <x-ban-event-card :resource="$event" />
                         @endforeach
                     </div>
-                    <div class="ban2-events__footer">
+                    {{-- <div class="ban2-events__footer">
                         <a href="{{ route('resources') }}" class="ban2-text-link">Discover BAN Resources <span
                                 aria-hidden="true">&rarr;</span></a>
-                    </div>
+                    </div> --}}
                 @endif
             </div>
         </section>
