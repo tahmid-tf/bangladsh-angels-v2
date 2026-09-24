@@ -19,12 +19,7 @@ class PrimaryController extends Controller
     // Landing Page
     public function __invoke()
     {
-        $portfolioDeals = Deal::query()
-            ->with('media')
-            ->inPortfolio()
-            ->latest()
-            ->limit(8)
-            ->get();
+        $portfolioDeals = Deal::getHomepageDeals();
 
         $teamMembers = TeamMember::query()
             ->forSection(TeamMember::SECTION_MANAGEMENT)

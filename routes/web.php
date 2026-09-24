@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\AngelAcademyNetworkApplicationController as Admin
 use App\Http\Controllers\Admin\BanWealthOrderController as AdminBanWealthOrderController;
 use App\Http\Controllers\Admin\BlogController as AdminBlogController;
 use App\Http\Controllers\Admin\FounderPitchSubmissionController;
+use App\Http\Controllers\Admin\HomepagePortfolioController;
 use App\Http\Controllers\Admin\InvestorInvestmentController as AdminInvestorInvestmentController;
 use App\Http\Controllers\Admin\LandingPageStatController;
 use App\Http\Controllers\Admin\LandingProgramCardController;
@@ -291,6 +292,15 @@ Route::middleware('auth')->group(function () {
         Route::get('/landing-program-cards/{landingProgramCard}/edit', [LandingProgramCardController::class, 'edit'])->name('admin.landing-program-cards.edit');
         Route::put('/landing-program-cards/{landingProgramCard}', [LandingProgramCardController::class, 'update'])->name('admin.landing-program-cards.update');
         Route::delete('/landing-program-cards/{landingProgramCard}', [LandingProgramCardController::class, 'destroy'])->name('admin.landing-program-cards.destroy');
+
+        Route::get('/homepage-portfolios', [HomepagePortfolioController::class, 'index'])->name('admin.homepage-portfolios');
+        Route::post('/homepage-portfolios', [HomepagePortfolioController::class, 'store'])->name('admin.homepage-portfolios.store');
+        Route::put('/homepage-portfolios/reorder', [HomepagePortfolioController::class, 'reorder'])->name('admin.homepage-portfolios.reorder');
+        Route::post('/homepage-portfolios/sync', [HomepagePortfolioController::class, 'sync'])->name('admin.homepage-portfolios.sync');
+        Route::delete('/homepage-portfolios/batch-destroy', [HomepagePortfolioController::class, 'batchDestroy'])->name('admin.homepage-portfolios.batch-destroy');
+        Route::post('/homepage-portfolios/{homepagePortfolio}/move-up', [HomepagePortfolioController::class, 'moveUp'])->name('admin.homepage-portfolios.move-up');
+        Route::post('/homepage-portfolios/{homepagePortfolio}/move-down', [HomepagePortfolioController::class, 'moveDown'])->name('admin.homepage-portfolios.move-down');
+        Route::delete('/homepage-portfolios/{homepagePortfolio}', [HomepagePortfolioController::class, 'destroy'])->name('admin.homepage-portfolios.destroy');
 
         Route::get('/team-about-section', [TeamAboutSectionController::class, 'edit'])->name('admin.team-about-section.edit');
         Route::put('/team-about-section', [TeamAboutSectionController::class, 'update'])->name('admin.team-about-section.update');
