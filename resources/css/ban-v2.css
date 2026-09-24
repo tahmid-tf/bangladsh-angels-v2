@@ -1760,6 +1760,29 @@
     min-height: 280px;
 }
 
+@media (max-width: 860px) {
+    .ban2-events .ban-event-card {
+        grid-template-columns: 1fr;
+        min-height: 0;
+        border-radius: 22px;
+    }
+
+    .ban2-events .ban-event-card__image {
+        min-height: 0;
+        height: auto;
+        max-height: 540px;
+        aspect-ratio: auto;
+    }
+
+    .ban2-events .ban-event-card__image img {
+        width: 100%;
+        height: auto;
+        max-height: 540px;
+        object-fit: cover;
+        object-position: center top;
+    }
+}
+
 .ban2-events .ban-event-card__body {
     padding: clamp(26px, 4vw, 40px);
 }

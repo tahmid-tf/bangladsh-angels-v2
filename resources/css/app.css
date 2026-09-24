@@ -3110,7 +3110,17 @@ html {
 
     .ban-event-card__image {
         min-height: 0;
-        aspect-ratio: 16 / 10;
+        height: auto;
+        max-height: 540px;
+        aspect-ratio: auto;
+    }
+
+    .ban-event-card__image img {
+        width: 100%;
+        height: auto;
+        max-height: 540px;
+        object-fit: cover;
+        object-position: center top;
     }
 
     .ban-event-card__body {
